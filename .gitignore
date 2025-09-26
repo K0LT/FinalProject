@@ -1,0 +1,46 @@
+# --- GLOBAL (root) ---
+.DS_Store
+Thumbs.db
+
+# Logs & coverage
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+/coverage
+
+# --- LARAVEL (backend/) ---
+backend/vendor/
+backend/node_modules/
+
+# Laravel runtime/build artifacts
+backend/public/hot
+backend/public/storage
+backend/public/build
+backend/storage/*.key
+backend/bootstrap/cache/
+
+# Common local-only config
+backend/.env
+backend/.env.*
+backend/auth.json
+backend/Homestead.yaml
+backend/Homestead.json
+backend/.vagrant
+backend/.phpactor.json
+backend/.phpunit.result.cache
+
+# --- NEXT.JS (frontend/) ---
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.env
+frontend/.env.*
+frontend/.pnp
+frontend/.pnp.js
+frontend/.vercel
+frontend/*.tsbuildinfo
+
+# IMPORTANT: keep next-env.d.ts tracked (don't ignore)
+# (Next.js requires it in the repo)
+# frontend/next-env.d.ts  <-- intentionally NOT ignored
