@@ -29,6 +29,11 @@ class ClientController extends Controller
 //            'email' => 'required',
 //            'phone_number' => 'required',
 //        ]);
+        $request->validate([
+            'full_name' => 'required',
+            'email' => 'required',
+            'phone_number' => 'required',
+        ]);
         $user = User::create([
             'name' => $request->get('full_name'),
             'email' => $request->get('email'),
