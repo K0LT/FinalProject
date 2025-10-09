@@ -24,11 +24,6 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-//        $request->validate([
-//            'full_name' => 'required',
-//            'email' => 'required',
-//            'phone_number' => 'required',
-//        ]);
         $request->validate([
             'full_name' => 'required',
             'email' => 'required',
