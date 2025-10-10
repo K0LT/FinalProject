@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Models\User;
 
 class ClientController extends Controller
 {
@@ -23,7 +24,27 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
+        $request->validate([
+            'full_name' => 'required',
+            'email' => 'required',
+            'phone_number' => 'required',
+        ]);
+        $user = User::create([
+            'name' => $request->get('full_name'),
+            'email' => $request->get('email'),
+            'password' => bcrypt('password'),
+        ]);
 
+        $client = Client::create([
+            'full_name' => $request->get('full_name'),
+            'phone_number' => $request->get('phone_number'),
+            'email' => $request->get('email'),
+            'user_id' => $user->id,
+        ]);
+
+
+//        return redirect('people')->with('status', 'Item created successfully!');
+        return "ok";
     }
 
     /**
@@ -39,7 +60,16 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
-        //
+        $data = $request->validate(array(
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone_number' => 'required|string|min:9|max:9',
+
+        ));
+
+            $client->update($data);
+
+            return $client;
     }
 
     /**
@@ -47,6 +77,8 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        $clients = Client::find($client->id);
+        $clients->delete();
+        return "return eliminadao";
     }
 }
