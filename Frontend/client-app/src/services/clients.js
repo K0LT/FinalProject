@@ -5,5 +5,10 @@ export async function getClient(id){
     return response.data;
 }
 
+export async function getClients(){
+    const response = await api.get('/clients');
+    return response.data;
+}
+
 
 //

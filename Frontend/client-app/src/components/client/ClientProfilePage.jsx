@@ -3,23 +3,29 @@
 import Card from "../ui/Card";
 import Badge from "../ui/Badge";
 import InfoRow from "../ui/InfoRow";
-import {getClient} from "@/services/clients";
+import {getClients} from "@/services/clients";
 import {useState} from "react";
 import {useEffect} from "react";
 
 export default function ClientProfilePage() {
-    const [client, setClient] = useState(null);
+    const [clients, setClients] = useState([]);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [currentPage,setCurrentPage] = useState(1);
+    const clientsPerPage=6;
 
     useEffect(() => {
         const ctrl = new AbortController();
         (async () => {
             try {
-                const data = await getClient(6);
-                setClient(data);
+                const data = await getClients();
+                setClients(data);
                 console.log("Fetched client:", data);
             } catch (e) {
                 if (e.name !== "CanceledError") setError(e);
+                console.error("Error:", e);
+            } finally {
+                setLoading(false);
             }
         })();
         return () => ctrl.abort();
@@ -27,17 +33,79 @@ export default function ClientProfilePage() {
 
 
     useEffect(() => {
-        if (client) console.log("State updated:", client);
-    }, [client]);
+        if (clients) console.log("State updated:", clients);
+    }, [clients]);
 
     if (error) return <div className="p-6 text-red-600">Falha ao carregar.</div>;
-    if (!client) return <div className="p-6">A carregar…</div>;
+    if (!clients) return <div className="p-6">A carregar…</div>;
+    if (clients.length === 0) return <div className="p-6">Nenhum Cliente.</div>;
+
+    const indexOfLastClient = currentPage * clientsPerPage;
+    const indexOfFirstClient = indexOfLastClient - clientsPerPage;
+    const currentClients = clients.slice(indexOfFirstClient, indexOfLastClient);
+    const totalPages = Math.ceil(clients.length / clientsPerPage);
+
 
     return (
         <div className="grid grid-cols-12 gap-6">
-            <div className="col-span-8">
-                <ClientHeaderCard client={client} />
+            {currentClients.map((client) => (
+                <div key={client.id} className="col-span-8">
+                    <ClientHeaderCard client={client} />
+                </div>
+            ))}
+            <div className="col-span-12">
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
             </div>
+        </div>
+    );
+
+
+}
+
+
+function Pagination({ currentPage, totalPages, onPageChange }) {
+    if (totalPages <= 1) return null;
+
+    const pages = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+    }
+
+    return (
+        <div className="flex items-center justify-center gap-2 mt-4">
+            <button
+                onClick={() => onPageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-3 py-2 rounded-md border disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+            >
+                Anterior
+            </button>
+
+            {pages.map((page) => (
+                <button
+                    key={page}
+                    onClick={() => onPageChange(page)}
+                    className={`px-3 py-2 rounded-md border ${
+                        currentPage === page
+                            ? 'bg-yellow-500 text-white border-yellow-500'
+                            : 'hover:bg-gray-50'
+                    }`}
+                >
+                    {page}
+                </button>
+            ))}
+
+            <button
+                onClick={() => onPageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="px-3 py-2 rounded-md border disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+            >
+                Próximo
+            </button>
         </div>
     );
 }
