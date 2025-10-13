@@ -30,8 +30,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Profile::class);
     }
 
-    public function pacient(){
-        return $this->belongsTo(Pacient::class);
+    public function patient(){
+        return $this->hasOne(Patient::class);
     }
 
     /**

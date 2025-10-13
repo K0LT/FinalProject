@@ -99,6 +99,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UserSeeder::class);
         $this->call(PatientSeeder::class);
+        $this->call(AppointmentSeeder::class);
 
 
     }

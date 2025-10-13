@@ -13,7 +13,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Appointment::all());
     }
 
     /**
@@ -37,7 +37,7 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        //
+        return response()->json($appointment);
     }
 
     /**

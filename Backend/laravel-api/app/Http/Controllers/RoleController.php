@@ -14,6 +14,8 @@ class RoleController extends Controller
     public function index()
     {
         //
+        $roles = Role::all();
+        return response()->json($roles);
     }
 
     /**
@@ -37,7 +39,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
+        return response()->json($role);
     }
 
     /**

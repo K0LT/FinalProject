@@ -13,7 +13,8 @@ class PatientController extends Controller
      */
     public function index()
     {
-        //
+        $patients = Patient::all();
+        return response()->json($patients);
     }
 
     /**
@@ -37,7 +38,7 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        //
+        return response()->json($patient);
     }
 
     /**

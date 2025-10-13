@@ -13,7 +13,8 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+        $profiles = Profile::all();
+        return response()->json($profiles);
     }
 
     /**
@@ -37,7 +38,7 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
-        //
+        return response()->json($profile);
     }
 
     /**
