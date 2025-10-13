@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         return response()->json([
             'success' => true,
-            'user' => $user->load('role', 'profiles', 'patient') // traz relações
+            'user' => $user->load('role', 'profiles', 'patient')
         ], 200);
     }
 }

@@ -37,7 +37,10 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        return response()->json($appointment);
+        return response()->json([
+            'success' => true,
+            'appointment' => $appointment->load('patient', 'user')
+        ], 200);
     }
 
     /**
