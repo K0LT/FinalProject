@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('diagnostics', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')->constrained();
             $table->foreignId('profile_id')->constrained();
-            $table->date('appointment_date');
-            $table->integer('duration');
-            $table->string('type');
-            $table->text('notes');
-            $table->string('status');
-
+            $table->date('diagnostic_date');
+            $table->string('western_diagnosis')->nullable();
+            $table->string('tcm_diagnosis')->nullable();
+            $table->string('severity')->nullable();
+            $table->string('symptoms')->nullable();
+            $table->string('pulse_quality')->nullable();
+            $table->text('tongue_description')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('diagnostics');
     }
 };

@@ -100,6 +100,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(PatientSeeder::class);
         $this->call(AppointmentSeeder::class);
+        $this->call(DiagnosticSeeder::class);
+        $this->call(TreatmentSeeder::class);
+        $this->call(TreatmentGoalSeeder::class);
+        $this->call(ExerciseSeeder::class);
 
 
     }
