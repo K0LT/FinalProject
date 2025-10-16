@@ -4,22 +4,29 @@ import Footer from "./Footer";
 
 export default function AppLayout({ children }) {
     return (
-        <div className="min-h-screen grid grid-cols-[18rem_minmax(0,1fr)] grid-rows-[auto_1fr_auto]">
-            <aside className="row-span-3 border-r bg-white/90">
+        <div className="min-h-screen flex">
+            {/* Sidebar */}
+            <aside className="w-60 bg-white border-r shadow-sm flex-shrink-0">
                 <Sidebar />
             </aside>
 
-            <header className="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
-                <Topbar />
-            </header>
+            {/* Main Area */}
+            <div className="flex-1 flex flex-col min-w-0">
+                {/* Topbar */}
+                <header className="h-14 border-b bg-white sticky top-0 z-40">
+                    <Topbar />
+                </header>
 
-            <main className="overflow-y-auto">
-                <div className="p-6">{children}</div>
-            </main>
+                {/* Content */}
+                <main className="flex-1 overflow-y-auto bg-gray-50">
+                    <div className="p-6">{children}</div>
+                </main>
 
-            <footer className="col-span-2 border-t bg-white">
-                <Footer />
-            </footer>
+                {/* Footer */}
+                <footer className="h-12 border-t bg-white">
+                    <Footer />
+                </footer>
+            </div>
         </div>
     );
 }

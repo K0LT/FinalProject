@@ -1,155 +1,209 @@
 'use client'
 
 import { useState } from "react";
-import Callendar from '@components/ui/callendar/callendar';
-import styles from './appointments.module.css'; // Vamos criar este ficheiro
 
-export default function AppointmentsPage() {
-    const [appointments, setAppointments] = useState([
-        // Exemplo de estrutura de dados
-        // { id: 1, date: '2024-01-15', title: 'Reunião', time: '10:00' }
-    ]);
+/**
+ * Reusable Calendar Component
+ *
+ * @param {Date} value - Currently selected date
+ * @param {Function} onChange - Callback when date is selected
+ * @param {Date[]} markedDates - Optional: Array of dates to mark (e.g., appointments)
+ * @param {Date} minDate - Optional: Minimum selectable date
+ * @param {Date} maxDate - Optional: Maximum selectable date
+ */
+export default function Calendar({
+                                     value,
+                                     onChange,
+                                     markedDates = [],
+                                     minDate = null,
+                                     maxDate = null
+                                 }) {
+    const [currentMonth, setCurrentMonth] = useState(value || new Date());
 
-    const [selectedDate, setSelectedDate] = useState(null);
+    // ============================================
+    // DATE HELPER FUNCTIONS
+    // ============================================
 
-    const addAppointment = (appointment) => {
-        setAppointments([...appointments, {
-            ...appointment,
-            id: Date.now()
-        }]);
+    const getDaysInMonth = (date) => {
+        return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
     };
 
-
-
-    const removeAppointment = (id) => {
-        setAppointments(appointments.filter(apt => apt.id !== id));
+    const getFirstDayOfMonth = (date) => {
+        return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
     };
 
-
-    const getAppointmentsForDate = (date) => {
-        return appointments.filter(apt => apt.date === date);
+    const getMonthYear = (date) => {
+        return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
     };
 
-    return (
-        <main className={styles.container}>
-            <div className={styles.header}>
-                <h1>Meu Calendário de Compromissos</h1>
-            </div>
+    const isSameDay = (date1, date2) => {
+        if (!date1 || !date2) return false;
+        return (
+            date1.getDate() === date2.getDate() &&
+            date1.getMonth() === date2.getMonth() &&
+            date1.getFullYear() === date2.getFullYear()
+        );
+    };
 
-            <div className={styles.content}>
-                <div className={styles.calendarSection}>
-                    <Callendar
-                        appointments={appointments}
-                        onDateSelect={setSelectedDate}
-                        selectedDate={selectedDate}
-                    />
-                </div>
+    const isToday = (date) => {
+        return isSameDay(date, new Date());
+    };
 
-                <div className={styles.appointmentsSection}>
-                    <h2>
-                        {selectedDate
-                            ? `Compromissos para ${selectedDate}`
-                            : 'Selecione uma data'}
-                    </h2>
+    const isMarked = (date) => {
+        return markedDates.some(markedDate => isSameDay(date, markedDate));
+    };
 
-                    {selectedDate && (
-                        <>
-                            <AppointmentForm
-                                onAdd={addAppointment}
-                                selectedDate={selectedDate}
-                            />
+    const isDisabled = (date) => {
+        if (minDate && date < minDate) return true;
+        if (maxDate && date > maxDate) return true;
+        return false;
+    };
 
-                            <AppointmentsList
-                                appointments={getAppointmentsForDate(selectedDate)}
-                                onRemove={removeAppointment}
-                            />
-                        </>
-                    )}
-                </div>
-            </div>
-        </main>
-    );
-}
+    // ============================================
+    // NAVIGATION
+    // ============================================
 
+    const goToPreviousMonth = () => {
+        setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
+    };
 
-function AppointmentForm({ onAdd, selectedDate }) {
-    const [title, setTitle] = useState('');
-    const [time, setTime] = useState('');
-    const [description, setDescription] = useState('');
+    const goToNextMonth = () => {
+        setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
+    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    // ============================================
+    // BUILD CALENDAR DAYS
+    // ============================================
 
-        if (!title || !time) {
-            alert('Por favor, preenche todos os campos obrigatórios');
-            return;
+    const buildCalendarDays = () => {
+        const daysInMonth = getDaysInMonth(currentMonth);
+        const firstDay = getFirstDayOfMonth(currentMonth);
+        const days = [];
+
+        // Previous month days
+        const prevMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1);
+        const daysInPrevMonth = getDaysInMonth(prevMonth);
+
+        for (let i = firstDay - 1; i >= 0; i--) {
+            days.push({
+                day: daysInPrevMonth - i,
+                isCurrentMonth: false,
+                date: new Date(prevMonth.getFullYear(), prevMonth.getMonth(), daysInPrevMonth - i)
+            });
         }
 
-        onAdd({
-            date: selectedDate,
-            title,
-            time,
-            description
-        });
+        // Current month days
+        for (let day = 1; day <= daysInMonth; day++) {
+            days.push({
+                day: day,
+                isCurrentMonth: true,
+                date: new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day)
+            });
+        }
 
-        // Limpar formulário
-        setTitle('');
-        setTime('');
-        setDescription('');
+        // Next month days
+        const totalCells = 42;
+        const remainingDays = totalCells - days.length;
+        const nextMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1);
+
+        for (let day = 1; day <= remainingDays; day++) {
+            days.push({
+                day: day,
+                isCurrentMonth: false,
+                date: new Date(nextMonth.getFullYear(), nextMonth.getMonth(), day)
+            });
+        }
+
+        return days;
     };
 
-    return (
-        <form onSubmit={handleSubmit} className={styles.form}>
-            <input
-                type="text"
-                placeholder="Título do compromisso"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-            />
+    const calendarDays = buildCalendarDays();
+    const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-            <input
-                type="time"
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
-                required
-            />
-
-            <textarea
-                placeholder="Descrição (opcional)"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows="3"
-            />
-
-            <button type="submit">Adicionar Compromisso</button>
-        </form>
-    );
-}
-
-// Componente para listar compromissos
-function AppointmentsList({ appointments, onRemove }) {
-    if (appointments.length === 0) {
-        return <p className={styles.noAppointments}>Nenhum compromisso para este dia</p>;
-    }
+    // ============================================
+    // RENDER
+    // ============================================
 
     return (
-        <div className={styles.appointmentsList}>
-            {appointments.map(apt => (
-                <div key={apt.id} className={styles.appointmentItem}>
-                    <div className={styles.appointmentTime}>{apt.time}</div>
-                    <div className={styles.appointmentDetails}>
-                        <h3>{apt.title}</h3>
-                        {apt.description && <p>{apt.description}</p>}
+        <div className="w-full">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-4">
+                <button
+                    onClick={goToPreviousMonth}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    aria-label="Previous month"
+                >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+
+                <h3 className="font-semibold text-lg">
+                    {getMonthYear(currentMonth)}
+                </h3>
+
+                <button
+                    onClick={goToNextMonth}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    aria-label="Next month"
+                >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+
+            {/* Week days */}
+            <div className="grid grid-cols-7 gap-2 mb-2">
+                {weekDays.map((day) => (
+                    <div key={day} className="text-center text-sm font-medium text-gray-600 py-2">
+                        {day}
                     </div>
-                    <button
-                        onClick={() => onRemove(apt.id)}
-                        className={styles.removeButton}
-                    >
-                        ✕
-                    </button>
-                </div>
-            ))}
+                ))}
+            </div>
+
+            {/* Days grid */}
+            <div className="grid grid-cols-7 gap-2">
+                {calendarDays.map((dayObj, index) => {
+                    const isSelected = value && isSameDay(dayObj.date, value);
+                    const isTodayDate = isToday(dayObj.date);
+                    const isMarkedDate = isMarked(dayObj.date);
+                    const isDisabledDate = isDisabled(dayObj.date);
+
+                    return (
+                        <button
+                            key={index}
+                            onClick={() => !isDisabledDate && onChange(dayObj.date)}
+                            disabled={isDisabledDate}
+                            className={`
+                                relative aspect-square p-2 rounded-lg text-sm font-medium
+                                transition-all
+                                ${!dayObj.isCurrentMonth
+                                ? 'text-gray-300'
+                                : isDisabledDate
+                                    ? 'text-gray-400 cursor-not-allowed opacity-50'
+                                    : 'text-gray-900 hover:bg-gray-100 cursor-pointer'
+                            }
+                                ${isSelected
+                                ? 'bg-yellow-500 text-white hover:bg-yellow-600'
+                                : ''
+                            }
+                                ${isTodayDate && !isSelected
+                                ? 'bg-yellow-100 font-bold'
+                                : ''
+                            }
+                            `}
+                        >
+                            {dayObj.day}
+
+                            {/* Dot indicator for marked dates */}
+                            {isMarkedDate && dayObj.isCurrentMonth && (
+                                <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-yellow-500 rounded-full" />
+                            )}
+                        </button>
+                    );
+                })}
+            </div>
         </div>
     );
 }
