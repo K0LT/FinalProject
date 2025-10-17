@@ -55,8 +55,7 @@ export default function Calendar({
 
     const isDisabled = (date) => {
         if (minDate && date < minDate) return true;
-        if (maxDate && date > maxDate) return true;
-        return false;
+        return maxDate && date > maxDate; // simplified if statement
     };
 
     // ============================================
