@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder
         $this->call(GoalMillestoneSeeder::class);
         $this->call(WeightTrackingSeeder::class);
         $this->call(NutritionalGoalSeeder::class);
-
-
+        $this->call(DailyNutritionSeeder::class);
+        $this->call(AllergieSeeder::class);
 
         /*
          * // <editor-fold desc="Creation of users and profiles manually.">
