@@ -17,8 +17,20 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(RoleSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(ProfileSeeder::class);
+        $this->call(PatientSeeder::class);
+        $this->call(AppointmentSeeder::class);
+        $this->call(DiagnosticSeeder::class);
+        $this->call(TreatmentSeeder::class);
+        $this->call(TreatmentGoalSeeder::class);
+        $this->call(ExerciseSeeder::class);
 
-        // <editor-fold desc="Creation of users and profiles manually.">
+
+
+
+        /*
+         * // <editor-fold desc="Creation of users and profiles manually.">
         $profile1 = Profile::create([
             'specialty' => 'Acupunturista',
             'license_number' => '111111',
@@ -96,15 +108,7 @@ class DatabaseSeeder extends Seeder
 
         // </editor-fold>
 
-
-        $this->call(UserSeeder::class);
-        $this->call(PatientSeeder::class);
-        $this->call(AppointmentSeeder::class);
-        $this->call(DiagnosticSeeder::class);
-        $this->call(TreatmentSeeder::class);
-        $this->call(TreatmentGoalSeeder::class);
-        $this->call(ExerciseSeeder::class);
-
+         */
 
     }
 }

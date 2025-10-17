@@ -14,10 +14,11 @@ class PatientSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::where('id', '>', 4)->get();
+        $users = User::where('id', '>', 3)->get();
         foreach ($users as $user) {
             Patient::factory()->create([
                 'user_id' => $user->id,
+                'full_name' => $user->name,
             ]);
 
         }

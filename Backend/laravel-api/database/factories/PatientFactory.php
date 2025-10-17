@@ -20,8 +20,7 @@ class PatientFactory extends Factory
         return [
             //
 
-            'name' => $this->faker->firstName(),
-            'surname' => $this->faker->lastName(),
+            'full_name' => $this->faker->firstName(),
             'phone_number' => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),
             'birth_date' => $this->faker->date('Y-m-d', '2005-01-01'),

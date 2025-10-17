@@ -22,7 +22,12 @@ class PatientController extends Controller
      */
     public function create()
     {
-        //
+        $patients = Patient::with([
+            'user',
+            'appointments.profile'
+        ])->get();
+
+        return response()->json($patients);
     }
 
     /**
@@ -38,6 +43,12 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
+
+        $patient->load([
+            'user',
+            'appointments.profile'
+        ]);
+
         return response()->json($patient);
     }
 

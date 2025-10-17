@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->unique()->constrained();
-            $table->string('name');
-            $table->string('surname');
+            $table->string('full_name');
             $table->string('phone_number')->nullable();
             $table->string('address')->nullable();
             $table->date('birth_date')->nullable();
