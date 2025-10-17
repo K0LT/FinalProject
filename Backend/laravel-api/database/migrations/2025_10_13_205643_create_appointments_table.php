@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('patient_id')->constrained();
             $table->foreignId('profile_id')->constrained();
             $table->date('appointment_date');
+            $table->time('appointment_time');
             $table->integer('duration');
             $table->string('type');
             $table->text('notes');

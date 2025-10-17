@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->json('permissions')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

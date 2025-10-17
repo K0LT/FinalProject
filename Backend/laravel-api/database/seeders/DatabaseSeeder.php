@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\NutritionalGoal;
 use App\Models\Patient;
 use App\Models\Profile;
 use App\Models\User;
@@ -25,7 +26,10 @@ class DatabaseSeeder extends Seeder
         $this->call(TreatmentSeeder::class);
         $this->call(TreatmentGoalSeeder::class);
         $this->call(ExerciseSeeder::class);
-
+        $this->call(ExercisePatientSeeder::class);
+        $this->call(GoalMillestoneSeeder::class);
+        $this->call(WeightTrackingSeeder::class);
+        $this->call(NutritionalGoalSeeder::class);
 
 
 
