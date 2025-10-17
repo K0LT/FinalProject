@@ -2,26 +2,24 @@
 
 namespace Database\Seeders;
 
+use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Client;
-use App\Models\User;
 
-class ClientSeeder extends Seeder
+class PatientSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-
-        $users = User::all();
-
+        $users = User::where('id', '>', 4)->get();
         foreach ($users as $user) {
-            Client::factory(1)->create([
+            Patient::factory()->create([
                 'user_id' => $user->id,
-            'email' => $user->email,
             ]);
+
         }
     }
 }
