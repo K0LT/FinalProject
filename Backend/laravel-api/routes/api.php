@@ -7,10 +7,24 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/clients', [\App\Http\Controllers\ClientController::class, 'index']);
-Route::get('/clients/{client}', [\App\Http\Controllers\ClientController::class, 'show']);
-//Route::get('/clients', [\App\Http\Controllers\ClientController::class, 'create ']);
-Route::post('/clients', [\App\Http\Controllers\ClientController::class, 'store']);
-Route::put('/clients/{client}', [\App\Http\Controllers\ClientController::class, 'update']);
-Route::delete('/clients/{client}', [\App\Http\Controllers\ClientController::class, 'destroy']);
+//Users
+Route::get('/users', [\App\Http\Controllers\UserController::class, 'index']);
+Route::get('users/{user}', [\App\Http\Controllers\UserController::class, 'show']);
+
+//Profiles
+Route::get('profiles', [\App\Http\Controllers\ProfileController::class, 'index']);
+Route::get('profiles/{profile}', [\App\Http\Controllers\ProfileController::class, 'show']);
+
+//Roles
+Route::get('roles', [\App\Http\Controllers\RoleController::class, 'index']);
+Route::get('roles/{role}', [\App\Http\Controllers\RoleController::class, 'show']);
+
+//Patients
+Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index']);
+Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'show']);
+
+//Appointments
+Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index']);
+Route::get('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show']);
+
 

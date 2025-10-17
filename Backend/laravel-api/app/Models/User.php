@@ -23,6 +23,17 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
+    public function profiles(){
+        return $this->belongsToMany(Profile::class);
+    }
+
+    public function patient(){
+        return $this->hasOne(Patient::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
