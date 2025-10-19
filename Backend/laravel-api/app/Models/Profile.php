@@ -27,8 +27,8 @@ class Profile extends Model
         return $this->hasMany(Treatment::class);
     }
 
-    public function patientExercises(){
-        return $this->hasMany(PatientExercise::class);
+    public function exercisePatients(){
+        return $this->hasMany(ExercisePatient::class);
     }
 
     public function progressNotes(){
