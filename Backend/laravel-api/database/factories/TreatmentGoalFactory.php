@@ -6,7 +6,7 @@ use App\Models\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Treatment_Goal>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TreatmentGoal>
  */
 class TreatmentGoalFactory extends Factory
 {
