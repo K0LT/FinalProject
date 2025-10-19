@@ -15,6 +15,6 @@ class ProgressNoteSeeder extends Seeder
     public function run(): void
     {
         //
-        ProgressNote::factory(30)->create();
+        ProgressNote::factory(100)->create();
     }
 }

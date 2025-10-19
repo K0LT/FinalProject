@@ -10,8 +10,29 @@ class Profile extends Model
     /** @use HasFactory<\Database\Factories\ProfileFactory> */
     use HasFactory;
 
-    public function user(){
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
+    public function appointments(){
+        return $this->hasMany(Appointment::class);
+    }
+
+    public function diagnostics(){
+        return $this->hasMany(Diagnostic::class);
+    }
+
+    public function treatments(){
+        return $this->hasMany(Treatment::class);
+    }
+
+    public function patientExercises(){
+        return $this->hasMany(PatientExercise::class);
+    }
+
+    public function progressNotes(){
+        return $this->hasMany(ProgressNote::class);
     }
 
 }

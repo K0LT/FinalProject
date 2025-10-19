@@ -13,6 +13,6 @@ class AllergieSeeder extends Seeder
      */
     public function run(): void
     {
-        Allergie::factory(200)->create();
+        Allergie::factory(100)->create();
     }
 }

@@ -9,4 +9,8 @@ class Condition extends Model
 {
     /** @use HasFactory<\Database\Factories\ConditionFactory> */
     use HasFactory;
+
+    public function patient(){
+        return $this->belongsTo(Patient::class);
+    }
 }

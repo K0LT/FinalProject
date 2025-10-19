@@ -9,4 +9,8 @@ class ExercisePatient extends Model
 {
     /** @use HasFactory<\Database\Factories\ExercisePatientFactory> */
     use HasFactory;
+
+    public function profile(){
+        return $this->belongsTo(Profile::class);
+    }
 }

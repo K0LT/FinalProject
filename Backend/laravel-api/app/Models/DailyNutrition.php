@@ -9,4 +9,8 @@ class DailyNutrition extends Model
 {
     /** @use HasFactory<\Database\Factories\DailyNutritionFactory> */
     use HasFactory;
+
+    public function patient(){
+        return $this->belongsTo(Patient::class);
+    }
 }

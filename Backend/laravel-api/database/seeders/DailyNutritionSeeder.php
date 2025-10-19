@@ -14,6 +14,6 @@ class DailyNutritionSeeder extends Seeder
     public function run(): void
     {
         //
-        DailyNutrition::factory(30)->create();
+        DailyNutrition::factory(100)->create();
     }
 }

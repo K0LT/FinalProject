@@ -16,4 +16,8 @@ class Appointment extends Model
     public function profile(){
         return $this->belongsTo(Profile::class);
     }
+
+    public function progressNotes(){
+        return $this->hasMany(ProgressNote::class);
+    }
 }

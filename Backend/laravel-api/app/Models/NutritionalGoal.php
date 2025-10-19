@@ -9,4 +9,8 @@ class NutritionalGoal extends Model
 {
     /** @use HasFactory<\Database\Factories\NutritionalGoalFactory> */
     use HasFactory;
+
+    public function patient(){
+        return $this->belongsTo(Patient::class);
+    }
 }

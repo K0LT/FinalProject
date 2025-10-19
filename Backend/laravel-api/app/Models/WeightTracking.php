@@ -9,4 +9,8 @@ class WeightTracking extends Model
 {
     /** @use HasFactory<\Database\Factories\WeightTrackingFactory> */
     use HasFactory;
+
+    public function patient(){
+        return $this->belongsTo(Patient::class);
+    }
 }
