@@ -13,16 +13,20 @@ return new class extends Migration
     {
         Schema::create('treatments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('diagnostic_id')->constrained();
-            $table->foreignId('patient_id')->constrained();
-            $table->foreignId('profile_id')->constrained();
-            $table->date('session_date');
+
+            $table->foreignId('diagnostic_id')
+                ->constrained();
+            $table->foreignId('patient_id')
+                ->constrained()->cascadeOnDelete();
+            $table->foreignId('profile_id')
+                ->nullable()->constrained();
+
+            $table->dateTime('session_date_time');
             $table->string('treatment_methods')->nullable();
             $table->string('acupoints_used')->nullable();
-            $table->integer('duration');
+            $table->integer('duration')->nullable();
             $table->text('notes')->nullable();
             $table->date('next_session')->nullable();
-
             $table->timestamps();
         });
     }

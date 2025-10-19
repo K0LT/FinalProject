@@ -38,7 +38,7 @@ class AllergieFactory extends Factory
         ];
 
         return [
-            'patient_id' => Patient::inRandomOrder()->first()?->id ?? Patient::factory(),
+            'patient_id' => Patient::inRandomOrder()->first()?->id,
             'allergen' => $this->faker->randomElement($allergens),
             'reaction_type' => $this->faker->randomElement($reactionTypes),
             'severity' => $this->faker->randomElement($severities),
