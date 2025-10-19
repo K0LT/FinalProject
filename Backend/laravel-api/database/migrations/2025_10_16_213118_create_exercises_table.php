@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('category');
-            $table->string('difficulty_level');
+            $table->enum('difficulty_level', ['Fácil', 'Moderado', 'Difícil']);
             $table->text('instructions')->nullable();
             $table->text('benefits')->nullable();
             $table->text('precautions')->nullable();

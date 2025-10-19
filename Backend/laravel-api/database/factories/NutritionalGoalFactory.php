@@ -17,7 +17,7 @@ class NutritionalGoalFactory extends Factory
     public function definition(): array
     {
         return [
-            'target_weight' => (rand(0, 2) === 0) ? null : $this->faker->numberBetween(50, 100),
+            'target_weight' => (rand(0, 2) === 0) ? null : $this->faker->randomFloat(1, 30,200),
             'target_body_fat' => (rand(0, 10) === 0) ? null : $this->faker->randomFloat(2, 15, 35),
             'daily_calories_goal' => (rand(0, 3) === 0) ? null : $this->faker->numberBetween(1500, 3000),
             'daily_protein_goal' => (rand(0, 3) === 0) ? null : $this->faker->numberBetween(50, 200),

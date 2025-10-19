@@ -56,7 +56,7 @@ class TreatmentGoalFactory extends Factory
 
         $priorities = ['Mínima', 'Média', 'Alta'];
 
-        $statuses = ['Em progresso', 'Concluído', 'Pendente'];
+        $statuses = ['Em progresso', 'Concluído', 'Cancelado'];
 
         $progressPercentages = [0,10,20,30,40,50,60,70,80,90,100];
 

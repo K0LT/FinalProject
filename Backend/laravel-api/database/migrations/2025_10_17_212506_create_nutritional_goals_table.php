@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('nutritional_goals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained();
-            $table->integer('target_weight')->nullable();
-            $table->float('target_body_fat')->nullable();
+
+            $table->foreignId('patient_id')
+                ->constrained()->cascadeOnDelete();
+
+            $table->decimal('target_weight')->nullable();
+            $table->decimal('target_body_fat')->nullable();
             $table->integer('daily_calories_goal')->nullable();
             $table->integer('daily_protein_goal')->nullable();
             $table->integer('daily_carbs_goal')->nullable();
