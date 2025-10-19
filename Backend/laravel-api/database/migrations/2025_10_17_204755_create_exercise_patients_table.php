@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('patient_id')
-                ->constrained();
+                ->constrained()->cascadeOnDelete();
             $table->foreignId('exercise_id')
                 ->constrained();
             $table->foreignId('profile_id')
-                ->constrained()->cascadeOnDelete();
+                ->nullable()->constrained();
 
             $table->date('prescribed_date')->useCurrent();
             $table->string('frequency')->nullable();

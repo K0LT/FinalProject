@@ -13,9 +13,14 @@ return new class extends Migration
     {
         Schema::create('progress_notes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained();
-            $table->foreignId('appointment_id')->constrained();
-            $table->foreignId('profile_id')->constrained();
+
+            $table->foreignId('patient_id')
+                ->constrained()->cascadeOnDelete();
+            $table->foreignId('appointment_id')
+                ->constrained();
+            $table->foreignId('profile_id')
+                ->nullable()->constrained();
+
             $table->date('note_date');
             $table->text('subjective')->nullable();
             $table->text('objective')->nullable();
