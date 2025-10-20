@@ -24,10 +24,6 @@ class User extends Authenticatable
         'role_id',
     ];
 
-    protected function password(): Attribute{
-        return Attribute::make( set: fn ($value) => bcrypt($value), );
-    }
-
     public function role(){
         return $this->belongsTo(Role::class);
     }
