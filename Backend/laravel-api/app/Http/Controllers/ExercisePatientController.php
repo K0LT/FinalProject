@@ -13,7 +13,8 @@ class ExercisePatientController extends Controller
      */
     public function index()
     {
-        //
+        $exercisesPatients = ExercisePatient::all();
+        return response()->json($exercisesPatients);
     }
 
     /**
@@ -37,7 +38,7 @@ class ExercisePatientController extends Controller
      */
     public function show(ExercisePatient $exercisePatient)
     {
-        //
+        return response()->json($exercisePatient);
     }
 
     /**

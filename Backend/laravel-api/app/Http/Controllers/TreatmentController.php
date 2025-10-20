@@ -13,7 +13,8 @@ class TreatmentController extends Controller
      */
     public function index()
     {
-        //
+        $treatments = Treatment::all();
+        return response()->json($treatments);
     }
 
     /**
@@ -37,7 +38,7 @@ class TreatmentController extends Controller
      */
     public function show(Treatment $treatment)
     {
-        //
+        return response()->json($treatment);
     }
 
     /**

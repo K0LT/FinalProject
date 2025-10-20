@@ -13,7 +13,8 @@ class GoalMillestoneController extends Controller
      */
     public function index()
     {
-        //
+        $goalMillestone = GoalMillestone::all();
+        return response()->json($goalMillestone);
     }
 
     /**
@@ -37,7 +38,7 @@ class GoalMillestoneController extends Controller
      */
     public function show(GoalMillestone $goalMillestone)
     {
-        //
+        return response()->json($goalMillestone);
     }
 
     /**

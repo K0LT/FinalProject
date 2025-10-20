@@ -19,6 +19,7 @@ return new class extends Migration
 
             $table->string('phone_number')->nullable();
             $table->string('address')->nullable();
+            $table->string('gender')->nullable();
             $table->date('birth_date')->nullable();
             $table->string('emergency_contact_name')->nullable();
             $table->string('emergency_contact_phone')->nullable();

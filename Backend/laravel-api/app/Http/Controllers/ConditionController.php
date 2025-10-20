@@ -13,7 +13,8 @@ class ConditionController extends Controller
      */
     public function index()
     {
-        //
+        $conditions = Condition::all();
+        return response()->json($conditions);
     }
 
     /**
@@ -37,7 +38,7 @@ class ConditionController extends Controller
      */
     public function show(Condition $condition)
     {
-        //
+        return response()->json($condition);
     }
 
     /**

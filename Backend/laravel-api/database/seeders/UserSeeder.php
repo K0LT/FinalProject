@@ -33,6 +33,7 @@ class UserSeeder extends Seeder
             'name' => 'User paciente',
             'email' => 'user@example.com',
             'password' => Hash::make('atec123'),
+            'role_id' => 3,
         ]);
 
         User::factory(30)->create();

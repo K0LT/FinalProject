@@ -22,7 +22,9 @@ class User extends Authenticatable
         'email',
         'email_verified_at',
         'role_id',
+        'password',
     ];
+
 
     public function role(){
         return $this->belongsTo(Role::class);

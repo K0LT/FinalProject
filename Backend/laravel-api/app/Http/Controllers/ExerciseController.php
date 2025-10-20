@@ -13,7 +13,8 @@ class ExerciseController extends Controller
      */
     public function index()
     {
-        //
+        $exercises = Exercise::all();
+        return response()->json($exercises);
     }
 
     /**
@@ -37,7 +38,7 @@ class ExerciseController extends Controller
      */
     public function show(Exercise $exercise)
     {
-        //
+        return response()->json($exercise);
     }
 
     /**

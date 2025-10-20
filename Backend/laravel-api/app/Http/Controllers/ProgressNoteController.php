@@ -38,7 +38,7 @@ class ProgressNoteController extends Controller
      */
     public function show(ProgressNote $progressNote)
     {
-        //
+        return response()->json($progressNote);
     }
 
     /**

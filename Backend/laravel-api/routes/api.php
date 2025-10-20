@@ -9,6 +9,7 @@ Route::get('/user', function (Request $request) {
 
 //Users
 Route::get('/users', [\App\Http\Controllers\UserController::class, 'index']);
+Route::post('/users', [\App\Http\Controllers\UserController::class, 'store']);
 Route::get('users/{user}', [\App\Http\Controllers\UserController::class, 'show']);
 
 //Profiles
@@ -25,6 +26,7 @@ Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class
 
 //Appointments
 Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index']);
+Route::post('appointments', [\App\Http\Controllers\AppointmentController::class, 'store']);
 Route::get('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show']);
 
 
