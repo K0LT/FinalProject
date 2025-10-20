@@ -10,6 +10,17 @@ class Exercise extends Model
     /** @use HasFactory<\Database\Factories\ExerciseFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'category',
+        'difficulty_level',
+        'instructions',
+        'benefits',
+        'precautions',
+        'video_url',
+        'image_url',
+    ];
     public function patients()
     {
         return $this->belongsToMany(Patient::class, 'exercice_patients')

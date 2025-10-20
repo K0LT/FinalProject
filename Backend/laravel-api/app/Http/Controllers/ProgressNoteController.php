@@ -13,7 +13,8 @@ class ProgressNoteController extends Controller
      */
     public function index()
     {
-        //
+        $progressNotes = ProgressNote::all();
+        return response()->json($progressNotes);
     }
 
     /**

@@ -10,6 +10,19 @@ class Treatment extends Model
     /** @use HasFactory<\Database\Factories\TreatmentFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'diagnostic_id',
+        'patient_id',
+        'profile_id',
+        'session_date_time',
+        'treatment_methods',
+        'acupoints_used',
+        'duration',
+        'notes',
+        'next_session',
+    ];
+
+
     public function diagnostic(){
         return $this->belongsTo(Diagnostic::class);
     }
