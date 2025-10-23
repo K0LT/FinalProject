@@ -22,7 +22,14 @@ class StoreProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required|integer|exists:users,id',
+            'speciality' => 'required|string|max:255',
+            'license_number' => 'required|string|max:255',
+            'phone' => 'string|max:255|nullable',
+            'address' => 'string|max:255|nullable',
+            'bio' => 'nullable|string',
         ];
     }
 }
+
+

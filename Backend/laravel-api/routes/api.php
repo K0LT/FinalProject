@@ -15,7 +15,7 @@ Route::get('users/{user}', [\App\Http\Controllers\UserController::class, 'show']
 //Profiles
 Route::get('profiles', [\App\Http\Controllers\ProfileController::class, 'index']);
 Route::get('profiles/{profile}', [\App\Http\Controllers\ProfileController::class, 'show']);
-
+Route::post('profiles', [\App\Http\Controllers\ProfileController::class, 'store']);
 //Roles
 Route::get('roles', [\App\Http\Controllers\RoleController::class, 'index']);
 Route::get('roles/{role}', [\App\Http\Controllers\RoleController::class, 'show']);
