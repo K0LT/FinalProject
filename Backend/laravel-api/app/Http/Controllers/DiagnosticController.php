@@ -30,7 +30,9 @@ class DiagnosticController extends Controller
      */
     public function store(StoreDiagnosticRequest $request)
     {
-        //
+        $data = $request->validated();
+        $diagnostic = Diagnostic::create($data);
+        return response()->json($diagnostic);
     }
 
     /**

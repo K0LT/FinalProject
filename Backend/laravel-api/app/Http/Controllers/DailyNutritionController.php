@@ -30,7 +30,9 @@ class DailyNutritionController extends Controller
      */
     public function store(StoreDailyNutritionRequest $request)
     {
-        //
+        $data = $request->validated();
+        $daily_nutrition = DailyNutrition::create($data);
+        return response()->json($daily_nutrition);
     }
 
     /**
