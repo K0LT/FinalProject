@@ -18,11 +18,6 @@ class ProfileFactory extends Factory
     public function definition(): array
     {
         return [
-            'specialty' => $this->faker->randomElement(['Nutricionista','Medico', 'Treinador Pessoal', 'Acunpulturista']),
-            'license_number' => $this->faker->randomNumber(),
-            'phone' => $this->faker->phoneNumber(),
-            'address' => $this->faker->address(),
-            'bio' => $this->faker->text(),
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ExercisePatient;
 use Database\Factories\ExercisePatientFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,6 +15,6 @@ class ExercisePatientSeeder extends Seeder
     public function run(): void
     {
         //
-        ExercisePatientFactory::factory(30)->create();
+        ExercisePatient::factory(100)->create();
     }
 }

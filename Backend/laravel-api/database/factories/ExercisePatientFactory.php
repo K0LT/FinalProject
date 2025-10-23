@@ -29,6 +29,13 @@ class ExercisePatientFactory extends Factory
             'Paciente não completou o exercício hoje.'
         ];
 
+        $frequencies = [
+            'Daily',
+            'Once a week',
+            'Fortnight',
+            'Once a month',
+        ];
+
 
         return [
 
@@ -37,6 +44,7 @@ class ExercisePatientFactory extends Factory
             'profile_id' => Profile::inRandomOrder()->first()->id,
             'prescribed_date' => now()->subDays(rand(0,30)),
             'status' => $this->faker->randomElement($statuses),
+            'frequency' => $this->faker->randomElement($frequencies),
             'compliance_rate' => rand(0,100),
             'last_performed' => now()->subDays(rand(0,30)),
             'notes' => $this->faker->randomElement($notes),

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\NutritionalGoal;
 use App\Models\Patient;
 use App\Models\Profile;
 use App\Models\User;
@@ -17,8 +18,23 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(RoleSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(ProfileSeeder::class);
+        $this->call(PatientSeeder::class);
+        $this->call(AppointmentSeeder::class);
+        $this->call(DiagnosticSeeder::class);
+        $this->call(TreatmentSeeder::class);
+        $this->call(TreatmentGoalSeeder::class);
+        $this->call(ExerciseSeeder::class);
+        $this->call(ExercisePatientSeeder::class);
+        $this->call(GoalMillestoneSeeder::class);
+        $this->call(WeightTrackingSeeder::class);
+        $this->call(NutritionalGoalSeeder::class);
+        $this->call(DailyNutritionSeeder::class);
+        $this->call(AllergieSeeder::class);
 
-        // <editor-fold desc="Creation of users and profiles manually.">
+        /*
+         * // <editor-fold desc="Creation of users and profiles manually.">
         $profile1 = Profile::create([
             'specialty' => 'Acupunturista',
             'license_number' => '111111',
@@ -96,15 +112,7 @@ class DatabaseSeeder extends Seeder
 
         // </editor-fold>
 
-
-        $this->call(UserSeeder::class);
-        $this->call(PatientSeeder::class);
-        $this->call(AppointmentSeeder::class);
-        $this->call(DiagnosticSeeder::class);
-        $this->call(TreatmentSeeder::class);
-        $this->call(TreatmentGoalSeeder::class);
-        $this->call(ExerciseSeeder::class);
-
+         */
 
     }
 }
