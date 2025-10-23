@@ -30,7 +30,7 @@ export default function Sidebar() {
             </div>
 
             {/* Menu Items */}
-            <nav className="flex-1 overflow-y-auto p-3 space-y-1">
+            <nav className="flex-1 overflow-y-auto space-y-1">
                 {menuItems.map((item) => {
                     const isActive = pathname === item.href;
                     return (
@@ -38,11 +38,11 @@ export default function Sidebar() {
                             key={item.href}
                             href={item.href}
                             className={`
-                                flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm
-                                transition-colors
+                                flex gap-3 py-1 rounded-lg text-sm
+                                transition-colors text-gray-800
                                 ${isActive
-                                ? 'bg-yellow-50 text-yellow-900 font-medium'
-                                : 'text-gray-700 hover:bg-gray-50'
+                                ? 'bg-gray-50 font-medium'
+                                : 'hover:bg-gray-50'
                             }
                             `}
                         >

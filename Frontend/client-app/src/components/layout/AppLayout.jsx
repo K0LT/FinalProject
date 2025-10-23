@@ -13,12 +13,12 @@ export default function AppLayout({ children }) {
             {/* Main Area */}
             <div className="flex-1 flex flex-col min-w-0">
                 {/* Topbar */}
-                <header className="h-14 border-b bg-white sticky top-0 z-40">
+                <header className="h-14 bg-white sticky top-0 z-40">
                     <Topbar />
                 </header>
 
                 {/* Content */}
-                <main className="flex-1 overflow-y-auto bg-gray-50">
+                <main className="flex-1 overflow-y-auto">
                     <div className="p-6">{children}</div>
                 </main>
 
