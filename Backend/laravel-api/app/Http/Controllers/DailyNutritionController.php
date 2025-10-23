@@ -13,7 +13,8 @@ class DailyNutritionController extends Controller
      */
     public function index()
     {
-        //
+        $dailyNutritions = DailyNutrition::all();
+        return response()->json($dailyNutritions);
     }
 
     /**
@@ -37,7 +38,7 @@ class DailyNutritionController extends Controller
      */
     public function show(DailyNutrition $dailyNutrition)
     {
-        //
+        return response ()->json($dailyNutrition);
     }
 
     /**

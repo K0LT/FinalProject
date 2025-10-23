@@ -32,7 +32,8 @@ class DatabaseSeeder extends Seeder
         $this->call(NutritionalGoalSeeder::class);
         $this->call(DailyNutritionSeeder::class);
         $this->call(AllergieSeeder::class);
-
+        $this->call(ProgressNoteSeeder::class);
+        $this->call(ConditionSeeder::class);
         /*
          * // <editor-fold desc="Creation of users and profiles manually.">
         $profile1 = Profile::create([

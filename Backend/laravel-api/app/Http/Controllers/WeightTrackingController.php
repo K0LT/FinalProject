@@ -13,7 +13,8 @@ class WeightTrackingController extends Controller
      */
     public function index()
     {
-        //
+        $weightTrackings = WeightTracking::all();
+        return response()->json($weightTrackings);
     }
 
     /**
@@ -37,7 +38,7 @@ class WeightTrackingController extends Controller
      */
     public function show(WeightTracking $weightTracking)
     {
-        //
+        return response()->json($weightTracking);
     }
 
     /**

@@ -9,4 +9,24 @@ class TreatmentGoal extends Model
 {
     /** @use HasFactory<\Database\Factories\TreatmentGoalFactory> */
     use HasFactory;
+
+
+    protected $fillable = [
+        'patient_id',
+        'title',
+        'description',
+        'priority',
+        'status',
+        'progress_percentage',
+        'target_date',
+        'treatment_methods',
+    ];
+
+    public function goalMilestones(){
+        return $this->hasMany(GoalMillestone::class);
+    }
+
+    public function patient(){
+        return $this->belongsTo(Patient::class);
+    }
 }

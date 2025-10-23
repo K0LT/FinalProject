@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AppointmentResource;
 use App\Models\Appointment;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
@@ -13,7 +14,8 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        return response()->json(Appointment::all());
+        $appointments = Appointment::all();
+        return response()->json($appointments);
     }
 
     /**
@@ -21,7 +23,7 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -29,7 +31,11 @@ class AppointmentController extends Controller
      */
     public function store(StoreAppointmentRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['status'] = 'Confirmado';
+        $appointment = Appointment::create($data);
+
+        return response()->json($appointment);
     }
 
     /**
@@ -37,10 +43,8 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        return response()->json([
-            'success' => true,
-            'appointment' => $appointment->load('patient', 'user')
-        ], 200);
+        $appointment->load(['patient.user', 'profile.user']);
+        return new AppointmentResource($appointment);
     }
 
     /**

@@ -13,7 +13,8 @@ class DiagnosticController extends Controller
      */
     public function index()
     {
-        //
+        $diagnostics = Diagnostic::all();
+        return response()->json($diagnostics);
     }
 
     /**
@@ -37,7 +38,7 @@ class DiagnosticController extends Controller
      */
     public function show(Diagnostic $diagnostic)
     {
-        //
+        return response()->json($diagnostic);
     }
 
     /**

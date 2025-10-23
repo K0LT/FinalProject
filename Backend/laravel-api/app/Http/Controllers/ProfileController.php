@@ -30,7 +30,10 @@ class ProfileController extends Controller
      */
     public function store(StoreProfileRequest $request)
     {
-        //
+        $data = $request->validated();
+        $profile = Profile::create($data);
+
+        return response()->json($profile);
     }
 
     /**

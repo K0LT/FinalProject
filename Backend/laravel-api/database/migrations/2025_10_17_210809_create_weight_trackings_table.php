@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('weight_trackings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained();
+
+            $table->foreignId('patient_id')
+            ->constrained()->cascadeOnDelete();
+
             $table->integer('weight');
-            $table->float('body_fat_percentage')->nullable();
+            $table->decimal('body_fat_percentage')->nullable();
             $table->date('measurement_date');
             $table->text('notes')->nullable();
             $table->timestamps();

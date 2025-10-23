@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('goal_millestones', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('treatment_goal_id')->constrained();
+
+            $table->foreignId('treatment_goal_id')
+                ->constrained()->cascadeOnDelete();
+
             $table->text('description')->nullable();
             $table->date('target_date');
             $table->boolean('completed')->default(false);

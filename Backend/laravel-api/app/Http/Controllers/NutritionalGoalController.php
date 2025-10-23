@@ -13,7 +13,8 @@ class NutritionalGoalController extends Controller
      */
     public function index()
     {
-        //
+        $nutritionalGoals = NutritionalGoal::all();
+        return response()->json($nutritionalGoals);
     }
 
     /**
@@ -37,7 +38,7 @@ class NutritionalGoalController extends Controller
      */
     public function show(NutritionalGoal $nutritionalGoal)
     {
-        //
+        return response()->json($nutritionalGoal);
     }
 
     /**

@@ -18,7 +18,6 @@ class PatientSeeder extends Seeder
         foreach ($users as $user) {
             Patient::factory()->create([
                 'user_id' => $user->id,
-                'full_name' => $user->name,
             ]);
 
         }

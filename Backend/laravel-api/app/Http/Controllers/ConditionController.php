@@ -13,7 +13,8 @@ class ConditionController extends Controller
      */
     public function index()
     {
-        //
+        $conditions = Condition::all();
+        return response()->json($conditions);
     }
 
     /**
@@ -29,7 +30,11 @@ class ConditionController extends Controller
      */
     public function store(StoreConditionRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $condition = Condition::create($data);
+
+        return response()->json($condition);
     }
 
     /**
@@ -37,7 +42,7 @@ class ConditionController extends Controller
      */
     public function show(Condition $condition)
     {
-        //
+        return response()->json($condition);
     }
 
     /**

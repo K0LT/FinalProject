@@ -14,6 +14,6 @@ class TreatmentGoalSeeder extends Seeder
     public function run(): void
     {
         //
-        TreatmentGoal::factory(30)->create();
+        TreatmentGoal::factory(100)->create();
     }
 }

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Treatment_Goal;
+use App\Models\TreatmentGoal;
 use App\Http\Requests\StoreTreatment_GoalRequest;
 use App\Http\Requests\UpdateTreatment_GoalRequest;
+
 
 class TreatmentGoalController extends Controller
 {
@@ -13,7 +14,8 @@ class TreatmentGoalController extends Controller
      */
     public function index()
     {
-        //
+        $treatmentgoals = TreatmentGoal::all();
+        return response()->json($treatmentgoals);
     }
 
     /**
@@ -29,21 +31,21 @@ class TreatmentGoalController extends Controller
      */
     public function store(StoreTreatment_GoalRequest $request)
     {
-        //
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Treatment_Goal $treatment_Goal)
+    public function show(TreatmentGoal $treatment_goal)
     {
-        //
+        return response()->json($treatment_goal);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Treatment_Goal $treatment_Goal)
+    public function edit(TreatmentGoal $treatment_Goal)
     {
         //
     }
@@ -51,7 +53,7 @@ class TreatmentGoalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTreatment_GoalRequest $request, Treatment_Goal $treatment_Goal)
+    public function update(UpdateTreatment_GoalRequest $request, TreatmentGoal $treatment_Goal)
     {
         //
     }
@@ -59,7 +61,7 @@ class TreatmentGoalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Treatment_Goal $treatment_Goal)
+    public function destroy(TreatmentGoal $treatment_Goal)
     {
         //
     }

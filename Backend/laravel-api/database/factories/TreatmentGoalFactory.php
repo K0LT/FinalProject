@@ -6,7 +6,7 @@ use App\Models\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Treatment_Goal>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TreatmentGoal>
  */
 class TreatmentGoalFactory extends Factory
 {
@@ -56,7 +56,7 @@ class TreatmentGoalFactory extends Factory
 
         $priorities = ['Mínima', 'Média', 'Alta'];
 
-        $statuses = ['Em progresso', 'Concluído', 'Pendente'];
+        $statuses = ['Em progresso', 'Concluído', 'Cancelado'];
 
         $progressPercentages = [0,10,20,30,40,50,60,70,80,90,100];
 

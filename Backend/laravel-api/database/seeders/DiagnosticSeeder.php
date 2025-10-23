@@ -13,7 +13,7 @@ class DiagnosticSeeder extends Seeder
      */
     public function run(): void
     {
-        Diagnostic::factory(30)->create();
+        Diagnostic::factory(100)->create();
 
 
     }

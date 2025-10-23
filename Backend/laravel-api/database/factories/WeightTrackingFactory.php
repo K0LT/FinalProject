@@ -25,7 +25,7 @@ class WeightTrackingFactory extends Factory
         ];
 
         return [
-            'weight' => $this->faker->numberBetween(50, 100), // peso em kg
+            'weight' => $this->faker->randomFloat(1, 30, 400),
             'body_fat_percentage' => (rand(0, 7) === 0) ? null :$this->faker->randomFloat(2,6,40),
             'measurement_date' => $this->faker->dateTimeBetween('-3 months', 'now')->format('Y-m-d'),
             'notes' => (rand(0, 7) === 0) ? null :$this->faker->optional()->randomElement($notes),

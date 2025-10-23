@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('daily_nutrition', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained();
+
+            $table->foreignId('patient_id')
+                ->constrained()->cascadeOnDelete();
+
             $table->date('date');
             $table->integer('calories_consumed')->nullable();
             $table->integer('protein_consumed')->nullable();

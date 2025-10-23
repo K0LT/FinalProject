@@ -13,9 +13,14 @@ return new class extends Migration
     {
         Schema::create('exercise_patients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained();
-            $table->foreignId('exercise_id')->constrained();
-            $table->foreignId('profile_id')->constrained();
+
+            $table->foreignId('patient_id')
+                ->constrained()->cascadeOnDelete();
+            $table->foreignId('exercise_id')
+                ->constrained();
+            $table->foreignId('profile_id')
+                ->nullable()->constrained();
+
             $table->date('prescribed_date')->useCurrent();
             $table->string('frequency')->nullable();
             $table->string('status');

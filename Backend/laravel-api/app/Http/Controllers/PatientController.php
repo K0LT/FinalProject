@@ -22,12 +22,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        $patients = Patient::with([
-            'user',
-            'appointments.profile'
-        ])->get();
 
-        return response()->json($patients);
     }
 
     /**
@@ -35,7 +30,7 @@ class PatientController extends Controller
      */
     public function store(StorePatientRequest $request)
     {
-        //
+
     }
 
     /**
@@ -43,15 +38,35 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-
         $patient->load([
             'user',
-            'appointments.profile'
+            'diagnostics',
+            'treatments',
+            'treatmentGoals',
+            'exercises',
+            'weightTrackings',
+            'nutritionGoals',
+            'dailyNutritions',
+            'allergies',
+            'conditions',
+            'progressNotes',
         ]);
-
         return response()->json($patient);
     }
 
+/*
+ * 'appointments',
+            'diagnostics',
+            'treatments',
+            'treatment_goals',
+            'exercises',
+            'weightTrackings',
+            'nutritionGoals',
+            'dailyNutrition',
+            'allergies',
+            'conditions',
+            'progressNotes',
+ */
     /**
      * Show the form for editing the specified resource.
      */

@@ -15,8 +15,8 @@ class ProfileSeeder extends Seeder
     {
         Profile::create([
             'user_id' => 1,
-            'specialty' => 'Administração',
-            'license_number' => 1001,
+            'speciality' => 'Administração',
+            'license_number' => '1001XD',
             'phone' => '912345678',
             'address' => 'Rua das Flores, 10',
             'bio' => 'Administrador do sistema.'
@@ -25,8 +25,8 @@ class ProfileSeeder extends Seeder
 
         Profile::create([
             'user_id' => 2,
-            'specialty' => 'Fisioterapia',
-            'license_number' => 2001,
+            'speciality' => 'Fisioterapia',
+            'license_number' => '2001DW',
             'phone' => '913456789',
             'address' => 'Avenida Central, 45',
             'bio' => 'Terapeuta especialista em reabilitação.'
@@ -35,8 +35,8 @@ class ProfileSeeder extends Seeder
 
         Profile::create([
             'user_id' => 1,
-            'specialty' => 'Acupuntura',
-            'license_number' => 2002,
+            'speciality' => 'Acupuntura',
+            'license_number' => 'DWAWDAWF',
             'phone' => '914567890',
             'address' => 'Rua Nova, 78',
             'bio' => 'Terapeuta com 10 anos de experiência em acupuntura.'
@@ -45,8 +45,8 @@ class ProfileSeeder extends Seeder
 
         Profile::create([
             'user_id' => 2,
-            'specialty' => 'Nutrição',
-            'license_number' => 3001,
+            'speciality' => 'Nutrição',
+            'license_number' => 'Disorder',
             'phone' => '915678901',
             'address' => 'Praça da Saúde, 12',
             'bio' => 'Nutricionista clínica.'

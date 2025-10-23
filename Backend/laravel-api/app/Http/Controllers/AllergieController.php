@@ -13,7 +13,8 @@ class AllergieController extends Controller
      */
     public function index()
     {
-        //
+        $allergies = Allergie::all();
+        return response()->json($allergies);
     }
 
     /**
@@ -29,7 +30,10 @@ class AllergieController extends Controller
      */
     public function store(StoreAllergieRequest $request)
     {
-        //
+        $data = $request->validated();
+        $allergie = Allergie::create($data);
+
+        return response()->json($allergie);
     }
 
     /**
@@ -37,7 +41,7 @@ class AllergieController extends Controller
      */
     public function show(Allergie $allergie)
     {
-        //
+        return response()->json($allergie);
     }
 
     /**
