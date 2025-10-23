@@ -1,11 +1,18 @@
 'use client'
 
 import Card from "@/components/ui/Card";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {getClients} from "@/services/clients";
+import {getDiagnostic} from "@/services/diagnostics";
 
 export default function DiagnosesPage(){
 
     const names = ['Diagnoses', 'Treatment', 'Progress Notes'];
+    const [activeButton, setActiveButton] = useState('diagnoses');
+    const [diagnostic, setDiagnostic] = useState(null);
+
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(null);
 
     const diagnosisData = {
         western_diagnosis: "Chronic Lower Back Pain",
@@ -17,7 +24,23 @@ export default function DiagnosesPage(){
         tongue_description: "Pale with white coating"
     };
 
-    const [activeButton, setActiveButton] = useState('diagnosis');
+
+    useEffect(() => {
+        const ctrl = new AbortController();
+        (async () => {
+            try {
+                const data = await getDiagnostic(1);
+                setDiagnostic(data);
+                console.log("Fetched diagnostic:", data);
+            } catch (e) {
+                if (e.name !== "CanceledError") setError(e);
+                console.error("Error:", e);
+            } finally {
+                setLoading(false);
+            }
+        })();
+        return () => ctrl.abort();
+    }, []);
 
     function handleClick(key){
         setActiveButton(key);
@@ -37,14 +60,13 @@ export default function DiagnosesPage(){
         <div className="mt-4">
             {activeButton === names[0].toLowerCase() ?
                 <div>
-                    <DiagnosisCard {...diagnosisData}/>
-                    <DiagnosisCard {...diagnosisData}/>
+                    <DiagnosisCard {...diagnostic}/>
+                    <DiagnosisCard {...diagnostic}/>
                 </div>
                 : '' }
             {activeButton === names[1].toLowerCase() ? <Card title={names[1]}/> : '' }
             {activeButton === names[2].toLowerCase() ? <Card title={names[2]}/> : '' }
         </div>
-
     </div>
 
 }
