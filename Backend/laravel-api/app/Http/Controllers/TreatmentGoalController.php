@@ -31,15 +31,15 @@ class TreatmentGoalController extends Controller
      */
     public function store(StoreTreatment_GoalRequest $request)
     {
-        return response()->json($request);
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(TreatmentGoal $treatment_Goal)
+    public function show(TreatmentGoal $treatment_goal)
     {
-        //
+        return response()->json($treatment_goal);
     }
 
     /**
