@@ -10,5 +10,14 @@ export async function getClients(){
     return response.data;
 }
 
+// temporarily keeping above for compatibility
 
-//
+export async function getPatient(id){
+    const response = await api.get('/patients/' + id);
+    return response.data;
+}
+
+export async function getPatients(){
+    const response = await api.get('/patients');
+    return response.data;
+}
