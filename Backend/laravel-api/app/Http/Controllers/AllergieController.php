@@ -30,7 +30,10 @@ class AllergieController extends Controller
      */
     public function store(StoreAllergieRequest $request)
     {
-        //
+        $data = $request->validated();
+        $allergie = Allergie::create($data);
+
+        return response()->json($allergie);
     }
 
     /**

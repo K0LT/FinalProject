@@ -16,6 +16,7 @@ Route::get('users/{user}', [\App\Http\Controllers\UserController::class, 'show']
 Route::get('profiles', [\App\Http\Controllers\ProfileController::class, 'index']);
 Route::get('profiles/{profile}', [\App\Http\Controllers\ProfileController::class, 'show']);
 Route::post('profiles', [\App\Http\Controllers\ProfileController::class, 'store']);
+
 //Roles
 Route::get('roles', [\App\Http\Controllers\RoleController::class, 'index']);
 Route::get('roles/{role}', [\App\Http\Controllers\RoleController::class, 'show']);
@@ -36,6 +37,7 @@ Route::get('diagnostics/{diagnostic}', [\App\Http\Controllers\DiagnosticControll
 //Allergies
 Route::get('allergies', [\App\Http\Controllers\AllergieController::class, 'index']);
 Route::get('allergies/{allergie}', [\App\Http\Controllers\AllergieController::class, 'show']);
+Route::post('allergies', [\App\Http\Controllers\AllergieController::class, 'store']);
 
 //Conditions
 Route::get('conditions', [\App\Http\Controllers\ConditionController::class, 'index']);
@@ -60,7 +62,6 @@ Route::get('goal_millestones/{goal_millestone}', [\App\Http\Controllers\GoalMill
 //NutritionalGoals
 Route::get('nutritional_goals', [\App\Http\Controllers\NutritionalGoalController::class, 'index']);
 Route::get('nutritional_goals/{nutritional_goal}', [\App\Http\Controllers\NutritionalGoalController::class, 'show']);
-
 
 //ProgressNotes
 Route::get('progress_notes', [\App\Http\Controllers\ProgressNoteController::class, 'index']);
