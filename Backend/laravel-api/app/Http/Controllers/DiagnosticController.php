@@ -40,9 +40,11 @@ class DiagnosticController extends Controller
      */
     public function show(Diagnostic $diagnostic)
     {
+        $symptomsArray = array_map('trim', explode(',', $diagnostic->symptoms));
+        $diagnostic->symptoms = $symptomsArray;
+
         return response()->json($diagnostic);
     }
-
     /**
      * Show the form for editing the specified resource.
      */
