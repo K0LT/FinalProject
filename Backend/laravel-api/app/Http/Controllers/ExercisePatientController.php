@@ -30,7 +30,9 @@ class ExercisePatientController extends Controller
      */
     public function store(StoreExercisePatientRequest $request)
     {
-        //
+        $data = $request->validated();
+        $exercise_patient = ExercisePatient::create($data);
+        return response()->json($exercise_patient);
     }
 
     /**
