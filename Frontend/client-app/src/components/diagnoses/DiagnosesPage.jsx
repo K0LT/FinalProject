@@ -5,7 +5,7 @@ import {useState} from "react";
 
 export default function DiagnosesPage(){
 
-    const names = ['Diagnosis', 'Treatment', 'Progress Notes'];
+    const names = ['Diagnoses', 'Treatment', 'Progress Notes'];
 
     const diagnosisData = {
         western_diagnosis: "Chronic Lower Back Pain",
@@ -24,7 +24,13 @@ export default function DiagnosesPage(){
     }
 
     return <div>
-        <h2>Diagnosis & Treatment</h2>
+        <div className="flex flex-row justify-between">
+            <h2>Diagnoses & Treatment</h2>
+            <div className="space-x-2">
+                <button className="rounded-lg border border-amber-200 py-1 px-2 hover:text-yellow-600 hover:bg-gray-50">+  New Diagnosis</button>
+                <button className="rounded-lg bg-yellow-600 text-white py-1 px-2 hover:bg-yellow-500">+  New Treatment</button>
+            </div>
+            </div>
 
         <ButtonRow names={names} activeButton={activeButton} handleClick={handleClick}/>
 
@@ -69,7 +75,7 @@ function DiagnosisCard({diagnostic_date, western_diagnosis, tcm_diagnosis, sever
             </div>
             <div className="flex flex-col">
                 <div className="space-x-2">
-                    <span className="rounded-lg bg-yellow-700 text-xs pt-1 pb-0.5 text-white px-2">{severity}</span>
+                    <span className="rounded-lg bg-yellow-600 text-xs pt-1 pb-0.5 text-white px-2">{severity}</span>
                     <span className="font-extralight text-gray-500 text-sm">{diagnostic_date}</span>
                 </div>
             </div>
