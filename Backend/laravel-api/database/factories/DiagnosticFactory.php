@@ -120,7 +120,7 @@ class DiagnosticFactory extends Factory
         $s1 = $symptoms[rand(0, count($symptoms) - 1)];
         $s2 = $symptoms[rand(0, count($symptoms) - 1)];
         $s3 = $symptoms[rand(0, count($symptoms) - 1)];
-        $symptomsString = $s1 . ", " . $s2 . "," . $s3;
+        $symptomsString = $s1 . "," . $s2 . "," . $s3;
 
         // </editor-fold>
 
