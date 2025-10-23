@@ -30,7 +30,9 @@ class NutritionalGoalController extends Controller
      */
     public function store(StoreNutritionalGoalRequest $request)
     {
-        //
+        $data = $request->validated();
+        $nutritional_goal = NutritionalGoal::create($data);
+        return response()->json($nutritional_goal);
     }
 
     /**

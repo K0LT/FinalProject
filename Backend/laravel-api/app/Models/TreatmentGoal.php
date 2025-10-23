@@ -23,7 +23,7 @@ class TreatmentGoal extends Model
     ];
 
     public function goalMilestones(){
-        return $this->hasMany(GoalMillestone::class);
+        return $this->hasMany(GoalMilestone::class);
     }
 
     public function patient(){

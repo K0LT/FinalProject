@@ -43,10 +43,10 @@ Route::get('exercise_patients', [\App\Http\Controllers\ExercisePatientController
 Route::get('exercise_patients/{exercise_patient}', [\App\Http\Controllers\ExercisePatientController::class, 'show']);
 Route::post('exercise_patients', [\App\Http\Controllers\ExercisePatientController::class, 'store']);
 
-//GoalMillestones
-Route::get('goal_millestones', [\App\Http\Controllers\GoalMillestoneController::class, 'index']);
-Route::get('goal_millestones/{goal_millestone}', [\App\Http\Controllers\GoalMillestoneController::class, 'show']);
-Route::post('goal_millestones', [\App\Http\Controllers\GoalMillestoneController::class, 'store']);
+//GoalMilestones
+Route::get('goal_milestones', [\App\Http\Controllers\GoalMilestoneController::class, 'index']);
+Route::get('goal_milestones/{goal_milestone}', [\App\Http\Controllers\GoalMilestoneController::class, 'show']);
+Route::post('goal_milestones', [\App\Http\Controllers\GoalMilestoneController::class, 'store']);
 
 //NutritionalGoals
 Route::get('nutritional_goals', [\App\Http\Controllers\NutritionalGoalController::class, 'index']);

@@ -39,7 +39,12 @@ class TreatmentGoalController extends Controller
      */
     public function show(TreatmentGoal $treatment_goal)
     {
+        $treatment_goal -> load([
+            'goalMilestones',
+
+        ]);
         return response()->json($treatment_goal);
+
     }
 
     /**
