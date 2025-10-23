@@ -30,7 +30,11 @@ class ConditionController extends Controller
      */
     public function store(StoreConditionRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $condition = Condition::create($data);
+
+        return response()->json($condition);
     }
 
     /**
