@@ -30,7 +30,9 @@ class ExerciseController extends Controller
      */
     public function store(StoreExerciseRequest $request)
     {
-        //
+        $data = $request->validated();
+        $exercise = Exercise::create($data);
+        return response()->json($exercise);
     }
 
     /**

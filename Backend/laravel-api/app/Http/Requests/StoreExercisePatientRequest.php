@@ -11,7 +11,7 @@ class StoreExercisePatientRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class StoreExercisePatientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'patient_id'  => 'required|integer|exists:patients,id',
+            'exercise_id'  => 'required|integer|exists:exercises,id',
+            'profile_id'  => 'nullable|integer|exists:profiles,id',
+            'prescribed_date' => 'required|date',
+            'frequency' => 'nullable|string',
+            'status' => 'required|string|max:255',
+            'compliance_rate' => 'required|integer',
+            'last_performed'=> 'nullable|string',
+            'notes' => 'nullable|string',
         ];
     }
 }
