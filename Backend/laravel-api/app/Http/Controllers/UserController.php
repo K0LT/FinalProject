@@ -53,6 +53,7 @@ class UserController extends Controller
             ]);
         }
 
+
         return response()->json($user->load('patient'), 201);
 
     }

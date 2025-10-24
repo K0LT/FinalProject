@@ -42,7 +42,7 @@ class PatientController extends Controller
             'user',
             'diagnostics',
             'treatments',
-            'treatmentGoals',
+            'treatmentGoals.goalMilestones',
             'exercises',
             'weightTrackings',
             'nutritionGoals',
@@ -90,4 +90,5 @@ class PatientController extends Controller
     {
         //
     }
+
 }
