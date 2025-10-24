@@ -45,7 +45,7 @@ class UserController extends Controller
         if ($roleId == 2) {
             Profile::create([
                 'user_id' => $user->id,
-                'specialty' => $request->specialty ?? null,
+                'speciality' => $request->specialty ?? null,
                 'license_number' => $request->license_number ?? null,
                 'phone' => $request->phone ?? null,
                 'address' => $request->address ?? null,
