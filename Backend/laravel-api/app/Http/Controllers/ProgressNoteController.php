@@ -30,7 +30,9 @@ class ProgressNoteController extends Controller
      */
     public function store(StoreProgressNoteRequest $request)
     {
-        //
+        $data = $request->validated();
+        $progress_note = ProgressNote::create($data);
+        return response()->json($progress_note);
     }
 
     /**
