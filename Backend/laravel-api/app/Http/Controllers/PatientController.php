@@ -30,7 +30,9 @@ class PatientController extends Controller
      */
     public function store(StorePatientRequest $request)
     {
-
+        $data = $request->validated();
+        $patient = Patient::create($data);
+        return response()->json($patient );
     }
 
     /**
@@ -54,19 +56,8 @@ class PatientController extends Controller
         return response()->json($patient);
     }
 
-/*
- * 'appointments',
-            'diagnostics',
-            'treatments',
-            'treatment_goals',
-            'exercises',
-            'weightTrackings',
-            'nutritionGoals',
-            'dailyNutrition',
-            'allergies',
-            'conditions',
-            'progressNotes',
- */
+
+
     /**
      * Show the form for editing the specified resource.
      */
