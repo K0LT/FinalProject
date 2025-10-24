@@ -11,7 +11,7 @@ class StoreWeightTrackingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreWeightTrackingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'patient_id' => 'required|integer|exists:patients,id',
+            'weight' => 'required|integer',
+            'body_fat_percentage' => 'nullable|decimal:1',
+            'measurement_date' => 'required|date',
+            'notes' => 'nullable|text',
         ];
     }
 }

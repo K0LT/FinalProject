@@ -30,7 +30,9 @@ class TreatmentController extends Controller
      */
     public function store(StoreTreatmentRequest $request)
     {
-        //
+        $data = $request->validated();
+        $treatment = Treatment::create($data);
+        return response()->json($treatment);
     }
 
     /**

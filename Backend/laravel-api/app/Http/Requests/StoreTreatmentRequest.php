@@ -11,7 +11,7 @@ class StoreTreatmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class StoreTreatmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'diagnostic_id' => 'required|integer|exists:diagnostics,id',
+            'patient_id' => 'required|integer|exists:patients,id',
+            'profile_id' => 'required|integer|exists:profiles,id',
+            'session_date_time' => 'required|date',
+            'treatment_methods' => 'nullable|string',
+            'acupoints_used' => 'nullable|string',
+            'duration' => 'nullable|integer',
+            'notes' => 'nullable|text',
+            'next_session' => 'nullable|date',
         ];
     }
 }

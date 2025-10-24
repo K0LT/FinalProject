@@ -30,7 +30,9 @@ class WeightTrackingController extends Controller
      */
     public function store(StoreWeightTrackingRequest $request)
     {
-        //
+        $data = $request->validated();
+        $weight_tracking = WeightTracking::create($data);
+        return response()->json($weight_tracking);
     }
 
     /**

@@ -31,7 +31,9 @@ class TreatmentGoalController extends Controller
      */
     public function store(StoreTreatment_GoalRequest $request)
     {
-
+        $data = $request->validated();
+        $treatment_goal = TreatmentGoal::create($data);
+        return response()->json($treatment_goal);
     }
 
     /**
