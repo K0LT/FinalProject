@@ -9,27 +9,23 @@ export default function DiagnosesPage(){
 
     const names = ['Diagnoses', 'Treatment', 'Progress Notes'];
     const [activeButton, setActiveButton] = useState('diagnoses');
-    const [diagnostic, setDiagnostic] = useState(null);
-
+    const [diagnostic, setDiagnostic] = useState({
+        diagnostic_date: "",
+        western_diagnosis: "",
+        tcm_diagnosis: "",
+        severity: "",
+        symptoms: [],
+        pulse_quality: "",
+        tongue_description: "",
+    });
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
-
-    const diagnosisData = {
-        western_diagnosis: "Chronic Lower Back Pain",
-        tcm_diagnosis: "Kidney Yang Deficiency with Blood Stasis",
-        severity: "Moderate",
-        diagnostic_date: "2024-09-15",
-        symptoms: ["Lower back stiffness", "Cold limbs", "Fatigue", "Sleep disturbances"],
-        pulse_quality: "Deep and slow",
-        tongue_description: "Pale with white coating"
-    };
-
 
     useEffect(() => {
         const ctrl = new AbortController();
         (async () => {
             try {
-                const data = await getDiagnostic(1);
+                const data = await getDiagnostic(2);
                 setDiagnostic(data);
                 console.log("Fetched diagnostic:", data);
             } catch (e) {
@@ -60,7 +56,6 @@ export default function DiagnosesPage(){
         <div className="mt-4">
             {activeButton === names[0].toLowerCase() ?
                 <div>
-                    <DiagnosisCard {...diagnostic}/>
                     <DiagnosisCard {...diagnostic}/>
                 </div>
                 : '' }
