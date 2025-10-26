@@ -7,7 +7,7 @@ export default function Sidebar() {
     const pathname = usePathname();
 
     const menuItems = [
-        { label: "Perfil do Cliente", href: "/clientProfile"},
+        { label: "Perfil do Cliente", href: "/patient"},
         { label: "Consultas", href: "/appointments"},
         { label: "Diagnóstico Energético", href: "/diagnoses"},
         { label: "Objectivos do Tratamento", href: "/treatments"},
