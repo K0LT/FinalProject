@@ -62,7 +62,9 @@ class TreatmentGoalController extends Controller
      */
     public function update(UpdateTreatment_GoalRequest $request, TreatmentGoal $treatment_Goal)
     {
-        //
+        $data = $request->validated();
+        $treatment_Goal->update($data);
+        return response()->json($treatment_Goal);
     }
 
     /**

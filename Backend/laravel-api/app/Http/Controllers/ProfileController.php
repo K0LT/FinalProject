@@ -57,7 +57,9 @@ class ProfileController extends Controller
      */
     public function update(UpdateProfileRequest $request, Profile $profile)
     {
-        //
+        $data = $request->validated();
+        $profile->update($data);
+        return response()->json($profile);
     }
 
     /**

@@ -56,7 +56,9 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        //
+        $data = $request->validated();
+        $role->update($data);
+        return response()->json($role);
     }
 
     /**

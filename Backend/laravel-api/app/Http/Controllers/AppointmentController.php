@@ -52,7 +52,7 @@ class AppointmentController extends Controller
      */
     public function edit(Appointment $appointment)
     {
-        //
+
     }
 
     /**
@@ -60,7 +60,9 @@ class AppointmentController extends Controller
      */
     public function update(UpdateAppointmentRequest $request, Appointment $appointment)
     {
-        //
+        $data = $request->validated();
+        $appointment -> update($data);
+        return response()->json($appointment);
     }
 
     /**

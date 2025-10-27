@@ -56,7 +56,9 @@ class WeightTrackingController extends Controller
      */
     public function update(UpdateWeightTrackingRequest $request, WeightTracking $weightTracking)
     {
-        //
+        $data = $request->validated();
+        $weightTracking->update($data);
+        return response()->json($weightTracking);
     }
 
     /**

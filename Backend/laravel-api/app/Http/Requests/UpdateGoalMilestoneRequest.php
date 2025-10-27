@@ -11,7 +11,7 @@ class UpdateGoalMilestoneRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class UpdateGoalMilestoneRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'treatment_goal_id' => 'required|integer|exists:treatment_goals,id',
+            'description' => 'nullable|string',
+            'target_date' => 'required|date',
+            'completed' => 'required|boolean',
+            'completion_date' => 'nullable|date',
+            'notes' => 'nullable|string',
         ];
     }
 }

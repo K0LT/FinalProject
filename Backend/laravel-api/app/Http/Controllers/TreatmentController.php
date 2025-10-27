@@ -56,7 +56,9 @@ class TreatmentController extends Controller
      */
     public function update(UpdateTreatmentRequest $request, Treatment $treatment)
     {
-        //
+        $data = $request->validated();
+        $treatment->update($data);
+        return response()->json($treatment);
     }
 
     /**

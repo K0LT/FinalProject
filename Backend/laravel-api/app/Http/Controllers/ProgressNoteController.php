@@ -56,7 +56,9 @@ class ProgressNoteController extends Controller
      */
     public function update(UpdateProgressNoteRequest $request, ProgressNote $progressNote)
     {
-        //
+        $data = $request->validated();
+        $progressNote->update($data);
+        return response()->json($progressNote);
     }
 
     /**
