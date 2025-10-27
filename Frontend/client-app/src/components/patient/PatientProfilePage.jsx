@@ -22,6 +22,7 @@ export function PatientProfilePage({params}) {
             } catch (e) {
                 if (e.name !== "CanceledError") setError(e);
                 console.error("Error:", e);
+                
             } finally {
                 setLoading(false);
             }

@@ -1,11 +1,11 @@
 'use client'
 
 import Card from "@/components/ui/Card";
-import {useEffect, useState} from "react";
+import {use, useEffect, useState} from "react";
 import {getClients} from "@/services/clients";
 import {getDiagnostic} from "@/services/diagnostics";
 
-export default function DiagnosesPage(){
+export default function DiagnosesPage({params}){
 
     const names = ['Diagnoses', 'Treatment', 'Progress Notes'];
     const [activeButton, setActiveButton] = useState('diagnoses');
@@ -21,11 +21,13 @@ export default function DiagnosesPage(){
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
 
+    const slug = use(params);
+
     useEffect(() => {
         const ctrl = new AbortController();
         (async () => {
             try {
-                const data = await getDiagnostic(2);
+                const data = await getDiagnostic(slug.id);
                 setDiagnostic(data);
                 console.log("Fetched diagnostic:", data);
             } catch (e) {
