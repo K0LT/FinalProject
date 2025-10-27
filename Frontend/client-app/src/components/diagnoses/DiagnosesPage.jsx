@@ -25,7 +25,7 @@ export default function DiagnosesPage(){
         const ctrl = new AbortController();
         (async () => {
             try {
-                const data = await getDiagnostic(10);
+                const data = await getDiagnostic(2);
                 setDiagnostic(data);
                 console.log("Fetched diagnostic:", data);
             } catch (e) {
@@ -56,8 +56,6 @@ export default function DiagnosesPage(){
         <div className="mt-4">
             {activeButton === names[0].toLowerCase() ?
                 <div>
-                    <DiagnosisCard {...diagnostic}/>
-                    <DiagnosisCard {...diagnostic}/>
                     <DiagnosisCard {...diagnostic}/>
                 </div>
                 : '' }
