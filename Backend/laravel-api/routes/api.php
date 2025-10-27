@@ -58,6 +58,9 @@ Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index']
 Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'show']);
 Route::post('patients', [\App\Http\Controllers\PatientController::class, 'store']);
 Route::get('patients/{patient}/diagnostics', [\App\Http\Controllers\PatientController::class, 'index_diagnostics']);
+Route::get('patients/{patient}/treatments', [\App\Http\Controllers\PatientController::class, 'index_treatments']);
+Route::get('patients/{patient}/progress_notes', [\App\Http\Controllers\PatientController::class, 'index_treatments']);
+
 
 //Profiles
 Route::get('profiles', [\App\Http\Controllers\ProfileController::class, 'index']);

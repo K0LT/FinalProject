@@ -83,7 +83,18 @@ class PatientController extends Controller
     }
     public function index_diagnostics(Patient $patient){
 
-        $patient_diagnostics = $patient->load('diagnostics');
+        $patient_diagnostics = $patient->diagnostics;
         return response()->json($patient_diagnostics);
+    }
+
+    public function index_treatments(Patient $patient){
+
+        $patient_treatments = $patient->treatments;
+        return response()->json($patient_treatments);
+    }
+    public function index_progress_notes(Patient $patient){
+
+        $patient_progress_notes = $patient->progress_notes;
+        return response()->json($patient_progress_notes);
     }
 }
