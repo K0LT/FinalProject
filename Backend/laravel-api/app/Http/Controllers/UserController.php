@@ -28,6 +28,7 @@ class UserController extends Controller
 
         $user = User::create([
             'name' => $request->name,
+            'surname' => $request->surname,
             'email' => $request->email,
             'password' => $request->password,
             'role_id' => $roleId,
@@ -44,13 +45,14 @@ class UserController extends Controller
         if ($roleId == 2) {
             Profile::create([
                 'user_id' => $user->id,
-                'specialty' => $request->specialty ?? null,
+                'speciality' => $request->specialty ?? null,
                 'license_number' => $request->license_number ?? null,
                 'phone' => $request->phone ?? null,
                 'address' => $request->address ?? null,
                 'bio' => $request->bio ?? null,
             ]);
         }
+
 
         return response()->json($user->load('patient'), 201);
 

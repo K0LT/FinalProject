@@ -11,7 +11,7 @@ class StoreTreatment_GoalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class StoreTreatment_GoalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'patient_id' => 'required|integer|exists:patients,id',
+            'title' => 'required|string',
+            'description' => 'nullable|text',
+            'priority' => 'required|string|in:Mínima,Média,Alta',
+            'status' => 'required|string|in:Em progresso,Concluído,Cancelado',
+            'progress_percentage' => 'required|decimal:1',
+            'target_date' => 'nullable|date',
+            'treatment_methods' => 'nullable|string',
         ];
     }
 }

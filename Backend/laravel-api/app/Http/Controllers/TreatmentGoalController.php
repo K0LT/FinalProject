@@ -31,7 +31,9 @@ class TreatmentGoalController extends Controller
      */
     public function store(StoreTreatment_GoalRequest $request)
     {
-
+        $data = $request->validated();
+        $treatment_goal = TreatmentGoal::create($data);
+        return response()->json($treatment_goal);
     }
 
     /**
@@ -60,7 +62,9 @@ class TreatmentGoalController extends Controller
      */
     public function update(UpdateTreatment_GoalRequest $request, TreatmentGoal $treatment_Goal)
     {
-        //
+        $data = $request->validated();
+        $treatment_Goal->update($data);
+        return response()->json($treatment_Goal);
     }
 
     /**

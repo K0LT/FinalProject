@@ -58,9 +58,10 @@ class DiagnosticController extends Controller
      */
     public function update(UpdateDiagnosticRequest $request, Diagnostic $diagnostic)
     {
-        //
+        $data = $request->validated();
+        $diagnostic->update($data);
+        return response()->json($diagnostic);
     }
-
     /**
      * Remove the specified resource from storage.
      */

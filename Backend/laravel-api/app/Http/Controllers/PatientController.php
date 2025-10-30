@@ -30,7 +30,9 @@ class PatientController extends Controller
      */
     public function store(StorePatientRequest $request)
     {
-
+        $data = $request->validated();
+        $patient = Patient::create($data);
+        return response()->json($patient);
     }
 
     /**
@@ -42,7 +44,7 @@ class PatientController extends Controller
             'user',
             'diagnostics',
             'treatments',
-            'treatmentGoals',
+            'treatmentGoals.goalMilestones',
             'exercises',
             'weightTrackings',
             'nutritionGoals',
@@ -54,19 +56,8 @@ class PatientController extends Controller
         return response()->json($patient);
     }
 
-/*
- * 'appointments',
-            'diagnostics',
-            'treatments',
-            'treatment_goals',
-            'exercises',
-            'weightTrackings',
-            'nutritionGoals',
-            'dailyNutrition',
-            'allergies',
-            'conditions',
-            'progressNotes',
- */
+
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -80,7 +71,9 @@ class PatientController extends Controller
      */
     public function update(UpdatePatientRequest $request, Patient $patient)
     {
-        //
+        $data = $request->validated();
+        $patient->update($data);
+        return response()->json($patient);
     }
 
     /**
@@ -89,5 +82,21 @@ class PatientController extends Controller
     public function destroy(Patient $patient)
     {
         //
+    }
+    public function index_diagnostics(Patient $patient){
+
+        $patient_diagnostics = $patient->diagnostics;
+        return response()->json($patient_diagnostics);
+    }
+
+    public function index_treatments(Patient $patient){
+
+        $patient_treatments = $patient->treatments;
+        return response()->json($patient_treatments);
+    }
+    public function index_progress_notes(Patient $patient){
+
+        $patient_progress_notes = $patient->progress_notes;
+        return response()->json($patient_progress_notes);
     }
 }

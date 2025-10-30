@@ -11,7 +11,7 @@ class UpdateDiagnosticRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class UpdateDiagnosticRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'patient_id' => 'required|integer|exists:patients,id',
+            'profile_id' => 'required|integer|exists:profiles,id',
+            'diagnostic_date' => 'required|date',
+            'western_diagnosis' => 'nullable|string|max:255',
+            'tcm_diagnosis' => 'nullable|string|max:255',
+            'severity' => 'nullable|string|max:255',
+            'symptoms' => 'nullable|string|max:255',
+            'pulse_quality' => 'nullable|string|max:255',
+            'tongue_description' => 'nullable|string|max:255',
         ];
     }
 }
