@@ -56,7 +56,9 @@ class NutritionalGoalController extends Controller
      */
     public function update(UpdateNutritionalGoalRequest $request, NutritionalGoal $nutritionalGoal)
     {
-        //
+        $data = $request->validated();
+        $nutritionalGoal->update($data);
+        return response()->json($nutritionalGoal);
     }
 
     /**

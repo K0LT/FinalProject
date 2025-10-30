@@ -56,7 +56,9 @@ class ConditionController extends Controller
      */
     public function update(UpdateConditionRequest $request, Condition $condition)
     {
-        //
+        $data = $request->validated();
+        $condition -> update($data);
+        return response()->json($condition);
     }
 
     /**

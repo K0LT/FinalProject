@@ -11,7 +11,7 @@ class UpdateNutritionalGoalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class UpdateNutritionalGoalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'patient_id' => 'required|integer|exists:patients,id',
+            'target_weight' => 'nullable|numeric|between:30,200',
+            'target_body_fat' => 'nullable|numeric|between:15,35',
+            'daily_calories_goal' => 'nullable|numeric|between:1500,3000',
+            'daily_protein_goal' => 'nullable|numeric|between:50,200',
+            'daily_carbs_goal' => 'nullable|numeric|between:100,400',
+            'daily_fat_goal' => 'nullable|numeric|between:30,120',
+            'start_date' => 'nullable|date',
+            'target_date' => 'nullable|date',
         ];
     }
 }

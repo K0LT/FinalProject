@@ -56,7 +56,9 @@ class DailyNutritionController extends Controller
      */
     public function update(UpdateDailyNutritionRequest $request, DailyNutrition $dailyNutrition)
     {
-        //
+        $data = $request->validated();
+        $dailyNutrition -> update($data);
+        return response()->json($dailyNutrition);
     }
 
     /**

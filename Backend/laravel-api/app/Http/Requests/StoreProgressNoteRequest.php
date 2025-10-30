@@ -11,7 +11,7 @@ class StoreProgressNoteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class StoreProgressNoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'patient_id' => 'required|integer|exists:patients,id',
+            'appointment_id' => 'nullable|integer|exists:appointments,id',
+            'profile_id' => 'required|integer|exists:profiles,id',
+            'note_date' => 'required|date',
+            'subjective' => 'nullable|string',
+            'objective' => 'nullable|string',
+            'assessment' => 'nullable|string',
+            'plan' => 'nullable|string',
         ];
     }
 }

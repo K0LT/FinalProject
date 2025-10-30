@@ -11,7 +11,7 @@ class UpdateDailyNutritionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,16 @@ class UpdateDailyNutritionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'patient_id' => 'required|integer|exists:patients,id',
+            'date' => 'required|date',
+            'calories_consumed' => 'nullable|integer',
+            'protein_consumed' => 'nullable|integer',
+            'carbs_consumed' => 'nullable|integer',
+            'fat_consumed' => 'nullable|integer',
+            'water_intake' => 'nullable|integer',
+            'steps' => 'nullable|integer',
+            'sleep_hours' => 'nullable|integer',
+            'calories_burned' => 'nullable|integer',
         ];
     }
 }

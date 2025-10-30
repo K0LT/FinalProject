@@ -30,7 +30,9 @@ class PatientController extends Controller
      */
     public function store(StorePatientRequest $request)
     {
-
+        $data = $request->validated();
+        $patient = Patient::create($data);
+        return response()->json($patient);
     }
 
     /**
@@ -43,6 +45,7 @@ class PatientController extends Controller
             'diagnostics',
             'treatments',
             'treatmentGoals',
+            'treatmentGoals.goalMilestones',
             'exercises',
             'weightTrackings',
             'nutritionGoals',
@@ -54,19 +57,8 @@ class PatientController extends Controller
         return response()->json($patient);
     }
 
-/*
- * 'appointments',
-            'diagnostics',
-            'treatments',
-            'treatment_goals',
-            'exercises',
-            'weightTrackings',
-            'nutritionGoals',
-            'dailyNutrition',
-            'allergies',
-            'conditions',
-            'progressNotes',
- */
+
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -80,7 +72,9 @@ class PatientController extends Controller
      */
     public function update(UpdatePatientRequest $request, Patient $patient)
     {
-        //
+        $data = $request->validated();
+        $patient->update($data);
+        return response()->json($patient);
     }
 
     /**
@@ -89,5 +83,17 @@ class PatientController extends Controller
     public function destroy(Patient $patient)
     {
         //
+    }
+    public function get_relation(Patient $patient, $relation){
+        $relationships = ['diagnostics', 'treatments', 'progress_notes','treatmentGoals',
+            'exercises', 'weightTrackings', 'nutritionGoals', 'dailyNutritions', 'allergies', 'conditions'];
+
+        foreach($relationships as $relationship){
+            if($relationship === $relation){
+                return response()->json($patient->$relation);
+            }
+        }
+
+        return response()->json("Error", 404);
     }
 }

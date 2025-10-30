@@ -56,7 +56,9 @@ class GoalMilestoneController extends Controller
      */
     public function update(UpdateGoalMilestoneRequest $request, GoalMilestone $goalMilestone)
     {
-        //
+        $data = $request->validated();
+        $goalMilestone->update($data);
+        return response()->json($goalMilestone);
     }
 
     /**

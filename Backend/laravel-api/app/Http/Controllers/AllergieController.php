@@ -32,7 +32,6 @@ class AllergieController extends Controller
     {
         $data = $request->validated();
         $allergie = Allergie::create($data);
-
         return response()->json($allergie);
     }
 
@@ -49,7 +48,7 @@ class AllergieController extends Controller
      */
     public function edit(Allergie $allergie)
     {
-        //
+
     }
 
     /**
@@ -57,7 +56,9 @@ class AllergieController extends Controller
      */
     public function update(UpdateAllergieRequest $request, Allergie $allergie)
     {
-        //
+        $data = $request->validated();
+        $allergie -> update($data);
+        return response()->json($allergie);
     }
 
     /**

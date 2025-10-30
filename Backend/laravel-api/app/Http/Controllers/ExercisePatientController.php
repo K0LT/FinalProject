@@ -56,7 +56,9 @@ class ExercisePatientController extends Controller
      */
     public function update(UpdateExercisePatientRequest $request, ExercisePatient $exercisePatient)
     {
-        //
+        $data = $request->validated();
+        $exercisePatient->update($data);
+        return response()->json($exercisePatient);
     }
 
     /**
