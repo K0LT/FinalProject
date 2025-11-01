@@ -19,9 +19,23 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
+        'email_verified_at',
+        'role_id',
         'password',
     ];
+
+
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
+    public function profiles(){
+        return $this->hasMany(Profile::class);
+    }
+    public function patient(){
+        return $this->hasOne(Patient::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -44,5 +58,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function client()
+    {
+        return $this->hasOne('App\Models\Client');
     }
 }
