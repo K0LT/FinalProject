@@ -1,8 +1,20 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import Footer from "./Footer";
+import LandingPage from "../../app/Pages/LandingPage/page";
 
 export default function AppLayout({ children }) {
+    const pathname = usePathname();
+
+    // Se estiver na homepage, mostra apenas a Landing Page (sem sidebar/topbar/footer)
+    if (pathname === "/" || pathname === "/LandingPage") {
+        return <LandingPage />;
+    }
+
+    // Caso contrário, mostra o layout completo da aplicação
     return (
         <div className="min-h-screen flex">
             {/* Sidebar */}

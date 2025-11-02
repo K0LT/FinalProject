@@ -51,7 +51,7 @@ export default function DiagnosesPage({params}){
                 <button className="rounded-lg border border-amber-200 py-1 px-2 hover:text-yellow-600 hover:bg-gray-50">+  New Diagnosis</button>
                 <button className="rounded-lg bg-yellow-600 text-white py-1 px-2 hover:bg-yellow-500">+  New Treatment</button>
             </div>
-            </div>
+        </div>
 
         <ButtonRow names={names} activeButton={activeButton} handleClick={handleClick}/>
 
@@ -99,7 +99,7 @@ function DiagnosisCard({diagnostic_date, western_diagnosis, tcm_diagnosis, sever
                 </div>
             </div>
         </div>
-            <div className="flex flex-col mt-5">
+        <div className="flex flex-col mt-5">
             <span>Symptoms</span>
             <div className="flex flex-row space-x-2 pt-1.5">{symptoms.map((symptom) => (
                 <div key={symptom} className="border rounded-lg border-amber-200 text-sm px-1.5">{symptom}</div>

@@ -1,39 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="c1b459c2-d94e-4fdc-a627-79371de693f9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Backend/laravel-api/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../Backend/laravel-api/routes/api.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/Pages/LandingPage/page.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Accordion.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Alert-dialog.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Alert.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Aspect-ratio.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Avatar.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Breadcrumbs.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Button.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Carousel.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Chart.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Checkbox.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Collapsable.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Command.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Context-menu.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Dialog.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Drawer.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Dropdown-menu.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Form.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Hover-card.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Input-otp.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Input.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Label.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Menubar.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Navigation-menu.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Pagination.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Popover.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Progress.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Radio-group.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Resizable.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Scroll-area.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Select.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Separator.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Sheet.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Sidebar.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Skeleton.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Slider.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Sonner.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Switch.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Table.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Tabs.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Textarea.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Toggle-group.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Toggle.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Tooltip.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Components/Buttons/GoldButton.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Components/Buttons/WhiteButton.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Pages/LandingPage/Components/Features.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Pages/LandingPage/Components/FinalCta.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Pages/LandingPage/Components/Hero.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Pages/LandingPage/Components/HowItWorks.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Pages/LandingPage/Components/Stats.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Pages/LandingPage/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Pages/LandingPage/index.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Pages/Master/Footer.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Pages/Master/Header.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/appointments/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Pages/appointments/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/clientProfile/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Pages/clientProfile/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/client/ClientProfilePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/client/ClientProfilePage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/diagnoses/DiagnosesPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/diagnoses/DiagnosesPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/AppLayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/AppLayout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/Badge.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/Badge.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;marciaL14&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/K0LT/FinalProject.git&quot;,
+    &quot;accountId&quot;: &quot;5a866a49-4c9c-455e-bc7c-4021448def53&quot;
+  }
+}</component>
+  <component name="PhpDebugGeneral" listening_started="true" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="Laragon 7.4" />
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="33t0KoVdn6GPC8BsMXuCo27ttqv" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "dev-backend-den2",
-    "js.debugger.nextJs.config.created.client": "true",
-    "js.debugger.nextJs.config.created.server": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;DEV-LANDINGPAIGE&quot;,
+    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\PhpStorm 2025.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\marci\Desktop\Atec\FinalProject\Frontend\client-app\src\app\Pages" />
+      <recent name="C:\Users\marci\Desktop\Atec\FinalProject\Frontend\client-app\src\app\Pages\LandingPage" />
+      <recent name="C:\Users\marci\Desktop\Atec\FinalProject\Frontend\client-app\src\components\ui" />
+    </key>
+  </component>
   <component name="RunManager" selected="npm.Next.js: server-side">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
@@ -52,7 +150,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-WS-252.26830.93" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-PS-252.27397.112" />
+        <option value="bundled-php-predefined-a98d8de5180a-b35feea871ed-com.jetbrains.php.sharedIndexes-PS-252.27397.112" />
       </set>
     </attachedChunks>
   </component>
@@ -64,6 +163,8 @@
       <option name="presentableId" value="Default" />
       <updated>1760121001166</updated>
       <workItem from="1760121002718" duration="28000" />
+      <workItem from="1762037056218" duration="8108000" />
+      <workItem from="1762048242155" duration="3671000" />
     </task>
     <servers />
   </component>
