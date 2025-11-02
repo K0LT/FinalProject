@@ -44,6 +44,7 @@ class PatientController extends Controller
             'user',
             'diagnostics',
             'treatments',
+            'treatmentGoals',
             'treatmentGoals.goalMilestones',
             'exercises',
             'weightTrackings',
@@ -83,20 +84,16 @@ class PatientController extends Controller
     {
         //
     }
-    public function index_diagnostics(Patient $patient){
+    public function get_relation(Patient $patient, $relation){
+        $relationships = ['diagnostics', 'treatments', 'progress_notes','treatmentGoals',
+            'exercises', 'weightTrackings', 'nutritionGoals', 'dailyNutritions', 'allergies', 'conditions'];
 
-        $patient_diagnostics = $patient->diagnostics;
-        return response()->json($patient_diagnostics);
-    }
+        foreach($relationships as $relationship){
+            if($relationship === $relation){
+                return response()->json($patient->$relation);
+            }
+        }
 
-    public function index_treatments(Patient $patient){
-
-        $patient_treatments = $patient->treatments;
-        return response()->json($patient_treatments);
-    }
-    public function index_progress_notes(Patient $patient){
-
-        $patient_progress_notes = $patient->progress_notes;
-        return response()->json($patient_progress_notes);
+        return response()->json("Error", 404);
     }
 }
