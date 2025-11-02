@@ -5,7 +5,7 @@ export async function getDiagnostic(id){
     return response.data;
 }
 
-export async function getDiagnostics(){
-    const response = await api.get('/diagnostics');
+export async function getDiagnostics(id){
+    const response = await api.get('/patients/' + id + '/diagnostics');
     return response.data;
 }

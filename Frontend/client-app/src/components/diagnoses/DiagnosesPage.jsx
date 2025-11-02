@@ -2,14 +2,17 @@
 
 import Card from "@/components/ui/Card";
 import {use, useEffect, useState} from "react";
-import {getClients} from "@/services/clients";
-import {getDiagnostic} from "@/services/diagnostics";
+import {getDiagnostic, getDiagnostics} from "@/services/diagnostics";
+import TreatmentsCard from "@/components/treatments/Treatments";
+import {getTreatments} from "@/services/treatments";
 
-export default function DiagnosesPage({params}){
-
+export default function DiagnosesPage({ params }) {
     const names = ['Diagnoses', 'Treatment', 'Progress Notes'];
     const [activeButton, setActiveButton] = useState('diagnoses');
-    const [diagnostic, setDiagnostic] = useState({
+
+    const slug = use(params);
+
+    const placeHolderDiag = {
         diagnostic_date: "",
         western_diagnosis: "",
         tcm_diagnosis: "",
@@ -17,55 +20,109 @@ export default function DiagnosesPage({params}){
         symptoms: [],
         pulse_quality: "",
         tongue_description: "",
-    });
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(null);
+    };
 
-    const slug = use(params);
+    const placeHolderTreatment = {
+        session_date_time: "",
+        treatment_methods: "",
+        acupoints_used: [],
+        duration: "",
+        notes: "",
+        next_session: "",
+    }
+
+    const [diagnostics, setDiagnostics] = useState([]);
+    const [treatments, setTreatments] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const ctrl = new AbortController();
         (async () => {
             try {
-                const data = await getDiagnostic(slug.id);
-                setDiagnostic(data);
-                console.log("Fetched diagnostic:", data);
+                const diagData = await getDiagnostics(slug?.id);
+                const treatData = await getTreatments(slug?.id);
+                setDiagnostics(Array.isArray(diagData) ? diagData : []);
+                setTreatments(Array.isArray(treatData) ? treatData : []);
             } catch (e) {
                 if (e.name !== "CanceledError") setError(e);
-                console.error("Error:", e);
             } finally {
                 setLoading(false);
             }
         })();
         return () => ctrl.abort();
-    }, []);
+    }, [slug?.id]);
 
-    function handleClick(key){
+    function handleClick(key) {
         setActiveButton(key);
     }
 
-    return <div>
-        <div className="flex flex-row justify-between">
-            <h2>Diagnoses & Treatment</h2>
-            <div className="space-x-2">
-                <button className="rounded-lg border border-amber-200 py-1 px-2 hover:text-yellow-600 hover:bg-gray-50">+  New Diagnosis</button>
-                <button className="rounded-lg bg-yellow-600 text-white py-1 px-2 hover:bg-yellow-500">+  New Treatment</button>
-            </div>
-            </div>
-
-        <ButtonRow names={names} activeButton={activeButton} handleClick={handleClick}/>
-
-        <div className="mt-4">
-            {activeButton === names[0].toLowerCase() ?
-                <div>
-                    <DiagnosisCard {...diagnostic}/>
+    return (
+        <div>
+            <div className="flex flex-row justify-between">
+                <h2>Diagnoses & Treatment</h2>
+                <div className="space-x-2">
+                    <button className="rounded-lg border border-amber-200 py-1 px-2 hover:text-yellow-600 hover:bg-gray-50">
+                        + New Diagnosis
+                    </button>
+                    <button className="rounded-lg bg-yellow-600 text-white py-1 px-2 hover:bg-yellow-500">
+                        + New Treatment
+                    </button>
                 </div>
-                : '' }
-            {activeButton === names[1].toLowerCase() ? <Card title={names[1]}/> : '' }
-            {activeButton === names[2].toLowerCase() ? <Card title={names[2]}/> : '' }
-        </div>
-    </div>
+            </div>
 
+            <ButtonRow names={names} activeButton={activeButton} handleClick={handleClick} />
+
+            <div className="mt-4">
+                {activeButton === names[0].toLowerCase() && (
+                    <>
+                        {loading && <div>Loading…</div>}
+                        {!loading && error && <div className="text-red-600">Failed to load diagnostics.</div>}
+                        {!loading && !error && diagnostics.length === 0 && (
+                            <div className="text-gray-500">No diagnoses yet.</div>
+                        )}
+                        {!loading && !error && diagnostics.length > 0 && (
+                            <div>
+                                {diagnostics.map((d, idx) => {
+                                    const symptoms =
+                                        Array.isArray(d.symptoms) ? d.symptoms
+                                            : typeof d.symptoms === 'string'
+                                                ? d.symptoms.split(',').map(s => s.trim()).filter(Boolean)
+                                                : [];
+
+                                    return <DiagnosisCard key={d.id ?? idx} {...d} symptoms={symptoms} />;
+                                })}
+                            </div>
+                        )}
+                    </>
+                )}
+                {activeButton === names[1].toLowerCase() && (
+                    <>
+                        {loading && <div>Loading…</div>}
+                        {!loading && error && <div className="text-red-600">Failed to load treatments.</div>}
+                        {!loading && !error && treatments.length === 0 && (
+                            <div className="text-gray-500">No treatments yet.</div>
+                        )}
+                        {!loading && !error && treatments.length > 0 && (
+                            <div>
+                                {treatments.map((t, idx) => {
+                                    const acupoints_used =
+                                        Array.isArray(t.acupoints_used) ? t.acupoints_used
+                                            : typeof t.acupoints_used === 'string'
+                                                ? t.acupoints_used.split(',').map(s => s.trim()).filter(Boolean)
+                                                : [];
+
+                                    return <TreatmentsCard key={t.id ?? idx} {...t} acupoints_used={acupoints_used} />;
+                                })}
+                            </div>
+                        )}
+                    </>
+                )}
+
+                {activeButton === names[2].toLowerCase() && <Card title={names[2]} />}
+            </div>
+        </div>
+    );
 }
 
 // We pass the names for the buttons, potentially also the buttons in the future

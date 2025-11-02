@@ -6,10 +6,12 @@ import { usePathname } from "next/navigation";
 export default function Sidebar() {
     const pathname = usePathname();
 
+    const id = 1;
+
     const menuItems = [
-        { label: "Perfil do Cliente", href: "/patient"},
+        { label: "Perfil do Cliente", href: "/patient/" + id},
         { label: "Consultas", href: "/appointments"},
-        { label: "Diagnóstico Energético", href: "/diagnoses"},
+        { label: "Diagnóstico Energético", href: "/diagnoses/" + id},
         { label: "Objectivos do Tratamento", href: "/treatments"},
         { label: "Prescrição de Exercícios", href: "/exercises"},
         { label: "Controlo de Peso", href: "/weight"},

@@ -36,14 +36,16 @@ export function PatientProfilePage({params}) {
     }, [patient]);
 
     if (error) return <div className="p-6 text-red-600">Falha ao carregar.</div>;
-    if (!loading) return <div className="p-6">A carregar…</div>;
-    if (!patient) return <div className="p-6">PATIENT LOADING ERROR</div>
+    if (loading) return <div className="p-6">A carregar…</div>;
+    if (!patient) return <div className="p-6">PATIENT LOADING ERROR</div>;
+
+    const safePatient = { ...patient, user: { name: "", ...(patient.user || {}) } };
+
     return (
-
-        <PatientCard patient={patient}/>
+        <div>
+            <PatientCard patient={safePatient} />
+        </div>
     );
-
-
 }
 
 function PatientHeaderCard({ patient }) {
