@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../../../tailwind.css';
 const WhyQiFlow = () => {
     return (
         <section className="py-20 bg-gray-50">
@@ -10,11 +10,8 @@ const WhyQiFlow = () => {
                         Metodologia única que combina tradição oriental com tecnologia moderna
                     </p>
                 </div>
+                <div className="flex flex-row gap-8 max-w-6xl mx-auto">
 
-                {/* Grelha com 4 colunas, 1 coluna em telas pequenas, 2 em médias e 4 em grandes */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-
-                    {/* Card 1 */}
                     <div data-slot="card" className="text-card-foreground flex flex-col gap-6 rounded-xl text-center border-0 shadow-lg bg-white hover:shadow-xl transition-shadow">
                         <div data-slot="card-content" className="px-6 [&:last-child]:pb-6 pt-8 pb-6">
                             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -29,7 +26,6 @@ const WhyQiFlow = () => {
                         </div>
                     </div>
 
-                    {/* Card 2 */}
                     <div data-slot="card" className="text-card-foreground flex flex-col gap-6 rounded-xl text-center border-0 shadow-lg bg-white hover:shadow-xl transition-shadow">
                         <div data-slot="card-content" className="px-6 [&:last-child]:pb-6 pt-8 pb-6">
                             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -45,7 +41,6 @@ const WhyQiFlow = () => {
                         </div>
                     </div>
 
-                    {/* Card 3 */}
                     <div data-slot="card" className="text-card-foreground flex flex-col gap-6 rounded-xl text-center border-0 shadow-lg bg-white hover:shadow-xl transition-shadow">
                         <div data-slot="card-content" className="px-6 [&:last-child]:pb-6 pt-8 pb-6">
                             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -61,7 +56,6 @@ const WhyQiFlow = () => {
                         </div>
                     </div>
 
-                    {/* Card 4 */}
                     <div data-slot="card" className="text-card-foreground flex flex-col gap-6 rounded-xl text-center border-0 shadow-lg bg-white hover:shadow-xl transition-shadow">
                         <div data-slot="card-content" className="px-6 [&:last-child]:pb-6 pt-8 pb-6">
                             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -76,7 +70,9 @@ const WhyQiFlow = () => {
                     </div>
 
                 </div>
+
             </div>
+
         </section>
     );
 };

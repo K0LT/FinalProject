@@ -101,16 +101,14 @@ const StartToday = () => {
                                     <path d="M3 10h18"></path>
                                 </svg>Marcar Consulta Gratuita
                             </button>
-                            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border border-white text-white bg-transparent hover:bg-white hover:text-primary hover:border-primary h-10 rounded-md has-[>svg]:px-4 text-lg px-8">
+                            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border border-white text-white hover:bg-white hover:text-primary hover:border-primary h-10 rounded-md has-[>svg]:px-4 text-lg px-8">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right w-5 h-5 mr-2" aria-hidden="true">
                                     <path d="M5 12h14"></path>
                                     <path d="m12 5 7 7-7 7"></path>
                                 </svg>
                                 Começar Hoje
                             </button>
-
                         </div>
-
                         <p className="text-sm opacity-75 mt-4">✓ Primeira consulta gratuita ✓ Sem compromisso ✓ Resultados em 30 dias</p>
                     </div>
                 </div>
