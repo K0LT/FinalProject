@@ -69,4 +69,5 @@ class DiagnosticController extends Controller
     {
         //
     }
+
 }
