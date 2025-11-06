@@ -66,28 +66,6 @@ class DiagnosticFactory extends Factory
         $severities = ['Leve',
             'Moderada',
             'Grave'];
-        $symptoms = [
-            "dor de cabeça",
-            "náusea",
-            "cansaço",
-            "tontura",
-            "falta de ar",
-            "dor no peito",
-            "dor nas articulações",
-            "dor de estômago",
-            "tosse",
-            "febre",
-            "insônia",
-            "ansiedade",
-            "depressão",
-            "fraqueza",
-            "espasmos musculares",
-            "sensibilidade à luz",
-            "palpitações",
-            "calafrios",
-            "congestão nasal",
-            "diarreia"
-        ];
         $pulse_quality = [
             'Forte',
             'Fraco',
@@ -117,10 +95,6 @@ class DiagnosticFactory extends Factory
                 'Língua com revestimento espesso',
                 'Língua com revestimento fino'
             ];
-        $s1 = $symptoms[rand(0, count($symptoms) - 1)];
-        $s2 = $symptoms[rand(0, count($symptoms) - 1)];
-        $s3 = $symptoms[rand(0, count($symptoms) - 1)];
-        $symptomsString = $s1 . "," . $s2 . "," . $s3;
 
         // </editor-fold>
 
@@ -131,7 +105,6 @@ class DiagnosticFactory extends Factory
             'western_diagnosis' => (rand(0, 3) === 0) ? null : $this->faker->randomElement($western_diagnosis),
             'tcm_diagnosis' => (rand(0, 3) === 0) ? null : $this->faker->randomElement($tcm_diagnosis),
             'severity' => $this->faker->randomElement($severities),
-            'symptoms' => (rand(0, 9) === 0) ? null : $symptomsString,
             'pulse_quality' => (rand(0, 9) === 0) ? null : $this->faker->randomElement($pulse_quality),
             'tongue_description' => (rand(0, 9) === 0) ? null : $this->faker->randomElement($tongue_description),
         ];

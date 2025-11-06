@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('western_diagnosis')->nullable();
             $table->string('tcm_diagnosis')->nullable();
             $table->string('severity')->nullable();
-            $table->string('symptoms')->nullable();
             $table->string('pulse_quality')->nullable();
             $table->text('tongue_description')->nullable();
             $table->timestamps();
