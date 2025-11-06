@@ -104,10 +104,10 @@ Route::post('weight_trackings', [\App\Http\Controllers\WeightTrackingController:
 Route::put('weight_trackings/{weight_tracking}', [\App\Http\Controllers\WeightTrackingController::class, 'update']);
 
 //Symptom
-Route::get('symptom', [\App\Http\Controllers\SymptomController::class, 'index']);
-Route::post('symptom', [\App\Http\Controllers\SymptomController::class, 'store']);
-Route::get('symptom/{symptom}', [\App\Http\Controllers\SymptomController::class, 'show']);
-Route::put('symptom/{symptom}', [\App\Http\Controllers\SymptomController::class, 'update']);
+Route::get('symptoms', [\App\Http\Controllers\SymptomController::class, 'index']);
+Route::post('symptoms', [\App\Http\Controllers\SymptomController::class, 'store']);
+Route::get('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'show']);
+Route::put('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'update']);
 
 
 
