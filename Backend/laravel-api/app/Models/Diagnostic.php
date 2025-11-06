@@ -35,6 +35,6 @@ class Diagnostic extends Model
     }
     public function symptoms()
     {
-        return $this->belongsToMany(Symptom::class, 'diagnostic_symptom');
+        return $this->belongsToMany(Symptom::class, 'diagnostic_symptom')->withTimestamps();
     }
 }
