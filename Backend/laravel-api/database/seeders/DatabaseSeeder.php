@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProgressNoteSeeder::class);
         $this->call(ConditionSeeder::class);
         $this->call(GoalMilestoneSeeder::class);
-        $this->call(SympthonSeeder::class);
+        $this->call(SymptomSeeder::class);
 
         /*
          * // <editor-fold desc="Creation of users and profiles manually.">
