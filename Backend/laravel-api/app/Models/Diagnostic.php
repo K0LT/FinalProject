@@ -33,4 +33,8 @@ class Diagnostic extends Model
     public function treatments(){
         return $this->hasMany(Treatment::class);
     }
+    public function symptoms()
+    {
+        return $this->belongsToMany(Symptom::class, 'diagnostic_symptom');
+    }
 }
