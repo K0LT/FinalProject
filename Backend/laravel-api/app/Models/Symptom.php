@@ -10,6 +10,13 @@ class Symptom extends Model
     /** @use HasFactory<\Database\Factories\SymptomFactory> */
     use HasFactory;
 
+
+    protected $fillable = [
+        'name',
+        'description'
+        ];
+
+
     public function diagnostics()
     {
         return $this->belongsToMany(Diagnostic::class, 'diagnostic_symptom');

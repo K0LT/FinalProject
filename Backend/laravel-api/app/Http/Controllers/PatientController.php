@@ -44,7 +44,7 @@ class PatientController extends Controller
             'user',
             'diagnostics',
             'treatments',
-            'treatmentGoals',
+            'treatmentGoals.symptoms',
             'treatmentGoals.goalMilestones',
             'exercises',
             'weightTrackings',

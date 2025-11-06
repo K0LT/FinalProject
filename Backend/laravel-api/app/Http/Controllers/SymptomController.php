@@ -13,7 +13,8 @@ class SymptomController extends Controller
      */
     public function index()
     {
-        //
+        $symptoms = Symptom::all();
+        return response()->json($symptoms);
     }
 
     /**
@@ -29,7 +30,10 @@ class SymptomController extends Controller
      */
     public function store(StoreSymptomRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $symptom = Symptom::create($data);
+        return response()->json($symptom);
     }
 
     /**
@@ -37,7 +41,7 @@ class SymptomController extends Controller
      */
     public function show(Symptom $symptom)
     {
-        //
+        return response()->json($symptom);
     }
 
     /**
@@ -53,7 +57,9 @@ class SymptomController extends Controller
      */
     public function update(UpdateSymptomRequest $request, Symptom $symptom)
     {
-        //
+        $data = $request->validated();
+        $symptom->update($data);
+        return response()->json($symptom);
     }
 
     /**
