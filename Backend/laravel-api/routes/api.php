@@ -9,10 +9,10 @@ Route::get('/user', function (Request $request) {
 
 
 //Allergies
-Route::get('allergies', [\App\Http\Controllers\AllergieController::class, 'index']);
-Route::get('allergies/{allergie}', [\App\Http\Controllers\AllergieController::class, 'show']);
-Route::post('allergies', [\App\Http\Controllers\AllergieController::class, 'store']);
-Route::put('allergies/{allergie}', [\App\Http\Controllers\AllergieController::class, 'update']);
+Route::get('allergies', [\App\Http\Controllers\AllergyController::class, 'index']);
+Route::get('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'show']);
+Route::post('allergies', [\App\Http\Controllers\AllergyController::class, 'store']);
+Route::put('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'update']);
 
 //Appointments
 Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index']);
