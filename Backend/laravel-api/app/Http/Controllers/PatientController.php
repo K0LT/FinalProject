@@ -43,6 +43,7 @@ class PatientController extends Controller
         $patient->load([
             'user',
             'diagnostics',
+            'diagnostics.symptoms',
             'treatments',
             'treatmentGoals',
             'treatmentGoals.goalMilestones',

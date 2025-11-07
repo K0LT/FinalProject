@@ -32,7 +32,12 @@ class DiagnosticController extends Controller
     {
         $data = $request->validated();
         $diagnostic = Diagnostic::create($data);
-        return response()->json($diagnostic);
+
+        if (!empty($data['symptom_ids'])) {
+            $diagnostic->symptoms()->sync($data['symptom_ids']);
+        }
+
+        return response()->json($diagnostic->load('symptoms'), 201);
     }
 
     /**
@@ -40,9 +45,6 @@ class DiagnosticController extends Controller
      */
     public function show(Diagnostic $diagnostic)
     {
-        $symptomsArray = array_map('trim', explode(',', $diagnostic->symptoms));
-        $diagnostic->symptoms = $symptomsArray;
-
         return response()->json($diagnostic);
     }
     /**
@@ -69,4 +71,5 @@ class DiagnosticController extends Controller
     {
         //
     }
+
 }
