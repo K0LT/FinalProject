@@ -58,7 +58,7 @@ class Patient extends Model
     }
 
     public function allergies(){
-        return $this->hasMany(Allergie::class);
+        return $this->hasMany(Allergy::class);
     }
 
     public function conditions(){
