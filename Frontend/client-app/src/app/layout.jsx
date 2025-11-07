@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import {Geist, Geist_Mono} from "next/font/google";
 import AppLayout from "@/components/layout/AppLayout";
 import "./globals.css";
 
@@ -18,6 +18,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  console.log(children);
   return (
       <html lang="pt-PT">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>

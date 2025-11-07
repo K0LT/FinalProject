@@ -3,11 +3,15 @@ import Topbar from "./Topbar";
 import Footer from "./Footer";
 
 export default function AppLayout({ children }) {
+    // In the future, we need to have the userID selected at this point
+    // We will use a static variable for the time being
+    const userId = 1;
+
     return (
         <div className="min-h-screen flex">
             {/* Sidebar */}
             <aside className="w-60 bg-white border-r shadow-sm flex-shrink-0">
-                <Sidebar />
+                <Sidebar props={{userId: userId}}/>
             </aside>
 
             {/* Main Area */}

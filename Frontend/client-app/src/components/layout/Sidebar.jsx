@@ -1,20 +1,18 @@
 'use client'
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import {usePathname} from "next/navigation";
 
-export default function Sidebar() {
+export default function Sidebar({props}) {
     const pathname = usePathname();
 
-    const id = 1;
-
     const menuItems = [
-        { label: "Perfil do Cliente", href: "/patient/" + id},
-        { label: "Consultas", href: "/appointments"},
-        { label: "Diagnóstico Energético", href: "/diagnoses/" + id},
-        { label: "Objectivos do Tratamento", href: "/treatments"},
-        { label: "Prescrição de Exercícios", href: "/exercises"},
-        { label: "Controlo de Peso", href: "/weight"},
+        {label: "Perfil do Cliente", href: "/patient/" + props.userId},
+        {label: "Consultas", href: "/appointments/" + props.userId},
+        {label: "Diagnóstico Energético", href: "/diagnoses/" + props.userId},
+        {label: "Objectivos do Tratamento", href: "/treatments/" + props.userId},
+        {label: "Prescrição de Exercícios", href: "/exercises/" + props.userId},
+        {label: "Controlo de Peso", href: "/weight/" + props.userId},
         { label: "Assistente IA", href: "/ai-assistant"},
     ];
 
