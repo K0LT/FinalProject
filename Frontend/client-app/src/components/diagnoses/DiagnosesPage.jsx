@@ -24,10 +24,8 @@ export default function DiagnosesPage() {
     const [diagnostics, setDiagnostics] = useState([]);
     const [treatments, setTreatments] = useState([]);
 
-
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-
 
     useEffect(() => {
         const ctrl = new AbortController();
@@ -49,7 +47,6 @@ export default function DiagnosesPage() {
     function handleClick(key) {
         setActiveButton(key);
     }
-
 
     return (
         <div>
