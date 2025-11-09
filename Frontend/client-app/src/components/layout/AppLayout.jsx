@@ -5,7 +5,7 @@ import Footer from "./Footer";
 export default function AppLayout({ children }) {
     // In the future, we need to have the userID selected at this point
     // We will use a static variable for the time being
-    const userId = 1;
+    const userId = 4;
 
     return (
         <div className="min-h-screen flex">

@@ -268,7 +268,7 @@ export default function NewDiagnosticModal({ open, onClose, setPostDiag }) {
                             className="rounded-xl border px-3 py-2"
                             value={form.pulse_quality}
                             onChange={handleChange}
-                            placeholder="ex.: Fino, Deslizante, Tenso"
+                            placeholder="ex.: Fino"
                         />
                     </div>
                     <div className="flex flex-col">

@@ -3,8 +3,8 @@ export default function DiagnosisCard({diagnostic_date, western_diagnosis, tcm_d
         className="rounded-2xl border border-amber-100 p-4 bg-white flex flex-col justify-between">
         <div className="flex flex-row justify-between">
             <div className="flex flex-col">
-                <span>{western_diagnosis}</span>
-                <span className="text-gray-500">{tcm_diagnosis}</span>
+                <span>{western_diagnosis ? western_diagnosis : "DEFAULT WESTERN DIAGNOSIS"}</span>
+                <span className="text-gray-500">{tcm_diagnosis ? tcm_diagnosis : "DEFAULT TCM DIAGNOSIS"}</span>
             </div>
             <div className="flex flex-col">
                 <div className="space-x-2">
