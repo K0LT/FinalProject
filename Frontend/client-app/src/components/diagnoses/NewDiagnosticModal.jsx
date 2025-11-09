@@ -4,7 +4,8 @@ import {getSymptoms} from "@/services/symptoms";
 
 export default function NewDiagnosticModal({ open, onClose, setPostDiag }) {
     const ref = useRef(null);
-    const [symptoms, setSymptoms] = useState(null);
+    const [symptoms, setSymptoms] = useState([]);
+    const [selected, setSelected] = useState([]);
     const [symptomsLoaded, setSymptomsLoaded] = useState(false);
     const [strippedSymptoms, setStrippedSymptoms] = useState([]);
 
@@ -15,7 +16,6 @@ export default function NewDiagnosticModal({ open, onClose, setPostDiag }) {
         western_diagnostic: "Diabetes tipo 2",
         tcm_diagnosis: "Qi do Baço em Afundamento",
         severity: "Moderada",
-        symptoms: ["dor no peito","espasmos musculares","diarreia"],
         pulse_quality: "",
         tongue_description: "Língua com fissuras",
     };
@@ -32,11 +32,14 @@ export default function NewDiagnosticModal({ open, onClose, setPostDiag }) {
     useEffect(() => {
         (async () => {
             try{
-                if(!symptoms){
+                if(symptoms.length === 0){
                     await getSymptoms().then((value) => {
+                        debugger;
                         setSymptoms(value);
-                        const minimals = value.map(({ id, name }) => ({ id, name }));
+                        const minimals = value.map(({id}) => ({id}));
                         setStrippedSymptoms(minimals);
+                        const selectArray = value.map(({id}) => ({id, isSelected : false}))
+                        setSelected(selectArray);
                     }
                     );
                 }
@@ -85,9 +88,11 @@ export default function NewDiagnosticModal({ open, onClose, setPostDiag }) {
             pulse_quality: form.pulse_quality?.trim() ? form.pulse_quality.trim() : null,
             western_diagnostic: form.western_diagnostic?.trim() || "",
             tcm_diagnosis: form.tcm_diagnosis?.trim() || "",
+            symptom_ids: selected.filter(s => s.isSelected).map(s => Number(s.id)),
             severity: form.severity || "",
             tongue_description: form.tongue_description?.trim() || "",
         };
+        debugger;
         setPostDiag(payload);
         postDiagnostic(payload)
             .then((response) => {
@@ -242,20 +247,28 @@ export default function NewDiagnosticModal({ open, onClose, setPostDiag }) {
                 {/* Symptoms / Tongue / Pulse */}
                 <section className="flex flex-row gap-4">
                     <div className="flex flex-col">
-                        <label className="text-sm text-gray-600 mb-1" htmlFor="symptoms">
-                            Simtomas
+                        <label className="flex flex-col text-sm text-gray-600 mb-1" htmlFor="symptoms">
+                            Sintomas
                         </label>
-                        <select
-                            id="symptoms"
-                            name="symptoms"
-                            className="rounded-xl border px-3 py-2"
-                            value={form.symptoms[0]}
-                            onChange={handleChange}
-                            required
-                        >
-                            <option value="">— selecione —</option>
-                            {form.symptoms.map((symptom, index) => <option key={index} value={0}>{symptom}</option>)}
-                        </select>
+                        <div className="flex flex-col overflow-auto h-50 rounded-xl border px-3 py-2">
+                            {symptoms.map((symptom, idx) => (
+                                <label key={symptom.id}>
+                                    <input
+                                        type="checkbox"
+                                        value={symptom.id}
+                                        checked={selected[idx]?.isSelected ?? false}
+                                        onChange={(e) =>
+                                            setSelected(prev => {
+                                                const next = [...prev];
+                                                next[idx] = { ...next[idx], id: symptom.id, isSelected: e.target.checked };
+                                                return next;
+                                            })
+                                        }
+                                    />
+                                    {symptom.name}
+                                </label>
+                            ))}
+                        </div>
                     </div>
                     <div className="flex flex-col">
                         <label className="text-sm text-gray-600 mb-1" htmlFor="pulse_quality">
