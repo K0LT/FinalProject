@@ -72,8 +72,21 @@ class PatientController extends Controller
     public function update(UpdatePatientRequest $request, Patient $patient)
     {
         $data = $request->validated();
+
+        if ($patient->user) {
+            $patient->user->update([
+                'name' => $request->name ?? $patient->user->name,
+                'surname' => $request->surname ?? $patient->user->surname,
+            ]);
+        }
+
         $patient->update($data);
-        return response()->json($patient);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Patient and user updated successfully.',
+            'patient' => $patient->load('user'),
+        ]);
     }
 
     /**
