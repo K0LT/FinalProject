@@ -89,6 +89,7 @@ export default function NewTreatmentModal({ open, onClose }) {
             patient_id: form.patient_id === "" ? null : Number(form.patient_id),
             diagnostic_id: form.diagnostic_id === "" ? null : Number(form.diagnostic_id),
             profile_id: form.profile_id === "" ? null : Number(form.profile_id),
+            session_date_time: form.session_date_time ? form.session_date_time.replace('T', ' ') : "",
             treatment_methods: form.treatment_methods?.trim() || "",
             acupoints_used: selectedPoints || "",
             duration: form.duration === "" ? null : Number(form.duration),

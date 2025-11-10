@@ -1,22 +1,23 @@
 'use client'
 import {use, useEffect, useState} from "react";
-import {getPatient} from "@/services/clients";
+import {getPatient} from "@/services/patients";
 import InfoRow from "@/components/ui/InfoRow";
 import Card from "@/components/ui/Card";
+import {useParams} from "next/navigation";
 
-export function PatientProfilePage({params}) {
+export function PatientProfilePage() {
     const [patient, setPatient] = useState([]);
-    const [user, setUser] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const slug = use(params);
+    const params = useParams();
 
     useEffect(() => {
         const ctrl = new AbortController();
         (async () => {
             try {
-                const data = await getPatient(slug.id);
+                const data = await getPatient(params.id);
+                debugger;
                 setPatient(data);
                 console.log("Fetched patient:", data);
             } catch (e) {
