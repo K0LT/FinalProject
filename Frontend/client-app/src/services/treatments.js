@@ -9,3 +9,8 @@ export async function getTreatments(id){
     const response = await api.get('/patients/' + id + '/treatments');
     return response.data;
 }
+
+export async function postTreatment(treatment){
+    const response = await api.post('/treatments', treatment);
+    return response.data;
+}

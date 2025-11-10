@@ -9,14 +9,15 @@ import NewDiagnosticModal from "@/components/diagnoses/NewDiagnosticModal";
 import ButtonRow from "@/components/ui/ButtonRow";
 import DiagnosisCard from "@/components/diagnoses/DiagnosisCard";
 import {useParams} from "next/navigation";
+import NewTreatmentModal from "@/components/treatments/NewTreatmentModal";
 
 export default function DiagnosesPage() {
     // These names are passed down to the buttons to swap the current card displays
     const names = ['Diagnoses', 'Treatment', 'Progress Notes'];
 
     const [activeButton, setActiveButton] = useState('diagnoses');
-    const [postedDiag, setPostedDiag] = useState(["DEFAULT POSTED DIAG"]);
-    const [open, setOpen] = useState(false);
+    const [diagOpen, setDiagOpen] = useState(false);
+    const [treatOpen, setTreatOpen] = useState(false);
 
     // This is how we grab information from the dynamic URL functionality provided by next
     const params = useParams();
@@ -55,14 +56,15 @@ export default function DiagnosesPage() {
 
             The postedDiag variable is set from within the dialog using setPostedDiag
             */}
-            <NewDiagnosticModal open={open} onClose={() => setOpen(false)} setPostDiag={setPostedDiag}/>
+            <NewDiagnosticModal open={diagOpen} onClose={() => setDiagOpen(false)}/>
+            <NewTreatmentModal open={treatOpen} onclose={() => setTreatOpen(false)}/>
 
             <div className="flex flex-row justify-between">
                 <h2>Diagnoses & Treatment</h2>
                 <div className="space-x-2">
                     <button
                         className="rounded-lg border border-amber-200 py-1 px-2 hover:text-yellow-600 hover:bg-gray-50"
-                        onClick={() => setOpen(true)}>
+                        onClick={() => setDiagOpen(true)}>
                         + New Diagnosis
                     </button>
                     <button className="rounded-lg bg-yellow-600 text-white py-1 px-2 hover:bg-yellow-500">

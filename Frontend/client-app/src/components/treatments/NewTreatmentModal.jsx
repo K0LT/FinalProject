@@ -1,26 +1,41 @@
-import { useEffect, useRef, useState } from "react";
+/*
+{ TREATMENT FIELDS
+    "id": 1,
+    "diagnostic_id": 39,
+    "patient_id": 14,
+    "profile_id": 3,
+    "session_date_time": "2025-06-08 18:41:04",
+    "treatment_methods": "Exercícios de respiração",
+    "acupoints_used": "CV4, BL32, SP6",
+    "duration": 60,
+    "notes": "Paciente apresentou melhora nos sintomas.",
+    "next_session": "2026-09-16",
+    "created_at": "2025-11-09T15:12:04.000000Z",
+    "updated_at": "2025-11-09T15:12:04.000000Z"
+},*/
+
+import {useEffect, useRef, useState} from "react";
 import {postDiagnostic} from "@/services/diagnostics";
-import {getSymptoms} from "@/services/symptoms";
 
-export default function NewDiagnosticModal({ open, onClose}) {
+export default function NewTreatmentModal({open, onClose}){
     const ref = useRef(null);
-    const [symptoms, setSymptoms] = useState([]);
-    const [selected, setSelected] = useState([]);
-    const [symptomsLoaded, setSymptomsLoaded] = useState(false);
-    const [strippedSymptoms, setStrippedSymptoms] = useState([]);
 
-    const templateDiag = {
-        patient_id: 17,
-        profile_id: 4,
-        diagnostic_date: "2026-04-09",
-        western_diagnostic: "Diabetes tipo 2",
-        tcm_diagnosis: "Qi do Baço em Afundamento",
-        severity: "Moderada",
-        pulse_quality: "",
-        tongue_description: "Língua com fissuras",
-    };
+    const templateTreatment = {
+        diagnostic_id: 39,
+        patient_id: 14,
+        profile_id: 3,
+        // Check time format on debug
+        session_date_time: Date.now(),
+        treatment_methods: "Template Treatment",
+        // Create hardcoded array of acupoints
+        acupoints_used: "CV4, BL32, SP6",
+        duration: 60,
+        notes: "Patient shows improvement, etc..",
+        next_session: Date.now(),
+    }
 
-    const [form, setForm] = useState(() => ({ ...templateDiag }));
+    const [form, setForm] = useState(...templateTreatment);
+
 
     useEffect(() => {
         const dlg = ref.current;
@@ -28,34 +43,6 @@ export default function NewDiagnosticModal({ open, onClose}) {
         if (open) dlg.showModal?.();
         else dlg.close?.();
     }, [open]);
-
-    useEffect(() => {
-        (async () => {
-            try{
-                if(symptoms.length === 0){
-                    await getSymptoms().then((value) => {
-                        debugger;
-                        setSymptoms(value);
-                        const minimals = value.map(({id}) => ({id}));
-                        setStrippedSymptoms(minimals);
-                        const selectArray = value.map(({id}) => ({id, isSelected : false}))
-                        setSelected(selectArray);
-                    }
-                    );
-                }
-            }
-            catch (e) {
-                console.log(e);
-            }
-            finally{
-                setSymptomsLoaded(true);
-            }
-        }
-        )();
-        if(symptomsLoaded){
-            console.log("Loaded symptoms!\n", strippedSymptoms);
-        }
-    }, []);
 
     const handleBackdropClick = (event) => {
         if (event.target === ref.current) {
@@ -84,9 +71,9 @@ export default function NewDiagnosticModal({ open, onClose}) {
         const payload = {
             ...form,
             patient_id: form.patient_id === "" ? null : Number(form.patient_id),
-            profile_id: form.profile_id === "" ? null : Number(form.profile_id),
-            pulse_quality: form.pulse_quality?.trim() ? form.pulse_quality.trim() : null,
-            western_diagnostic: form.western_diagnostic?.trim() || "",
+            diagnostic_id: form.diagnostic_id === "" ? null : Number(form.diagnostic_id),
+            treatment_methods: form.treatment_methods?.trim() ? form.treatment_methods.trim() : null,
+            notes: form.western_diagnostic?.trim() || "",
             tcm_diagnosis: form.tcm_diagnosis?.trim() || "",
             symptom_ids: selected.filter(s => s.isSelected).map(s => Number(s.id)),
             severity: form.severity || "",
@@ -331,4 +318,5 @@ export default function NewDiagnosticModal({ open, onClose}) {
             </form>
         </dialog>
     );
+
 }
