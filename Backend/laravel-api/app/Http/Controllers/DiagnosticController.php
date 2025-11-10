@@ -45,6 +45,8 @@ class DiagnosticController extends Controller
      */
     public function show(Diagnostic $diagnostic)
     {
+        $diagnostic->load('symptoms');
+
         return response()->json($diagnostic);
     }
     /**
