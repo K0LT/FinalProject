@@ -46,6 +46,10 @@ class PatientPolicy
      */
     public function update(User $user, Patient $patient): bool
     {
+        if($user->role->name === "Admin" || $user->patient->id === $patient->id){
+            return true;
+        }
+
         return false;
     }
 

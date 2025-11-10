@@ -23,9 +23,11 @@ Route::post('allergies', [\App\Http\Controllers\AllergyController::class, 'store
 Route::patch('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'update']);
 
 //Appointments
-Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index']);
+Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index'])
+    ->middleware('can:viewAny,App\Models\Appointment');
 Route::post('appointments', [\App\Http\Controllers\AppointmentController::class, 'store']);
-Route::get('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show']);
+Route::get('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show'])
+    ->middleware('can:view,appointment');
 Route::patch('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'update']);
 
 //Conditions
@@ -74,7 +76,9 @@ Route::patch('nutritional_goals/{nutritional_goal}', [\App\Http\Controllers\Nutr
 Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index'])
 ->middleware('can:viewAny,App\Models\Patient');
 
-Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'show']);
+Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'show'])
+    ->middleware('can:view,patient');
+
 Route::post('patients', [\App\Http\Controllers\PatientController::class, 'store']);
 Route::patch('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'update']);
 Route::get('patients/{patient}/{relation}', [\App\Http\Controllers\PatientController::class, 'get_relation']);
