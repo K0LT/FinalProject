@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -7,6 +8,13 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::post('login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+
+
+
+Route::middleware('auth:sanctum')->group(function () {
 
 //Allergies
 Route::get('allergies', [\App\Http\Controllers\AllergyController::class, 'index']);
@@ -63,7 +71,9 @@ Route::post('nutritional_goals', [\App\Http\Controllers\NutritionalGoalControlle
 Route::patch('nutritional_goals/{nutritional_goal}', [\App\Http\Controllers\NutritionalGoalController::class, 'update']);
 
 //Patients
-Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index']);
+Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index'])
+->middleware('can:viewAny,App\Models\Patient');
+
 Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'show']);
 Route::post('patients', [\App\Http\Controllers\PatientController::class, 'store']);
 Route::patch('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'update']);
@@ -110,6 +120,7 @@ Route::post('symptoms', [\App\Http\Controllers\SymptomController::class, 'store'
 Route::get('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'show']);
 Route::patch('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'update']);
 
+});
 
 
 
