@@ -57,7 +57,7 @@ export default function DiagnosesPage() {
             The postedDiag variable is set from within the dialog using setPostedDiag
             */}
             <NewDiagnosticModal open={diagOpen} onClose={() => setDiagOpen(false)}/>
-            <NewTreatmentModal open={treatOpen} onclose={() => setTreatOpen(false)}/>
+            <NewTreatmentModal open={treatOpen} onClose={() => setTreatOpen(false)}/>
 
             <div className="flex flex-row justify-between">
                 <h2>Diagnoses & Treatment</h2>
@@ -67,7 +67,8 @@ export default function DiagnosesPage() {
                         onClick={() => setDiagOpen(true)}>
                         + New Diagnosis
                     </button>
-                    <button className="rounded-lg bg-yellow-600 text-white py-1 px-2 hover:bg-yellow-500">
+                    <button className="rounded-lg bg-yellow-600 text-white py-1 px-2 hover:bg-yellow-500"
+                        onClick={() => setTreatOpen(true)}>
                         + New Treatment
                     </button>
                 </div>

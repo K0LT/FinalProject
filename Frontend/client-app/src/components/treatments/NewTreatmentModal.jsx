@@ -1,41 +1,42 @@
-/*
-{ TREATMENT FIELDS
-    "id": 1,
-    "diagnostic_id": 39,
-    "patient_id": 14,
-    "profile_id": 3,
-    "session_date_time": "2025-06-08 18:41:04",
-    "treatment_methods": "Exercícios de respiração",
-    "acupoints_used": "CV4, BL32, SP6",
-    "duration": 60,
-    "notes": "Paciente apresentou melhora nos sintomas.",
-    "next_session": "2026-09-16",
-    "created_at": "2025-11-09T15:12:04.000000Z",
-    "updated_at": "2025-11-09T15:12:04.000000Z"
-},*/
+import { useEffect, useRef, useState } from "react";
+import { postTreatment } from "@/services/treatments";
 
-import {useEffect, useRef, useState} from "react";
-import {postDiagnostic} from "@/services/diagnostics";
-
-export default function NewTreatmentModal({open, onClose}){
+export default function NewTreatmentModal({ open, onClose }) {
     const ref = useRef(null);
 
     const templateTreatment = {
         diagnostic_id: 39,
         patient_id: 14,
         profile_id: 3,
-        // Check time format on debug
-        session_date_time: Date.now(),
-        treatment_methods: "Template Treatment",
-        // Create hardcoded array of acupoints
+        session_date_time: "",
+        treatment_methods: "Exercícios de respiração",
         acupoints_used: "CV4, BL32, SP6",
         duration: 60,
-        notes: "Patient shows improvement, etc..",
-        next_session: Date.now(),
-    }
+        notes: "Paciente apresentou melhora nos sintomas.",
+        next_session: "",
+    };
 
-    const [form, setForm] = useState(...templateTreatment);
+    const [form, setForm] = useState({ ...templateTreatment });
 
+
+    const commonAcupoints = [
+        { id: "CV4", name: "CV4 - Guanyuan" },
+        { id: "BL32", name: "BL32 - Ciliao" },
+        { id: "SP6", name: "SP6 - Sanyinjiao" },
+        { id: "LI4", name: "LI4 - Hegu" },
+        { id: "ST36", name: "ST36 - Zusanli" },
+        { id: "GB34", name: "GB34 - Yanglingquan" },
+        { id: "LV3", name: "LV3 - Taichong" },
+        { id: "PC6", name: "PC6 - Neiguan" },
+    ];
+
+    const [selectedAcupoints, setSelectedAcupoints] = useState(
+        commonAcupoints.map((point) => ({
+            id: point.id,
+            name: point.name,
+            isSelected: ["CV4", "BL32", "SP6"].includes(point.id),
+        }))
+    );
 
     useEffect(() => {
         const dlg = ref.current;
@@ -58,31 +59,50 @@ export default function NewTreatmentModal({open, onClose}){
 
     const handleNumberChange = (e) => {
         const { name, value } = e.target;
-        setForm((prev) => ({ ...prev, [name]: value === "" ? "" : Number(value) }));
+        setForm((prev) => ({
+            ...prev,
+            [name]: value === "" ? "" : Number(value),
+        }));
     };
 
     const resetToTemplate = () => {
-        setForm({ ...templateDiag });
+        setForm({ ...templateTreatment });
+        setSelectedAcupoints(
+            commonAcupoints.map((point) => ({
+                id: point.id,
+                name: point.name,
+                isSelected: ["CV4", "BL32", "SP6"].includes(point.id),
+            }))
+        );
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        const selectedPoints = selectedAcupoints
+            .filter((p) => p.isSelected)
+            .map((p) => p.id)
+            .join(", ");
+
         const payload = {
             ...form,
             patient_id: form.patient_id === "" ? null : Number(form.patient_id),
             diagnostic_id: form.diagnostic_id === "" ? null : Number(form.diagnostic_id),
-            treatment_methods: form.treatment_methods?.trim() ? form.treatment_methods.trim() : null,
-            notes: form.western_diagnostic?.trim() || "",
-            tcm_diagnosis: form.tcm_diagnosis?.trim() || "",
-            symptom_ids: selected.filter(s => s.isSelected).map(s => Number(s.id)),
-            severity: form.severity || "",
-            tongue_description: form.tongue_description?.trim() || "",
+            profile_id: form.profile_id === "" ? null : Number(form.profile_id),
+            treatment_methods: form.treatment_methods?.trim() || "",
+            acupoints_used: selectedPoints || "",
+            duration: form.duration === "" ? null : Number(form.duration),
+            notes: form.notes?.trim() || "",
         };
-        postDiagnostic(payload)
+
+        debugger;
+
+        postTreatment(payload)
             .then((response) => {
+                console.log("Treatment saved:", response);
             })
             .catch((error) => console.log(error));
+
         onClose();
         ref.current?.close();
     };
@@ -102,7 +122,7 @@ export default function NewTreatmentModal({open, onClose}){
         >
             <form onSubmit={handleSubmit} className="p-6">
                 <header className="mb-4 flex items-center justify-between">
-                    <h2 className="text-xl font-semibold tracking-tight">Novo Diagnóstico</h2>
+                    <h2 className="text-xl font-semibold tracking-tight">Novo Tratamento</h2>
                     <div className="space-x-2">
                         <button
                             type="button"
@@ -141,10 +161,11 @@ export default function NewTreatmentModal({open, onClose}){
                             className="rounded-xl border px-3 py-2"
                             value={form.patient_id}
                             onChange={handleNumberChange}
-                            placeholder="ex.: 17"
+                            placeholder="ex.: 14"
                             required
                         />
                     </div>
+
                     <div className="flex flex-col">
                         <label className="text-sm text-gray-600 mb-1" htmlFor="profile_id">
                             ID do Perfil
@@ -157,166 +178,143 @@ export default function NewTreatmentModal({open, onClose}){
                             className="rounded-xl border px-3 py-2"
                             value={form.profile_id}
                             onChange={handleNumberChange}
-                            placeholder="ex.: 4"
+                            placeholder="ex.: 3"
                             required
                         />
                     </div>
+
                     <div className="flex flex-col">
-                        <label className="text-sm text-gray-600 mb-1" htmlFor="diagnostic_date">
-                            Data do Diagnóstico
+                        <label className="text-sm text-gray-600 mb-1" htmlFor="diagnostic_id">
+                            ID do Diagnóstico
                         </label>
                         <input
-                            id="diagnostic_date"
-                            name="diagnostic_date"
-                            type="date"
+                            id="diagnostic_id"
+                            name="diagnostic_id"
+                            type="number"
+                            inputMode="numeric"
                             className="rounded-xl border px-3 py-2"
-                            value={form.diagnostic_date}
-                            onChange={handleChange}
+                            value={form.diagnostic_id}
+                            onChange={handleNumberChange}
+                            placeholder="ex.: 39"
                             required
                         />
                     </div>
+
                     <div className="flex flex-col">
-                        <label className="text-sm text-gray-600 mb-1" htmlFor="severity">
-                            Gravidade
+                        <label className="text-sm text-gray-600 mb-1" htmlFor="duration">
+                            Duração (minutos)
                         </label>
-                        <select
-                            id="severity"
-                            name="severity"
+                        <input
+                            id="duration"
+                            name="duration"
+                            type="number"
+                            inputMode="numeric"
                             className="rounded-xl border px-3 py-2"
-                            value={form.severity}
-                            onChange={handleChange}
+                            value={form.duration}
+                            onChange={handleNumberChange}
+                            placeholder="ex.: 60"
                             required
-                        >
-                            <option value="">— selecione —</option>
-                            <option>Leve</option>
-                            <option>Moderada</option>
-                            <option>Grave</option>
-                        </select>
+                        />
                     </div>
                 </section>
 
-                {/* Western / TCM */}
+                {/* Session Dates */}
                 <section className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div className="flex flex-col">
-                        <label className="text-sm text-gray-600 mb-1" htmlFor="western_diagnostic">
-                            Diagnóstico Ocidental
+                        <label className="text-sm text-gray-600 mb-1" htmlFor="session_date_time">
+                            Data e Hora da Sessão
                         </label>
                         <input
-                            id="western_diagnostic"
-                            name="western_diagnostic"
-                            type="text"
+                            id="session_date_time"
+                            name="session_date_time"
+                            type="datetime-local"
                             className="rounded-xl border px-3 py-2"
-                            value={form.western_diagnostic}
+                            value={form.session_date_time}
                             onChange={handleChange}
-                            placeholder="ex.: Diabetes tipo 2"
                             required
                         />
                     </div>
+
                     <div className="flex flex-col">
-                        <label className="text-sm text-gray-600 mb-1" htmlFor="tcm_diagnosis">
-                            Diagnóstico MTC
+                        <label className="text-sm text-gray-600 mb-1" htmlFor="next_session">
+                            Próxima Sessão
                         </label>
                         <input
-                            id="tcm_diagnosis"
-                            name="tcm_diagnosis"
+                            id="next_session"
+                            name="next_session"
+                            type="date"
+                            className="rounded-xl border px-3 py-2"
+                            value={form.next_session}
+                            onChange={handleChange}
+                        />
+                    </div>
+                </section>
+
+                {/* Treatment Methods */}
+                <section className="mb-6">
+                    <div className="flex flex-col">
+                        <label className="text-sm text-gray-600 mb-1" htmlFor="treatment_methods">
+                            Métodos de Tratamento
+                        </label>
+                        <input
+                            id="treatment_methods"
+                            name="treatment_methods"
                             type="text"
                             className="rounded-xl border px-3 py-2"
-                            value={form.tcm_diagnosis}
+                            value={form.treatment_methods}
                             onChange={handleChange}
-                            placeholder="ex.: Qi do Baço em Afundamento"
+                            placeholder="ex.: Exercícios de respiração, Acupuntura"
                             required
                         />
                     </div>
                 </section>
 
-                {/* Symptoms / Tongue / Pulse */}
-                <section className="flex flex-row gap-4">
+                {/* Acupoints & Notes */}
+                <section className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div className="flex flex-col">
-                        <label className="flex flex-col text-sm text-gray-600 mb-1" htmlFor="symptoms">
-                            Sintomas
-                        </label>
-                        <div className="flex flex-col overflow-auto h-50 rounded-xl border px-3 py-2">
-                            {symptoms.map((symptom, idx) => (
-                                <label key={symptom.id}>
+                        <label className="text-sm text-gray-600 mb-1">Pontos de Acupuntura</label>
+                        <div className="flex flex-col overflow-auto max-h-48 rounded-xl border px-3 py-2">
+                            {commonAcupoints.map((point, idx) => (
+                                <label key={point.id} className="flex items-center gap-2 py-1">
                                     <input
                                         type="checkbox"
-                                        value={symptom.id}
-                                        checked={selected[idx]?.isSelected ?? false}
+                                        value={point.id}
+                                        checked={selectedAcupoints[idx]?.isSelected ?? false}
                                         onChange={(e) =>
-                                            setSelected(prev => {
+                                            setSelectedAcupoints((prev) => {
                                                 const next = [...prev];
-                                                next[idx] = { ...next[idx], id: symptom.id, isSelected: e.target.checked };
+                                                next[idx] = {
+                                                    ...next[idx],
+                                                    id: point.id,
+                                                    name: point.name,
+                                                    isSelected: e.target.checked,
+                                                };
                                                 return next;
                                             })
                                         }
                                     />
-                                    {symptom.name}
+                                    <span className="text-sm">{point.name}</span>
                                 </label>
                             ))}
                         </div>
                     </div>
+
                     <div className="flex flex-col">
-                        <label className="text-sm text-gray-600 mb-1" htmlFor="pulse_quality">
-                            Qualidade do Pulso (opcional)
+                        <label className="text-sm text-gray-600 mb-1" htmlFor="notes">
+                            Notas
                         </label>
-                        <input
-                            id="pulse_quality"
-                            name="pulse_quality"
-                            type="text"
-                            className="rounded-xl border px-3 py-2"
-                            value={form.pulse_quality}
+                        <textarea
+                            id="notes"
+                            name="notes"
+                            rows="8"
+                            className="rounded-xl border px-3 py-2 resize-none"
+                            value={form.notes}
                             onChange={handleChange}
-                            placeholder="ex.: Fino"
-                        />
-                    </div>
-                    <div className="flex flex-col">
-                        <label className="text-sm text-gray-600 mb-1" htmlFor="tongue_description">
-                            Língua
-                        </label>
-                        <input
-                            id="tongue_description"
-                            name="tongue_description"
-                            type="text"
-                            className="rounded-xl border px-3 py-2"
-                            value={form.tongue_description}
-                            onChange={handleChange}
-                            placeholder="ex.: Língua com fissuras"
-                            required
+                            placeholder="ex.: Paciente apresentou melhora nos sintomas..."
                         />
                     </div>
                 </section>
-
-                {/* Technical / timestamps (read-only)
-                <section className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 text-sm">
-                    <div className="flex flex-col">
-                        <label className="text-gray-500 mb-1" htmlFor="created_at">
-                            Criado em (definido ao guardar)
-                        </label>
-                        <input
-                            id="created_at"
-                            name="created_at"
-                            type="text"
-                            className="rounded-xl border px-3 py-2 bg-gray-50"
-                            value={form.created_at}
-                            readOnly
-                        />
-                    </div>
-                    <div className="flex flex-col">
-                        <label className="text-gray-500 mb-1" htmlFor="updated_at">
-                            Atualizado em (definido ao guardar)
-                        </label>
-                        <input
-                            id="updated_at"
-                            name="updated_at"
-                            type="text"
-                            className="rounded-xl border px-3 py-2 bg-gray-50"
-                            value={form.updated_at}
-                            readOnly
-                        />
-                    </div>
-                </section>*/}
             </form>
         </dialog>
     );
-
 }

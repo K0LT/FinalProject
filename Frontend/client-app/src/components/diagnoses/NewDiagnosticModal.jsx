@@ -34,7 +34,6 @@ export default function NewDiagnosticModal({ open, onClose}) {
             try{
                 if(symptoms.length === 0){
                     await getSymptoms().then((value) => {
-                        debugger;
                         setSymptoms(value);
                         const minimals = value.map(({id}) => ({id}));
                         setStrippedSymptoms(minimals);
@@ -80,7 +79,6 @@ export default function NewDiagnosticModal({ open, onClose}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         const payload = {
             ...form,
             patient_id: form.patient_id === "" ? null : Number(form.patient_id),
