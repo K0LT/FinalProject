@@ -51,11 +51,6 @@ export default function DiagnosesPage() {
 
     return (
         <div>
-            {/*
-            Dialog PopUp (rendered at the top so it doesn't inherit the following CSS)
-
-            The postedDiag variable is set from within the dialog using setPostedDiag
-            */}
             <NewDiagnosticModal open={diagOpen} onClose={() => setDiagOpen(false)}/>
             <NewTreatmentModal open={treatOpen} onClose={() => setTreatOpen(false)}/>
 

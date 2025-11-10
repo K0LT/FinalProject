@@ -4,11 +4,13 @@ import {getPatient} from "@/services/patients";
 import InfoRow from "@/components/ui/InfoRow";
 import Card from "@/components/ui/Card";
 import {useParams} from "next/navigation";
+import UpdatePatientModal from "@/components/patient/UpdatePatientModal";
 
 export function PatientProfilePage() {
     const [patient, setPatient] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [open, setOpen] = useState(false);
 
     const params = useParams();
 
@@ -43,9 +45,11 @@ export function PatientProfilePage() {
 
     return (
         <div className="flex flex-col gap-4">
+            {open ? <UpdatePatientModal patient={safePatient} onClose={() => setOpen(false)} open={open} patientId={params.id} /> : " "}
+
             <div className="flex flex-col lg:flex-row gap-4">
                 <div className="flex-1">
-                    <PatientCard patient={safePatient} />
+                    <PatientCard patient={safePatient} setOpen={setOpen}/>
                 </div>
                 <div className="lg:w-80">
                     <PatientAppointmentInfoCard patient={safePatient}/>
@@ -109,7 +113,7 @@ function PatientEmergencyContact({patient}){
     </div>
 }
 
-function PatientCard({ patient }) {
+function PatientCard({ patient, setOpen }) {
     return (
         <Card className="h-full">
             <div className="flex gap-4">
@@ -123,7 +127,7 @@ function PatientCard({ patient }) {
                             <div className="text-lg font-semibold">{patient.user.name}</div>
                             <div className="text-sm opacity-70">ID do Paciente: #{patient.id}</div>
                         </div>
-                        <button className="rounded-md border px-3 py-2 text-sm whitespace-nowrap">Editar Perfil</button>
+                        <button className="rounded-md border px-3 py-2 text-sm whitespace-nowrap" onClick={() => setOpen(true)}>Editar Perfil</button>
                     </div>
 
                     <div className="grid grid-cols-2 gap-2">

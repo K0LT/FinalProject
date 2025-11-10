@@ -26,8 +26,9 @@ export default function TreatmentsCard({session_date_time, treatment_methods, ac
                 <span>{notes}</span>
             </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col mt-2">
             <hr className="border-amber-200 border-0"/>
+            <span>Próxima Sessão</span>
             <span className="text-gray-500">{next_session}</span>
         </div>
     </section>
