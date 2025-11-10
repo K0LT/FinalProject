@@ -96,7 +96,6 @@ export default function NewTreatmentModal({ open, onClose }) {
             notes: form.notes?.trim() || "",
         };
 
-        debugger;
 
         postTreatment(payload)
             .then((response) => {

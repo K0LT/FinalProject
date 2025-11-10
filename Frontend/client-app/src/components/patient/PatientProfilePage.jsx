@@ -17,7 +17,6 @@ export function PatientProfilePage() {
         (async () => {
             try {
                 const data = await getPatient(params.id);
-                debugger;
                 setPatient(data);
                 console.log("Fetched patient:", data);
             } catch (e) {
@@ -43,24 +42,70 @@ export function PatientProfilePage() {
     const safePatient = { ...patient, user: { name: "", ...(patient.user || {}) } };
 
     return (
-        <div>
-            <PatientCard patient={safePatient} />
-        </div>
-    );
-}
 
-function PatientHeaderCard({ patient }) {
-    return (
-        <div className="flex flex-col">
-            <div className="flex flex-row space-x-2">
-                <div id="patientIcon" className="flex">ICON</div>
-                <div className="flex flex-col w-full">
-                    <span className="flex">FIRST NAME</span>
-                    <span className="flex">Patient ID info</span>
-                </div>
+        <div className="flex flex-col space-x-2 gap-4">
+            <div className="flex flex-row gap-4">
+                <PatientCard patient={safePatient} />
+                <PatientAppointmentInfoCard patient={safePatient}/>
+            </div>
+            <div className="flex flex-row gap-4">
+                <PatientConditions patient={safePatient}/>
+                <PatientAllergies patient={safePatient}/>
+                <PatientEmergencyContact patient={safePatient}/>
             </div>
         </div>
-    );
+        );
+}
+
+function PatientAppointmentInfoCard({patient}){
+    return <div className="flex flex-col justify-between rounded-2xl border border-amber-100 p-4 bg-white gap-4">
+        <span>Informações da Consulta</span>
+        <div className="flex flex-col mt-6">
+            <span className="text-gray-500">Cliente Desde</span>
+            <span>{patient.client_since ? patient.client_since : "data-cliente-desde"}</span>
+        </div>
+        <div className="flex flex-col">
+            <span className="text-gray-500">Última Visita</span>
+            <span>{patient.last_visit ? patient.last_visit : "data-ultima-visita"}</span>
+        </div>
+        <div className="flex flex-col">
+            <span className="text-gray-500">Próxima Consulta</span>
+            <span>{patient.next_appointment ? patient.next_appointment : "data-proxima-consulta"}</span>
+        </div>
+    </div>
+}
+
+function PatientConditions({patient}){
+    return <div className="flex flex-col justify-between rounded-2xl border border-amber-100 p-4 bg-white gap-2">
+        <span>Condições Atuais</span>
+        <div className="flex flex-col mt-2">
+            <div className="flex flex-row space-x-2 pt-1.5">{patient.conditions ?
+                patient.conditions.map((condition) => (
+                <div key={condition.id} className="border rounded-lg border-amber-200 text-sm px-1.5">{condition.name}</div>
+            )) : <div key="no-conditions" className="border rounded-lg border-amber-200 text-sm px-1.5">Nenhuma registada</div> }</div>
+        </div>
+    </div>
+}
+
+function PatientAllergies({patient}){
+    return <div className="flex flex-col justify-between rounded-2xl border border-amber-100 p-4 bg-white gap-2">
+        <span>Alergias</span>
+        <div className="flex flex-col mt-2">
+            <div className="flex flex-row space-x-2 pt-1.5">{patient.allergies ?
+                patient.allergies.map((allergy) => (
+                    <div key={allergy.id} className="border rounded-lg border-amber-200 text-sm px-1.5">{allergy.allergen}</div>
+                )) : <div key="no-conditions" className="border rounded-lg border-amber-200 text-sm px-1.5">Nenhuma registada</div> }</div>
+        </div>
+    </div>
+}
+
+function PatientEmergencyContact({patient}){
+    return <div className="flex flex-col justify-between rounded-2xl border border-amber-100 p-4 bg-white gap-2">
+        <span>Contacto de Emergência</span>
+        <span>{patient.emergency_contact_name}</span>
+        <span className="text-gray-500">{patient.emergency_contact_relation}</span>
+        <span>{patient.emergency_contact_phone}</span>
+    </div>
 }
 
 function PatientCard({ patient }) {
