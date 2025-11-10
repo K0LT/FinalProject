@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(WeightTrackingSeeder::class);
         $this->call(NutritionalGoalSeeder::class);
         $this->call(DailyNutritionSeeder::class);
-        $this->call(AllergieSeeder::class);
+        $this->call(AllergySeeder::class);
         $this->call(ProgressNoteSeeder::class);
         $this->call(ConditionSeeder::class);
         $this->call(GoalMilestoneSeeder::class);

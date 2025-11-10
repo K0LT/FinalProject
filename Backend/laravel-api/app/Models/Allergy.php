@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Allergie extends Model
+class Allergy extends Model
 {
-    /** @use HasFactory<\Database\Factories\AllergieFactory> */
+    /** @use HasFactory<\Database\Factories\AllergyFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -21,4 +21,5 @@ class Allergie extends Model
     public function patient(){
         return $this->belongsTo(Patient::class);
     }
+
 }

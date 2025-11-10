@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAllergieRequest extends FormRequest
+class StoreAllergyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,6 @@ class StoreAllergieRequest extends FormRequest
             'reaction_type' => 'required|string|max:255',
             'severity' => 'required|string|in:Leve,Moderada,Grave',
             'notes' => 'required|string',
-
         ];
     }
 }

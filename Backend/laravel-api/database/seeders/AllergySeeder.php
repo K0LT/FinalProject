@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Allergie;
+use App\Models\Allergy;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class AllergieSeeder extends Seeder
+class AllergySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Allergie::factory(100)->create();
+        Allergy::factory(100)->create();
     }
 }
