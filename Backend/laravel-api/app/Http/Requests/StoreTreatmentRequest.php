@@ -29,7 +29,7 @@ class StoreTreatmentRequest extends FormRequest
             'treatment_methods' => 'nullable|string',
             'acupoints_used' => 'nullable|string',
             'duration' => 'nullable|integer',
-            'notes' => 'nullable|text',
+            'notes' => 'nullable|string',
             'next_session' => 'nullable|date',
         ];
     }
