@@ -42,6 +42,7 @@ class PatientController extends Controller
     {
         $patient->load([
             'user',
+            'appointments',
             'diagnostics',
             'diagnostics.symptoms',
             'treatments',
