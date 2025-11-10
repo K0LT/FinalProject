@@ -66,6 +66,7 @@ Route::put('nutritional_goals/{nutritional_goal}', [\App\Http\Controllers\Nutrit
 Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index']);
 Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'show']);
 Route::post('patients', [\App\Http\Controllers\PatientController::class, 'store']);
+Route::put('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'update']);
 Route::get('patients/{patient}/{relation}', [\App\Http\Controllers\PatientController::class, 'get_relation']);
 
 //ProgressNotes
