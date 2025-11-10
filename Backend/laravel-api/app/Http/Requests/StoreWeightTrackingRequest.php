@@ -26,7 +26,7 @@ class StoreWeightTrackingRequest extends FormRequest
             'weight' => 'required|integer',
             'body_fat_percentage' => 'nullable|decimal:1',
             'measurement_date' => 'required|date',
-            'notes' => 'nullable|text',
+            'notes' => 'nullable|string',
         ];
     }
 }
