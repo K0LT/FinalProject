@@ -17,7 +17,6 @@ class AllergyController extends Controller
 
             $allergies = Allergy::all();
             return response()->json([
-                'success' => true,
                 'data' => $allergies,
                 ], 200);
 
@@ -25,7 +24,6 @@ class AllergyController extends Controller
 
             \Log::error('Ocorreu um erro ao obter alergias.' . $e->getMessage());
             return response()->json([
-                'success' => false,
                 'message' => 'Ocorreu um erro ao obter alergias.',
             ], 500);
         }
