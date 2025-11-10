@@ -28,7 +28,8 @@ class UpdateDiagnosticRequest extends FormRequest
             'western_diagnosis' => 'nullable|string|max:255',
             'tcm_diagnosis' => 'nullable|string|max:255',
             'severity' => 'nullable|string|max:255',
-            'symptoms' => 'nullable|string|max:255',
+            'symptom_ids' => ['array'],
+            'symptom_ids.*' => ['integer', 'exists:symptoms,id'],
             'pulse_quality' => 'nullable|string|max:255',
             'tongue_description' => 'nullable|string|max:255',
         ];

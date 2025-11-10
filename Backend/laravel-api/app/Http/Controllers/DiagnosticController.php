@@ -64,7 +64,13 @@ class DiagnosticController extends Controller
     {
         $data = $request->validated();
         $diagnostic->update($data);
-        return response()->json($diagnostic);
+
+        //Depois do diagnostico já estar editado, é preciso adicionar na tabela intermédia o diagnostico e os sintomas.
+        //Consoante o que vier, dá sync e atualiza a tabela intermédia.
+
+        $diagnostic->symptoms()->sync($data['symptom_ids'] ?? []);
+
+        return response()->json($diagnostic->load('symptoms'));
     }
     /**
      * Remove the specified resource from storage.
