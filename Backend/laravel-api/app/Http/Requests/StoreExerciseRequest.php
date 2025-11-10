@@ -23,12 +23,12 @@ class StoreExerciseRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'description' => 'nullable|text',
+            'description' => 'nullable|string',
             'category' => 'required|string|max:255',
             'difficulty_level' => 'required|string|in:Fácil,Moderado,Difícil',
-            'instructions' => 'nullable|text',
-            'benefits' => 'nullable|text',
-            'precautions' => 'nullable|text',
+            'instructions' => 'nullable|string',
+            'benefits' => 'nullable|string',
+            'precautions' => 'nullable|string',
             'video_url' => 'nullable|string',
             'image_url' => 'nullable|string',
         ];

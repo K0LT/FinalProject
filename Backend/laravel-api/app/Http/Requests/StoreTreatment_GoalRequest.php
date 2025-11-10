@@ -24,7 +24,7 @@ class StoreTreatment_GoalRequest extends FormRequest
         return [
             'patient_id' => 'required|integer|exists:patients,id',
             'title' => 'required|string',
-            'description' => 'nullable|text',
+            'description' => 'nullable|string',
             'priority' => 'required|string|in:Mínima,Média,Alta',
             'status' => 'required|string|in:Em progresso,Concluído,Cancelado',
             'progress_percentage' => 'required|decimal:1',
