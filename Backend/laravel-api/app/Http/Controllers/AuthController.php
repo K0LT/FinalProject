@@ -42,5 +42,39 @@ class AuthController extends Controller
             'success' => true,
             'message' => 'Logout realizado com sucesso'
         ]);
+
     }
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'role_id' => 'required|integer',
+        ]);
+
+        $user = \App\Models\User::create([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role_id' => $request->role_id,
+        ]);
+//        if ($request->role_id == 3) {
+//            \App\Models\Patient::create([
+//                'user_id' => $user->id,
+//                'phone_number' => $request->phone_number,
+//                'client_since' => $request->client_since ?? now(),
+//            ]);
+//        }
+
+
+        $user->sendEmailVerificationNotification();
+
+        return response()->json([
+            'message' => 'Conta criada com sucesso! Verifique o seu email para confirmar a conta.'
+        ], 201);
+    }
+
 }
