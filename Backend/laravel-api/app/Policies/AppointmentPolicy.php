@@ -13,6 +13,9 @@ class AppointmentPolicy
      */
     public function viewAny(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -21,6 +24,10 @@ class AppointmentPolicy
      */
     public function view(User $user, Appointment $appointment): bool
     {
+        if($user->role->name === "Admin" || $user->patient->id === $appointment->patient->id){
+            return true;
+        }
+
         return false;
     }
 
