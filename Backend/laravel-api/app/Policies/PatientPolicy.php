@@ -13,6 +13,11 @@ class PatientPolicy
      */
     public function viewAny(User $user): bool
     {
+        if ($user->role->name === "Admin")
+        {
+            return true;
+        }
+
         return false;
     }
 
@@ -21,6 +26,10 @@ class PatientPolicy
      */
     public function view(User $user, Patient $patient): bool
     {
+        if($user->role->name === "Admin" || $user->patient->id === $patient->id){
+            return true;
+        }
+
         return false;
     }
 
@@ -37,6 +46,10 @@ class PatientPolicy
      */
     public function update(User $user, Patient $patient): bool
     {
+        if($user->role->name === "Admin" || $user->patient->id === $patient->id){
+            return true;
+        }
+
         return false;
     }
 
