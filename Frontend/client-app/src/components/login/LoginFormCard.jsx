@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import {login as axiosLogin} from "@/services/login";
 
 export default function LoginFormCard() {
     const [email, setEmail] = useState("");
@@ -13,6 +14,8 @@ export default function LoginFormCard() {
         setSubmitting(true);
         try {
             console.log("login:", { email, pw });
+            const loginAttempt = await axiosLogin({email, password: pw});
+            debugger;
         } finally {
             setSubmitting(false);
         }

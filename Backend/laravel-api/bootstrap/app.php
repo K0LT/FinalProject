@@ -10,12 +10,8 @@ return Application::configure(basePath: dirname(__DIR__))
         api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
-    )
-    ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->appendToGroup('api', [
-            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-        ]);
-    })
-    ->withExceptions(function (Exceptions $exceptions): void {
+    )->withExceptions(function (Exceptions $exceptions): void {
         //
+    })->withMiddleware(function (Middleware $middleware): void {
+        // no EnsureFrontendRequestsAreStateful for token-based APIs
     })->create();
