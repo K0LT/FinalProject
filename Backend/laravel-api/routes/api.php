@@ -6,9 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
 
 
 
@@ -175,4 +174,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'show']);
     Route::patch('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'update']);
 
-});
+

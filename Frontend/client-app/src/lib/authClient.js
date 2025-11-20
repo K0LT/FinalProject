@@ -61,8 +61,6 @@ export async function postJson(path, body, options = {}) {
         throw error;
     }
 
-    // se o backend devolver { token: "...", user: {...} } pode-se
-    // guardar aqui um cookie "auth-token"
     if (data && data.token && typeof document !== "undefined") {
         document.cookie =
             "auth-token=" +
@@ -81,5 +79,22 @@ export async function register(payload) {
 }
 
 export async function login(payload) {
-    return postJson("/login", payload);
+    const data = await postJson("/login", payload);
+    if (typeof document !== "undefined") {
+        document.cookie =
+            "auth-token=session; path=/; max-age=" +
+            60 * 60 * 24 * 7 +
+            "; SameSite=Lax";
+    }
+
+    return data;
 }
+export async function logout() {
+    await postJson("/logout", {});
+
+    if (typeof document !== "undefined") {
+        document.cookie =
+            "auth-token=; path=/; max-age=0; SameSite=Lax";
+    }
+}
+

@@ -65,6 +65,7 @@ export default function LoginFormCard() {
                 password: form.password,
                 remember: form.remember,
             });
+            console.log("Login OK — redirecting to /appointments");
 
             router.push("/appointments");
             router.refresh();

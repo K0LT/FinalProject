@@ -18,7 +18,7 @@ export default function Sidebar({props}) {
 
     return (
         <div className="h-full flex flex-col bg-white">
-            {/* Logo/Header */}
+            {/* Logo/BookingHeader */}
             <div className="h-16 px-4 border-b flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center text-white font-bold text-lg">
                     Q

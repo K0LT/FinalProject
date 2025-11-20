@@ -125,7 +125,7 @@ export default function Calendar({
 
     return (
         <div className="w-full">
-            {/* Header */}
+            {/* BookingHeader */}
             <div className="flex items-center justify-between mb-4">
                 <button
                     onClick={goToPreviousMonth}
