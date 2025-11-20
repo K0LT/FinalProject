@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
         <body
             className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden antialiased`}
         >
-        <Layout>{children}</Layout>
+        <AppLayout>{children}</AppLayout>
         </body>
         </html>
     );

@@ -23,7 +23,9 @@ export default function AppLayout({ children }) {
 
                 {/* Content */}
                 <main className="flex-1 overflow-y-auto">
-                    <div className="p-6">{children}</div>
+                    <div className="p-6">
+                        {children}
+                    </div>
                 </main>
 
                 {/* Footer */}
@@ -33,4 +35,11 @@ export default function AppLayout({ children }) {
             </div>
         </div>
     );
+}
+
+
+function PageExample({title}){
+    return <div>
+        <h1>{title}</h1>
+    </div>
 }

@@ -15,7 +15,6 @@ export default function LoginFormCard() {
         try {
             console.log("login:", { email, pw });
             const loginAttempt = await axiosLogin({email, password: pw});
-            debugger;
         } finally {
             setSubmitting(false);
         }
@@ -117,7 +116,6 @@ export default function LoginFormCard() {
                     </div>
                 )}
             </div>
-
             <div className="pb-6" />
         </div>
     );
