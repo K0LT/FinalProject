@@ -1,24 +1,39 @@
-"use client";
-import { useState } from "react";
-import Link from "next/link";
-import {login as axiosLogin} from "@/services/login";
+'use client';
 
-export default function LoginFormCard() {
-    const [email, setEmail] = useState("");
-    const [pw, setPw] = useState("");
-    const [submitting, setSubmitting] = useState(false);
-    const [tab, setTab] = useState("login"); // "login" | "demo"
+import { useState, useEffect } from 'react';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
-    async function onSubmit(e) {
+export const LoginFormCard = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { login, error, clearError } = useAuth();
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirect = searchParams.get('redirect') || '/dashboard';
+
+    useEffect(() => {
+        clearError();
+    }, [clearError]);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setSubmitting(true);
+        setIsLoading(true);
+        clearError();
+
         try {
-            console.log("login:", { email, pw });
-            const loginAttempt = await axiosLogin({email, password: pw});
+            await login({ email, password });
+            router.push(redirect);
+        } catch (err) {
+
+            console.error('Erro no login:', err);
         } finally {
-            setSubmitting(false);
+            setIsLoading(false);
         }
-    }
+    };
 
     return (
         <div className="text-card-foreground flex flex-col gap-6 rounded-xl shadow-lg border-0 bg-white/70 backdrop-blur-sm">
