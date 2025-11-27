@@ -6,6 +6,7 @@ use App\Models\Patient;
 use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
 
+//TestForCommits
 class PatientController extends Controller
 {
     /**
@@ -85,16 +86,33 @@ class PatientController extends Controller
     {
         //
     }
-    public function get_relation(Patient $patient, $relation){
-        $relationships = ['diagnostics', 'treatments', 'progress_notes','treatmentGoals',
-            'exercises', 'weightTrackings', 'nutritionGoals', 'dailyNutritions', 'allergies', 'conditions'];
+    public function get_relation(Patient $patient, $relation)
+    {
+        $relationships = [
+            'diagnostics',
+            'treatments',
+            'progress_notes',
+            'treatmentGoals',
+            'exercises',
+            'weightTrackings',
+            'nutritionGoals',
+            'dailyNutritions',
+            'allergies',
+            'conditions'
+        ];
 
-        foreach($relationships as $relationship){
-            if($relationship === $relation){
-                return response()->json($patient->$relation);
-            }
+        if (!in_array($relation, $relationships)) {
+            return response()->json("Error", 404);
         }
 
-        return response()->json("Error", 404);
+        // Se for treatmentGoals, carregamos também os goalMilestones
+        if ($relation === 'treatmentGoals') {
+            $data = $patient->treatmentGoals()->with('goalMilestones')->get();
+            return response()->json($data);
+        }
+
+        // Para outras relações
+        return response()->json($patient->$relation);
     }
+
 }
