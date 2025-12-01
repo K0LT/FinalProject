@@ -4,24 +4,20 @@ import React from "react";
 
 export default function ObjectiveProgress({ titulo, progresso, meta }) {
     return (
-        <div className="mb-4">
-            <div className="flex items-center justify-between mb-1.5">
-        <span className="text-sm font-medium text-gray-900 truncate">
-          {titulo}
-        </span>
-                <span className="text-xs sm:text-sm font-semibold text-[#b8860b]">
+        <div className="space-y-1">
+            <div className="flex items-center justify-between text-xs">
+                <span className="font-medium text-gray-800">{titulo}</span>
+                <span className="rounded-md bg-amber-50 px-2 py-0.5 text-[11px] font-semibold text-amber-800">
           {progresso}%
         </span>
             </div>
-            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div className="h-2 rounded-full bg-gray-100">
                 <div
-                    className="h-full bg-gradient-to-r from-[#b8860b] to-[#f1c04b] transition-all duration-500"
+                    className="h-2 rounded-full bg-amber-500"
                     style={{ width: `${progresso}%` }}
                 />
             </div>
-            <p className="text-[11px] sm:text-xs text-gray-600 mt-1">
-                Meta: {meta}
-            </p>
+            <p className="text-[11px] text-gray-500">{meta}</p>
         </div>
     );
 }

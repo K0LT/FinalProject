@@ -1,55 +1,22 @@
 "use client";
 
 import React from "react";
-import { TrendingUp, TrendingDown } from "lucide-react";
 
-const colorClasses = {
-    gold: "from-[#fff9e8] to-[#fdf4d7] border-[#f1dca3]/40 text-[#b8860b]",
-    green: "from-green-50 to-green-100 border-green-200 text-green-600",
-    purple: "from-purple-50 to-purple-100 border-purple-200 text-purple-600",
-    red: "from-red-50 to-red-100 border-red-200 text-red-600",
-};
-
-export default function StatCard({
-                                     title,
-                                     value,
-                                     subtitle,
-                                     icon: Icon,
-                                     color = "gold",
-                                     trend,
-                                 }) {
-    const classes = colorClasses[color] ?? colorClasses.gold;
-
+export default function StatCard({ title, value, subtitle, icon: Icon }) {
     return (
-        <div className={`bg-gradient-to-br ${classes} border rounded-xl p-4 sm:p-6 hover:shadow-lg transition-shadow`}>
+        <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
             <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
-                    <p className="text-xs sm:text-sm font-medium mb-1 text-gray-800">{title}</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 truncate">{value}</p>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        {title}
+                    </p>
+                    <p className="mt-1 text-2xl font-bold text-gray-900">{value}</p>
                     {subtitle && (
-                        <p className="text-[11px] sm:text-xs opacity-75 text-gray-700">
-                            {subtitle}
-                        </p>
-                    )}
-                    {trend && (
-                        <div className="flex items-center gap-1 mt-2">
-                            {trend.isPositive ? (
-                                <TrendingUp className="w-4 h-4 text-emerald-600" />
-                            ) : (
-                                <TrendingDown className="w-4 h-4 text-red-600" />
-                            )}
-                            <span
-                                className={`text-xs font-semibold ${
-                                    trend.isPositive ? "text-emerald-600" : "text-red-600"
-                                }`}
-                            >
-                {trend.value}%
-              </span>
-                        </div>
+                        <p className="mt-1 text-xs text-gray-500">{subtitle}</p>
                     )}
                 </div>
-                <div className="p-2 sm:p-3 bg-white/60 rounded-lg flex items-center justify-center">
-                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-800" />
+                <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-amber-50 text-amber-700">
+                    <Icon className="h-4 w-4" />
                 </div>
             </div>
         </div>

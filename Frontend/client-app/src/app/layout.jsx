@@ -9,6 +9,8 @@ import LandingLayout from "@/app/landingPage/LandingLayout";
 import RegistrationLayout from "@/app/registration/RegistrationLayout";
 import LoginLayout from "@/app/login/LoginLayout";
 import BookingLayout from "@/app/booking/BookingLayout";
+import DashboardLayout from "@/app/dashboard/DashboardLayout";
+import ClientDashLayout from "@/app/clientdashboard/ClientDashLayout";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -24,23 +26,23 @@ function resolveLayout(pathname, isAuthenticated) {
         pathname === "/registration" || pathname.startsWith("/registration/");
     const isLogin = pathname === "/login" || pathname.startsWith("/login/");
     const isBooking = pathname === "/booking" || pathname.startsWith("/booking/");
-
-    // 1) Rotas especiais têm prioridade
+    const isDashboard =
+        pathname === "/dashboard" || pathname.startsWith("/dashboard");
+    const isClientDashboard =
+        pathname === "/clientdashboard" || pathname.startsWith("/clientdashboard");
+    debugger;
     if (isRegistration) return RegistrationLayout;
     if (isLogin) return LoginLayout;
-    if (isBooking) return BookingLayout; // aqui decides se queres proteger por login
+    if (isBooking) return BookingLayout;
+    if (isClientDashboard) return ClientDashLayout;
+    if (isDashboard) return DashboardLayout;
 
-    // 2) Resto da app
     if (isAuthenticated) return AppLayout;
-
-    // 3) Visitantes
     return LandingLayout;
 }
 
 export default function RootLayout({ children }) {
     const pathname = usePathname() || "/";
-
-    // Autenticação por cookie
     const token = useMemo(() => getCookie("auth-token"), []);
     const isAuthenticated = Boolean(token);
 

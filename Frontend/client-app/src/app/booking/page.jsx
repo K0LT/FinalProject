@@ -36,3 +36,13 @@ export default function BookingPage() {
         </div>
     );
 }
+
+
+/*
+//TODO: Acrescentar a lógica de:
+   - Cliente pede marcação
+   - Envia notificaçao ao admin
+   - Admin tem 24h para dar resposta
+   - Se não der resposta, irá enviar notificação ao cliente que não foi aprovado
+   - Se for recusado, irá enviar notificação ao cliente que não foi aprovado e que será contactado
+   - Se for aprovado irá automaticamente para o dashboard do cliente.*/
