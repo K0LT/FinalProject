@@ -10,13 +10,9 @@ return Application::configure(basePath: dirname(__DIR__))
         api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
-    )
-    ->withMiddleware(function (Middleware $middleware): void {
-
-        $middleware->statefulApi();
-
-    })
-    ->withExceptions(function (Exceptions $exceptions): void {
+    )->withExceptions(function (Exceptions $exceptions): void {
         //
-    })
-    ->create();
+    })->withMiddleware(function (Middleware $middleware): void {
+        // no EnsureFrontendRequestsAreStateful for token-based APIs
+    })->create();
+
