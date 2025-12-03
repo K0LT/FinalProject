@@ -1,6 +1,6 @@
 import { LoginForm } from '@/components/Login/LoginForm';
-import { AuthGuard } from '@/components/Auth/AuthGuard';
+import LoginPage from '@/components/login/LoginPage'
 
-export default function LoginPage() {
-    return <LoginForm />;
+export default function Page() {
+    return <LoginPage />;
 }

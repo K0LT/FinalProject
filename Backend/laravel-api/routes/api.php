@@ -9,6 +9,10 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+
+Route::post('/users', [\App\Http\Controllers\UserController::class, 'store']);
+
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -105,7 +109,7 @@ Route::patch('treatment_goals/{treatment_goal}', [\App\Http\Controllers\Treatmen
 
 //Users
 Route::get('/users', [\App\Http\Controllers\UserController::class, 'index']);
-Route::post('/users', [\App\Http\Controllers\UserController::class, 'store']);
+// Temporarily moved outside the group to test
 Route::get('users/{user}', [\App\Http\Controllers\UserController::class, 'show']);
 
 //WeightTrackings

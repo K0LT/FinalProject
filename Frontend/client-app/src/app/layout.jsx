@@ -3,6 +3,8 @@ import "./globals.css";
 import { AuthProvider } from '@/context/AuthContext';
 import DevControlPanel from "@/components/Auth/DevControlPanel";
 
+import LandingLayout from '@/app/landingPage/LandingLayout'
+
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],
@@ -23,10 +25,12 @@ export default function RootLayout({ children }) {
         <html lang="pt-PT">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
         <AuthProvider>
-            {children}
+            <LandingLayout>
+                {children}
 
-            {process.env.NODE_ENV === 'development' && <DevControlPanel />}
-        </AuthProvider>
+                {process.env.NODE_ENV === 'development' && <DevControlPanel />}
+            </LandingLayout>
+            </AuthProvider>
         </body>
         </html>
     );

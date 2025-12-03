@@ -9,6 +9,7 @@ export const LoginFormCard = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [tab, setTab] = useState('login');
 
     const { login, error, clearError } = useAuth();
     const router = useRouter();
@@ -17,7 +18,7 @@ export const LoginFormCard = () => {
 
     useEffect(() => {
         clearError();
-    }, [clearError]);
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -65,7 +66,7 @@ export const LoginFormCard = () => {
                 </div>
 
                 {tab === "login" ? (
-                    <form className="space-y-4" onSubmit={onSubmit}>
+                    <form className="space-y-4" onSubmit={handleSubmit}>
                         <div className="space-y-2">
                             <label htmlFor="email" className="text-sm font-medium">Email</label>
                             <input
@@ -87,8 +88,8 @@ export const LoginFormCard = () => {
                                 type="password"
                                 className="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground border-input flex h-9 w-full rounded-md border px-3 py-1 text-base bg-input-background outline-none md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
                                 placeholder="••••••••"
-                                value={pw}
-                                onChange={(e) => setPw(e.target.value)}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 required
                                 autoComplete="current-password"
                             />
@@ -96,7 +97,6 @@ export const LoginFormCard = () => {
 
                         <button
                             type="submit"
-                            disabled={submitting}
                             className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 w-full"
                         >
                             <span>Entrar</span>
