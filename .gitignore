@@ -44,3 +44,4 @@ frontend/*.tsbuildinfo
 # IMPORTANT: keep next-env.d.ts tracked (don't ignore)
 # (Next.js requires it in the repo)
 # frontend/next-env.d.ts  <-- intentionally NOT ignored
+/Frontend/client-app/.idea
