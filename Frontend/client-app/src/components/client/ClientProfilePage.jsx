@@ -3,7 +3,7 @@
 import Card from "../ui/Card";
 import Badge from "../ui/Badge";
 import InfoRow from "../ui/InfoRow";
-import {getClients} from "@/services/clients";
+import {getClients} from "@/services/patients";
 import {useState} from "react";
 import {useEffect} from "react";
 

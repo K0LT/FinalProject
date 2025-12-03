@@ -1,28 +1,55 @@
-export default function Sidebar() {
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import QiFlowBrand from "@/components/ui/QiFlowBrand";
+export default function Sidebar({ userId, onClose }) {
+    const pathname = usePathname();
+
+    const menuItems = [
+        { label: "Perfil do Cliente", href: "/patient/" + userId },
+        { label: "Consultas", href: "/appointments/" + userId },
+        { label: "Diagnóstico Energético", href: "/diagnoses/" + userId },
+        { label: "Objectivos do Tratamento", href: "/treatments/" + userId },
+        { label: "Prescrição de Exercícios", href: "/exercises/" + userId },
+        { label: "Controlo de Peso", href: "/weight/" + userId },
+        { label: "Assistente IA", href: "/ai-assistant" },
+    ];
+
     return (
-        <div className="h-full flex flex-col">
-            <div className="h-16 px-4 border-b flex items-center gap-2">
-                <div className="size-8 rounded-full bg-yellow-500" />
-                <span className="font-semibold">QiFlow</span>
+        <div className="h-full flex flex-col bg-white">
+            <div className="h-16 px-4 border-b flex items-center">
+                <QiFlowBrand
+                    title="QiFlow"
+                    subtitle="Portal Cliente"
+                    size="md"
+                    className="ml-0"
+                />
+
             </div>
-            <nav className="flex-1 min-h-0 overflow-y-auto p-3 space-y-1 text-sm">
-                {[
-                    "Perfil do Cliente",
-                    "Consultas",
-                    "Diagnóstico Energético",
-                    "Objectivos do Tratamento",
-                    "Prescrição de Exercícios",
-                    "Controlo de Peso",
-                    "Assistente IA",
-                ].map((label) => (
-                    <a key={label} className="block rounded-md px-3 py-2 hover:bg-gray-100">
-                        {label}
-                    </a>
-                ))}
+
+            <nav className="flex-1 overflow-y-auto space-y-1 p-3">
+                {menuItems.map((item) => {
+                    const isActive = pathname === item.href;
+                    return (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={onClose}
+                            className={`flex gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-gray-800 ${
+                                isActive ? "bg-gray-50 font-medium" : "hover:bg-gray-50"
+                            }`}
+                        >
+                            <span>{item.label}</span>
+                        </Link>
+                    );
+                })}
             </nav>
+
             <div className="p-3 border-t">
-                <button className="w-full rounded-md border px-3 py-2 text-left text-sm">
-                    Terminar Sessão
+                <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <span className="text-lg">🚪</span>
+                    <span>Terminar Sessão</span>
                 </button>
             </div>
         </div>

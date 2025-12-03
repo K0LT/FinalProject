@@ -3,23 +3,27 @@ import Topbar from "./Topbar";
 import Footer from "./Footer";
 
 export default function AppLayout({ children }) {
+    const userId = 4;
+
     return (
-        <div className="min-h-screen grid grid-cols-[18rem_minmax(0,1fr)] grid-rows-[auto_1fr_auto]">
-            <aside className="row-span-3 border-r bg-white/90">
-                <Sidebar />
+        <div className="min-h-screen flex">
+            <aside className="w-60 bg-white border-r shadow-sm flex-shrink-0">
+                <Sidebar props={{userId: userId}}/>
             </aside>
 
-            <header className="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
-                <Topbar />
-            </header>
+            <div className="flex-1 flex flex-col min-w-0">
+                <header className="h-14 bg-white sticky top-0 z-40">
+                    <Topbar />
+                </header>
 
-            <main className="overflow-y-auto">
-                <div className="p-6">{children}</div>
-            </main>
+                <main className="flex-1 overflow-y-auto">
+                    <div className="p-6">{children}</div>
+                </main>
 
-            <footer className="col-span-2 border-t bg-white">
-                <Footer />
-            </footer>
+                <footer className="h-12 border-t bg-white">
+                    <Footer />
+                </footer>
+            </div>
         </div>
     );
 }
