@@ -30,14 +30,14 @@ function resolveLayout(pathname, isAuthenticated) {
         pathname === "/dashboard" || pathname.startsWith("/dashboard");
     const isClientDashboard =
         pathname === "/clientdashboard" || pathname.startsWith("/clientdashboard");
-    debugger;
     if (isRegistration) return RegistrationLayout;
     if (isLogin) return LoginLayout;
     if (isBooking) return BookingLayout;
     if (isClientDashboard) return ClientDashLayout;
     if (isDashboard) return DashboardLayout;
 
-    if (isAuthenticated) return AppLayout;
+    // DEFAULT FOR NOW
+    if (isAuthenticated) return LandingLayout;
     return LandingLayout;
 }
 

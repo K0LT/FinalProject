@@ -67,7 +67,7 @@ export default function LoginFormCard() {
             });
             console.log("Login OK — redirecting to /appointments");
 
-            router.push("/appointments");
+            router.push("/clientdashboard");
             router.refresh();
         } catch (err) {
             console.error(err);
