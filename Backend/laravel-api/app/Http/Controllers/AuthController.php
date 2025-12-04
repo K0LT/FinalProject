@@ -2,69 +2,76 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
+use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Http\Requests\RegisterUserRequest;
+
 
 class AuthController extends Controller
 {
-    /**
-     * Registo de novo utilizador (SPA + Sanctum com cookies).
-     */
-    public function register(Request $request)
-    {
-        $data = $request->validate([
-            'name'                  => ['required', 'string', 'max:255'],
-            'surname'               => ['nullable', 'string', 'max:255'],
-            'email'                 => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password'              => ['required', 'string', 'min:8', 'confirmed'], // password_confirmation
-        ]);
 
-        // ⚠️ Escolhe o role "por defeito" para novos utilizadores
-        // vê na tabela "roles" qual o ID que queres (por ex. 1 = paciente)
-        $defaultRoleId = 1;
+    public function register(RegisterUserRequest $request)
+    {
+        $roleId = $request->role_id ?? 3;
+        $validated = $request->validated();
 
         $user = User::create([
-            'role_id'  => $defaultRoleId,
-            'name'     => $data['name'],
-            'surname'  => $data['surname'] ?? '', // como a coluna NÃO é nullable
-            'email'    => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'email' => $request->email,
+            'password' => $request->password,
+            'role_id' => $roleId,
         ]);
 
-        Auth::login($user);
-        $request->session()->regenerate();
+        if ($roleId == 3) {
+            Patient::create([
+                'user_id' => $user->id,
+                'phone_number' => $request->phone_number,
+                'client_since' => $request->client_since ?? now(),
+            ]);
+        }
+
+        $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
             'message' => 'Registo efectuado com sucesso.',
             'user'    => $user,
+            'token'   => $token
         ], 201);
     }
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email'    => ['required', 'email'],
+        $validated = $request->validate([
+            'email' => ['required', 'email'],
             'password' => ['required', 'string'],
-            'remember' => ['boolean'],
         ]);
 
-        if (! Auth::attempt(
-            ['email' => $credentials['email'], 'password' => $credentials['password']],
-            $request->boolean('remember')
-        )) {
+
+        $user = User::where('email', $validated['email'])->first();
+
+
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
             throw ValidationException::withMessages([
                 'email' => 'As credenciais fornecidas não são válidas.',
             ]);
         }
 
-        $request->session()->regenerate();
+        Auth::login($user);
+        $request->session()?->regenerate();
+
+        $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => 'Sessão iniciada com sucesso.',
-            'user'    => $request->user(),
+            'message' => 'Login efetuado com sucesso.',
+            'user'    => $user,
+            'token'   => $token,
+            'token_type' => 'Bearer',
         ]);
     }
 

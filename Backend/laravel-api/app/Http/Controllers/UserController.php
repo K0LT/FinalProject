@@ -24,7 +24,7 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request){
 
-        $roleId = $request->role_id ?? 3;
+        $roleId = $request->role_id ?? 2;
 
         $user = User::create([
             'name' => $request->name,
@@ -33,14 +33,6 @@ class UserController extends Controller
             'password' => $request->password,
             'role_id' => $roleId,
         ]);
-
-        if ($roleId == 3) {
-            Patient::create([
-                'user_id' => $user->id,
-                'phone_number' => $request->phone_number,
-                'client_since' => $request->client_since ?? now(),
-            ]);
-        }
 
         if ($roleId == 2) {
             Profile::create([
