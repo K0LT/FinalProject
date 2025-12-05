@@ -5,26 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1b459c2-d94e-4fdc-a627-79371de693f9" name="Changes" comment="Dashboard beginning">
-      <change afterPath="$PROJECT_DIR$/src/app/clientdashboard/ClientDashLayout.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/clientdashboard/page.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/clientDashboard/ClientDashboard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/clientDashboard/Footer.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/clientDashboard/Sidebar.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/clientDashboard/Topbar.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/Dashboard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/ui/QiFlowBrand.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Backend/laravel-api/tests/Feature/LoginTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Backend/laravel-api/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../Backend/laravel-api/routes/api.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/booking/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/booking/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/dashboard/DashboardLayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/DashboardLayout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/dashboard/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/ConsultaCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/ConsultaCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/ObjectiveProgress.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/ObjectiveProgress.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/StatCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/StatCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/landingPage/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/landingPage/Navbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/authClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/authClient.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,12 +28,12 @@
     &quot;assignee&quot;: &quot;marciaL14&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/K0LT/FinalProject.git&quot;,
-    &quot;accountId&quot;: &quot;5a866a49-4c9c-455e-bc7c-4021448def53&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/K0LT/FinalProject.git",
+    "accountId": "b59946ae-39cd-49ad-8150-0855eebabcaa"
   }
-}</component>
+}]]></component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="Laragon 8.3" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
@@ -59,22 +43,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;DEV-SideLP&quot;,
-    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
-    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "dev-implementingBackendTests",
+    "js.debugger.nextJs.config.created.client": "true",
+    "js.debugger.nextJs.config.created.server": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\marci\Desktop\FinalProject\Frontend\client-app\src\app\dashboard" />
@@ -99,8 +83,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-PS-252.27397.112" />
-        <option value="bundled-php-predefined-a98d8de5180a-b35feea871ed-com.jetbrains.php.sharedIndexes-PS-252.27397.112" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-WS-251.25410.117" />
       </set>
     </attachedChunks>
   </component>
@@ -131,6 +114,7 @@
       <workItem from="1763148248351" duration="408000" />
       <workItem from="1764272233660" duration="2065000" />
       <workItem from="1764274352129" duration="9989000" />
+      <workItem from="1764959435613" duration="1268000" />
     </task>
     <servers />
   </component>

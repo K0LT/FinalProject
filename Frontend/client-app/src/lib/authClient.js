@@ -38,7 +38,7 @@ export async function postJson(path, body, options = {}) {
         headers["X-XSRF-TOKEN"] = xsrf;
     }
 
-    const res = await fetch(`${API_BASE}${path}`, {
+    const res = await fetch(path, {
         method: "POST",
         headers,
         credentials: "include",
@@ -75,11 +75,11 @@ export async function postJson(path, body, options = {}) {
 
 
 export async function register(payload) {
-    return postJson("/register", payload);
+    return postJson(ROOT + "/register", payload);
 }
 
 export async function login(payload) {
-    const data = await postJson("/login", payload);
+    const data = await postJson(ROOT + "/login", payload);
     if (typeof document !== "undefined") {
         document.cookie =
             "auth-token=session; path=/; max-age=" +
@@ -90,7 +90,7 @@ export async function login(payload) {
     return data;
 }
 export async function logout() {
-    await postJson("/logout", {});
+    await postJson(ROOT + "/logout", {});
 
     if (typeof document !== "undefined") {
         document.cookie =
