@@ -16,7 +16,6 @@ class LoginTest extends TestCase
 
     public function test_login(): void
     {
-
         $this->withoutMiddleware(ValidateCsrfToken::class);
 
         \DB::table('roles')->insert([
