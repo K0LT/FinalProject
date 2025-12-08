@@ -18,13 +18,13 @@ class AppointmentResource extends JsonResource
             'id' => $this->id,
             'patient_id' => $this->patient_id,
             'patient_name' => $this->patient->user->name,
-            'profile_id' => $this->profile_id,
-            'profile_name' => $this->profile->user->name ?? null,
             'appointment_date_time' => $this->appointment_date_time,
             'duration' => $this->duration,
             'type' => $this->type,
             'notes' => $this->notes,
             'status' => $this->status,
+            'email' => $this->patient->user->email,
+            'phone_number' => $this->patient->phone_number,
         ];
     }
 }

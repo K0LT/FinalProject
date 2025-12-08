@@ -24,18 +24,17 @@ Route::post('/logout', [AuthController::class, 'logout']);
     // -----------------------------
     // Appointments
     // -----------------------------
-    Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index'])
-        ->middleware('can:viewAny,App\Models\Appointment');
+    Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index']);
 
     Route::post('appointments', [\App\Http\Controllers\AppointmentController::class, 'store']);
 
-    Route::get('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show'])
-        ->middleware('can:view,appointment');
+    Route::get('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show']);
 
     Route::patch('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'update']);
 
-
-    // -----------------------------
+    Route::middleware('auth:sanctum')->post('user/createAppointment', [\App\Http\Controllers\AppointmentController::class, 'patientCreateAppointment']);
+    Route::middleware('auth:sanctum')->get('/user/appointments', [\App\Http\Controllers\AppointmentController::class, 'patientAppointments']);
+// -----------------------------
     // Conditions
     // -----------------------------
     Route::get('conditions', [\App\Http\Controllers\ConditionController::class, 'index']);

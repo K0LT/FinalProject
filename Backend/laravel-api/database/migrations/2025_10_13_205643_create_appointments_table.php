@@ -18,7 +18,7 @@ return new class extends Migration
                 ->constrained()->cascadeOnDelete();
             $table->dateTime('appointment_date_time');
             $table->integer('duration')->nullable();
-            $table->string('type')->nullable();
+            $table->enum('type', ['Acupunturista', 'Nutricionista', 'Treinador Pessoal', 'Medico']);
             $table->text('notes')->nullable();
             $table->enum('status', ['Pendente', 'Confirmado', 'Cancelado', 'Concluído']);
             $table->timestamps();

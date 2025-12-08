@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateAppointmentRequest extends FormRequest
+class StorePatientAppointmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -12,6 +12,14 @@ class UpdateAppointmentRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'patient_id' => auth()->id(),
+            'status' => $this->input('status', 'Pendente')
+        ]);
     }
 
     /**
@@ -22,12 +30,13 @@ class UpdateAppointmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_id' => 'required|exists:patients,id',
             'appointment_date_time' => 'required|date',
             'duration' => 'nullable|integer',
             'type' => 'required|string|max:255|in:Acupunturista,Nutricionista,Treinador Pessoal,Medico',
             'notes' => 'nullable|string',
-            'status' => 'nullable|string|max:255'
+            'status' => 'nullable|string|max:255|in:Pendente,Confirmado,CanceladoConcluído',
+            'patient_id' => 'required|exists:patients,id',
+
         ];
     }
 }
