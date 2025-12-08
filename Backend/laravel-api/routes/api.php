@@ -56,6 +56,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
     // -----------------------------
     Route::get('diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'index']);
     Route::get('diagnostics/{diagnostic}', [\App\Http\Controllers\DiagnosticController::class, 'show']);
+    Route::middleware('auth:sanctum')->get('user/diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'patientDiagnostics']);
     Route::post('diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'store']);
     Route::patch('diagnostics/{diagnostic}', [\App\Http\Controllers\DiagnosticController::class, 'update']);
 

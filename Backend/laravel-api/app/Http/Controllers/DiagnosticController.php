@@ -14,16 +14,9 @@ class DiagnosticController extends Controller
     public function index()
     {
         $diagnostics = Diagnostic::all();
-        return response()->json($diagnostics);
+        return response()->json([$diagnostics],200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -79,5 +72,13 @@ class DiagnosticController extends Controller
     {
         //
     }
+
+    public function patientDiagnostics()
+    {
+        $patient = auth()->user()->patient;
+        $patientWithDiagnostics = $patient->load('diagnostics.symptoms');
+        return response()->json(['data'=>$patientWithDiagnostics], 200);
+    }
+
 
 }
