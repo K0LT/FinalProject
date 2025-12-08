@@ -16,6 +16,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
     // -----------------------------
     Route::get('allergies', [\App\Http\Controllers\AllergyController::class, 'index']);
     Route::get('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'show']);
+    Route::get('{patient}/allergies', [\App\Http\Controllers\AllergyController::class, 'patientAllergies']);
     Route::post('allergies', [\App\Http\Controllers\AllergyController::class, 'store']);
     Route::patch('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'update']);
 

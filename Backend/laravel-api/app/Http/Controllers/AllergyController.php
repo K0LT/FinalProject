@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Allergy;
 use App\Http\Requests\StoreAllergyRequest;
 use App\Http\Requests\UpdateAllergyRequest;
+use App\Models\Patient;
 
 class AllergyController extends Controller
 {
@@ -15,9 +16,7 @@ class AllergyController extends Controller
     {
         $allergies = Allergy::all();
 
-        return response()->json([
-            'data' => $allergies], 200
-        );
+        return response()->json(['data' => $allergies], 200);
 
     }
 
@@ -67,5 +66,12 @@ class AllergyController extends Controller
     public function destroy(Allergy $allergy)
     {
         //
+    }
+
+    public function patientAllergies(Patient $patient)
+    {
+        $patientWithAllergies = $patient->load('allergies');
+
+            return response()->json(['data' => $patientWithAllergies], 200);
     }
 }
