@@ -19,7 +19,6 @@ class PatientFactory extends Factory
     {
         return [
             //
-
             'phone_number' => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),
             'gender' => $this->faker->randomElement(['Masculino', 'Feminino', 'Outro']),

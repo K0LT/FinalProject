@@ -24,19 +24,11 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Terapeuta John',
-            'surname' => 'Doe',
-            'email' => 'terapeuta@example.com',
-            'password' => Hash::make('atec123'),
-            'role_id' => 2,
-        ]);
-
-        User::create([
             'name' => 'User paciente',
             'surname' => 'Machado',
             'email' => 'user@example.com',
             'password' => Hash::make('atec123'),
-            'role_id' => 3,
+            'role_id' => 2,
         ]);
 
         User::factory(30)->create();

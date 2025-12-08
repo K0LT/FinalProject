@@ -100,7 +100,6 @@ class DiagnosticFactory extends Factory
 
         return [
             'patient_id' => Patient::inRandomOrder()->first()->id,
-            'profile_id' => Profile::inRandomOrder()->first()->id,
             'diagnostic_date' => $this->faker->dateTimeBetween('-1 year', '+1 year')->format('Y-m-d'),
             'western_diagnosis' => (rand(0, 3) === 0) ? null : $this->faker->randomElement($western_diagnosis),
             'tcm_diagnosis' => (rand(0, 3) === 0) ? null : $this->faker->randomElement($tcm_diagnosis),

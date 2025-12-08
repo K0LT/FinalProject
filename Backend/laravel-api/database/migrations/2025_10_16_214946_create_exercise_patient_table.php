@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('patient_id')->constrained();
             $table->foreignId('exercise_id')->constrained();
-            $table->foreignId('profile_id')->constrained();
             $table->date('prescribed_date')->useCurrent();
             $table->string('status');
             $table->integer('compliance_rate')->default(0);

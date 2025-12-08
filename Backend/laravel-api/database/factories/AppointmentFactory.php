@@ -39,7 +39,6 @@ class AppointmentFactory extends Factory
         return [
 
             'patient_id' => Patient::inRandomOrder()->first()->id,
-            'profile_id' => Profile::inRandomOrder()->first()->id,
             'appointment_date_time' => $this->faker->dateTimeBetween('+1 day', '+1 month')->format('Y-m-d H:i:s'),
             'duration' => $this->faker->randomElement($durations),
             'type' => $this->faker->randomElement($types),

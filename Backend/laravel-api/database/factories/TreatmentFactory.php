@@ -62,7 +62,6 @@ class TreatmentFactory extends Factory
         // </editor-fold>
         return [
             'patient_id' => Patient::inRandomOrder()->first()->id,
-            'profile_id' => Profile::inRandomOrder()->first()->id,
             'diagnostic_id' => Diagnostic::inRandomOrder()->first()->id,
             'session_date_time' => $this->faker->dateTimeBetween('-1 year', '+1 year')->format('Y-m-d H:i:s'),
             'treatment_methods' => (rand(0, 7) === 0) ? null : $this->faker->randomElement($treatment_methods),

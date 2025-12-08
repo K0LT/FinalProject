@@ -18,8 +18,6 @@ return new class extends Migration
                 ->constrained()->cascadeOnDelete();
             $table->foreignId('appointment_id')
                 ->constrained();
-            $table->foreignId('profile_id')
-                ->nullable()->constrained();
 
             $table->date('note_date');
             $table->text('subjective')->nullable();

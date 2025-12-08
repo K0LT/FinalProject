@@ -51,7 +51,6 @@ class ProgressNoteFactory extends Factory
         return [
             //
             'patient_id' => Patient::inRandomOrder()->first()?->id,
-            'profile_id' => Profile::inRandomOrder()->first()?->id,
             'appointment_id' => Appointment::inRandomOrder()->first()?->id,
             'note_date' => $this->faker->dateTimeBetween('-6 months', 'now')->format('Y-m-d'),
             'subjective' => (rand(0, 3) === 0) ? null : $this->faker->randomElement($subjectiveSamples),

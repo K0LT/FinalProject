@@ -18,8 +18,6 @@ return new class extends Migration
                 ->constrained()->cascadeOnDelete();
             $table->foreignId('exercise_id')
                 ->constrained();
-            $table->foreignId('profile_id')
-                ->nullable()->constrained();
 
             $table->date('prescribed_date')->useCurrent();
             $table->string('frequency')->nullable();
