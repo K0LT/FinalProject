@@ -14,7 +14,7 @@ class ConditionController extends Controller
     public function index()
     {
         $conditions = Condition::all();
-        return response()->json($conditions);
+        return response()->json([$conditions], 200);
     }
 
     /**
@@ -24,7 +24,7 @@ class ConditionController extends Controller
     {
         $data = $request->validated();
         $condition = Condition::create($data);
-        return response()->json($condition);
+        return response()->json([$condition],201);
     }
 
     /**
@@ -32,15 +32,7 @@ class ConditionController extends Controller
      */
     public function show(Condition $condition)
     {
-        return response()->json($condition);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Condition $condition)
-    {
-        //
+        return response()->json([$condition],201);
     }
 
     /**
@@ -50,7 +42,7 @@ class ConditionController extends Controller
     {
         $data = $request->validated();
         $condition -> update($data);
-        return response()->json($condition);
+        return response()->json([$condition], 201);
     }
 
     /**
@@ -59,5 +51,12 @@ class ConditionController extends Controller
     public function destroy(Condition $condition)
     {
         //
+    }
+
+    public function patientConditions()
+    {
+        $patient = auth()->user()->patient;
+        $patientWithConditions = $patient->load('conditions');
+        return response()->json(['data'=>$patientWithConditions], 200);
     }
 }

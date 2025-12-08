@@ -36,6 +36,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
     // -----------------------------
     Route::get('conditions', [\App\Http\Controllers\ConditionController::class, 'index']);
     Route::get('conditions/{condition}', [\App\Http\Controllers\ConditionController::class, 'show']);
+    Route::middleware('auth:sanctum')->get('user/conditions', [\App\Http\Controllers\ConditionController::class, 'patientConditions']);
     Route::post('conditions', [\App\Http\Controllers\ConditionController::class, 'store']);
     Route::patch('conditions/{condition}', [\App\Http\Controllers\ConditionController::class, 'update']);
 
