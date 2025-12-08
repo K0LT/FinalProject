@@ -15,21 +15,13 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $data = $request->validate([
-            'name'                  => ['required', 'string', 'max:255'],
-            'surname'               => ['nullable', 'string', 'max:255'],
-            'email'                 => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password'              => ['required', 'string', 'min:8', 'confirmed'], // password_confirmation
-        ]);
-
-        // ⚠️ Escolhe o role "por defeito" para novos utilizadores
-        // vê na tabela "roles" qual o ID que queres (por ex. 1 = paciente)
         $defaultRoleId = 3;
+        $data = $request->validated();
 
         $user = User::create([
             'role_id'  => $defaultRoleId,
             'name'     => $data['name'],
-            'surname'  => $data['surname'] ?? '', // como a coluna NÃO é nullable
+            'surname'  => $data['surname'] ?? '',
             'email'    => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
