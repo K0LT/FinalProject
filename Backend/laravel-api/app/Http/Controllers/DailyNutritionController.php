@@ -17,13 +17,6 @@ class DailyNutritionController extends Controller
         return response()->json($dailyNutritions);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -43,13 +36,6 @@ class DailyNutritionController extends Controller
         return response ()->json($dailyNutrition);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(DailyNutrition $dailyNutrition)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -67,5 +53,12 @@ class DailyNutritionController extends Controller
     public function destroy(DailyNutrition $dailyNutrition)
     {
         //
+    }
+
+    public function patientDailyNutritions()
+    {
+        $patient = auth()->user()->patient;
+        $patientWithDailyNutrition = $patient->load('dailyNutritions');
+        return response()->json(['data'=>$patientWithDailyNutrition], 200);
     }
 }

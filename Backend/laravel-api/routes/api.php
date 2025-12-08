@@ -46,6 +46,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
     // -----------------------------
     Route::get('daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'index']);
     Route::get('daily_nutritions/{daily_nutrition}', [\App\Http\Controllers\DailyNutritionController::class, 'show']);
+    Route::middleware('auth:sanctum')->get('user/daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'patientDailyNutritions']);
     Route::post('daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'store']);
     Route::patch('daily_nutritions/{daily_nutrition}', [\App\Http\Controllers\DailyNutritionController::class, 'update']);
 
