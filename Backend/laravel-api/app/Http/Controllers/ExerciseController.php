@@ -14,15 +14,7 @@ class ExerciseController extends Controller
     public function index()
     {
         $exercises = Exercise::all();
-        return response()->json($exercises);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return response()->json([$exercises]. 200);
     }
 
     /**
@@ -32,7 +24,7 @@ class ExerciseController extends Controller
     {
         $data = $request->validated();
         $exercise = Exercise::create($data);
-        return response()->json($exercise);
+        return response()->json([$exercise], 201);
     }
 
     /**
@@ -40,16 +32,9 @@ class ExerciseController extends Controller
      */
     public function show(Exercise $exercise)
     {
-        return response()->json($exercise);
+        return response()->json([$exercise],200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Exercise $exercise)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -58,7 +43,7 @@ class ExerciseController extends Controller
     {
         $data = $request->validated();
         $exercise->update($data);
-        return response()->json($exercise);
+        return response()->json([$exercise],200);
     }
 
     /**
@@ -68,4 +53,6 @@ class ExerciseController extends Controller
     {
         //
     }
+
+
 }
