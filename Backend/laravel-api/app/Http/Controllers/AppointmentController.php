@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePatientAppointmentRequest;
 use App\Http\Resources\AppointmentResource;
 use App\Models\Appointment;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
+use App\Models\Patient;
 
 class AppointmentController extends Controller
 {
@@ -15,26 +17,18 @@ class AppointmentController extends Controller
     public function index()
     {
         $appointments = Appointment::all();
-        return response()->json($appointments);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-
+        return response()->json(['data' => $appointments],200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
+    //Só para admin.
     public function store(StoreAppointmentRequest $request)
     {
+        $data = $request;
         $data = $request->validated();
-        $data['status'] = 'Confirmado';
         $appointment = Appointment::create($data);
-
         return response()->json($appointment);
     }
 
@@ -43,16 +37,8 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        $appointment->load(['patient.user', 'profile.user']);
+        $appointment->load(['patient.user', 'patient']);
         return new AppointmentResource($appointment);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Appointment $appointment)
-    {
-
     }
 
     /**
@@ -71,5 +57,17 @@ class AppointmentController extends Controller
     public function destroy(Appointment $appointment)
     {
         //
+    }
+
+    public function patientCreateAppointment(StorePatientAppointmentRequest $request){
+        $data = $request->validated();
+        $appointment = Appointment::create($data);
+        return response()->json($appointment);
+    }
+
+    public function patientAppointments(){
+        $patient = auth()->user()->patient;
+        $patientWithAppointments = $patient->load('appointments');
+        return response()->json($patientWithAppointments);
     }
 }
