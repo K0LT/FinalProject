@@ -15,7 +15,6 @@ class AllergyController extends Controller
     public function index()
     {
         $allergies = Allergy::all();
-
         return response()->json(['data' => $allergies], 200);
 
     }
@@ -28,10 +27,7 @@ class AllergyController extends Controller
     {
         $data = $request->validated();
         $allergy = Allergy::create($data);
-        return Response()->json([
-            'success' => true,
-            'data' => $allergy
-        ], 200);
+        return Response()->json(['data' => $allergy], 201);
     }
 
     /**
@@ -40,9 +36,7 @@ class AllergyController extends Controller
     public function show(Allergy $allergy)
     {
 
-        return response()->json([
-            'data' => $allergy], 200
-        );
+        return response()->json(['data' => $allergy], 200);
 
     }
 
@@ -54,10 +48,7 @@ class AllergyController extends Controller
     {
         $data = $request->validated();
         $allergy -> update($data);
-        return response()->json([
-            'success' => true,
-            'data' => $allergy
-        ]);
+        return response()->json(['data' => $allergy],200);
     }
 
     /**
@@ -68,10 +59,10 @@ class AllergyController extends Controller
         //
     }
 
-    public function patientAllergies(Patient $patient)
+    public function patientAllergies()
     {
+        $patient = auth()->user()->patient;
         $patientWithAllergies = $patient->load('allergies');
-
-            return response()->json(['data' => $patientWithAllergies], 200);
+        return response()->json(['data'=>$patientWithAllergies], 200);
     }
 }

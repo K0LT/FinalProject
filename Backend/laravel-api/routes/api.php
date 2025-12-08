@@ -16,7 +16,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
     // -----------------------------
     Route::get('allergies', [\App\Http\Controllers\AllergyController::class, 'index']);
     Route::get('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'show']);
-    Route::get('{patient}/allergies', [\App\Http\Controllers\AllergyController::class, 'patientAllergies']);
+    Route::middleware('auth:sanctum')->get('user/allergies', [\App\Http\Controllers\AllergyController::class, 'patientAllergies']);
     Route::post('allergies', [\App\Http\Controllers\AllergyController::class, 'store']);
     Route::patch('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'update']);
 
@@ -25,16 +25,13 @@ Route::post('/logout', [AuthController::class, 'logout']);
     // Appointments
     // -----------------------------
     Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index']);
-
     Route::post('appointments', [\App\Http\Controllers\AppointmentController::class, 'store']);
-
     Route::get('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show']);
-
     Route::patch('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'update']);
-
     Route::middleware('auth:sanctum')->post('user/createAppointment', [\App\Http\Controllers\AppointmentController::class, 'patientCreateAppointment']);
     Route::middleware('auth:sanctum')->get('/user/appointments', [\App\Http\Controllers\AppointmentController::class, 'patientAppointments']);
-// -----------------------------
+
+    // -----------------------------
     // Conditions
     // -----------------------------
     Route::get('conditions', [\App\Http\Controllers\ConditionController::class, 'index']);
