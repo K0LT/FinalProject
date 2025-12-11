@@ -15,7 +15,7 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $defaultRoleId = 3;
+        $defaultRoleId = 2;
         $data = $request->validated();
 
         $user = User::create([
