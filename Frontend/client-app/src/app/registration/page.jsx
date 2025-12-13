@@ -5,8 +5,10 @@ import Testimonials from '@/components/registration/Testimonials';
 import Help from '@/components/registration/Help';
 import RegistrationIntro from "@/components/registration/RegistrationIntro";
 
+import LandingLayout from '@/components/landingPage/LandingLayout'
+
 const Register = () => {
-    return (
+    return <LandingLayout>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="space-y-8">
                 <RegistrationIntro />
@@ -18,6 +20,8 @@ const Register = () => {
                 <Help />
             </div>
         </div>
-    );
+    </LandingLayout>
+
+
 }
 export default Register;

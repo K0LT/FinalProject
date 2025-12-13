@@ -124,6 +124,7 @@ export default function RegistrationForm({ onSubmit }) {
                 surname: "",
                 email: form.email,
                 password: form.password,
+                password_confirmation: form.confirmPassword,
                 phone_number: form.phone,
                 age: form.age || null,
                 gender: form.gender || null,
@@ -135,7 +136,7 @@ export default function RegistrationForm({ onSubmit }) {
 
             console.log("Enviando dados para /users:", registrationData);
 
-            const response = await apiClient.post('/users', registrationData);
+            const response = await apiClient.post('/register', registrationData);
 
             console.log("User criado com sucesso:", response);
 

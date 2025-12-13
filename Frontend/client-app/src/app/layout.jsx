@@ -3,7 +3,9 @@ import "./globals.css";
 import { AuthProvider } from '@/context/AuthContext';
 import DevControlPanel from "@/components/Auth/DevControlPanel";
 
-import LandingLayout from '@/app/landingPage/LandingLayout'
+import LandingLayout from '@/components/landingPage/LandingLayout'
+import DashboardSidebarLayout from "@/components/dashboard/DashboardLayout";
+import ClientDashLayout from "@/components/clientDashboard/ClientDashLayout";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -21,15 +23,13 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
     return (
         <html lang="pt-PT">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
             <AuthProvider>
-                <LandingLayout>
                     {children}
-
                     {process.env.NODE_ENV === 'development' && <DevControlPanel />}
-                </LandingLayout>
             </AuthProvider>
         </body>
         </html>
