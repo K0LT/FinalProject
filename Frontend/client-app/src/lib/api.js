@@ -1,4 +1,7 @@
 import axios from 'axios';
+import {ensureCsrf} from "@/lib/authClient";
+import {getCookie} from "@/lib/authClient";
+
 
 class ApiClient {
     constructor() {
@@ -15,10 +18,13 @@ class ApiClient {
         this.client.interceptors.request.use(
             (config) => {
                 const token = this.getToken();
+                ensureCsrf();
+                const xsrf = getCookie("XSRF-TOKEN");
                 if (token) {
                     config.headers.Authorization = `Bearer ${token}`;
                 }
                 config.headers['X-Requested-With'] = 'XMLHttpRequest';
+                config.headers['X-XSRF-TOKEN'] = xsrf;
                 return config;
             },
             (error) => Promise.reject(error)

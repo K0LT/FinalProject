@@ -3,7 +3,7 @@ const API_BASE =
 
 const ROOT = API_BASE.replace(/\/api\/?$/, "");
 
-function getCookie(name) {
+export function getCookie(name) {
     if (typeof document === "undefined") return null;
     const match = document.cookie.match(
         new RegExp("(^|; )" + name + "=([^;]*)"),
@@ -11,7 +11,7 @@ function getCookie(name) {
     return match ? decodeURIComponent(match[2]) : null;
 }
 
-async function ensureCsrf() {
+export async function ensureCsrf() {
     if (typeof window === "undefined") return;
 
     const xsrf = getCookie("XSRF-TOKEN");
@@ -38,7 +38,7 @@ export async function postJson(path, body, options = {}) {
         headers["X-XSRF-TOKEN"] = xsrf;
     }
 
-    const res = await fetch(`${API_BASE}${path}`, {
+    const res = await fetch(`${ROOT}${path}`, {
         method: "POST",
         headers,
         credentials: "include",

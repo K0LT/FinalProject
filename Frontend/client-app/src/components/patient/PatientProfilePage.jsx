@@ -1,10 +1,12 @@
 'use client'
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {getPatient} from "@/services/patients";
 import InfoRow from "@/components/ui/InfoRow";
 import Card from "@/components/ui/Card";
 import {useParams} from "next/navigation";
 import UpdatePatientModal from "@/components/patient/UpdatePatientModal";
+import { AuthProvider } from '@/context/AuthContext';
+import {apiClient} from "@/lib/api";
 
 export function PatientProfilePage() {
     const [patient, setPatient] = useState([]);
@@ -12,13 +14,15 @@ export function PatientProfilePage() {
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
 
+    const authPatient = useContext(AuthProvider);
+
     const params = useParams();
 
     useEffect(() => {
         const ctrl = new AbortController();
         (async () => {
             try {
-                const data = await getPatient(params.id);
+                const data = await apiClient.get('/patients');
                 setPatient(data);
                 console.log("Fetched patient:", data);
             } catch (e) {

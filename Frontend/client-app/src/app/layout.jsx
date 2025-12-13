@@ -24,12 +24,12 @@ export default function RootLayout({ children }) {
     return (
         <html lang="pt-PT">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
-        <AuthProvider>
-            <LandingLayout>
-                {children}
+            <AuthProvider>
+                <LandingLayout>
+                    {children}
 
-                {process.env.NODE_ENV === 'development' && <DevControlPanel />}
-            </LandingLayout>
+                    {process.env.NODE_ENV === 'development' && <DevControlPanel />}
+                </LandingLayout>
             </AuthProvider>
         </body>
         </html>
