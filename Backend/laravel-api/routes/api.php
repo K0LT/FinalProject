@@ -12,6 +12,9 @@ Route::get('/user', function (Request $request) {
 
 
 Route::post('/users', [\App\Http\Controllers\UserController::class, 'store']);
+Route::post('/loginToken', [App\Http\Controllers\AuthController::class, 'loginToken']);
+
+Route::middleware('auth:sanctum')->group(function () {
 
 //Allergies
 Route::get('allergies', [\App\Http\Controllers\AllergyController::class, 'index']);
@@ -72,7 +75,7 @@ Route::patch('nutritional_goals/{nutritional_goal}', [\App\Http\Controllers\Nutr
 
 //Patients
 Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index'])
-    ->middleware('can:viewAny,App\Models\Patient');
+->middleware('can:viewAny,App\Models\Patient');
 
 Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'show'])
     ->middleware('can:view,patient');
@@ -122,6 +125,7 @@ Route::post('symptoms', [\App\Http\Controllers\SymptomController::class, 'store'
 Route::get('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'show']);
 Route::patch('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'update']);
 
+});
 
 
 

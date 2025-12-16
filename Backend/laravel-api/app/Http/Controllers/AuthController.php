@@ -79,4 +79,24 @@ class AuthController extends Controller
             'message' => 'Sessão terminada com sucesso.',
         ]);
     }
+
+    public function loginToken(Request $request)
+    {
+        $credentials = $request->validate([
+            'email'    => ['required', 'email'],
+            'password' => ['required', 'string'],
+        ]);
+
+        if (! Auth::attempt($credentials)) {
+            return response()->json(['message' => 'Credenciais inválidas'], 401);
+        }
+
+        $user = Auth::user();
+        $token = $user->createToken('api-test-token')->plainTextToken;
+
+        return response()->json([
+            'user'  => $user,
+            'token' => $token
+        ]);
+    }
 }
