@@ -20,23 +20,14 @@ export default function DashboardSidebarLayout({ children }) {
     const router = useRouter();
     const pathname = usePathname();
 
-
-
-
-    useEffect(() => {
-        if (!isAuthenticated && !isLoading) {
-
-        }
-    }, [isAuthenticated, isLoading]);
-
     const quickActions = [
-        { label: "Nova Consulta", icon: Calendar, href: `/appointments/${userId}` },
+        { label: "Nova Consulta", icon: Calendar, href: `/appointments/${user.id}` },
         { label: "Adicionar Paciente", icon: Users, href: `/patients/new` },
-        { label: "Diagnóstico", icon: Activity, href: `/diagnoses/${userId}` },
-        { label: "Relatórios", icon: BarChart3, href: `/reports/${userId}` },
-        { label: "Perfil do Cliente", icon: User, href: `/patient/${userId}` },
-        { label: "Prescrição de Exercícios", icon: Dumbbell, href: `/exercises/${userId}` },
-        { label: "Controlo de Peso", icon: Scale, href: `/weight/${userId}` },
+        { label: "Diagnóstico", icon: Activity, href: `/diagnoses/${user.id}` },
+        { label: "Relatórios", icon: BarChart3, href: `/reports/${user.id}` },
+        { label: "Perfil do Cliente", icon: User, href: `/patient/${user.id}` },
+        { label: "Prescrição de Exercícios", icon: Dumbbell, href: `/exercises/${user.id}` },
+        { label: "Controlo de Peso", icon: Scale, href: `/weight/${user.id}` },
     ];
 
     return (

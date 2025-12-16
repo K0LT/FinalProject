@@ -73,8 +73,7 @@ Route::post('nutritional_goals', [\App\Http\Controllers\NutritionalGoalControlle
 Route::patch('nutritional_goals/{nutritional_goal}', [\App\Http\Controllers\NutritionalGoalController::class, 'update']);
 
 //Patients
-Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index'])
-->middleware('can:viewAny,App\Models\Patient');
+Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index']);
 
 Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'show'])
     ->middleware('can:view,patient');

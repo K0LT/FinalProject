@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
             <AuthProvider>
                     {children}
-                    {process.env.NODE_ENV === 'development' && <DevControlPanel />}
+                    {/*{process.env.NODE_ENV === 'development' && <DevControlPanel />}*/}
             </AuthProvider>
         </body>
         </html>

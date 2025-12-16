@@ -75,9 +75,10 @@ class ApiClient {
     }
 
     async login(credentials) {
+        debugger;
         const response = await this.request({
             method: 'POST',
-            url: '/login',
+            url: 'http://localhost:8000/login',
             data: credentials,
         });
 
@@ -93,7 +94,7 @@ class ApiClient {
         try {
             await this.request({
                 method: 'POST',
-                url: '/logout',
+                url: 'http://localhost:8000/logout',
             });
         } catch (error) {
             console.error('Logout error:', error);
@@ -105,7 +106,7 @@ class ApiClient {
     async getCurrentUser() {
         return this.request({
             method: 'GET',
-            url: '/user',
+            url: 'http://localhost:8000/user',
         });
     }
 
