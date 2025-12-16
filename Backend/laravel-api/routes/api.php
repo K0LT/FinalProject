@@ -13,14 +13,12 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/users', [\App\Http\Controllers\UserController::class, 'store']);
 
-
-Route::middleware('auth:sanctum')->group(function () {
-
 //Allergies
 Route::get('allergies', [\App\Http\Controllers\AllergyController::class, 'index']);
 Route::get('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'show']);
 Route::post('allergies', [\App\Http\Controllers\AllergyController::class, 'store']);
 Route::patch('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'update']);
+Route::get('allergies/user', [\App\Http\Controllers\AllergyController::class, 'update']);
 
 //Appointments
 Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index'])
@@ -74,7 +72,7 @@ Route::patch('nutritional_goals/{nutritional_goal}', [\App\Http\Controllers\Nutr
 
 //Patients
 Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index'])
-->middleware('can:viewAny,App\Models\Patient');
+    ->middleware('can:viewAny,App\Models\Patient');
 
 Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'show'])
     ->middleware('can:view,patient');
@@ -124,7 +122,6 @@ Route::post('symptoms', [\App\Http\Controllers\SymptomController::class, 'store'
 Route::get('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'show']);
 Route::patch('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'update']);
 
-});
 
 
 

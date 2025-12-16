@@ -121,4 +121,11 @@ class AllergyController extends Controller
     {
         //
     }
+
+    public function patientAllergies()
+    {
+        $patient = auth()->user()->patient;
+        $patientWithAllergies = $patient->load('allergies');
+        return response()->json(['data'=>$patientWithAllergies], 200);
+    }
 }
