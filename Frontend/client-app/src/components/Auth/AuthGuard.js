@@ -13,12 +13,18 @@ export const AuthGuard = ({
     const router = useRouter();
     const pathname = usePathname();
 
+
+
     useEffect(() => {
+
         if (!isLoading) {
             if (requireAuth && !isAuthenticated) {
-                const redirectUrl = `/login?redirect=${encodeURIComponent(pathname)}`;
-                router.push(redirectUrl);
-            } else if (!requireAuth && isAuthenticated) {
+                if (!pathname.startsWith('/login')) {
+                    const redirectUrl = `/login?redirect=${encodeURIComponent(pathname)}`;
+                    router.push(redirectUrl);
+                }
+            }
+            if (!requireAuth && isAuthenticated) {
                 router.push(redirectTo);
             }
         }
