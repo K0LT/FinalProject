@@ -11,7 +11,6 @@ import { apiClient } from '@/lib/api';
 const AuthContext = createContext();
 
 const authReducer = (state, action) => {
-    debugger;
     switch (action.type) {
         case 'AUTH_START':
             return { ...state, isLoading: true, error: null };
@@ -62,9 +61,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const checkAuth = async () => {
-            debugger;
             if (typeof window === 'undefined') return;
-            debugger;
             // modo dev
             const devMode = localStorage.getItem('dev_auto_login') === 'true';
 

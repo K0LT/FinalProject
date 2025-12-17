@@ -81,8 +81,8 @@ class ApiClient {
             url: 'http://localhost:8000/login',
             data: credentials,
         });
-
-        this.setToken(response.token);
+        debugger;
+        this.setToken(response.auth_token);
         if (typeof window !== 'undefined') {
             localStorage.setItem('user_data', JSON.stringify(response.user));
         }
