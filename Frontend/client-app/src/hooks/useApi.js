@@ -11,7 +11,7 @@ export const useApi = () => {
     const request = async (method, url, data = null, config = {}) => {
         setLoading(true);
         setError(null);
-        debugger;
+
         try {
             return await apiClient[method](url, data, config);
         } catch (err) {

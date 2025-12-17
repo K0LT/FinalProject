@@ -16,7 +16,8 @@ import { useAuth } from "@/context/AuthContext";
 import { AuthGuard } from "@/components/Auth/AuthGuard";
 
 export default function DashboardSidebarLayout({ children }) {
-    const { user, isAuthenticated, isLoading, logout } = useAuth();
+    const { userAuth, isAuthenticated, isLoading, logout } = useAuth();
+    const user = localStorage.getItem('user_data');
     debugger;
     const router = useRouter();
     const pathname = usePathname();

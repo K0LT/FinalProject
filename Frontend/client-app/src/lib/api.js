@@ -1,6 +1,5 @@
 import axios from 'axios';
-import {ensureCsrf} from "@/lib/authClient";
-import {getCookie} from "@/lib/authClient";
+import {ensureCsrf, getCookie} from "@/lib/authClient";
 
 
 class ApiClient {
@@ -15,12 +14,12 @@ class ApiClient {
     }
 
     setupInterceptors() {
-        debugger;
         this.client.interceptors.request.use(
             (config) => {
+                debugger;
                 const token = this.getToken();
-                ensureCsrf();
-                const xsrf = getCookie("XSRF-TOKEN");
+                let xsrf = getCookie("XSRF-TOKEN");
+                if (!xsrf) xsrf = ensureCsrf();
                 if (token) {
                     config.headers.Authorization = `Bearer ${token}`;
                 }
@@ -32,7 +31,7 @@ class ApiClient {
         );
 
         this.client.interceptors.response.use(
-            (response) => response,
+            /*(response) => response,
             (error) => {
                 if (error.response?.status === 401) {
                     this.clearToken();
@@ -41,7 +40,7 @@ class ApiClient {
                     }
                 }
                 return Promise.reject(error);
-            }
+            }*/
         );
     }
 
@@ -59,10 +58,10 @@ class ApiClient {
     clearToken() {
         if (typeof window === 'undefined') return;
         localStorage.removeItem('auth_token');
-        localStorage.removeItem('user_data');
     }
 
     async request(config) {
+        debugger;
         try {
             const response = await this.client(config);
             return response.data;

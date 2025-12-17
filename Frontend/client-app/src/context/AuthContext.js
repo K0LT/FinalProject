@@ -11,6 +11,7 @@ import { apiClient } from '@/lib/api';
 const AuthContext = createContext();
 
 const authReducer = (state, action) => {
+    debugger;
     switch (action.type) {
         case 'AUTH_START':
             return { ...state, isLoading: true, error: null };
@@ -61,6 +62,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const checkAuth = async () => {
+            debugger;
             if (typeof window === 'undefined') return;
             debugger;
             // modo dev
@@ -85,6 +87,7 @@ export const AuthProvider = ({ children }) => {
 
             // Auth normal
             try {
+                debugger;
                 const token = apiClient.getToken();
                 const userData = localStorage.getItem('user_data');
                 const user = userData ? JSON.parse(userData) : null;
