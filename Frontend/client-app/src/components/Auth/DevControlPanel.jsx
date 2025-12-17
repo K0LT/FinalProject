@@ -17,7 +17,6 @@ export default function DevControlPanel() {
         const savedMode = localStorage.getItem('dev_auto_login') === 'true';
         setDevMode(savedMode);
 
-
         const userData = localStorage.getItem('user_data');
         const user = userData ? JSON.parse(userData) : null;
         const token = localStorage.getItem('auth_token');

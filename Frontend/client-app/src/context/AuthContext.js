@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const checkAuth = async () => {
             if (typeof window === 'undefined') return;
-
+            debugger;
             // modo dev
             const devMode = localStorage.getItem('dev_auto_login') === 'true';
 
@@ -122,6 +122,7 @@ export const AuthProvider = ({ children }) => {
 
         try {
             const response = await apiClient.login(credentials);
+            debugger;
             dispatch({
                 type: 'AUTH_SUCCESS',
                 payload: response,
