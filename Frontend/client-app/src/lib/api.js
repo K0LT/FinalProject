@@ -15,6 +15,7 @@ class ApiClient {
     }
 
     setupInterceptors() {
+        debugger;
         this.client.interceptors.request.use(
             (config) => {
                 const token = this.getToken();
@@ -75,7 +76,7 @@ class ApiClient {
     }
 
     async login(credentials) {
-        debugger;
+        await ensureCsrf();
         const response = await this.request({
             method: 'POST',
             url: 'http://localhost:8000/login',
