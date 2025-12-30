@@ -46,8 +46,10 @@ class Patient extends Model
 
     public function exercises(){
         return $this->belongsToMany(Exercise::class, 'exercise_patients')
-            ->withPivot('profile_id', 'prescribed_date', 'frequency', 'status', 'compliance_rate', 'last_performed', 'notes')
-            ->withTimestamps();
+            ->using(ExercisePatient::class)
+            ->withPivot( 'prescribed_date', 'frequency', 'status', 'compliance_rate', 'last_performed', 'notes')
+            ->withTimestamps()
+            ->wherePivotNull('deleted_at');
     }
 
     public function weightTrackings(){
