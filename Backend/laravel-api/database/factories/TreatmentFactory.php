@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Diagnostic;
 use App\Models\Patient;
-use App\Models\Profile;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -62,7 +62,6 @@ class TreatmentFactory extends Factory
         // </editor-fold>
         return [
             'patient_id' => Patient::inRandomOrder()->first()->id,
-            'profile_id' => Profile::inRandomOrder()->first()->id,
             'diagnostic_id' => Diagnostic::inRandomOrder()->first()->id,
             'session_date_time' => $this->faker->dateTimeBetween('-1 year', '+1 year')->format('Y-m-d H:i:s'),
             'treatment_methods' => (rand(0, 7) === 0) ? null : $this->faker->randomElement($treatment_methods),
@@ -77,7 +76,6 @@ class TreatmentFactory extends Factory
 /*
  *  $table->foreignId('diagnosis_id')->constrained();
             $table->foreignId('patient_id')->constrained();
-            $table->foreignId('profile_id')->constrained();
             $table->date('session_date');
             $table->string('treatment_methods')->nullable();
             $table->string('acupoints_used')->nullable();

@@ -13,15 +13,8 @@ class AllergyController extends Controller
      */
     public function index()
     {
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $allergies = Allergy::all();
+        return response()->json($allergies, 200);
     }
 
     /**
@@ -29,7 +22,10 @@ class AllergyController extends Controller
      */
     public function store(StoreAllergyRequest $request)
     {
+        $data = $request->validated();
+        $allergy = Allergy::create($data);
 
+        return response()->json($allergy, 201);
     }
 
     /**
@@ -37,31 +33,52 @@ class AllergyController extends Controller
      */
     public function show(Allergy $allergy)
     {
-
+        return response()->json($allergy, 200);
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Allergy $allergy)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateAllergyRequest $request, Allergy $allergy)
     {
-
+        $data = $request->validated();
+        $allergy -> update($data);
+        return response()->json($allergy, 200);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * SoftDelete
      */
     public function destroy(Allergy $allergy)
     {
-        //
+        $allergy->delete();
+        return response()->json(null, 204);
     }
+
+
+    /**
+     * Index With SoftDelete
+     */
+
+    public function indexWithSoftDelete()
+    {
+        return response()->json(Allergy::onlyTrashed()->get(), 200);
+    }
+    
+
+    /**
+     * Restore SoftDelete
+     */
+
+    public function restore($id)
+    {
+        $allergy = Allergy::onlyTrashed()->findOrFail($id);
+        $allergy->restore();
+        return response()->json($allergy, 200);
+    }
+
+
+
 }

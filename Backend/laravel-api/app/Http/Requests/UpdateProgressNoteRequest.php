@@ -24,7 +24,6 @@ class UpdateProgressNoteRequest extends FormRequest
         return [
             'patient_id' => 'required|integer|exists:patients,id',
             'appointment_id' => 'nullable|integer|exists:appointments,id',
-            'profile_id' => 'required|integer|exists:profiles,id',
             'note_date' => 'required|date',
             'subjective' => 'nullable|string',
             'objective' => 'nullable|string',

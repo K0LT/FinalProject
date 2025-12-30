@@ -23,7 +23,6 @@ class StoreAppointmentRequest extends FormRequest
     {
         return [
             'patient_id' => 'required|exists:patients,id',
-            'profile_id' => 'required|exists:profiles,id',
             'appointment_date_time' => 'required|date',
             'duration' => 'nullable|integer',
             'type' => 'nullable|string|max:255',

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\NutritionalGoal;
 use App\Models\Patient;
-use App\Models\Profile;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,7 +18,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(ProfileSeeder::class);
         $this->call(PatientSeeder::class);
         $this->call(AppointmentSeeder::class);
         $this->call(DiagnosticSeeder::class);
