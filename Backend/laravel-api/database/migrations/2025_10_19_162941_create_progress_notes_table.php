@@ -27,6 +27,7 @@ return new class extends Migration
             $table->text('assessment')->nullable();
             $table->text('plan')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

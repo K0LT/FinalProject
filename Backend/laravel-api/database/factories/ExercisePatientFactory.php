@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Exercise;
 use App\Models\Patient;
-use App\Models\Profile;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -41,7 +40,6 @@ class ExercisePatientFactory extends Factory
 
             'patient_id' => Patient::inRandomOrder()->first()->id,
             'exercise_id' => Exercise::inRandomOrder()->first()->id,
-            'profile_id' => Profile::inRandomOrder()->first()->id,
             'prescribed_date' => now()->subDays(rand(0,30)),
             'status' => $this->faker->randomElement($statuses),
             'frequency' => $this->faker->randomElement($frequencies),

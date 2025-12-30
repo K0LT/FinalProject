@@ -25,6 +25,7 @@ return new class extends Migration
             $table->date('target_date')->nullable();
             $table->string('treatment_methods')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

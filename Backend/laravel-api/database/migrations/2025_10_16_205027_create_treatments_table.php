@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->date('next_session')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

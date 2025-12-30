@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('severity', ['Leve', 'Moderada', 'Grave']);
             $table->string('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

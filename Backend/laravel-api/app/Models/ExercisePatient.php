@@ -4,16 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ExercisePatient extends Model
 {
     /** @use HasFactory<\Database\Factories\ExercisePatientFactory> */
     use HasFactory;
 
+    use SoftDeletes;
+
     protected $fillable = [
         'patient_id',
         'exercise_id',
-        'profile_id',
         'prescribed_date',
         'frequency',
         'status',
@@ -22,7 +24,4 @@ class ExercisePatient extends Model
         'notes',
     ];
 
-    public function profile(){
-        return $this->belongsTo(Profile::class);
-    }
 }

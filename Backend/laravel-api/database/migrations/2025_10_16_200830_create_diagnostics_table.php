@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('pulse_quality')->nullable();
             $table->text('tongue_description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

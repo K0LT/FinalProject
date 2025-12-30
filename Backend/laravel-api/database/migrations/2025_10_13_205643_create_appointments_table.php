@@ -25,6 +25,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->enum('status', ['Pendente', 'Confirmado', 'Cancelado', 'Concluído']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('diagnostic_id');
             $table->foreignId('symptom_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

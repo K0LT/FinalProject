@@ -18,9 +18,6 @@ return new class extends Migration
                 ->constrained()->cascadeOnDelete();
             $table->foreignId('exercise_id')
                 ->constrained();
-            $table->foreignId('profile_id')
-                ->nullable()->constrained();
-
             $table->date('prescribed_date')->useCurrent();
             $table->string('frequency')->nullable();
             $table->string('status');
@@ -28,6 +25,8 @@ return new class extends Migration
             $table->date('last_performed')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

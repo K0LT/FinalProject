@@ -28,6 +28,7 @@ return new class extends Migration
             $table->date('last_visit')->nullable();
             $table->date('next_appointment')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
