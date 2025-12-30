@@ -22,7 +22,6 @@ class UpdateAllergyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_id' => 'required|integer|exists:patients,id',
             'allergen' => 'required|string|max:255',
             'reaction_type' => 'required|string|max:255',
             'severity' => 'required|string|in:Leve,Moderada,Grave',

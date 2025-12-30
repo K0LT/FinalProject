@@ -12,7 +12,6 @@ class Allergy extends Model
     use HasFactory;
     use SoftDeletes;
     protected $fillable = [
-        'patient_id',
         'allergen',
         'reaction_type',
         'severity',
