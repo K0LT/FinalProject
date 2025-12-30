@@ -30,7 +30,4 @@ class ProgressNote extends Model
         return $this->belongsTo(Appointment::class);
     }
 
-    public function profile(){
-        return $this->belongsTo(Profile::class);
-    }
 }

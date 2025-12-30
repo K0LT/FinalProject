@@ -32,9 +32,7 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo(Role::class);
     }
-    public function profiles(){
-        return $this->hasMany(Profile::class);
-    }
+
     public function patient(){
         return $this->hasOne(Patient::class);
     }

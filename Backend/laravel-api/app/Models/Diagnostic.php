@@ -13,7 +13,6 @@ class Diagnostic extends Model
     use SoftDeletes;
     protected $fillable = [
         'patient_id',
-        'profile_id',
         'diagnostic_date',
         'western_diagnosis',
         'tcm_diagnosis',
@@ -27,15 +26,16 @@ class Diagnostic extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function profile(){
-        return $this->belongsTo(Profile::class);
-    }
 
     public function treatments(){
         return $this->hasMany(Treatment::class);
     }
     public function symptoms()
     {
-        return $this->belongsToMany(Symptom::class, 'diagnostic_symptom')->withTimestamps();
+        return $this->belongsToMany(Symptom::class, 'diagnostic_symptom')
+            ->using(DiagnosticSymptom::class)
+            ->withTimestamps()
+            ->withPivot('deleted_at')
+            ->wherePivotNull('deleted_at');
     }
 }

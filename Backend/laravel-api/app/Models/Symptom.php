@@ -20,6 +20,10 @@ class Symptom extends Model
 
     public function diagnostics()
     {
-        return $this->belongsToMany(Diagnostic::class, 'diagnostic_symptom')->withTimestamps();
+        return $this->belongsToMany(Diagnostic::class, 'diagnostic_symptom')
+            ->using(DiagnosticSymptom::class)
+            ->withTimestamps()
+            ->withPivot('deleted_at')
+            ->wherePivotNull('deleted_at');
     }
 }

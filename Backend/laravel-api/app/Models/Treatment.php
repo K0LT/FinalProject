@@ -15,7 +15,6 @@ class Treatment extends Model
     protected $fillable = [
         'diagnostic_id',
         'patient_id',
-        'profile_id',
         'session_date_time',
         'treatment_methods',
         'acupoints_used',
@@ -33,7 +32,4 @@ class Treatment extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function profile(){
-        return $this->belongsTo(Profile::class);
-    }
 }
