@@ -19,8 +19,13 @@ class Allergy extends Model
         'notes',
     ];
 
-    public function patient(){
-        return $this->belongsTo(Patient::class);
+    public function patients()
+    {
+        return $this->belongsToMany(Patient::class, 'allergy_patient')
+            ->using(AllergyPatient::class)
+            ->withTimestamps()
+            ->withPivot('deleted_at')
+            ->wherePivotNull('deleted_at');
     }
 
 }

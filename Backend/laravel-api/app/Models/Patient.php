@@ -60,9 +60,6 @@ class Patient extends Model
         return $this->hasMany(NutritionalGoal::class);
     }
 
-    public function allergies(){
-        return $this->hasMany(Allergy::class);
-    }
 
     public function conditions(){
         return $this->hasMany(Condition::class);
@@ -75,4 +72,14 @@ class Patient extends Model
     public function dailyNutritions(){
         return $this->hasMany(DailyNutrition::class);
     }
+
+    public function allergies()
+    {
+        return $this->belongsToMany(Allergy::class, 'allergy_patient')
+            ->using(AllergyPatient::class)
+            ->withTimestamps()
+            ->withPivot('deleted_at')
+            ->wherePivotNull('deleted_at');
+    }
+
 }
