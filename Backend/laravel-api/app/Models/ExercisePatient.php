@@ -13,7 +13,7 @@ class ExercisePatient extends Pivot
 
     use SoftDeletes;
 
-    protected $table = 'exercise_patients';
+    protected $table = 'exercise_patient';
 
     protected $fillable = [
         'patient_id',

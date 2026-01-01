@@ -25,7 +25,7 @@ class Exercise extends Model
     ];
     public function patients()
     {
-        return $this->belongsToMany(Patient::class, 'exercise_patients')
+        return $this->belongsToMany(Patient::class, 'exercise_patient')
             ->using(ExercisePatient::class)
             ->withPivot('prescribed_date', 'frequency', 'status', 'compliance_rate', 'last_performed', 'notes')
             ->withTimestamps()

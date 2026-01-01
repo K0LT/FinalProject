@@ -35,17 +35,16 @@ class ExercisePatientFactory extends Factory
             'Once a month',
         ];
 
+        $lastPerformed = $this->faker->optional()->dateTimeBetween('-1 month', 'now');
 
         return [
-
-            'patient_id' => Patient::inRandomOrder()->first()->id,
-            'exercise_id' => Exercise::inRandomOrder()->first()->id,
-            'prescribed_date' => now()->subDays(rand(0,30)),
-            'status' => $this->faker->randomElement($statuses),
-            'frequency' => $this->faker->randomElement($frequencies),
-            'compliance_rate' => rand(0,100),
-            'last_performed' => now()->subDays(rand(0,30)),
-            'notes' => $this->faker->randomElement($notes),
+            'exercise_id'      => Exercise::inRandomOrder()->value('id'),
+            'prescribed_date'  => $this->faker->dateTimeBetween('-3 months', 'now')->format('Y-m-d'),
+            'frequency'        => $this->faker->randomElement($frequencies),
+            'status'           => $this->faker->randomElement($statuses),
+            'compliance_rate'  => $this->faker->numberBetween(0, 100),
+            'last_performed' => $lastPerformed ? $lastPerformed->format('Y-m-d') : null,
+            'notes'            => $this->faker->optional()->randomElement($notes),
 
         ];
     }

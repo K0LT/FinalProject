@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exercise_patients', function (Blueprint $table) {
+        Schema::create('exercise_patient', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('patient_id')
@@ -26,7 +26,6 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 
@@ -35,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exercise_patients');
+        Schema::dropIfExists('exercise_patient');
     }
 };
