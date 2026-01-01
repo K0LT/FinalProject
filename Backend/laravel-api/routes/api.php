@@ -24,6 +24,10 @@ Route::get('allergies', [\App\Http\Controllers\AllergyController::class, 'index'
 Route::get('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'show']);
 Route::post('allergies', [\App\Http\Controllers\AllergyController::class, 'store']);
 Route::patch('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'update']);
+Route::delete('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'destroy']);
+Route::get('softdelete/allergies/', [\App\Http\Controllers\AllergyController::class, 'indexSoftDelete']);
+Route::get('softdelete/allergies/{id}', [\App\Http\Controllers\AllergyController::class, 'showSoftDelete']);
+Route::patch('softdelete/allergies/restore/{id}', [\App\Http\Controllers\AllergyController::class, 'restoreSoftDelete']);
 
 //Appointments
 Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index'])

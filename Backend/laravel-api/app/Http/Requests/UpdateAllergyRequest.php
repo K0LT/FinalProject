@@ -23,9 +23,7 @@ class UpdateAllergyRequest extends FormRequest
     {
         return [
             'allergen' => 'required|string|max:255',
-            'reaction_type' => 'required|string|max:255',
-            'severity' => 'required|string|in:Leve,Moderada,Grave',
-            'notes' => 'required|string',
+            'description' => 'nullable|string'
         ];
     }
 }

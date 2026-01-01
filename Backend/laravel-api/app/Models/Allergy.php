@@ -11,11 +11,11 @@ class Allergy extends Model
     /** @use HasFactory<\Database\Factories\AllergyFactory> */
     use HasFactory;
     use SoftDeletes;
+
+
     protected $fillable = [
         'allergen',
-        'reaction_type',
-        'severity',
-        'notes',
+        'description',
     ];
 
     public function patients()

@@ -59,23 +59,30 @@ class AllergyController extends Controller
 
 
     /**
-     * Index With SoftDelete
+     * Index of SoftDelete
      */
-
-    public function indexWithSoftDelete()
+    public function indexSoftDelete()
     {
         return response()->json(Allergy::onlyTrashed()->get(), 200);
     }
-    
+
 
     /**
      * Restore SoftDelete
      */
-
-    public function restore($id)
+    public function restoreSoftDelete($id)
     {
         $allergy = Allergy::onlyTrashed()->findOrFail($id);
         $allergy->restore();
+        return response()->json($allergy, 200);
+    }
+
+    /**
+     * Show SoftDeleted
+     */
+
+    public function showSoftDelete($id){
+        $allergy = Allergy::onlyTrashed()->findOrFail($id);
         return response()->json($allergy, 200);
     }
 
