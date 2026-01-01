@@ -101,6 +101,12 @@ Route::get('goal_milestones', [\App\Http\Controllers\GoalMilestoneController::cl
 Route::get('goal_milestones/{goal_milestone}', [\App\Http\Controllers\GoalMilestoneController::class, 'show']);
 Route::post('goal_milestones', [\App\Http\Controllers\GoalMilestoneController::class, 'store']);
 Route::patch('goal_milestones/{goal_milestone}', [\App\Http\Controllers\GoalMilestoneController::class, 'update']);
+Route::delete('goal_milestones/{goal_milestone}', [\App\Http\Controllers\GoalMilestoneController::class, 'destroy']);
+Route::get('soft_delete/goal_milestones', [\App\Http\Controllers\GoalMilestoneController::class, 'indexSoftDelete']);
+Route::get('soft_delete/goal_milestones/{id}', [\App\Http\Controllers\GoalMilestoneController::class, 'showSoftDelete']);
+Route::patch('soft_delete/goal_milestones/restore/{id}', [\App\Http\Controllers\GoalMilestoneController::class, 'restoreSoftDelete']);
+
+
 
 //NutritionalGoals
 Route::get('nutritional_goals', [\App\Http\Controllers\NutritionalGoalController::class, 'index']);
