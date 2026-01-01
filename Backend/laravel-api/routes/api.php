@@ -47,6 +47,12 @@ Route::get('conditions', [\App\Http\Controllers\ConditionController::class, 'ind
 Route::get('conditions/{condition}', [\App\Http\Controllers\ConditionController::class, 'show']);
 Route::post('conditions', [\App\Http\Controllers\ConditionController::class, 'store']);
 Route::patch('conditions/{condition}', [\App\Http\Controllers\ConditionController::class, 'update']);
+Route::delete('conditions/{condition}', [\App\Http\Controllers\ConditionController::class, 'destroy']);
+Route::get('softdelete/conditions', [\App\Http\Controllers\ConditionController::class, 'indexSoftDelete']);
+Route::get('softdelete/conditions/{id}', [\App\Http\Controllers\ConditionController::class, 'showSoftDelete']);
+Route::patch('softdelete/conditions/restore/{id}', [\App\Http\Controllers\ConditionController::class, 'restoreSoftDelete']);
+
+
 
 //DailyNutritions
 Route::get('daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'index']);

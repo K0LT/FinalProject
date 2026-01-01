@@ -62,10 +62,39 @@ class ConditionController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a condition (soft delete)
      */
     public function destroy(Condition $condition)
     {
-        //
+        $condition->delete();
+        return response()->json(null, 204);
+    }
+
+    /**
+     * List all soft deleted conditions
+     */
+    public function indexSoftDelete()
+    {
+        $conditions = Condition::onlyTrashed()->get();
+        return response()->json($conditions, 200);
+    }
+
+    /**
+     * Show a specific soft deleted condition
+     */
+    public function showSoftDelete($id)
+    {
+        $condition = Condition::onlyTrashed()->findOrFail($id);
+        return response()->json($condition, 200);
+    }
+
+    /**
+     * Restore a soft deleted condition
+     */
+    public function restoreSoftDelete($id)
+    {
+        $condition = Condition::onlyTrashed()->findOrFail($id);
+        $condition->restore();
+        return response()->json($condition, 200);
     }
 }
