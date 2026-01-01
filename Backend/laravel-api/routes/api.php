@@ -71,6 +71,12 @@ Route::get('diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'i
 Route::get('diagnostics/{diagnostic}', [\App\Http\Controllers\DiagnosticController::class, 'show']);
 Route::post('diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'store']);
 Route::patch('diagnostics/{diagnostic}', [\App\Http\Controllers\DiagnosticController::class, 'update']);
+Route::delete('diagnostics/{diagnostic}', [\App\Http\Controllers\DiagnosticController::class, 'destroy']);
+Route::get('soft_delete/diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'indexSoftDelete']);
+Route::get('soft_delete/diagnostics/{id}', [\App\Http\Controllers\DiagnosticController::class, 'showSoftDelete']);
+Route::patch('soft_delete/diagnostics/restore/{id}', [\App\Http\Controllers\DiagnosticController::class, 'restoreSoftDelete']);
+
+
 
 //Exercises
 Route::get('exercises', [\App\Http\Controllers\ExerciseController::class, 'index']);
