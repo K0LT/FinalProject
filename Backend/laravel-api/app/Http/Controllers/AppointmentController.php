@@ -18,13 +18,6 @@ class AppointmentController extends Controller
         return response()->json($appointments);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -47,13 +40,6 @@ class AppointmentController extends Controller
         return new AppointmentResource($appointment);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Appointment $appointment)
-    {
-
-    }
 
     /**
      * Update the specified resource in storage.
@@ -70,6 +56,35 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        //
+        $appointment->delete();
+        return response()->json(null, 204);
     }
+
+    /**
+     * Index of SoftDelete
+     */
+    public function indexSoftDelete()
+    {
+        return response()->json(Appointment::onlyTrashed()->get(), 200);
+    }
+
+    /**
+     * Restore SoftDelete
+     */
+    public function restoreSoftDelete($id)
+    {
+        $appointment = Appointment::onlyTrashed()->findOrFail($id);
+        $appointment->restore();
+        return response()->json($appointment, 200);
+    }
+
+    /**
+     * Show SoftDeleted
+     */
+    public function showSoftDelete($id)
+    {
+        $appointment = Appointment::onlyTrashed()->findOrFail($id);
+        return response()->json($appointment, 200);
+    }
+
 }

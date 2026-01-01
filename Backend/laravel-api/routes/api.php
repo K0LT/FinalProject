@@ -30,12 +30,17 @@ Route::get('softdelete/allergies/{id}', [\App\Http\Controllers\AllergyController
 Route::patch('softdelete/allergies/restore/{id}', [\App\Http\Controllers\AllergyController::class, 'restoreSoftDelete']);
 
 //Appointments
-Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index'])
-    ->middleware('can:viewAny,App\Models\Appointment');
+Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index']);
+    //->middleware('can:viewAny,App\Models\Appointment');
 Route::post('appointments', [\App\Http\Controllers\AppointmentController::class, 'store']);
-Route::get('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show'])
-    ->middleware('can:view,appointment');
+Route::get('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show']);
+    //->middleware('can:view,appointment');
 Route::patch('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'update']);
+Route::delete('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'destroy']);
+Route::get('softdelete/appointments', [\App\Http\Controllers\AppointmentController::class, 'indexSoftDelete']);
+Route::get('softdelete/appointments/{id}', [\App\Http\Controllers\AppointmentController::class, 'showSoftDelete']);
+Route::patch('softdelete/appointments/restore/{id}', [\App\Http\Controllers\AppointmentController::class, 'restoreSoftDelete']);
+
 
 //Conditions
 Route::get('conditions', [\App\Http\Controllers\ConditionController::class, 'index']);
