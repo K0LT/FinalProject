@@ -34,5 +34,6 @@ class DatabaseSeeder extends Seeder
         $this->call(GoalMilestoneSeeder::class);
         $this->call(SymptomSeeder::class);
         $this->call(DiagnosticSymptomSeeder::class);
+        $this->call(AllergyPatientSeeder::class);
     }
 }
