@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('fat_consumed')->nullable();
             $table->float('water_intake')->nullable();
             $table->integer('steps')->nullable();
-            $table->float('sleep_hours')->nullable();
+            $table->integer('sleep_hours')->nullable();
             $table->integer('calories_burned')->nullable();
             $table->timestamps();
             $table->softDeletes();
