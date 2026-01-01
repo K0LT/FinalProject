@@ -17,13 +17,6 @@ class ExerciseController extends Controller
         return response()->json($exercises);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,14 +37,6 @@ class ExerciseController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Exercise $exercise)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateExerciseRequest $request, Exercise $exercise)
@@ -64,8 +49,41 @@ class ExerciseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    /**
+     * Soft delete an exercise
+     */
     public function destroy(Exercise $exercise)
     {
-        //
+        $exercise->delete();
+        return response()->json(null, 204);
     }
+
+    /**
+     * List all soft deleted exercises
+     */
+    public function indexSoftDelete()
+    {
+        $exercises = Exercise::onlyTrashed()->get();
+        return response()->json($exercises, 200);
+    }
+
+    /**
+     * Show a specific soft deleted exercise
+     */
+    public function showSoftDelete($id)
+    {
+        $exercise = Exercise::onlyTrashed()->findOrFail($id);
+        return response()->json($exercise, 200);
+    }
+
+    /**
+     * Restore a soft deleted exercise
+     */
+    public function restoreSoftDelete($id)
+    {
+        $exercise = Exercise::onlyTrashed()->findOrFail($id);
+        $exercise->restore();
+        return response()->json($exercise, 200);
+    }
+
 }
