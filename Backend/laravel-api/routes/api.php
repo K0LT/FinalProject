@@ -186,6 +186,11 @@ Route::get('treatment_goals', [\App\Http\Controllers\TreatmentGoalController::cl
 Route::get('treatment_goals/{treatment_goal}', [\App\Http\Controllers\TreatmentGoalController::class, 'show']);
 Route::post('treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'store']);
 Route::patch('treatment_goals/{treatment_goal}', [\App\Http\Controllers\TreatmentGoalController::class, 'update']);
+Route::delete('treatment_goals/{treatment_goal}', [\App\Http\Controllers\TreatmentGoalController::class, 'destroy']);
+Route::get('soft_delete/treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'indexSoftDelete']);
+Route::get('soft_delete/treatment_goals/{id}', [\App\Http\Controllers\TreatmentGoalController::class, 'showSoftDelete']);
+Route::patch('soft_delete/treatment_goals/restore/{id}', [\App\Http\Controllers\TreatmentGoalController::class, 'restoreSoftDelete']);
+
 
 //Users
 Route::get('/users', [\App\Http\Controllers\UserController::class, 'index']);

@@ -18,13 +18,6 @@ class TreatmentGoalController extends Controller
         return response()->json($treatmentgoals);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -49,29 +42,54 @@ class TreatmentGoalController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(TreatmentGoal $treatment_Goal)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTreatment_GoalRequest $request, TreatmentGoal $treatment_Goal)
+    public function update(UpdateTreatment_GoalRequest $request, TreatmentGoal $treatment_goal)
     {
         $data = $request->validated();
-        $treatment_Goal->update($data);
-        return response()->json($treatment_Goal);
+        $treatment_goal->update($data);
+        return response()->json($treatment_goal);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TreatmentGoal $treatment_Goal)
+    /**
+     * Soft delete a treatment goal.
+     */
+    public function destroy(TreatmentGoal $treatment_goal)
     {
-        //
+        $treatment_goal->delete();
+        return response()->json(null, 204);
+    }
+
+    /**
+     * List all soft deleted treatment goals.
+     */
+    public function indexSoftDelete()
+    {
+        $goals = TreatmentGoal::onlyTrashed()->get();
+        return response()->json($goals, 200);
+    }
+
+    /**
+     * Show a specific soft deleted treatment goal.
+     */
+    public function showSoftDelete($id)
+    {
+        $goal = TreatmentGoal::onlyTrashed()->findOrFail($id);
+        return response()->json($goal, 200);
+    }
+
+    /**
+     * Restore a soft deleted treatment goal.
+     */
+    public function restoreSoftDelete($id)
+    {
+        $goal = TreatmentGoal::onlyTrashed()->findOrFail($id);
+        $goal->restore();
+        return response()->json($goal, 200);
     }
 }
