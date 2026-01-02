@@ -62,10 +62,39 @@ class TreatmentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Soft delete a treatment.
      */
     public function destroy(Treatment $treatment)
     {
-        //
+        $treatment->delete();
+        return response()->json(null, 204);
+    }
+
+    /**
+     * List all soft deleted treatments.
+     */
+    public function indexSoftDelete()
+    {
+        $treatments = Treatment::onlyTrashed()->get();
+        return response()->json($treatments, 200);
+    }
+
+    /**
+     * Show a specific soft deleted treatment.
+     */
+    public function showSoftDelete($id)
+    {
+        $treatment = Treatment::onlyTrashed()->findOrFail($id);
+        return response()->json($treatment, 200);
+    }
+
+    /**
+     * Restore a soft deleted treatment.
+     */
+    public function restoreSoftDelete($id)
+    {
+        $treatment = Treatment::onlyTrashed()->findOrFail($id);
+        $treatment->restore();
+        return response()->json($treatment, 200);
     }
 }

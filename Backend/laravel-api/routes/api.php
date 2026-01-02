@@ -175,6 +175,11 @@ Route::get('treatments', [\App\Http\Controllers\TreatmentController::class, 'ind
 Route::get('treatments/{treatment}', [\App\Http\Controllers\TreatmentController::class, 'show']);
 Route::post('treatments', [\App\Http\Controllers\TreatmentController::class, 'store']);
 Route::patch('treatments/{treatment}', [\App\Http\Controllers\TreatmentController::class, 'update']);
+Route::delete('treatments/{treatment}', [\App\Http\Controllers\TreatmentController::class, 'destroy']);
+Route::get('soft_delete/treatments', [\App\Http\Controllers\TreatmentController::class, 'indexSoftDelete']);
+Route::get('soft_delete/treatments/{id}', [\App\Http\Controllers\TreatmentController::class, 'showSoftDelete']);
+Route::patch('soft_delete/treatments/restore/{id}', [\App\Http\Controllers\TreatmentController::class, 'restoreSoftDelete']);
+
 
 //TreatmentGoals
 Route::get('treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'index']);
@@ -200,34 +205,6 @@ Route::get('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class
 Route::patch('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'update']);
 
 
-//Treatments
-Route::get('treatments', [\App\Http\Controllers\TreatmentController::class, 'index']);
-Route::get('treatments/{treatment}', [\App\Http\Controllers\TreatmentController::class, 'show']);
-Route::post('treatments', [\App\Http\Controllers\TreatmentController::class, 'store']);
-Route::patch('treatments/{treatment}', [\App\Http\Controllers\TreatmentController::class, 'update']);
-
-//TreatmentGoals
-Route::get('treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'index']);
-Route::get('treatment_goals/{treatment_goal}', [\App\Http\Controllers\TreatmentGoalController::class, 'show']);
-Route::post('treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'store']);
-Route::patch('treatment_goals/{treatment_goal}', [\App\Http\Controllers\TreatmentGoalController::class, 'update']);
-
-//Users
-Route::get('/users', [\App\Http\Controllers\UserController::class, 'index']);
-Route::get('users/{user}', [\App\Http\Controllers\UserController::class, 'show']);
-Route::post('users', [\App\Http\Controllers\UserController::class, 'store']);
-
-//WeightTrackings
-Route::get('weight_trackings', [\App\Http\Controllers\WeightTrackingController::class, 'index']);
-Route::get('weight_trackings/{weight_tracking}', [\App\Http\Controllers\WeightTrackingController::class, 'show']);
-Route::post('weight_trackings', [\App\Http\Controllers\WeightTrackingController::class, 'store']);
-Route::patch('weight_trackings/{weight_tracking}', [\App\Http\Controllers\WeightTrackingController::class, 'update']);
-
-//Symptom
-Route::get('symptoms', [\App\Http\Controllers\SymptomController::class, 'index']);
-Route::post('symptoms', [\App\Http\Controllers\SymptomController::class, 'store']);
-Route::get('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'show']);
-Route::patch('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'update']);
 
 
 
