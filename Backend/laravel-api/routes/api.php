@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 });
 
+Route::post('register', [AuthController::class, 'register']);
+
 //Allergies
 Route::get('allergies', [\App\Http\Controllers\AllergyController::class, 'index']);
 Route::get('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'show']);
@@ -117,12 +119,18 @@ Route::patch('nutritional_goals/{nutritional_goal}', [\App\Http\Controllers\Nutr
 //Patients
 Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index']);
 
-Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'show'])
-    ->middleware('can:view,patient');
+Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'show']);
+    //->middleware('can:view,patient');
 
 Route::post('patients', [\App\Http\Controllers\PatientController::class, 'store']);
 Route::patch('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'update']);
 Route::get('patients/{patient}/{relation}', [\App\Http\Controllers\PatientController::class, 'get_relation']);
+Route::delete('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'destroy']);
+Route::get('softdelete/patients', [\App\Http\Controllers\PatientController::class, 'indexSoftDelete']);
+Route::get('softdelete/patients/{id}', [\App\Http\Controllers\PatientController::class, 'showSoftDelete']);
+Route::patch('softdelete/patients/restore/{id}', [\App\Http\Controllers\PatientController::class, 'restoreSoftDelete']);
+
+
 
 //ProgressNotes
 Route::get('progress_notes', [\App\Http\Controllers\ProgressNoteController::class, 'index']);
@@ -150,8 +158,8 @@ Route::patch('treatment_goals/{treatment_goal}', [\App\Http\Controllers\Treatmen
 
 //Users
 Route::get('/users', [\App\Http\Controllers\UserController::class, 'index']);
-// Temporarily moved outside the group to test
 Route::get('users/{user}', [\App\Http\Controllers\UserController::class, 'show']);
+Route::post('users', [\App\Http\Controllers\UserController::class, 'store']);
 
 //WeightTrackings
 Route::get('weight_trackings', [\App\Http\Controllers\WeightTrackingController::class, 'index']);
