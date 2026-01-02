@@ -137,6 +137,11 @@ Route::get('progress_notes', [\App\Http\Controllers\ProgressNoteController::clas
 Route::get('progress_notes/{progress_note}', [\App\Http\Controllers\ProgressNoteController::class, 'show']);
 Route::post('progress_notes', [\App\Http\Controllers\ProgressNoteController::class, 'store']);
 Route::patch('progress_notes/{progress_note}', [\App\Http\Controllers\ProgressNoteController::class, 'update']);
+Route::delete('progress_notes/{progress_note}', [\App\Http\Controllers\ProgressNoteController::class, 'destroy']);
+Route::get('soft_delete/progress_notes', [\App\Http\Controllers\ProgressNoteController::class, 'indexSoftDelete']);
+Route::get('soft_delete/progress_notes/{id}', [\App\Http\Controllers\ProgressNoteController::class, 'showSoftDelete']);
+Route::patch('soft_delete/progress_notes/restore/{id}', [\App\Http\Controllers\ProgressNoteController::class, 'restoreSoftDelete']);
+
 
 //Roles
 Route::get('roles', [\App\Http\Controllers\RoleController::class, 'index']);
