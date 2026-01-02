@@ -148,6 +148,57 @@ Route::get('roles', [\App\Http\Controllers\RoleController::class, 'index']);
 Route::get('roles/{role}', [\App\Http\Controllers\RoleController::class, 'show']);
 Route::post('roles', [\App\Http\Controllers\RoleController::class, 'store']);
 Route::patch('roles/{role}', [\App\Http\Controllers\RoleController::class, 'update']);
+//ProgressNotes
+Route::get('progress_notes', [\App\Http\Controllers\ProgressNoteController::class, 'index']);
+Route::get('progress_notes/{progress_note}', [\App\Http\Controllers\ProgressNoteController::class, 'show']);
+Route::post('progress_notes', [\App\Http\Controllers\ProgressNoteController::class, 'store']);
+Route::patch('progress_notes/{progress_note}', [\App\Http\Controllers\ProgressNoteController::class, 'update']);
+Route::delete('progress_notes/{progress_note}', [\App\Http\Controllers\ProgressNoteController::class, 'destroy']);
+Route::get('soft_delete/progress_notes', [\App\Http\Controllers\ProgressNoteController::class, 'indexSoftDelete']);
+Route::get('soft_delete/progress_notes/{id}', [\App\Http\Controllers\ProgressNoteController::class, 'showSoftDelete']);
+Route::patch('soft_delete/progress_notes/restore/{id}', [\App\Http\Controllers\ProgressNoteController::class, 'restoreSoftDelete']);
+
+
+//Roles
+Route::get('roles', [\App\Http\Controllers\RoleController::class, 'index']);
+Route::get('roles/{role}', [\App\Http\Controllers\RoleController::class, 'show']);
+Route::post('roles', [\App\Http\Controllers\RoleController::class, 'store']);
+Route::patch('roles/{role}', [\App\Http\Controllers\RoleController::class, 'update']);
+Route::delete('roles/{role}', [\App\Http\Controllers\RoleController::class, 'destroy']);
+Route::get('soft_delete/roles', [\App\Http\Controllers\RoleController::class, 'indexSoftDelete']);
+Route::get('soft_delete/roles/{id}', [\App\Http\Controllers\RoleController::class, 'showSoftDelete']);
+Route::patch('soft_delete/roles/restore/{id}', [\App\Http\Controllers\RoleController::class, 'restoreSoftDelete']);
+
+
+//Treatments
+Route::get('treatments', [\App\Http\Controllers\TreatmentController::class, 'index']);
+Route::get('treatments/{treatment}', [\App\Http\Controllers\TreatmentController::class, 'show']);
+Route::post('treatments', [\App\Http\Controllers\TreatmentController::class, 'store']);
+Route::patch('treatments/{treatment}', [\App\Http\Controllers\TreatmentController::class, 'update']);
+
+//TreatmentGoals
+Route::get('treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'index']);
+Route::get('treatment_goals/{treatment_goal}', [\App\Http\Controllers\TreatmentGoalController::class, 'show']);
+Route::post('treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'store']);
+Route::patch('treatment_goals/{treatment_goal}', [\App\Http\Controllers\TreatmentGoalController::class, 'update']);
+
+//Users
+Route::get('/users', [\App\Http\Controllers\UserController::class, 'index']);
+Route::get('users/{user}', [\App\Http\Controllers\UserController::class, 'show']);
+Route::post('users', [\App\Http\Controllers\UserController::class, 'store']);
+
+//WeightTrackings
+Route::get('weight_trackings', [\App\Http\Controllers\WeightTrackingController::class, 'index']);
+Route::get('weight_trackings/{weight_tracking}', [\App\Http\Controllers\WeightTrackingController::class, 'show']);
+Route::post('weight_trackings', [\App\Http\Controllers\WeightTrackingController::class, 'store']);
+Route::patch('weight_trackings/{weight_tracking}', [\App\Http\Controllers\WeightTrackingController::class, 'update']);
+
+//Symptom
+Route::get('symptoms', [\App\Http\Controllers\SymptomController::class, 'index']);
+Route::post('symptoms', [\App\Http\Controllers\SymptomController::class, 'store']);
+Route::get('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'show']);
+Route::patch('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'update']);
+
 
 //Treatments
 Route::get('treatments', [\App\Http\Controllers\TreatmentController::class, 'index']);
