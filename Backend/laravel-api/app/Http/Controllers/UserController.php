@@ -82,6 +82,34 @@ class UserController extends Controller
             'user' => $user->load('role', 'profiles', 'patient')
         ], 200);
     }
+
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Credenciais erradas.'
+            ], 401);
+        }
+
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'user'    => $user->load('role', 'patient'),
+            'token'   => $token,
+            'token_type' => 'Bearer'
+        ], 200);
+    }
 }
 
 

@@ -196,6 +196,7 @@ Route::patch('soft_delete/treatment_goals/restore/{id}', [\App\Http\Controllers\
 Route::get('/users', [\App\Http\Controllers\UserController::class, 'index']);
 Route::get('users/{user}', [\App\Http\Controllers\UserController::class, 'show']);
 Route::post('users', [\App\Http\Controllers\UserController::class, 'store']);
+Route::post('/login', [\App\Http\Controllers\UserController::class, 'login']);
 
 //WeightTrackings
 Route::get('weight_trackings', [\App\Http\Controllers\WeightTrackingController::class, 'index']);
