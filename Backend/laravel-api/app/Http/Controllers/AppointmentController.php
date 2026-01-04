@@ -6,6 +6,7 @@ use App\Http\Resources\AppointmentResource;
 use App\Models\Appointment;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
+use http\Client\Request;
 
 class AppointmentController extends Controller
 {
@@ -86,5 +87,34 @@ class AppointmentController extends Controller
         $appointment = Appointment::onlyTrashed()->findOrFail($id);
         return response()->json($appointment, 200);
     }
+
+
+    public function userPatientWithAppointments(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Não'
+            ], 401);
+        }
+
+        // Pega o paciente associado ao user
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found for this user'
+            ], 404);
+        }
+
+        // Carrega os appointments relacionados
+        $patient->load('appointments');
+
+        return response()->json([
+            'patient' => $patient
+        ], 200);
+    }
+
 
 }

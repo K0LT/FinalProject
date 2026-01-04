@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Allergy;
 use App\Http\Requests\StoreAllergyRequest;
 use App\Http\Requests\UpdateAllergyRequest;
-
+use Illuminate\Http\Request;
 class AllergyController extends Controller
 {
     /**
@@ -86,6 +86,32 @@ class AllergyController extends Controller
         return response()->json($allergy, 200);
     }
 
+    /**
+    *User Allergies
+    */
 
+    //Dentro do Request vem automaticamente o user, o front-end não precisa de enviar nada.
+    public function userAllergies(Request $request)
+    {
+        $user = auth('sanctum')->user();
 
+        if (!$user) {
+            return response()->json([
+                'message' => 'Não está autenticado'
+            ], 401);
+        }
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado' //Caso o admin tente entrar
+            ], 404);
+        }
+
+        return response()->json([
+            'patient_id' => $patient->id,
+            'allergies' => $patient->allergies
+        ]);
+    }
 }
