@@ -17,13 +17,6 @@ class SymptomController extends Controller
         return response()->json($symptoms);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,13 +37,6 @@ class SymptomController extends Controller
         return response()->json($symptom);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Symptom $symptom)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -63,10 +49,40 @@ class SymptomController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Soft delete a symptom.
      */
     public function destroy(Symptom $symptom)
     {
-        //
+        $symptom->delete();
+        return response()->json(null, 204);
+    }
+
+    /**
+     * List all soft deleted symptoms.
+     */
+    public function indexSoftDelete()
+    {
+        $symptoms = Symptom::onlyTrashed()->get();
+        return response()->json($symptoms);
+    }
+
+    /**
+     * Show a specific soft deleted symptom.
+     */
+    public function showSoftDelete($id)
+    {
+        $symptom = Symptom::onlyTrashed()->findOrFail($id);
+        return response()->json($symptom);
+    }
+
+    /**
+     * Restore a soft deleted symptom.
+     */
+    public function restoreSoftDelete($id)
+    {
+        $symptom = Symptom::onlyTrashed()->findOrFail($id);
+        $symptom->restore();
+
+        return response()->json($symptom);
     }
 }

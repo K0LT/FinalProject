@@ -126,9 +126,9 @@ Route::post('patients', [\App\Http\Controllers\PatientController::class, 'store'
 Route::patch('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'update']);
 Route::get('patients/{patient}/{relation}', [\App\Http\Controllers\PatientController::class, 'get_relation']);
 Route::delete('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'destroy']);
-Route::get('softdelete/patients', [\App\Http\Controllers\PatientController::class, 'indexSoftDelete']);
-Route::get('softdelete/patients/{id}', [\App\Http\Controllers\PatientController::class, 'showSoftDelete']);
-Route::patch('softdelete/patients/restore/{id}', [\App\Http\Controllers\PatientController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/patients', [\App\Http\Controllers\PatientController::class, 'indexSoftDelete']);
+Route::get('soft_delete/patients/{id}', [\App\Http\Controllers\PatientController::class, 'showSoftDelete']);
+Route::patch('soft_delete/patients/restore/{id}', [\App\Http\Controllers\PatientController::class, 'restoreSoftDelete']);
 
 
 
@@ -202,12 +202,22 @@ Route::get('weight_trackings', [\App\Http\Controllers\WeightTrackingController::
 Route::get('weight_trackings/{weight_tracking}', [\App\Http\Controllers\WeightTrackingController::class, 'show']);
 Route::post('weight_trackings', [\App\Http\Controllers\WeightTrackingController::class, 'store']);
 Route::patch('weight_trackings/{weight_tracking}', [\App\Http\Controllers\WeightTrackingController::class, 'update']);
+Route::delete('weight_trackings/{weight_tracking}', [\App\Http\Controllers\WeightTrackingController::class, 'destroy']);
+Route::get('soft_delete/weight_trackings', [\App\Http\Controllers\WeightTrackingController::class, 'indexSoftDelete']);
+Route::get('soft_delete/weight_trackings/{id}', [\App\Http\Controllers\WeightTrackingController::class, 'showSoftDelete']);
+Route::patch('soft_delete/weight_trackings/restore/{id}', [\App\Http\Controllers\WeightTrackingController::class, 'restoreSoftDelete']);
+
 
 //Symptom
 Route::get('symptoms', [\App\Http\Controllers\SymptomController::class, 'index']);
 Route::post('symptoms', [\App\Http\Controllers\SymptomController::class, 'store']);
 Route::get('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'show']);
 Route::patch('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'update']);
+Route::delete('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'destroy']);
+Route::get('soft_delete/symptoms', [\App\Http\Controllers\SymptomController::class, 'indexSoftDelete']);
+Route::get('soft_delete/symptoms/{id}', [\App\Http\Controllers\SymptomController::class, 'showSoftDelete']);
+Route::patch('soft_delete/symptoms/restore/{id}', [\App\Http\Controllers\SymptomController::class, 'restoreSoftDelete']);
+
 
 
 

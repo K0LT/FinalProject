@@ -15,7 +15,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::with('role', 'profiles', 'patient')->get();
+        $users = User::with('role', 'patient')->get();
 
         return response()->json([
             'success' => true,
@@ -34,7 +34,7 @@ class UserController extends Controller
             'role_id'  => 'nullable|integer|in:2',
 
             //Patientt
-            'phone_number'             => 'required_if:role_id,2|string|max:20',
+            'phone_number'             => 'required|string|max:20',
             'address'                  => 'required|string|max:255',
             'birth_date'               => 'nullable|date',
             'emergency_contact_name'   => 'nullable|string|max:255',

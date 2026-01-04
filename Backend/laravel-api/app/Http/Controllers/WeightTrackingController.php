@@ -17,13 +17,6 @@ class WeightTrackingController extends Controller
         return response()->json($weightTrackings);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -43,13 +36,6 @@ class WeightTrackingController extends Controller
         return response()->json($weightTracking);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(WeightTracking $weightTracking)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -62,10 +48,43 @@ class WeightTrackingController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Soft delete the specified resource.
      */
-    public function destroy(WeightTracking $weightTracking)
+    public function destroy(WeightTracking $weight_tracking)
     {
-        //
+        $weight_tracking->delete();
+
+        return response()->json(null, 204);
+    }
+
+    /**
+     * List all soft deleted weight trackings.
+     */
+    public function indexSoftDelete()
+    {
+        return response()->json(
+            WeightTracking::onlyTrashed()->get()
+        );
+    }
+
+    /**
+     * Show a specific soft deleted weight tracking.
+     */
+    public function showSoftDelete($id)
+    {
+        $weightTracking = WeightTracking::onlyTrashed()->findOrFail($id);
+
+        return response()->json($weightTracking);
+    }
+
+    /**
+     * Restore a soft deleted weight tracking.
+     */
+    public function restoreSoftDelete($id)
+    {
+        $weightTracking = WeightTracking::onlyTrashed()->findOrFail($id);
+        $weightTracking->restore();
+
+        return response()->json($weightTracking);
     }
 }
