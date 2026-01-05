@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user/allergies', [\App\Http\Controllers\AllergyController::class, 'userAllergies']);
     Route::get('user/appointments', [\App\Http\Controllers\AppointmentController::class, 'userAppointments']);
     Route::get('user/conditions', [\App\Http\Controllers\ConditionController::class, 'userConditions']);
-    Route::get('user/daily_nutritions', [\App\Http\Controllers\ConditionController::class, 'userDailyNutrtions']);
+    Route::get('user/daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'userDailyNutritions']);
 
 });
 

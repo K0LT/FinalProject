@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DailyNutrition;
 use App\Http\Requests\StoreDailyNutritionRequest;
 use App\Http\Requests\UpdateDailyNutritionRequest;
+use Illuminate\Http\Request;
 
 class DailyNutritionController extends Controller
 {
@@ -82,5 +83,30 @@ class DailyNutritionController extends Controller
         $dailyNutrition = DailyNutrition::onlyTrashed()->findOrFail($id);
         $dailyNutrition->restore();
         return response()->json($dailyNutrition, 200);
+    }
+
+    public function userDailyNutritions(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Não'
+            ], 401);
+        }
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found for this user'
+            ], 404);
+        }
+
+        $patient->load('dailyNutritions');
+
+        return response()->json([
+            'patient' => $patient
+        ], 200);
     }
 }
