@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Patient;
 use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
+use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
@@ -73,16 +74,46 @@ class PatientController extends Controller
         return response()->json($patient, 200);
     }
 
-    public function get_relation(Patient $patient, $relation){
-        $relationships = ['diagnostics', 'treatments', 'progress_notes','treatmentGoals',
-            'exercises', 'weightTrackings', 'nutritionGoals', 'dailyNutritions', 'allergies', 'conditions'];
+    /**
+     * Restore a soft deleted patien*
+     * public function get_relation(Patient $patient, $relation){
+     * $relationships = ['diagnostics', 'treatments', 'progress_notes','treatmentGoals',
+     * 'exercises', 'weightTrackings', 'nutritionGoals', 'dailyNutritions', 'allergies', 'conditions'];
+     *
+     * foreach($relationships as $relationship){
+     * if($relationship === $relation){
+     * return response()->json($patient->$relation);
+     * }
+     * }
+     *
+     * return response()->json("Error", 404);
+     * }
+     *
+     */
 
-        foreach($relationships as $relationship){
-            if($relationship === $relation){
-                return response()->json($patient->$relation);
-            }
+
+    public function userPatient(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthenticated'
+            ], 401);
         }
 
-        return response()->json("Error", 404);
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found for this user'
+            ], 404);
+        }
+
+
+        return response()->json([
+            'user' => $user,
+            'patient' => $patient
+        ], 200);
     }
 }

@@ -24,6 +24,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user/exercises', [\App\Http\Controllers\ExerciseController::class, 'userExercises']);
     Route::get('user/treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'userTreatmentGoals']);
     Route::get('user/nutritional_goals', [\App\Http\Controllers\NutritionalGoalController::class, 'userNutritionalGoals']);
+    Route::get('user/patient', [\App\Http\Controllers\PatientController::class, 'userPatient']);
+
 
 
 });
