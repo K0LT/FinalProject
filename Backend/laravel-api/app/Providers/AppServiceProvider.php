@@ -28,5 +28,9 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('restoreSoftDeleted', function (User $user) {
             return $user->role->name === 'Admin';
         });
+
+        Gate::define('isPatient', function (User $user) {
+            return $user->role->name === 'Patient';
+        });
     }
 }

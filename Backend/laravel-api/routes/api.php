@@ -19,17 +19,28 @@ Route::post('login', [\App\Http\Controllers\UserController::class, 'login']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('user/allergies', [\App\Http\Controllers\AllergyController::class, 'userAllergies']);
-    Route::get('user/appointments', [\App\Http\Controllers\AppointmentController::class, 'userAppointments']); //Appointments + Progress Notes
-    Route::get('user/conditions', [\App\Http\Controllers\ConditionController::class, 'userConditions']);
-    Route::get('user/daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'userDailyNutritions']);
-    Route::get('user/diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'userDiagnostics']); //Diagnostic + Symptoms
-    Route::get('user/exercises', [\App\Http\Controllers\ExerciseController::class, 'userExercises']);
-    Route::get('user/treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'userTreatmentGoals']); //TreatmnentGoals + GoalMilestones
-    Route::get('user/nutritional_goals', [\App\Http\Controllers\NutritionalGoalController::class, 'userNutritionalGoals']);
-    Route::get('user', [\App\Http\Controllers\PatientController::class, 'userPatient']);
-    Route::get('user/treatments', [\App\Http\Controllers\TreatmentController::class, 'userTreaments']);
-    Route::get('user/weight_trackings', [\App\Http\Controllers\WeightTrackingController::class, 'userWeightTrackings']);
+    Route::get('user/allergies', [\App\Http\Controllers\AllergyController::class, 'userAllergies'])
+        ->middleware('can:isPatient');
+    Route::get('user/appointments', [\App\Http\Controllers\AppointmentController::class, 'userAppointments'])
+        ->middleware('can:isPatient');//Appointments + Progress Notes
+    Route::get('user/conditions', [\App\Http\Controllers\ConditionController::class, 'userConditions'])
+        ->middleware('can:isPatient');
+    Route::get('user/daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'userDailyNutritions'])
+        ->middleware('can:isPatient');
+    Route::get('user/diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'userDiagnostics'])
+        ->middleware('can:isPatient');//Diagnostic + Symptoms
+    Route::get('user/exercises', [\App\Http\Controllers\ExerciseController::class, 'userExercises'])
+        ->middleware('can:isPatient');
+    Route::get('user/treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'userTreatmentGoals'])
+        ->middleware('can:isPatient');//TreatmnentGoals + GoalMilestones
+    Route::get('user/nutritional_goals', [\App\Http\Controllers\NutritionalGoalController::class, 'userNutritionalGoals'])
+        ->middleware('can:isPatient');
+    Route::get('user/patient', [\App\Http\Controllers\PatientController::class, 'userPatient'])
+        ->middleware('can:isPatient');
+    Route::get('user/treatments', [\App\Http\Controllers\TreatmentController::class, 'userTreaments'])
+        ->middleware('can:isPatient');
+    Route::get('user/weight_trackings', [\App\Http\Controllers\WeightTrackingController::class, 'userWeightTrackings'])
+        ->middleware('can:isPatient');
 
 
 // APPOINTMENTS
