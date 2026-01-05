@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,5 +21,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::define('viewSoftDeleted', function (User $user) {
+            return $user->role->name === 'Admin';
+        });
+
+        Gate::define('restoreSoftDeleted', function (User $user) {
+            return $user->role->name === 'Admin';
+        });
     }
 }

@@ -28,7 +28,7 @@ class UpdateDailyNutritionRequest extends FormRequest
             'protein_consumed' => 'nullable|integer',
             'carbs_consumed' => 'nullable|integer',
             'fat_consumed' => 'nullable|integer',
-            'water_intake' => 'nullable|integer',
+            'water_intake' => 'nullable|decimal:1',
             'steps' => 'nullable|integer',
             'sleep_hours' => 'nullable|integer',
             'calories_burned' => 'nullable|integer',

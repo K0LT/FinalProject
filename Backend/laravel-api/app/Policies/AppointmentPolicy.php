@@ -8,9 +8,7 @@ use Illuminate\Auth\Access\Response;
 
 class AppointmentPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
+    //Index
     public function viewAny(User $user): bool
     {
         if($user->role->name === "Admin"){
@@ -19,9 +17,7 @@ class AppointmentPolicy
         return false;
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
+    //Show
     public function view(User $user, Appointment $appointment): bool
     {
         if($user->role->name === "Admin"){
@@ -31,9 +27,7 @@ class AppointmentPolicy
         return false;
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
+    //Create
     public function create(User $user): bool
     {
         if($user->role->name === "Admin"){
@@ -43,9 +37,7 @@ class AppointmentPolicy
         return false;
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
+    //Update
     public function update(User $user, Appointment $appointment): bool
     {
         if($user->role->name === "Admin"){
@@ -55,9 +47,7 @@ class AppointmentPolicy
         return false;
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
+    ///SoftDelete
     public function delete(User $user, Appointment $appointment): bool
     {
         if($user->role->name === "Admin"){
@@ -67,10 +57,8 @@ class AppointmentPolicy
         return false;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Appointment $appointment): bool
+    //IndexSoftDelete
+    public function viewAnySoftDeleted(User $user): bool
     {
         if($user->role->name === "Admin"){
             return true;
@@ -78,5 +66,4 @@ class AppointmentPolicy
 
         return false;
     }
-
 }
