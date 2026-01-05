@@ -31,24 +31,27 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
-    //Appointments
-    //Index
-    Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index'])
-        ->middleware('can:viewAny,App\Models\Appointment');
-    //Create
-    Route::post('appointments', [\App\Http\Controllers\AppointmentController::class, 'store'])
-        ->middleware('can:create,App\Models\Appointment');
-    //Show
-    Route::get('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show'])
-        ->middleware('can:view,appointment');
-    //Update
-    Route::patch('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'update'])
-         ->middleware('can:view,appointment');
-    Route::delete('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'destroy']);
-    Route::get('soft_delete/appointments', [\App\Http\Controllers\AppointmentController::class, 'indexSoftDelete']);
-    Route::get('soft_delete/appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'showSoftDelete']);
-    Route::patch('soft_delete/appointments/restore/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'restoreSoftDelete']);
+
 });
+
+//Appointments
+//Index
+Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index']);
+//    ->middleware('can:viewAny,App\Models\Appointment');
+//Create
+Route::post('appointments', [\App\Http\Controllers\AppointmentController::class, 'store']);
+//    ->middleware('can:create,App\Models\Appointment');
+//Show
+Route::get('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show']);
+//    ->middleware('can:view,appointment');
+//Update
+Route::patch('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'update']);
+//    ->middleware('can:view,appointment');
+Route::delete('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'destroy']);
+Route::get('soft_delete/appointments', [\App\Http\Controllers\AppointmentController::class, 'indexSoftDelete']);
+Route::get('soft_delete/appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'showSoftDelete']);
+Route::patch('soft_delete/appointments/restore/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'restoreSoftDelete']);
+
 
 Route::post('register', [AuthController::class, 'register']);
 
