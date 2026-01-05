@@ -27,9 +27,27 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user/nutritional_goals', [\App\Http\Controllers\NutritionalGoalController::class, 'userNutritionalGoals']);
     Route::get('user', [\App\Http\Controllers\PatientController::class, 'userPatient']);
     Route::get('user/treatments', [\App\Http\Controllers\TreatmentController::class, 'userTreaments']);
+    Route::get('user/weight_trackings', [\App\Http\Controllers\WeightTrackingController::class, 'userWeightTrackings']);
 
 
 
+    //Appointments
+    //Index
+    Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index'])
+        ->middleware('can:viewAny,App\Models\Appointment');
+    //Create
+    Route::post('appointments', [\App\Http\Controllers\AppointmentController::class, 'store'])
+        ->middleware('can:create,App\Models\Appointment');
+    //Show
+    Route::get('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show'])
+        ->middleware('can:view,appointment');
+    //Update
+    Route::patch('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'update'])
+         ->middleware('can:view,appointment');
+    Route::delete('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'destroy']);
+    Route::get('soft_delete/appointments', [\App\Http\Controllers\AppointmentController::class, 'indexSoftDelete']);
+    Route::get('soft_delete/appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'showSoftDelete']);
+    Route::patch('soft_delete/appointments/restore/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'restoreSoftDelete']);
 });
 
 Route::post('register', [AuthController::class, 'register']);
@@ -41,21 +59,11 @@ Route::post('allergies', [\App\Http\Controllers\AllergyController::class, 'store
 Route::patch('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'update']);
 Route::delete('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'destroy']);
 Route::get('soft_delete/allergies/', [\App\Http\Controllers\AllergyController::class, 'indexSoftDelete']);
-Route::get('soft_delete/allergies/{id}', [\App\Http\Controllers\AllergyController::class, 'showSoftDelete']);
-Route::patch('soft_delete/allergies/restore/{id}', [\App\Http\Controllers\AllergyController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'showSoftDelete']);
+Route::patch('soft_delete/allergies/restore/{allergy}', [\App\Http\Controllers\AllergyController::class, 'restoreSoftDelete']);
 Route::get('user/allergies', [\App\Http\Controllers\AllergyController::class, 'userAllergies']);
 
-//Appointments
-Route::get('appointments', [\App\Http\Controllers\AppointmentController::class, 'index']);
-    //->middleware('can:viewAny,App\Models\Appointment');
-Route::post('appointments', [\App\Http\Controllers\AppointmentController::class, 'store']);
-Route::get('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show']);
-    //->middleware('can:view,appointment');
-Route::patch('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'update']);
-Route::delete('appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'destroy']);
-Route::get('soft_delete/appointments', [\App\Http\Controllers\AppointmentController::class, 'indexSoftDelete']);
-Route::get('soft_delete/appointments/{id}', [\App\Http\Controllers\AppointmentController::class, 'showSoftDelete']);
-Route::patch('soft_delete/appointments/restore/{id}', [\App\Http\Controllers\AppointmentController::class, 'restoreSoftDelete']);
+
 
 
 //Conditions
@@ -65,8 +73,8 @@ Route::post('conditions', [\App\Http\Controllers\ConditionController::class, 'st
 Route::patch('conditions/{condition}', [\App\Http\Controllers\ConditionController::class, 'update']);
 Route::delete('conditions/{condition}', [\App\Http\Controllers\ConditionController::class, 'destroy']);
 Route::get('soft_delete/conditions', [\App\Http\Controllers\ConditionController::class, 'indexSoftDelete']);
-Route::get('soft_delete/conditions/{id}', [\App\Http\Controllers\ConditionController::class, 'showSoftDelete']);
-Route::patch('soft_delete/conditions/restore/{id}', [\App\Http\Controllers\ConditionController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/conditions/{condition}', [\App\Http\Controllers\ConditionController::class, 'showSoftDelete']);
+Route::patch('soft_delete/conditions/restore/{condition}', [\App\Http\Controllers\ConditionController::class, 'restoreSoftDelete']);
 
 
 
@@ -77,8 +85,8 @@ Route::post('daily_nutritions', [\App\Http\Controllers\DailyNutritionController:
 Route::patch('daily_nutritions/{daily_nutrition}', [\App\Http\Controllers\DailyNutritionController::class, 'update']);
 Route::delete('daily_nutritions/{daily_nutrition}', [\App\Http\Controllers\DailyNutritionController::class, 'destroy']);
 Route::get('soft_delete/daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'indexSoftDelete']);
-Route::get('soft_delete/daily_nutritions/{id}', [\App\Http\Controllers\DailyNutritionController::class, 'showSoftDelete']);
-Route::patch('soft_delete/daily_nutritions/restore/{id}', [\App\Http\Controllers\DailyNutritionController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/daily_nutritions/{daily_nutrition}', [\App\Http\Controllers\DailyNutritionController::class, 'showSoftDelete']);
+Route::patch('soft_delete/daily_nutritions/restore/{daily_nutrition}', [\App\Http\Controllers\DailyNutritionController::class, 'restoreSoftDelete']);
 
 
 
@@ -89,8 +97,8 @@ Route::post('diagnostics', [\App\Http\Controllers\DiagnosticController::class, '
 Route::patch('diagnostics/{diagnostic}', [\App\Http\Controllers\DiagnosticController::class, 'update']);
 Route::delete('diagnostics/{diagnostic}', [\App\Http\Controllers\DiagnosticController::class, 'destroy']);
 Route::get('soft_delete/diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'indexSoftDelete']);
-Route::get('soft_delete/diagnostics/{id}', [\App\Http\Controllers\DiagnosticController::class, 'showSoftDelete']);
-Route::patch('soft_delete/diagnostics/restore/{id}', [\App\Http\Controllers\DiagnosticController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/diagnostics/{diagnostic}', [\App\Http\Controllers\DiagnosticController::class, 'showSoftDelete']);
+Route::patch('soft_delete/diagnostics/restore/{diagnostic}', [\App\Http\Controllers\DiagnosticController::class, 'restoreSoftDelete']);
 
 
 
@@ -101,8 +109,8 @@ Route::post('exercises', [\App\Http\Controllers\ExerciseController::class, 'stor
 Route::patch('exercises/{exercise}', [\App\Http\Controllers\ExerciseController::class, 'update']);
 Route::delete('exercises/{exercise}', [\App\Http\Controllers\ExerciseController::class, 'destroy']);
 Route::get('soft_delete/exercises', [\App\Http\Controllers\ExerciseController::class, 'indexSoftDelete']);
-Route::get('soft_delete/exercises/{id}', [\App\Http\Controllers\ExerciseController::class, 'showSoftDelete']);
-Route::patch('soft_delete/exercises/restore/{id}', [\App\Http\Controllers\ExerciseController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/exercises/{exercise}', [\App\Http\Controllers\ExerciseController::class, 'showSoftDelete']);
+Route::patch('soft_delete/exercises/restore/{exercise}', [\App\Http\Controllers\ExerciseController::class, 'restoreSoftDelete']);
 
 
 
@@ -119,8 +127,8 @@ Route::post('goal_milestones', [\App\Http\Controllers\GoalMilestoneController::c
 Route::patch('goal_milestones/{goal_milestone}', [\App\Http\Controllers\GoalMilestoneController::class, 'update']);
 Route::delete('goal_milestones/{goal_milestone}', [\App\Http\Controllers\GoalMilestoneController::class, 'destroy']);
 Route::get('soft_delete/goal_milestones', [\App\Http\Controllers\GoalMilestoneController::class, 'indexSoftDelete']);
-Route::get('soft_delete/goal_milestones/{id}', [\App\Http\Controllers\GoalMilestoneController::class, 'showSoftDelete']);
-Route::patch('soft_delete/goal_milestones/restore/{id}', [\App\Http\Controllers\GoalMilestoneController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/goal_milestones/{goal_milestone}', [\App\Http\Controllers\GoalMilestoneController::class, 'showSoftDelete']);
+Route::patch('soft_delete/goal_milestones/restore/{goal_milestone}', [\App\Http\Controllers\GoalMilestoneController::class, 'restoreSoftDelete']);
 
 
 
@@ -131,8 +139,8 @@ Route::post('nutritional_goals', [\App\Http\Controllers\NutritionalGoalControlle
 Route::patch('nutritional_goals/{nutritional_goal}', [\App\Http\Controllers\NutritionalGoalController::class, 'update']);
 Route::delete('nutritional_goals/{nutritional_goal}', [\App\Http\Controllers\NutritionalGoalController::class, 'destroy']);
 Route::get('soft_delete/nutritional_goals', [\App\Http\Controllers\NutritionalGoalController::class, 'indexSoftDelete']);
-Route::get('soft_delete/nutritional_goals/{id}', [\App\Http\Controllers\NutritionalGoalController::class, 'showSoftDelete']);
-Route::patch('soft_delete/nutritional_goals/restore/{id}', [\App\Http\Controllers\NutritionalGoalController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/nutritional_goals/{nutritional_goal}', [\App\Http\Controllers\NutritionalGoalController::class, 'showSoftDelete']);
+Route::patch('soft_delete/nutritional_goals/restore/{nutritional_goal}', [\App\Http\Controllers\NutritionalGoalController::class, 'restoreSoftDelete']);
 
 
 //Patients
@@ -143,11 +151,11 @@ Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class
 
 Route::post('patients', [\App\Http\Controllers\PatientController::class, 'store']);
 Route::patch('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'update']);
-Route::get('patients/{patient}/{relation}', [\App\Http\Controllers\PatientController::class, 'get_relation']);
+//Route::get('patients/{patient}/{relation}', [\App\Http\Controllers\PatientController::class, 'get_relation']);
 Route::delete('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'destroy']);
 Route::get('soft_delete/patients', [\App\Http\Controllers\PatientController::class, 'indexSoftDelete']);
-Route::get('soft_delete/patients/{id}', [\App\Http\Controllers\PatientController::class, 'showSoftDelete']);
-Route::patch('soft_delete/patients/restore/{id}', [\App\Http\Controllers\PatientController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/patients/{patient}', [\App\Http\Controllers\PatientController::class, 'showSoftDelete']);
+Route::patch('soft_delete/patients/restore/{patient}', [\App\Http\Controllers\PatientController::class, 'restoreSoftDelete']);
 
 
 
@@ -158,8 +166,8 @@ Route::post('progress_notes', [\App\Http\Controllers\ProgressNoteController::cla
 Route::patch('progress_notes/{progress_note}', [\App\Http\Controllers\ProgressNoteController::class, 'update']);
 Route::delete('progress_notes/{progress_note}', [\App\Http\Controllers\ProgressNoteController::class, 'destroy']);
 Route::get('soft_delete/progress_notes', [\App\Http\Controllers\ProgressNoteController::class, 'indexSoftDelete']);
-Route::get('soft_delete/progress_notes/{id}', [\App\Http\Controllers\ProgressNoteController::class, 'showSoftDelete']);
-Route::patch('soft_delete/progress_notes/restore/{id}', [\App\Http\Controllers\ProgressNoteController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/progress_notes/{progress_note}', [\App\Http\Controllers\ProgressNoteController::class, 'showSoftDelete']);
+Route::patch('soft_delete/progress_notes/restore/{progress_note}', [\App\Http\Controllers\ProgressNoteController::class, 'restoreSoftDelete']);
 
 
 //Roles
@@ -169,8 +177,8 @@ Route::post('roles', [\App\Http\Controllers\RoleController::class, 'store']);
 Route::patch('roles/{role}', [\App\Http\Controllers\RoleController::class, 'update']);
 Route::delete('roles/{role}', [\App\Http\Controllers\RoleController::class, 'destroy']);
 Route::get('soft_delete/roles', [\App\Http\Controllers\RoleController::class, 'indexSoftDelete']);
-Route::get('soft_delete/roles/{id}', [\App\Http\Controllers\RoleController::class, 'showSoftDelete']);
-Route::patch('soft_delete/roles/restore/{id}', [\App\Http\Controllers\RoleController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/roles/{role}', [\App\Http\Controllers\RoleController::class, 'showSoftDelete']);
+Route::patch('soft_delete/roles/restore/{role}', [\App\Http\Controllers\RoleController::class, 'restoreSoftDelete']);
 
 
 //Treatments
@@ -180,8 +188,8 @@ Route::post('treatments', [\App\Http\Controllers\TreatmentController::class, 'st
 Route::patch('treatments/{treatment}', [\App\Http\Controllers\TreatmentController::class, 'update']);
 Route::delete('treatments/{treatment}', [\App\Http\Controllers\TreatmentController::class, 'destroy']);
 Route::get('soft_delete/treatments', [\App\Http\Controllers\TreatmentController::class, 'indexSoftDelete']);
-Route::get('soft_delete/treatments/{id}', [\App\Http\Controllers\TreatmentController::class, 'showSoftDelete']);
-Route::patch('soft_delete/treatments/restore/{id}', [\App\Http\Controllers\TreatmentController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/treatments/{treatment}', [\App\Http\Controllers\TreatmentController::class, 'showSoftDelete']);
+Route::patch('soft_delete/treatments/restore/{treatment}', [\App\Http\Controllers\TreatmentController::class, 'restoreSoftDelete']);
 
 
 //TreatmentGoals
@@ -191,8 +199,8 @@ Route::post('treatment_goals', [\App\Http\Controllers\TreatmentGoalController::c
 Route::patch('treatment_goals/{treatment_goal}', [\App\Http\Controllers\TreatmentGoalController::class, 'update']);
 Route::delete('treatment_goals/{treatment_goal}', [\App\Http\Controllers\TreatmentGoalController::class, 'destroy']);
 Route::get('soft_delete/treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'indexSoftDelete']);
-Route::get('soft_delete/treatment_goals/{id}', [\App\Http\Controllers\TreatmentGoalController::class, 'showSoftDelete']);
-Route::patch('soft_delete/treatment_goals/restore/{id}', [\App\Http\Controllers\TreatmentGoalController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/treatment_goals/{treatment_goal}', [\App\Http\Controllers\TreatmentGoalController::class, 'showSoftDelete']);
+Route::patch('soft_delete/treatment_goals/restore/{treatment_goal}', [\App\Http\Controllers\TreatmentGoalController::class, 'restoreSoftDelete']);
 
 
 //Users
@@ -208,8 +216,8 @@ Route::post('weight_trackings', [\App\Http\Controllers\WeightTrackingController:
 Route::patch('weight_trackings/{weight_tracking}', [\App\Http\Controllers\WeightTrackingController::class, 'update']);
 Route::delete('weight_trackings/{weight_tracking}', [\App\Http\Controllers\WeightTrackingController::class, 'destroy']);
 Route::get('soft_delete/weight_trackings', [\App\Http\Controllers\WeightTrackingController::class, 'indexSoftDelete']);
-Route::get('soft_delete/weight_trackings/{id}', [\App\Http\Controllers\WeightTrackingController::class, 'showSoftDelete']);
-Route::patch('soft_delete/weight_trackings/restore/{id}', [\App\Http\Controllers\WeightTrackingController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/weight_trackings/{weight_tracking}', [\App\Http\Controllers\WeightTrackingController::class, 'showSoftDelete']);
+Route::patch('soft_delete/weight_trackings/restore/{weight_tracking}', [\App\Http\Controllers\WeightTrackingController::class, 'restoreSoftDelete']);
 
 
 //Symptom
@@ -219,8 +227,8 @@ Route::get('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class
 Route::patch('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'update']);
 Route::delete('symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'destroy']);
 Route::get('soft_delete/symptoms', [\App\Http\Controllers\SymptomController::class, 'indexSoftDelete']);
-Route::get('soft_delete/symptoms/{id}', [\App\Http\Controllers\SymptomController::class, 'showSoftDelete']);
-Route::patch('soft_delete/symptoms/restore/{id}', [\App\Http\Controllers\SymptomController::class, 'restoreSoftDelete']);
+Route::get('soft_delete/symptoms/{symptom}', [\App\Http\Controllers\SymptomController::class, 'showSoftDelete']);
+Route::patch('soft_delete/symptoms/restore/{symptom}', [\App\Http\Controllers\SymptomController::class, 'restoreSoftDelete']);
 
 
 

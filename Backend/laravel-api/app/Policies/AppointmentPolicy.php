@@ -24,7 +24,7 @@ class AppointmentPolicy
      */
     public function view(User $user, Appointment $appointment): bool
     {
-        if($user->role->name === "Admin" || $user->patient->id === $appointment->patient->id){
+        if($user->role->name === "Admin"){
             return true;
         }
 
@@ -36,6 +36,10 @@ class AppointmentPolicy
      */
     public function create(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
+
         return false;
     }
 
@@ -44,6 +48,10 @@ class AppointmentPolicy
      */
     public function update(User $user, Appointment $appointment): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
+
         return false;
     }
 
@@ -52,6 +60,10 @@ class AppointmentPolicy
      */
     public function delete(User $user, Appointment $appointment): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
+
         return false;
     }
 
@@ -60,14 +72,11 @@ class AppointmentPolicy
      */
     public function restore(User $user, Appointment $appointment): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
+
         return false;
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Appointment $appointment): bool
-    {
-        return false;
-    }
 }

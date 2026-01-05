@@ -113,5 +113,4 @@ class AppointmentController extends Controller
             'patient' => $patient
         ], 200);
     }
-
 }
