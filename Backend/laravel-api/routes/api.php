@@ -17,6 +17,7 @@ Route::post('/users', [\App\Http\Controllers\UserController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user/allergies', [\App\Http\Controllers\AllergyController::class, 'userAllergies']);
+    Route::get('user/appointments', [\App\Http\Controllers\AppointmentController::class, 'userAppointments']);
 
 });
 

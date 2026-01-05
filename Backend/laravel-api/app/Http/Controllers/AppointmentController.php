@@ -6,7 +6,7 @@ use App\Http\Resources\AppointmentResource;
 use App\Models\Appointment;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
-use http\Client\Request;
+use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
@@ -89,7 +89,7 @@ class AppointmentController extends Controller
     }
 
 
-    public function userPatientWithAppointments(Request $request)
+    public function userAppointments(Request $request)
     {
         $user = auth('sanctum')->user();
 
@@ -115,6 +115,5 @@ class AppointmentController extends Controller
             'patient' => $patient
         ], 200);
     }
-
 
 }
