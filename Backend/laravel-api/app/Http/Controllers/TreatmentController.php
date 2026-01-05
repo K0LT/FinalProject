@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Treatment;
 use App\Http\Requests\StoreTreatmentRequest;
 use App\Http\Requests\UpdateTreatmentRequest;
+use Illuminate\Http\Request;
 
 class TreatmentController extends Controller
 {
@@ -17,13 +18,7 @@ class TreatmentController extends Controller
         return response()->json($treatments);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -43,13 +38,7 @@ class TreatmentController extends Controller
         return response()->json($treatment);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Treatment $treatment)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -96,5 +85,30 @@ class TreatmentController extends Controller
         $treatment = Treatment::onlyTrashed()->findOrFail($id);
         $treatment->restore();
         return response()->json($treatment, 200);
+    }
+
+    public function userTreaments(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthenticated'
+            ], 401);
+        }
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found for this user'
+            ], 404);
+        }
+
+        $patient->load('treatments.treatmentGoals');
+
+        return response()->json([
+            'patient' => $patient
+        ], 200);
     }
 }

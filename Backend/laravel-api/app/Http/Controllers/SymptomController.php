@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Symptom;
 use App\Http\Requests\StoreSymptomRequest;
 use App\Http\Requests\UpdateSymptomRequest;
+use Illuminate\Http\Request;
 
 class SymptomController extends Controller
 {
@@ -85,4 +86,5 @@ class SymptomController extends Controller
 
         return response()->json($symptom);
     }
+
 }

@@ -118,7 +118,8 @@ class DiagnosticController extends Controller
             ], 404);
         }
 
-        $patient->load('diagnostics');
+        $patient->load('diagnostics.symptoms');
+
 
         return response()->json([
             'patient' => $patient
