@@ -13,6 +13,9 @@ class DailyNutritionPolicy
      */
     public function viewAny(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -21,6 +24,9 @@ class DailyNutritionPolicy
      */
     public function view(User $user, DailyNutrition $dailyNutrition): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -29,6 +35,9 @@ class DailyNutritionPolicy
      */
     public function create(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -37,6 +46,9 @@ class DailyNutritionPolicy
      */
     public function update(User $user, DailyNutrition $dailyNutrition): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -45,22 +57,14 @@ class DailyNutritionPolicy
      */
     public function delete(User $user, DailyNutrition $dailyNutrition): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, DailyNutrition $dailyNutrition): bool
-    {
-        return false;
-    }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, DailyNutrition $dailyNutrition): bool
-    {
-        return false;
-    }
 }

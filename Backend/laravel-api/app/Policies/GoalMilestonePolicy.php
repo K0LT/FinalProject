@@ -13,6 +13,9 @@ class GoalMilestonePolicy
      */
     public function viewAny(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -21,6 +24,9 @@ class GoalMilestonePolicy
      */
     public function view(User $user, GoalMilestone $goalMilestone): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -29,6 +35,9 @@ class GoalMilestonePolicy
      */
     public function create(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -37,30 +46,9 @@ class GoalMilestonePolicy
      */
     public function update(User $user, GoalMilestone $goalMilestone): bool
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, GoalMilestone $goalMilestone): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, GoalMilestone $goalMilestone): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, GoalMilestone $goalMilestone): bool
-    {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 }

@@ -13,6 +13,9 @@ class DiagnosticPolicy
      */
     public function viewAny(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -21,6 +24,9 @@ class DiagnosticPolicy
      */
     public function view(User $user, Diagnostic $diagnostic): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -29,6 +35,9 @@ class DiagnosticPolicy
      */
     public function create(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -37,6 +46,9 @@ class DiagnosticPolicy
      */
     public function update(User $user, Diagnostic $diagnostic): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -45,22 +57,9 @@ class DiagnosticPolicy
      */
     public function delete(User $user, Diagnostic $diagnostic): bool
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Diagnostic $diagnostic): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Diagnostic $diagnostic): bool
-    {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 }

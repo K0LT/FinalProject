@@ -13,6 +13,9 @@ class ConditionPolicy
      */
     public function viewAny(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -21,6 +24,9 @@ class ConditionPolicy
      */
     public function view(User $user, Condition $condition): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -29,6 +35,9 @@ class ConditionPolicy
      */
     public function create(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -37,6 +46,9 @@ class ConditionPolicy
      */
     public function update(User $user, Condition $condition): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -45,22 +57,10 @@ class ConditionPolicy
      */
     public function delete(User $user, Condition $condition): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Condition $condition): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Condition $condition): bool
-    {
-        return false;
-    }
 }
