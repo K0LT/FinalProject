@@ -37,7 +37,7 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        $appointment->load(['patient.user', 'profile.user']);
+        $appointment->load(['patient.user']);
         return new AppointmentResource($appointment);
     }
 

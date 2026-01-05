@@ -14,7 +14,6 @@ class ProgressNote extends Model
     protected $fillable = [
         'patient_id',
         'appointment_id',
-        'profile_id',
         'note_date',
         'subjective',
         'objective',

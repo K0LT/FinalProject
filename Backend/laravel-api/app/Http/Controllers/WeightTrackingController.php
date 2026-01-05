@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
 use App\Models\WeightTracking;
 use App\Http\Requests\StoreWeightTrackingRequest;
 use App\Http\Requests\UpdateWeightTrackingRequest;
+use Illuminate\Http\Request;
 
 class WeightTrackingController extends Controller
 {
@@ -86,5 +88,30 @@ class WeightTrackingController extends Controller
         $weightTracking->restore();
 
         return response()->json($weightTracking);
+    }
+
+    public function userWeightTrackings(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Não'
+            ], 401);
+        }
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found for this user'
+            ], 404);
+        }
+
+        $patient->load('weightTrackings');
+
+        return response()->json([
+            'patient' => $patient
+        ], 200);
     }
 }

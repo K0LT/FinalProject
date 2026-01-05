@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Models\Patient;
-use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -79,7 +78,7 @@ class UserController extends Controller
     {
         return response()->json([
             'success' => true,
-            'user' => $user->load('role', 'profiles', 'patient')
+            'user' => $user->load('role', 'patient')
         ], 200);
     }
 
