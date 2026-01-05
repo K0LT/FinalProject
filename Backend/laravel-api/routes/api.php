@@ -56,7 +56,8 @@ Route::middleware('auth:sanctum')->group(function () {
 // RESTORE
     Route::patch('soft_delete/appointments/restore/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'restoreSoftDelete'])
     ->middleware('can:restoreSoftDeleted');
-});
+
+
 
 
 
@@ -460,8 +461,7 @@ Route::get('soft_delete/symptoms/{symptom}', [\App\Http\Controllers\SymptomContr
 // RESTORE
 Route::patch('soft_delete/symptoms/restore/{symptom}', [\App\Http\Controllers\SymptomController::class, 'restoreSoftDelete'])
     ->middleware('can:restoreSoftDeleted');
-
-
+});
 
 
 
