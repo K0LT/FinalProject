@@ -17,12 +17,12 @@ Route::post('/users', [\App\Http\Controllers\UserController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user/allergies', [\App\Http\Controllers\AllergyController::class, 'userAllergies']);
-    Route::get('user/appointments', [\App\Http\Controllers\AppointmentController::class, 'userAppointments']);
+    Route::get('user/appointments', [\App\Http\Controllers\AppointmentController::class, 'userAppointments']); //Appointments + Progress Notes
     Route::get('user/conditions', [\App\Http\Controllers\ConditionController::class, 'userConditions']);
     Route::get('user/daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'userDailyNutritions']);
     Route::get('user/diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'userDiagnostics']);
     Route::get('user/exercises', [\App\Http\Controllers\ExerciseController::class, 'userExercises']);
-    Route::get('user/treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'userTreatmentGoals']);
+    Route::get('user/treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'userTreatmentGoals']); //TreatmnentGoals + GoalMilestones
     Route::get('user/nutritional_goals', [\App\Http\Controllers\NutritionalGoalController::class, 'userNutritionalGoals']);
     Route::get('user/patient', [\App\Http\Controllers\PatientController::class, 'userPatient']);
 

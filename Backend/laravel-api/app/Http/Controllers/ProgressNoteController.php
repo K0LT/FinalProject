@@ -86,4 +86,6 @@ class ProgressNoteController extends Controller
         $note->restore();
         return response()->json($note, 200);
     }
+
+
 }

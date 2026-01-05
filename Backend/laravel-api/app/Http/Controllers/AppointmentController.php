@@ -107,7 +107,7 @@ class AppointmentController extends Controller
             ], 404);
         }
 
-        $patient->load('appointments');
+        $patient->load(['appointments.progressNotes']);
 
         return response()->json([
             'patient' => $patient
