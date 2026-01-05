@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Allergy;
 use App\Http\Requests\StoreAllergyRequest;
 use App\Http\Requests\UpdateAllergyRequest;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 class AllergyController extends Controller
 {
@@ -113,5 +114,25 @@ class AllergyController extends Controller
             'patient_id' => $patient->id,
             'allergies' => $patient->allergies
         ]);
+    }
+
+
+    public function patientAllergies(Patient $patient)
+    {
+        $patient->load('allergies');
+        return response()->json($patient, 200);
+    }
+
+
+    public function patientAllergiesSoftDelete(Patient $patient)
+    {
+        $allergies = $patient->allergies()
+            ->onlyTrashed()
+            ->get();
+
+        return response()->json([
+            'patient_id' => $patient,
+            'allergies' => $allergies
+        ], 200);
     }
 }

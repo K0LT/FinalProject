@@ -472,9 +472,14 @@ Route::get('soft_delete/symptoms/{symptom}', [\App\Http\Controllers\SymptomContr
 // RESTORE
 Route::patch('soft_delete/symptoms/restore/{symptom}', [\App\Http\Controllers\SymptomController::class, 'restoreSoftDelete'])
     ->middleware('can:restoreSoftDeleted');
+
+
 });
 
 
+Route::get('patients/{patient}/allergies', [\App\Http\Controllers\AllergyController::class, 'patientAllergies']);
+
+Route::get('patients/{patient}/allergies/soft-deleted', [\App\Http\Controllers\AllergyController::class, 'patientAllergiesSoftDelete']);
 
 
 
