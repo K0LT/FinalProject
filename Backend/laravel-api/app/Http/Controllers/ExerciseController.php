@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Exercise;
 use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
+use Illuminate\Http\Request;
 
 class ExerciseController extends Controller
 {
@@ -84,6 +85,30 @@ class ExerciseController extends Controller
         $exercise = Exercise::onlyTrashed()->findOrFail($id);
         $exercise->restore();
         return response()->json($exercise, 200);
+    }
+
+    public function userExercises(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Não está autenticado'
+            ], 401);
+        }
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado' //Caso o admin tente entrar
+            ], 404);
+        }
+
+        return response()->json([
+            'patient_id' => $patient->id,
+            'exercises' => $patient->exercises
+        ]);
     }
 
 }

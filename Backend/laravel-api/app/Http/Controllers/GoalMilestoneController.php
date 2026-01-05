@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\GoalMilestone;
 use App\Http\Requests\StoreGoalMilestoneRequest;
 use App\Http\Requests\UpdateGoalMilestoneRequest;
+use Illuminate\Http\Request;
 
 class GoalMilestoneController extends Controller
 {
@@ -80,5 +81,6 @@ class GoalMilestoneController extends Controller
         $milestone->restore();
         return response()->json($milestone, 200);
     }
+
 
 }

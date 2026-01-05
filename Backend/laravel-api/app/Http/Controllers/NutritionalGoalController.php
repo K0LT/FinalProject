@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\NutritionalGoal;
 use App\Http\Requests\StoreNutritionalGoalRequest;
 use App\Http\Requests\UpdateNutritionalGoalRequest;
+use Illuminate\Http\Request;
 
 class NutritionalGoalController extends Controller
 {
@@ -17,13 +18,6 @@ class NutritionalGoalController extends Controller
         return response()->json($nutritionalGoals);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -43,13 +37,7 @@ class NutritionalGoalController extends Controller
         return response()->json($nutritionalGoal);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(NutritionalGoal $nutritionalGoal)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -62,10 +50,70 @@ class NutritionalGoalController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Nutritional goals of the authenticated user's patient
+     */
+    /**
+     * Soft delete a nutritional goal
      */
     public function destroy(NutritionalGoal $nutritionalGoal)
     {
-        //
+        $nutritionalGoal->delete();
+        return response()->json($nutritionalGoal);
+    }
+
+    /**
+     * List all soft-deleted nutritional goals
+     */
+    public function indexSoftDelete()
+    {
+        $goals = NutritionalGoal::onlyTrashed()->get();
+        return response()->json($goals, 200);
+
+    }
+
+    /**
+     * Show a specific soft-deleted nutritional goal
+     */
+    public function showSoftDelete($id)
+    {
+        $goal = NutritionalGoal::onlyTrashed()->findOrFail($id);
+        return response()->json($goal, 200);
+    }
+
+    /**
+     * Restore a soft-deleted nutritional goal
+     */
+    public function restoreSoftDelete($id)
+    {
+        $goal = NutritionalGoal::onlyTrashed()->findOrFail($id);
+        $goal->restore();
+        return response()->json($goal, 200);
+    }
+
+    /**
+     * Nutritional goals of the authenticated user's patient
+     */
+    public function userNutritionalGoals(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthenticated'
+            ], 401);
+        }
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found for this user'
+            ], 404);
+        }
+
+        return response()->json([
+            'patient_id' => $patient->id,
+            'nutritional_goals' => $patient->nutritionalGoals
+        ], 200);
     }
 }

@@ -21,6 +21,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user/conditions', [\App\Http\Controllers\ConditionController::class, 'userConditions']);
     Route::get('user/daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'userDailyNutritions']);
     Route::get('user/diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'userDiagnostics']);
+    Route::get('user/exercises', [\App\Http\Controllers\ExerciseController::class, 'userExercises']);
+    Route::get('user/treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'userTreatmentGoals']);
+    Route::get('user/nutritional_goals', [\App\Http\Controllers\NutritionalGoalController::class, 'userNutritionalGoals']);
+
 
 });
 
@@ -121,6 +125,11 @@ Route::get('nutritional_goals', [\App\Http\Controllers\NutritionalGoalController
 Route::get('nutritional_goals/{nutritional_goal}', [\App\Http\Controllers\NutritionalGoalController::class, 'show']);
 Route::post('nutritional_goals', [\App\Http\Controllers\NutritionalGoalController::class, 'store']);
 Route::patch('nutritional_goals/{nutritional_goal}', [\App\Http\Controllers\NutritionalGoalController::class, 'update']);
+Route::delete('nutritional_goals/{nutritional_goal}', [\App\Http\Controllers\NutritionalGoalController::class, 'destroy']);
+Route::get('soft_delete/nutritional_goals', [\App\Http\Controllers\NutritionalGoalController::class, 'indexSoftDelete']);
+Route::get('soft_delete/nutritional_goals/{id}', [\App\Http\Controllers\NutritionalGoalController::class, 'showSoftDelete']);
+Route::patch('soft_delete/nutritional_goals/restore/{id}', [\App\Http\Controllers\NutritionalGoalController::class, 'restoreSoftDelete']);
+
 
 //Patients
 Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index']);

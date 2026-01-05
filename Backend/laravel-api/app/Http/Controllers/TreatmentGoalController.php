@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
 use App\Models\TreatmentGoal;
 use App\Http\Requests\StoreTreatment_GoalRequest;
 use App\Http\Requests\UpdateTreatment_GoalRequest;
+use Illuminate\Http\Request;
 
 
 class TreatmentGoalController extends Controller
@@ -91,5 +93,32 @@ class TreatmentGoalController extends Controller
         $goal = TreatmentGoal::onlyTrashed()->findOrFail($id);
         $goal->restore();
         return response()->json($goal, 200);
+    }
+
+    public function userTreatmentGoals(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Não'
+            ], 401);
+        }
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found for this user'
+            ], 404);
+        }
+
+        $patient = Patient::with([
+            'treatmentGoals.goalMilestones'
+        ])->find($patient);
+
+        return response()->json([
+            'patient' => $patient
+        ], 200);
     }
 }
