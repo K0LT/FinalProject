@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Diagnostic;
 use App\Http\Requests\StoreDiagnosticRequest;
 use App\Http\Requests\UpdateDiagnosticRequest;
+use Illuminate\Http\Request;
 
 class DiagnosticController extends Controller
 {
@@ -97,5 +98,30 @@ class DiagnosticController extends Controller
         $diagnostic = Diagnostic::onlyTrashed()->findOrFail($id);
         $diagnostic->restore();
         return response()->json($diagnostic, 200);
+    }
+
+    public function userDiagnostics(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Não'
+            ], 401);
+        }
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found for this user'
+            ], 404);
+        }
+
+        $patient->load('diagnostics');
+
+        return response()->json([
+            'patient' => $patient
+        ], 200);
     }
 }

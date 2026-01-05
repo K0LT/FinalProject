@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user/appointments', [\App\Http\Controllers\AppointmentController::class, 'userAppointments']);
     Route::get('user/conditions', [\App\Http\Controllers\ConditionController::class, 'userConditions']);
     Route::get('user/daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'userDailyNutritions']);
+    Route::get('user/diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'userDiagnostics']);
 
 });
 
