@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Condition;
 use App\Http\Requests\StoreConditionRequest;
 use App\Http\Requests\UpdateConditionRequest;
+use Illuminate\Http\Request;
 
 class ConditionController extends Controller
 {
@@ -17,13 +18,6 @@ class ConditionController extends Controller
         return response()->json($conditions);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -43,13 +37,6 @@ class ConditionController extends Controller
         return response()->json($condition);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Condition $condition)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -96,5 +83,30 @@ class ConditionController extends Controller
         $condition = Condition::onlyTrashed()->findOrFail($id);
         $condition->restore();
         return response()->json($condition, 200);
+    }
+
+    public function userConditions(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Não'
+            ], 401);
+        }
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found for this user'
+            ], 404);
+        }
+
+        $patient->load('conditions');
+
+        return response()->json([
+            'patient' => $patient
+        ], 200);
     }
 }

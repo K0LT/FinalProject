@@ -99,7 +99,6 @@ class AppointmentController extends Controller
             ], 401);
         }
 
-        // Pega o paciente associado ao user
         $patient = $user->patient;
 
         if (!$patient) {
@@ -108,7 +107,6 @@ class AppointmentController extends Controller
             ], 404);
         }
 
-        // Carrega os appointments relacionados
         $patient->load('appointments');
 
         return response()->json([
