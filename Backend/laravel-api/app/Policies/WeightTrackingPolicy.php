@@ -13,6 +13,9 @@ class WeightTrackingPolicy
      */
     public function viewAny(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -21,6 +24,9 @@ class WeightTrackingPolicy
      */
     public function view(User $user, WeightTracking $weightTracking): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -29,6 +35,9 @@ class WeightTrackingPolicy
      */
     public function create(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -37,6 +46,9 @@ class WeightTrackingPolicy
      */
     public function update(User $user, WeightTracking $weightTracking): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -45,22 +57,9 @@ class WeightTrackingPolicy
      */
     public function delete(User $user, WeightTracking $weightTracking): bool
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, WeightTracking $weightTracking): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, WeightTracking $weightTracking): bool
-    {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 }
