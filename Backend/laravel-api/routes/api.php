@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('/users', [\App\Http\Controllers\UserController::class, 'store']);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [\App\Http\Controllers\UserController::class, 'login']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -56,7 +58,6 @@ Route::middleware('auth:sanctum')->group(function () {
     ->middleware('can:restoreSoftDeleted');
 });
 
-Route::post('register', [AuthController::class, 'register']);
 
 
 // ALLERGIES
