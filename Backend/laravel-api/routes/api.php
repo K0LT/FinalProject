@@ -60,112 +60,112 @@ Route::post('register', [AuthController::class, 'register']);
 
 
 // ALLERGIES
-Route::get('allergies', [AllergyController::class, 'index'])
+Route::get('allergies', [\App\Http\Controllers\AllergyController::class, 'index'])
     ->middleware('can:viewAny,' . \App\Models\Allergy::class);
 // STORE
-Route::post('allergies', [AllergyController::class, 'store'])
+Route::post('allergies', [\App\Http\Controllers\AllergyController::class, 'store'])
     ->middleware('can:create,' . \App\Models\Allergy::class);
 // SHOW
-Route::get('allergies/{allergy}', [AllergyController::class, 'show'])
+Route::get('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'show'])
     ->middleware('can:view,allergy');
 // UPDATE
-Route::patch('allergies/{allergy}', [AllergyController::class, 'update'])
+Route::patch('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'update'])
     ->middleware('can:update,allergy');
 // DESTROY
-Route::delete('allergies/{allergy}', [AllergyController::class, 'destroy'])
+Route::delete('allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'destroy'])
     ->middleware('can:delete,allergy');
 // INDEX SOFT DELETED
-Route::get('soft_delete/allergies', [AllergyController::class, 'indexSoftDelete'])
+Route::get('soft_delete/allergies', [\App\Http\Controllers\AllergyController::class, 'indexSoftDelete'])
     ->middleware('can:viewAnySoftDeleted,' . \App\Models\Allergy::class);
 // SHOW SOFT DELETED
-Route::get('soft_delete/allergies/{allergy}', [AllergyController::class, 'showSoftDelete'])
+Route::get('soft_delete/allergies/{allergy}', [\App\Http\Controllers\AllergyController::class, 'showSoftDelete'])
     ->middleware('can:viewSoftDeleted');
 // RESTORE
-Route::patch('soft_delete/allergies/restore/{allergy}', [AllergyController::class, 'restoreSoftDelete'])
+Route::patch('soft_delete/allergies/restore/{allergy}', [\App\Http\Controllers\AllergyController::class, 'restoreSoftDelete'])
     ->middleware('can:restoreSoftDeleted');
 
 
 
 
 // CONDITIONS
-Route::get('conditions', [ConditionController::class, 'index'])
+Route::get('conditions', [\App\Http\Controllers\ConditionController::class, 'index'])
     ->middleware('can:viewAny,' . \App\Models\Condition::class);
 //STORE
-Route::post('conditions', [ConditionController::class, 'store'])
+Route::post('conditions', [\App\Http\Controllers\ConditionController::class, 'store'])
     ->middleware('can:create,' . \App\Models\Condition::class);
 //SHOW
-Route::get('conditions/{condition}', [ConditionController::class, 'show'])
+Route::get('conditions/{condition}', [\App\Http\Controllers\ConditionController::class, 'show'])
     ->middleware('can:view,condition');
 //UPDATE
-Route::patch('conditions/{condition}', [ConditionController::class, 'update'])
+Route::patch('conditions/{condition}', [\App\Http\Controllers\ConditionController::class, 'update'])
     ->middleware('can:update,condition');
 //DESTROY (SOFT DELETE)
-Route::delete('conditions/{condition}', [ConditionController::class, 'destroy'])
+Route::delete('conditions/{condition}', [\App\Http\Controllers\ConditionController::class, 'destroy'])
     ->middleware('can:delete,condition');
 //INDEX SOFT DELETE
-Route::get('soft_delete/conditions', [ConditionController::class, 'indexSoftDelete'])
+Route::get('soft_delete/conditions', [\App\Http\Controllers\ConditionController::class, 'indexSoftDelete'])
     ->middleware('can:viewAnySoftDeleted,' . \App\Models\Condition::class);
 //SHOW SOFT DELETE
-Route::get('soft_delete/conditions/{condition}', [ConditionController::class, 'showSoftDelete'])
+Route::get('soft_delete/conditions/{condition}', [\App\Http\Controllers\ConditionController::class, 'showSoftDelete'])
     ->middleware('can:viewSoftDeleted');
 //RESTORE
-Route::patch('soft_delete/conditions/restore/{condition}', [ConditionController::class, 'restoreSoftDelete'])
+Route::patch('soft_delete/conditions/restore/{condition}', [\App\Http\Controllers\ConditionController::class, 'restoreSoftDelete'])
     ->middleware('can:restoreSoftDeleted');
 
 
 
 
 // DAILY NUTRITIONS
-Route::get('daily_nutritions', [DailyNutritionController::class, 'index'])
+Route::get('daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'index'])
     ->middleware('can:viewAny,' . \App\Models\DailyNutrition::class);
 //STORE
-Route::post('daily_nutritions', [DailyNutritionController::class, 'store'])
+Route::post('daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'store'])
     ->middleware('can:create,' . \App\Models\DailyNutrition::class);
 //SHOW
-Route::get('daily_nutritions/{daily_nutrition}', [DailyNutritionController::class, 'show'])
+Route::get('daily_nutritions/{daily_nutrition}', [\App\Http\Controllers\DailyNutritionController::class, 'show'])
     ->middleware('can:view,daily_nutrition');
 //UPDATE
-Route::patch('daily_nutritions/{daily_nutrition}', [DailyNutritionController::class, 'update'])
+Route::patch('daily_nutritions/{daily_nutrition}', [\App\Http\Controllers\DailyNutritionController::class, 'update'])
     ->middleware('can:update,daily_nutrition');
 //DESTROY SOFT DELETE
-Route::delete('daily_nutritions/{daily_nutrition}', [DailyNutritionController::class, 'destroy'])
+Route::delete('daily_nutritions/{daily_nutrition}', [\App\Http\Controllers\DailyNutritionController::class, 'destroy'])
     ->middleware('can:delete,daily_nutrition');
 //INDEX SOFT DELETE
-Route::get('soft_delete/daily_nutritions', [DailyNutritionController::class, 'indexSoftDelete'])
+Route::get('soft_delete/daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'indexSoftDelete'])
     ->middleware('can:viewAnySoftDeleted,' . \App\Models\DailyNutrition::class);
 //SHOW SOFT DELETE
-Route::get('soft_delete/daily_nutritions/{daily_nutrition}', [DailyNutritionController::class, 'showSoftDelete'])
+Route::get('soft_delete/daily_nutritions/{daily_nutrition}', [\App\Http\Controllers\DailyNutritionController::class, 'showSoftDelete'])
     ->middleware('can:viewSoftDeleted');
 //RESTORES
-Route::patch('soft_delete/daily_nutritions/restore/{daily_nutrition}', [DailyNutritionController::class, 'restoreSoftDelete'])
+Route::patch('soft_delete/daily_nutritions/restore/{daily_nutrition}', [\App\Http\Controllers\DailyNutritionController::class, 'restoreSoftDelete'])
     ->middleware('can:restoreSoftDeleted');
 
 
 
 
 // DIAGNOSTICS
-Route::get('diagnostics', [DiagnosticController::class, 'index'])
+Route::get('diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'index'])
     ->middleware('can:viewAny,' . \App\Models\Diagnostic::class);
 //STORE
-Route::post('diagnostics', [DiagnosticController::class, 'store'])
+Route::post('diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'store'])
     ->middleware('can:create,' . \App\Models\Diagnostic::class);
 //SHOW
-Route::get('diagnostics/{diagnostic}', [DiagnosticController::class, 'show'])
+Route::get('diagnostics/{diagnostic}', [\App\Http\Controllers\DiagnosticController::class, 'show'])
     ->middleware('can:view,diagnostic');
 //UPDATE
-Route::patch('diagnostics/{diagnostic}', [DiagnosticController::class, 'update'])
+Route::patch('diagnostics/{diagnostic}', [\App\Http\Controllers\DiagnosticController::class, 'update'])
     ->middleware('can:update,diagnostic');
 //DESTROY SOFT DELETE
-Route::delete('diagnostics/{diagnostic}', [DiagnosticController::class, 'destroy'])
+Route::delete('diagnostics/{diagnostic}', [\App\Http\Controllers\DiagnosticController::class, 'destroy'])
     ->middleware('can:delete,diagnostic');
 //INDEX SOFT DELETE
-Route::get('soft_delete/diagnostics', [DiagnosticController::class, 'indexSoftDelete'])
+Route::get('soft_delete/diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'indexSoftDelete'])
     ->middleware('can:viewAnySoftDeleted,' . \App\Models\Diagnostic::class);
 //SHOW SOFT DELETE
-Route::get('soft_delete/diagnostics/{diagnostic}', [DiagnosticController::class, 'showSoftDelete'])
+Route::get('soft_delete/diagnostics/{diagnostic}', [\App\Http\Controllers\DiagnosticController::class, 'showSoftDelete'])
     ->middleware('can:viewSoftDeleted');
 //RESTORE
-Route::patch('soft_delete/diagnostics/restore/{diagnostic}', [DiagnosticController::class, 'restoreSoftDelete'])
+Route::patch('soft_delete/diagnostics/restore/{diagnostic}', [\App\Http\Controllers\DiagnosticController::class, 'restoreSoftDelete'])
     ->middleware('can:restoreSoftDeleted');
 
 
@@ -275,8 +275,10 @@ Route::patch('soft_delete/nutritional_goals/restore/{nutritional_goal}', [\App\H
 Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index'])
     ->middleware('can:viewAny,' . \App\Models\Patient::class);
 // STORE
-Route::post('patients', [\App\Http\Controllers\PatientController::class, 'store'])
-    ->middleware('can:create,' . \App\Models\Patient::class);
+// Route::post('patients', [\App\Http\Controllers\PatientController::class, 'store'])
+   // ->middleware('can:create,' . \App\Models\Patient::class);
+
+
 // SHOW
 Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'show'])
     ->middleware('can:view,patient');
