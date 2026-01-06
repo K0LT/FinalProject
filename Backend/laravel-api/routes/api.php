@@ -474,12 +474,22 @@ Route::patch('soft_delete/symptoms/restore/{symptom}', [\App\Http\Controllers\Sy
     ->middleware('can:restoreSoftDeleted');
 
 
+
+
+Route::get('patients/{patient}/allergies', [\App\Http\Controllers\AllergyController::class, 'patientAllergies'])
+        ->middleware('can:isAdmin');
+Route::get('patients/{patient}/allergies/soft-deleted', [\App\Http\Controllers\AllergyController::class, 'patientAllergiesSoftDelete'])
+        ->middleware('can:isAdmin');
+
+
+    Route::get('patients/{patient}/appointments', [\App\Http\Controllers\AppointmentController::class, 'patientAppointments'])
+        ->middleware('can:isAdmin');
+    Route::get('patients/{patient}/appointments/soft-deleted', [\App\Http\Controllers\AppointmentController::class, 'patientAppointmentsSoftDelete'])
+        ->middleware('can:isAdmin');
+
 });
 
 
-Route::get('patients/{patient}/allergies', [\App\Http\Controllers\AllergyController::class, 'patientAllergies']);
-
-Route::get('patients/{patient}/allergies/soft-deleted', [\App\Http\Controllers\AllergyController::class, 'patientAllergiesSoftDelete']);
 
 
 

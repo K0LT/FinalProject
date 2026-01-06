@@ -6,6 +6,8 @@ use App\Http\Resources\AppointmentResource;
 use App\Models\Appointment;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
+use App\Models\Patient;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
@@ -113,4 +115,29 @@ class AppointmentController extends Controller
             'patient' => $patient
         ], 200);
     }
+
+    public function patientAppointments(Patient $patient)
+    {
+        $patient->load('appointments');
+
+        return response()->json($patient, 200);
+    }
+
+    /**
+     * @param Patient $patient
+     * @return JsonResponse
+     */
+    public function patientAppointmentsSoftDelete(Patient $patient)
+    {
+        $appointments = $patient->appointments()
+            ->onlyTrashed()
+            ->get();
+
+        return response()->json([
+            'patient_id' => $patient->id,
+            'appointments' => $appointments
+        ], 200);
+    }
+
+
 }
