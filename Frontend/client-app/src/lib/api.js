@@ -9,11 +9,13 @@ function getCookie(name) {
     return match ? decodeURIComponent(match[2]) : null;
 }
 
+function deleteCookie(name) {
+    if (typeof document === "undefined") return;
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+}
+
 async function ensureCsrf() {
     if (typeof window === "undefined") return;
-
-    const xsrf = getCookie("XSRF-TOKEN");
-    if (xsrf) return;
 
     const ROOT = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000").replace(/\/api\/?$/, "");
 
@@ -21,6 +23,16 @@ async function ensureCsrf() {
         method: "GET",
         credentials: "include",
     });
+}
+
+async function refreshCsrfToken() {
+    if (typeof window === "undefined") return;
+
+    // Clear old XSRF token
+    deleteCookie("XSRF-TOKEN");
+
+    // Fetch new one
+    await ensureCsrf();
 }
 
 class ApiClient {
@@ -57,7 +69,34 @@ class ApiClient {
 
         this.client.interceptors.response.use(
             (response) => response,
-            (error) => {
+            async (error) => {
+                const originalRequest = error.config;
+
+                // Handle CSRF token mismatch (419)
+                if (error.response?.status === 419 && !originalRequest._retry) {
+                    originalRequest._retry = true;
+
+                    console.log('🔄 CSRF token mismatch detected, refreshing token...');
+
+                    try {
+                        // Refresh CSRF token
+                        await refreshCsrfToken();
+
+                        // Update the header with new token
+                        const newXsrf = getCookie("XSRF-TOKEN");
+                        if (newXsrf) {
+                            originalRequest.headers['X-XSRF-TOKEN'] = newXsrf;
+                        }
+
+                        // Retry the original request
+                        return this.client(originalRequest);
+                    } catch (refreshError) {
+                        console.error('Failed to refresh CSRF token:', refreshError);
+                        return Promise.reject(error);
+                    }
+                }
+
+                // Handle unauthorized (401)
                 if (error.response?.status === 401) {
                     this.clearToken();
                     if (typeof window !== 'undefined') {
@@ -65,6 +104,7 @@ class ApiClient {
                         window.location.href = '/login';
                     }
                 }
+
                 return Promise.reject(error);
             }
         );

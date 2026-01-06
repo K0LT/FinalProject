@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { getDashboardRoute } from '@/lib/roleHelpers';
 
 export const LoginFormCard = () => {
     const [email, setEmail] = useState('');
@@ -11,10 +12,13 @@ export const LoginFormCard = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [tab, setTab] = useState('login');
 
-    const { login, error, clearError, isAuthenticated } = useAuth();
+    const { login, error, clearError, isAuthenticated, user } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
-    const redirect = searchParams.get('redirect') || '/dashboard';
+
+    // Get role-based redirect or use query parameter
+    const defaultRedirect = user ? getDashboardRoute(user) : '/dashboard';
+    const redirect = searchParams.get('redirect') || defaultRedirect;
 
     // Clear errors on mount (defensive check from LoginForm.js)
     useEffect(() => {
@@ -25,10 +29,12 @@ export const LoginFormCard = () => {
 
     // Redirect if already authenticated (from LoginForm.js)
     useEffect(() => {
-        if (isAuthenticated) {
-            router.push(redirect);
+        if (isAuthenticated && user) {
+            // Use role-based redirect
+            const targetRoute = searchParams.get('redirect') || getDashboardRoute(user);
+            router.push(targetRoute);
         }
-    }, [isAuthenticated, router, redirect]);
+    }, [isAuthenticated, user, router, searchParams]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -45,8 +51,13 @@ export const LoginFormCard = () => {
         }
 
         try {
-            await login({ email, password });
-            // Note: redirect happens via useEffect above after state updates
+            const response = await login({ email, password });
+
+            // Role-based redirect after successful login
+            if (response && response.user) {
+                const targetRoute = searchParams.get('redirect') || getDashboardRoute(response.user);
+                router.push(targetRoute);
+            }
         } catch (err) {
             console.error('Erro no login:', err);
             // Error is handled by AuthContext state
