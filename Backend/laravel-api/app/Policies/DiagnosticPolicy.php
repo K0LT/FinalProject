@@ -24,7 +24,7 @@ class DiagnosticPolicy
      */
     public function view(User $user, Diagnostic $diagnostic): bool
     {
-        if($user->role->name === "Admin"){
+        if($user->role->name === "Admin" || $user->patient->id === $diagnostic->patient_id){
             return true;
         }
         return false;
