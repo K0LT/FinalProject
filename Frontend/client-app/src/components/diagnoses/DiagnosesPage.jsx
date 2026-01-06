@@ -10,6 +10,7 @@ import ButtonRow from "@/components/ui/ButtonRow";
 import DiagnosisCard from "@/components/diagnoses/DiagnosisCard";
 import {useParams} from "next/navigation";
 import NewTreatmentModal from "@/components/treatments/NewTreatmentModal";
+import {login} from "@/services/login"
 
 export default function DiagnosesPage() {
     // These names are passed down to the buttons to swap the current card displays
@@ -32,8 +33,14 @@ export default function DiagnosesPage() {
         const ctrl = new AbortController();
         (async () => {
             try {
+                const loginResult = await login({
+                    email: "admin@example.com",
+                    password: "atec123",
+                });
+
                 const diagData = await getDiagnostics(params?.id);
                 const treatData = await getTreatments(params?.id);
+
                 setDiagnostics(Array.isArray(diagData) ? diagData : []);
                 setTreatments(Array.isArray(treatData) ? treatData : []);
             } catch (e) {
@@ -51,7 +58,7 @@ export default function DiagnosesPage() {
 
     return (
         <div>
-            <NewDiagnosticModal open={diagOpen} onClose={() => setDiagOpen(false)}/>
+            {loading ? <div></div> : <NewDiagnosticModal open={diagOpen} onClose={() => setDiagOpen(false)}/>}
             <NewTreatmentModal open={treatOpen} onClose={() => setTreatOpen(false)}/>
 
             <div className="flex flex-row justify-between">

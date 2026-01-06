@@ -1,301 +1,297 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from "react";
-import Card from "@/components/ui/Card";
-import Calendar from "@/components/ui/Calendar";
-import {
-    getUpcomingAppointments,
-    getAvailableSlots,
-    createAppointment
-} from "@/services/appointments";
+import { useState, useEffect } from 'react';
+import { useAuth } from '@/context/AuthContext';
+import { useApi } from '@/hooks/useApi';
+import Calendar from '@/components/ui/Calendar';
 
 export default function AppointmentScheduler() {
-    const [selectedDate, setSelectedDate] = useState(new Date(2025, 9, 16)); // Oct 16, 2025
-    const [selectedTime, setSelectedTime] = useState(null);
-    const [appointments, setAppointments] = useState([]);
+    const { user, isAuthenticated } = useAuth();
+    const { post, get, loading, error } = useApi();
+
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedTime, setSelectedTime] = useState('');
     const [availableSlots, setAvailableSlots] = useState([]);
-    const [loading, setLoading] = useState({
-        appointments: true,
-        slots: false
-    });
-    const [error, setError] = useState(null);
+    const [appointments, setAppointments] = useState([]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // ALTERAR POR DADOS DE API
-    const MOCK_SLOTS = [
-        { time: "09:00", available: true },
-        { time: "10:00", available: true },
-        { time: "11:00", available: false },
-        { time: "13:00", available: true },
-        { time: "14:00", available: true },
-        { time: "15:00", available: true },
-        { time: "16:00", available: true },
-        { time: "17:00", available: true },
-    ];
 
-    const MOCK_APPOINTMENTS = [
-        {
-            id: 1,
-            patient_name: "Inez Borges",
-            type: "Consulta Inicial",
-            appointment_date: "2024-09-20T14:00:00",
-            duration: 60,
-            status: "confirmed"
-        },
-        {
-            id: 2,
-            patient_name: "Miguel Rodrigues",
-            type: "Tratamento de Seguimento",
-            appointment_date: "2024-09-20T15:30:00",
-            duration: 45,
-            status: "confirmed"
-        },
-        {
-            id: 3,
-            patient_name: "Ana Santos",
-            type: "Gestão da Dor",
-            appointment_date: "2024-09-21T10:00:00",
-            duration: 60,
-            status: "pending"
+    useEffect(() => {
+        if (isAuthenticated) {
+            loadUserAppointments();
         }
-    ];
+    }, [isAuthenticated]);
 
-    // Fetch appointments
+
     useEffect(() => {
-        const fetchAppointments = async () => {
-            try {
-                setLoading(prev => ({ ...prev, appointments: true }));
-
-                await new Promise(resolve => setTimeout(resolve, 500));
-                setAppointments(MOCK_APPOINTMENTS);
-            } catch (err) {
-                console.error("Error:", err);
-                setError(err.message);
-            } finally {
-                setLoading(prev => ({ ...prev, appointments: false }));
-            }
-        };
-
-        fetchAppointments();
-    }, []);
-
-    // Fetch slots when date changes
-    useEffect(() => {
-        const fetchSlots = async () => {
-            try {
-                setLoading(prev => ({ ...prev, slots: true }));
-                setSelectedTime(null);
-
-                await new Promise(resolve => setTimeout(resolve, 300));
-                setAvailableSlots(MOCK_SLOTS);
-            } catch (err) {
-                console.error("Error:", err);
-                setAvailableSlots([]);
-            } finally {
-                setLoading(prev => ({ ...prev, slots: false }));
-            }
-        };
-
-        fetchSlots();
+        if (selectedDate) {
+            loadAvailableSlots();
+        }
     }, [selectedDate]);
 
-    const handleDateChange = (date) => {
+    const loadUserAppointments = async () => {
+        try {
+            const response = await get('/appointments');
+
+
+            const userAppointments = Array.isArray(response) ? response :
+                response?.data ? response.data :
+                    response?.appointments ? response.appointments : [];
+
+            setAppointments(userAppointments);
+
+            const markedDates = userAppointments.map(apt => new Date(apt.appointment_date));
+
+        } catch (err) {
+            console.error('Erro ao carregar appointments:', err);
+            // Set empty array as fallback
+            setAppointments([]);
+        }
+    };
+
+    const loadAvailableSlots = async () => {
+        try {
+
+            const slots = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'];
+            setAvailableSlots(slots);
+        } catch (err) {
+            console.error('Erro ao carregar horários:', err);
+        }
+    };
+
+    const handleDateSelect = (date) => {
         setSelectedDate(date);
+        setSelectedTime('');
     };
 
     const handleTimeSelect = (time) => {
         setSelectedTime(time);
     };
 
-    const handleNewAppointment = async () => {
+    const handleSubmitAppointment = async () => {
         if (!selectedDate || !selectedTime) {
-            alert("Por favor selecione uma data e hora");
+            alert('Por favor selecione uma data e horário');
             return;
         }
-        alert(`Nova consulta: ${selectedDate.toLocaleDateString('pt-PT')} às ${selectedTime}`);
+
+        try {
+            setIsSubmitting(true);
+
+            const appointmentData = {
+                appointment_date: selectedDate.toISOString().split('T')[0],
+                appointment_time: selectedTime,
+                patient_id: user?.patient?.id,
+
+                status: 'scheduled',
+                type: 'consultation'
+            };
+
+            console.log('📤 Marcando appointment:', appointmentData);
+
+            const newAppointment = await post('/appointments', appointmentData);
+
+            console.log('✅ Appointment marcado:', newAppointment);
+
+
+            setAppointments(prev => [...prev, newAppointment]);
+
+
+            setSelectedTime('');
+
+            alert('Consulta marcada com sucesso!');
+
+        } catch (err) {
+            console.error('Erro ao marcar consulta:', err);
+            alert('Erro ao marcar consulta. Tente novamente.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
-    const appointmentDates = appointments.map(apt => new Date(apt.appointment_date));
 
-    if (error) {
+    if (!isAuthenticated) {
         return (
-            <div className="p-6">
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                    <h3 className="text-red-800 font-semibold">Erro ao carregar dados</h3>
-                    <p className="text-red-600 text-sm">{error}</p>
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                    <p>A redirecionar para login...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="space-y-6">
-            {/* BookingHeader */}
-            <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-semibold">Agendamento de Consultas</h1>
-                <button
-                    onClick={handleNewAppointment}
-                    disabled={!selectedDate || !selectedTime}
-                    className="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-all"
-                >
-                    + Nova Consulta
-                </button>
-            </div>
+        <div className="min-h-screen bg-gray-50 py-8">
+            <div className="max-w-6xl mx-auto px-4">
+                {/* Header */}
+                <div className="mb-8">
+                    <h1 className="text-3xl font-bold text-gray-900">Marcar Consulta</h1>
+                    <p className="text-gray-600 mt-2">
+                        Olá <strong>{user?.name}</strong>, selecione uma data e horário para a sua consulta
+                    </p>
+                </div>
 
-            {/* Main Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                {/* Calendar */}
-                <div className="lg:col-span-7">
-                    <Card>
-                        <div className="flex items-center gap-2 mb-3">
-                            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                            <h3 className="font-semibold text-gray-900">Calendário</h3>
-                        </div>
-                        <p className="text-sm text-gray-600 mb-4">
-                            Selecione uma data para ver as consultas
-                        </p>
-
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Calendar Section */}
+                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 className="text-xl font-semibold mb-4">Selecionar Data</h2>
                         <Calendar
                             value={selectedDate}
-                            onChange={handleDateChange}
-                            markedDates={appointmentDates}
+                            onChange={handleDateSelect}
+                            markedDates={Array.isArray(appointments) ? appointments.map(apt => new Date(apt.appointment_date)) : []}
                             minDate={new Date()}
                         />
-                    </Card>
-                </div>
+                    </div>
 
-                {/* Available Times */}
-                <div className="lg:col-span-5">
-                    <Card>
-                        <div className="flex items-center gap-2 mb-3">
-                            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <h3 className="font-semibold text-gray-900">Horários Disponíveis</h3>
-                        </div>
-                        <p className="text-sm text-gray-600 mb-4">
-                            {selectedDate.toLocaleDateString('pt-PT', {
-                                day: '2-digit',
-                                month: '2-digit',
-                                year: 'numeric'
-                            })}
-                        </p>
+                    {/* Time Selection & Details */}
+                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 className="text-xl font-semibold mb-4">Detalhes da Consulta</h2>
 
-                        {loading.slots ? (
-                            <div className="text-center py-8 text-gray-500 text-sm">
-                                A carregar horários...
-                            </div>
-                        ) : availableSlots.length === 0 ? (
-                            <div className="text-center py-8 text-gray-500 text-sm">
-                                Sem horários disponíveis
+                        {selectedDate ? (
+                            <div className="space-y-6">
+                                {/* Selected Date Display */}
+                                <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                    <p className="font-medium text-blue-900 mb-1">Data selecionada:</p>
+                                    <p className="text-lg font-semibold">
+                                        {selectedDate.toLocaleDateString('pt-PT', {
+                                            weekday: 'long',
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        })}
+                                    </p>
+                                </div>
+
+                                {/* Time Selection */}
+                                <div>
+                                    <h3 className="font-semibold mb-3 text-gray-800">
+                                        Horários Disponíveis {loading && '(a carregar...)'}
+                                    </h3>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        {availableSlots.map(time => (
+                                            <button
+                                                key={time}
+                                                onClick={() => handleTimeSelect(time)}
+                                                className={`p-3 border rounded-lg transition-all duration-200 ${
+                                                    selectedTime === time
+                                                        ? 'bg-blue-600 text-white border-blue-600 shadow-md'
+                                                        : 'border-gray-300 hover:bg-blue-50 hover:border-blue-500 text-gray-700'
+                                                }`}
+                                            >
+                                                {time}
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    {availableSlots.length === 0 && !loading && (
+                                        <p className="text-gray-500 text-center py-4">
+                                            Não há horários disponíveis para esta data.
+                                        </p>
+                                    )}
+                                </div>
+
+                                {/* Submit Button */}
+                                <button
+                                    onClick={handleSubmitAppointment}
+                                    disabled={!selectedTime || isSubmitting || loading}
+                                    className={`w-full py-3 rounded-lg font-semibold transition-colors ${
+                                        selectedTime && !isSubmitting && !loading
+                                            ? 'bg-green-600 text-white hover:bg-green-700 shadow-md'
+                                            : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                                    }`}
+                                >
+                                    {isSubmitting ? (
+                                        <div className="flex items-center justify-center">
+                                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                                            A marcar consulta...
+                                        </div>
+                                    ) : (
+                                        'Confirmar Consulta'
+                                    )}
+                                </button>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-2 gap-2">
-                                {availableSlots.map((slot, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => slot.available && handleTimeSelect(slot.time)}
-                                        disabled={!slot.available}
-                                        className={`py-3 px-4 rounded-lg text-sm font-medium transition-all ${
-                                            selectedTime === slot.time
-                                                ? 'bg-yellow-600 text-white shadow-md'
-                                                : slot.available
-                                                    ? 'bg-yellow-600 text-white hover:bg-yellow-700 hover:shadow-md'
-                                                    : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                        }`}
-                                    >
-                                        {slot.time}
-                                    </button>
-                                ))}
-                            </div>
+                            <p className="text-gray-500 text-center py-8">
+                                Selecione uma data no calendário para ver os horários disponíveis.
+                            </p>
                         )}
-                    </Card>
+                    </div>
                 </div>
-            </div>
 
-            {/* Upcoming Appointments */}
-            <Card>
-                <h3 className="font-semibold text-lg mb-1">Próximas Consultas</h3>
-                <p className="text-sm text-gray-600 mb-4">
-                    As suas consultas agendadas para os próximos dias
-                </p>
+                {/* User Info & Existing Appointments */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+                    {/* User Information */}
+                    {user?.patient && (
+                        <div className="bg-white p-6 rounded-lg shadow-lg">
+                            <h3 className="text-lg font-semibold mb-4 text-gray-800">Suas Informações</h3>
+                            <div className="space-y-3">
+                                <div className="flex justify-between border-b pb-2">
+                                    <span className="font-medium">Nome:</span>
+                                    <span>{user.name} {user.surname}</span>
+                                </div>
+                                <div className="flex justify-between border-b pb-2">
+                                    <span className="font-medium">Email:</span>
+                                    <span>{user.email}</span>
+                                </div>
+                                <div className="flex justify-between border-b pb-2">
+                                    <span className="font-medium">Telefone:</span>
+                                    <span>{user.patient.phone_number}</span>
+                                </div>
+                                {user.patient.age && (
+                                    <div className="flex justify-between border-b pb-2">
+                                        <span className="font-medium">Idade:</span>
+                                        <span>{user.patient.age} anos</span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
 
-                {loading.appointments ? (
-                    <div className="text-center py-8 text-gray-500 text-sm">
-                        A carregar consultas...
+                    {/* Existing Appointments */}
+                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 className="text-lg font-semibold mb-4 text-gray-800">Suas Consultas</h3>
+                        {appointments.length > 0 ? (
+                            <div className="space-y-3">
+                                {appointments.slice(0, 3).map(appointment => (
+                                    <div key={appointment.id} className="border-l-4 border-blue-500 pl-4 py-2">
+                                        <p className="font-medium">
+                                            {new Date(appointment.appointment_date).toLocaleDateString('pt-PT')}
+                                        </p>
+                                        <p className="text-sm text-gray-600">
+                                            {appointment.appointment_time} • {appointment.status}
+                                        </p>
+                                    </div>
+                                ))}
+                                {appointments.length > 3 && (
+                                    <p className="text-sm text-gray-500 text-center">
+                                        +{appointments.length - 3} mais consultas
+                                    </p>
+                                )}
+                            </div>
+                        ) : (
+                            <p className="text-gray-500 text-center py-4">
+                                Ainda não tem consultas marcadas.
+                            </p>
+                        )}
                     </div>
-                ) : appointments.length === 0 ? (
-                    <div className="text-center py-8 text-gray-500 text-sm">
-                        Nenhuma consulta agendada
-                    </div>
-                ) : (
-                    <div className="space-y-3">
-                        {appointments.map((apt) => (
-                            <AppointmentCard key={apt.id} appointment={apt} />
-                        ))}
+                </div>
+
+                {/* Error Display */}
+                {error && (
+                    <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                        <div className="flex items-center">
+                            <div className="flex-shrink-0">
+                                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clipRule="evenodd" />
+                                </svg>
+                            </div>
+                            <div className="ml-3">
+                                <h3 className="text-sm font-medium text-red-800">Erro</h3>
+                                <div className="mt-1 text-sm text-red-700">{error}</div>
+                            </div>
+                        </div>
                     </div>
                 )}
-            </Card>
-        </div>
-    );
-}
-
-function AppointmentCard({ appointment }) {
-    const statusConfig = {
-        scheduled: { label: 'agendada', bg: 'bg-blue-600' },
-        confirmed: { label: 'confirmada', bg: 'bg-yellow-600' },
-        completed: { label: 'concluída', bg: 'bg-green-600' },
-        cancelled: { label: 'cancelada', bg: 'bg-red-600' },
-        pending: { label: 'pendente', bg: 'bg-orange-500' }
-    };
-
-    const config = statusConfig[appointment.status] || statusConfig.pending;
-
-    const appointmentDate = new Date(appointment.appointment_date);
-    const dateStr = appointmentDate.toLocaleDateString('pt-PT', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-    });
-    const timeStr = appointmentDate.toLocaleTimeString('pt-PT', {
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-
-    return (
-        <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200">
-            {/* Avatar */}
-            <div className="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center flex-shrink-0">
-                <svg className="w-6 h-6 text-yellow-700" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                </svg>
-            </div>
-
-            {/* Info */}
-            <div className="flex-1 min-w-0">
-                <h4 className="font-semibold text-gray-900 truncate">
-                    {appointment.patient_name}
-                </h4>
-                <p className="text-sm text-gray-600 truncate">
-                    {appointment.type}
-                </p>
-            </div>
-
-            {/* Date, Time and Status */}
-            <div className="flex items-center gap-3 flex-shrink-0">
-                <div className="text-right">
-                    <div className="text-sm font-medium text-gray-900 whitespace-nowrap">
-                        {dateStr} {timeStr}
-                    </div>
-                    <div className="text-xs text-gray-500">
-                        {appointment.duration} min
-                    </div>
-                </div>
-
-                <span className={`px-3 py-1 rounded-full text-xs font-medium text-white ${config.bg}`}>
-                    {config.label}
-                </span>
             </div>
         </div>
     );

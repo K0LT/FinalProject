@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+
 /**
  * Reusable Calendar Component
  *
@@ -124,6 +125,7 @@ export default function Calendar({
     // ============================================
 
     return (
+        <AuthGuard requireAuth={false}>
         <div className="w-full">
             {/* BookingHeader */}
             <div className="flex items-center justify-between mb-4">
@@ -204,5 +206,6 @@ export default function Calendar({
                 })}
             </div>
         </div>
+        </AuthGuard>
     );
 }

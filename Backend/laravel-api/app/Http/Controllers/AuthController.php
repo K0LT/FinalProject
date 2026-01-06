@@ -65,6 +65,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Sessão iniciada com sucesso.',
             'user'    => $request->user(),
+            'auth_token' => $request->user()->createToken('auth_token')->plainTextToken,
         ]);
     }
 
@@ -78,5 +79,10 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Sessão terminada com sucesso.',
         ]);
+    }
+
+    // TEMP GET USER FROM BEARER TOKEN
+    public function user(Request $request){
+        return response()->json($request->user());
     }
 }

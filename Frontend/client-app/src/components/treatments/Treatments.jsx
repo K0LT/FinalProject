@@ -12,7 +12,8 @@ export default function TreatmentsCard({session_date_time, treatment_methods, ac
         </div>
         <div className="flex flex-col mt-4">
             <span>Acupuncture Points</span>
-            <div className="flex flex-row space-x-2 pt-1.5">{acupoints_used.map((acupoint) => (
+            <div className="flex flex-row space-x-2 pt-1.5">
+                {acupoints_used.map((acupoint) => (
                 <div key={acupoint} className="border rounded-lg border-amber-200 text-sm px-1.5">{acupoint}</div>
             ))}</div>
         </div>
