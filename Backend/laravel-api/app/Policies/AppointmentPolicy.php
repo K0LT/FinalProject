@@ -20,7 +20,7 @@ class AppointmentPolicy
     //Show
     public function view(User $user, Appointment $appointment): bool
     {
-        if($user->role->name === "Admin"){
+        if($user->role->name === "Admin" || $user->patient->id === $appointment->patient_id){
             return true;
         }
 

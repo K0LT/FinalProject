@@ -24,7 +24,7 @@ class DailyNutritionPolicy
      */
     public function view(User $user, DailyNutrition $dailyNutrition): bool
     {
-        if($user->role->name === "Admin"){
+        if($user->role->name === "Admin" || $user->patient->id === $dailyNutrition->patient_id){
             return true;
         }
         return false;
@@ -35,10 +35,7 @@ class DailyNutritionPolicy
      */
     public function create(User $user): bool
     {
-        if($user->role->name === "Admin"){
-            return true;
-        }
-        return false;
+        return true;
     }
 
     /**
@@ -46,10 +43,7 @@ class DailyNutritionPolicy
      */
     public function update(User $user, DailyNutrition $dailyNutrition): bool
     {
-        if($user->role->name === "Admin"){
-            return true;
-        }
-        return false;
+        return true;
     }
 
     /**

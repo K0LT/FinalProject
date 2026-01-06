@@ -13,10 +13,7 @@ class ConditionPolicy
      */
     public function viewAny(User $user): bool
     {
-        if($user->role->name === "Admin"){
-            return true;
-        }
-        return false;
+        return true;
     }
 
     /**
@@ -24,10 +21,7 @@ class ConditionPolicy
      */
     public function view(User $user, Condition $condition): bool
     {
-        if($user->role->name === "Admin"){
-            return true;
-        }
-        return false;
+        return true;
     }
 
     /**
