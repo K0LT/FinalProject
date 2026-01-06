@@ -38,13 +38,18 @@ class ApiClient {
         this.client.interceptors.request.use(
             (config) => {
                 const token = this.getToken();
-                let xsrf = getCookie("XSRF-TOKEN");
-                if (!xsrf) xsrf = ensureCsrf();
+                const xsrf = getCookie("XSRF-TOKEN");
+
                 if (token) {
                     config.headers.Authorization = `Bearer ${token}`;
                 }
                 config.headers['X-Requested-With'] = 'XMLHttpRequest';
-                config.headers['X-XSRF-TOKEN'] = xsrf;
+
+                // Only set XSRF token if it exists
+                if (xsrf) {
+                    config.headers['X-XSRF-TOKEN'] = xsrf;
+                }
+
                 return config;
             },
             (error) => Promise.reject(error)
