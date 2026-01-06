@@ -121,4 +121,25 @@ class TreatmentGoalController extends Controller
             'patient' => $patient
         ], 200);
     }
+
+    public function patientTreatmentGoals(Patient $patient)
+    {
+        $patient->load('treatmentGoals.goalMilestones');
+
+        return response()->json($patient, 200);
+    }
+
+    public function patientTreatmentGoalsSoftDelete(Patient $patient)
+    {
+        $treatmentGoals = $patient->treatmentGoals()
+            ->onlyTrashed()
+            ->with('goalMilestones')
+            ->get();
+
+        return response()->json([
+            'patient' => $patient,
+            'treatment_goals' => $treatmentGoals
+        ], 200);
+    }
+
 }

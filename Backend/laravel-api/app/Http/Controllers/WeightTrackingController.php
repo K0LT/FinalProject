@@ -114,4 +114,24 @@ class WeightTrackingController extends Controller
             'patient' => $patient
         ], 200);
     }
+
+    public function patientWeightTrackings(Patient $patient)
+    {
+        $patient->load('weightTrackings');
+
+        return response()->json($patient, 200);
+    }
+
+    public function patientWeightTrackingsSoftDelete(Patient $patient)
+    {
+        $weightTrackings = $patient->weightTrackings()
+            ->onlyTrashed()
+            ->get();
+
+        return response()->json([
+            'patient' => $patient,
+            'weight_trackings' => $weightTrackings
+        ], 200);
+    }
+
 }

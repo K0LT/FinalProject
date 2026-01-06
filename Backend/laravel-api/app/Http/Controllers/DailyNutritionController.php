@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DailyNutrition;
 use App\Http\Requests\StoreDailyNutritionRequest;
 use App\Http\Requests\UpdateDailyNutritionRequest;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class DailyNutritionController extends Controller
@@ -109,4 +110,24 @@ class DailyNutritionController extends Controller
             'patient' => $patient
         ], 200);
     }
+
+    public function patientDailyNutritions(Patient $patient)
+    {
+        $patient->load('dailyNutritions');
+
+        return response()->json($patient, 200);
+    }
+
+    public function patientDailyNutritionsSoftDelete(Patient $patient)
+    {
+        $dailyNutritions = $patient->dailyNutritions()
+            ->onlyTrashed()
+            ->get();
+
+        return response()->json([
+            'patient' => $patient,
+            'daily_nutritions' => $dailyNutritions
+        ], 200);
+    }
+
 }

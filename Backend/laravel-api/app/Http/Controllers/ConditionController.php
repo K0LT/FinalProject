@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Condition;
 use App\Http\Requests\StoreConditionRequest;
 use App\Http\Requests\UpdateConditionRequest;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class ConditionController extends Controller
@@ -109,4 +110,24 @@ class ConditionController extends Controller
             'patient' => $patient
         ], 200);
     }
+
+    public function patientConditions(Patient $patient)
+    {
+        $patient->load('conditions');
+
+        return response()->json($patient, 200);
+    }
+
+    public function patientConditionsSoftDelete(Patient $patient)
+    {
+        $conditions = $patient->conditions()
+            ->onlyTrashed()
+            ->get();
+
+        return response()->json([
+            'patient' => $patient,
+            'conditions' => $conditions
+        ], 200);
+    }
+
 }

@@ -111,4 +111,24 @@ class TreatmentController extends Controller
             'patient' => $patient
         ], 200);
     }
+
+    public function patientTreatments(Patient $patient)
+    {
+        $patient->load('treatments');
+
+        return response()->json($patient, 200);
+    }
+
+    public function patientTreatmentsSoftDelete(Patient $patient)
+    {
+        $treatments = $patient->treatments()
+            ->onlyTrashed()
+            ->get();
+
+        return response()->json([
+            'patient' => $patient,
+            'treatments' => $treatments
+        ], 200);
+    }
+
 }

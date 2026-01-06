@@ -118,26 +118,24 @@ class AppointmentController extends Controller
 
     public function patientAppointments(Patient $patient)
     {
-        $patient->load('appointments');
+        $patient->load('appointments.progressNotes');
 
         return response()->json($patient, 200);
     }
 
-    /**
-     * @param Patient $patient
-     * @return JsonResponse
-     */
     public function patientAppointmentsSoftDelete(Patient $patient)
     {
         $appointments = $patient->appointments()
             ->onlyTrashed()
+            ->with('progressNotes')
             ->get();
 
         return response()->json([
-            'patient_id' => $patient->id,
+            'patient' => $patient,
             'appointments' => $appointments
         ], 200);
     }
+
 
 
 }

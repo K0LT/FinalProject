@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Diagnostic;
 use App\Http\Requests\StoreDiagnosticRequest;
 use App\Http\Requests\UpdateDiagnosticRequest;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class DiagnosticController extends Controller
@@ -125,4 +126,26 @@ class DiagnosticController extends Controller
             'patient' => $patient
         ], 200);
     }
+
+    public function patientDiagnostics(Patient $patient)
+    {
+        $patient->load('diagnostics.symptoms');
+
+        return response()->json($patient, 200);
+    }
+
+    public function patientDiagnosticsSoftDelete(Patient $patient)
+    {
+        $diagnostics = $patient->diagnostics()
+            ->onlyTrashed()
+            ->with('symptoms')
+            ->get();
+
+        return response()->json([
+            'patient' => $patient,
+            'diagnostics' => $diagnostics
+        ], 200);
+    }
+
+
 }

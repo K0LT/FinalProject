@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\NutritionalGoal;
 use App\Http\Requests\StoreNutritionalGoalRequest;
 use App\Http\Requests\UpdateNutritionalGoalRequest;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class NutritionalGoalController extends Controller
@@ -116,4 +117,24 @@ class NutritionalGoalController extends Controller
             'patient_id' => $patient->id,
         ], 200);
     }
+
+    public function patientNutritionalGoals(Patient $patient)
+    {
+        $patient->load('nutritionalGoals');
+
+        return response()->json($patient, 200);
+    }
+
+    public function patientNutritionalGoalsSoftDelete(Patient $patient)
+    {
+        $nutritionalGoals = $patient->nutritionalGoals()
+            ->onlyTrashed()
+            ->get();
+
+        return response()->json([
+            'patient' => $patient,
+            'nutritional_goals' => $nutritionalGoals
+        ], 200);
+    }
+
 }
