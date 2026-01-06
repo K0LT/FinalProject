@@ -4,7 +4,8 @@ import React, {
     createContext,
     useContext,
     useReducer,
-    useEffect
+    useEffect,
+    useCallback
 } from 'react';
 import { apiClient } from '@/lib/api';
 
@@ -62,29 +63,8 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const checkAuth = async () => {
             if (typeof window === 'undefined') return;
-            // modo dev
-            const devMode = localStorage.getItem('dev_auto_login') === 'true';
 
-            if (devMode && process.env.NODE_ENV === 'development') {
-                console.log('🔓 DEV: Auto-login ativo');
-                const mockUser = {
-                    id: 1,
-                    name: "Developer",
-                    email: "dev@example.com",
-                    role: { name: "patient" },
-                    patient: { phone_number: "+351912345678" }
-                };
-                const mockToken = "dev-token";
-
-                apiClient.setToken(mockToken);
-                localStorage.setItem('user_data', JSON.stringify(mockUser));
-                dispatch({ type: 'AUTH_SUCCESS', payload: { user: mockUser, token: mockToken } });
-                return;
-            }
-
-            // Auth normal
             try {
-                debugger;
                 const token = apiClient.getToken();
                 const userData = localStorage.getItem('user_data');
                 const user = userData ? JSON.parse(userData) : null;
@@ -117,12 +97,11 @@ export const AuthProvider = ({ children }) => {
         checkAuth();
     }, []);
 
-    const login = async (credentials) => {
+    const login = useCallback(async (credentials) => {
         dispatch({ type: 'AUTH_START' });
 
         try {
             const response = await apiClient.login(credentials);
-            debugger;
             dispatch({
                 type: 'AUTH_SUCCESS',
                 payload: response,
@@ -132,9 +111,9 @@ export const AuthProvider = ({ children }) => {
             dispatch({ type: 'AUTH_FAILURE', payload: error.message });
             throw error;
         }
-    };
+    }, []);
 
-    const logout = async () => {
+    const logout = useCallback(async () => {
         try {
             await apiClient.logout();
         } catch (error) {
@@ -142,11 +121,11 @@ export const AuthProvider = ({ children }) => {
         } finally {
             dispatch({ type: 'AUTH_LOGOUT' });
         }
-    };
+    }, []);
 
-    const clearError = () => {
+    const clearError = useCallback(() => {
         dispatch({ type: 'AUTH_CLEAR_ERROR' });
-    };
+    }, []);
 
     const value = {
         ...state,

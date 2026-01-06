@@ -1,6 +1,27 @@
 import axios from 'axios';
-import {ensureCsrf, getCookie} from "@/lib/authClient";
 
+// CSRF and Cookie helpers (moved from authClient.js)
+function getCookie(name) {
+    if (typeof document === "undefined") return null;
+    const match = document.cookie.match(
+        new RegExp("(^|; )" + name + "=([^;]*)"),
+    );
+    return match ? decodeURIComponent(match[2]) : null;
+}
+
+async function ensureCsrf() {
+    if (typeof window === "undefined") return;
+
+    const xsrf = getCookie("XSRF-TOKEN");
+    if (xsrf) return;
+
+    const ROOT = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000").replace(/\/api\/?$/, "");
+
+    await fetch(`${ROOT}/sanctum/csrf-cookie`, {
+        method: "GET",
+        credentials: "include",
+    });
+}
 
 class ApiClient {
     constructor() {
@@ -16,7 +37,6 @@ class ApiClient {
     setupInterceptors() {
         this.client.interceptors.request.use(
             (config) => {
-                debugger;
                 const token = this.getToken();
                 let xsrf = getCookie("XSRF-TOKEN");
                 if (!xsrf) xsrf = ensureCsrf();
@@ -31,16 +51,17 @@ class ApiClient {
         );
 
         this.client.interceptors.response.use(
-            /*(response) => response,
+            (response) => response,
             (error) => {
                 if (error.response?.status === 401) {
                     this.clearToken();
                     if (typeof window !== 'undefined') {
+                        localStorage.removeItem('user_data');
                         window.location.href = '/login';
                     }
                 }
                 return Promise.reject(error);
-            }*/
+            }
         );
     }
 
@@ -61,7 +82,6 @@ class ApiClient {
     }
 
     async request(config) {
-        debugger;
         try {
             const response = await this.client(config);
             return response.data;
@@ -78,10 +98,9 @@ class ApiClient {
         await ensureCsrf();
         const response = await this.request({
             method: 'POST',
-            url: 'http://localhost:8000/login',
+            url: '/login',
             data: credentials,
         });
-        debugger;
         this.setToken(response.auth_token);
         if (typeof window !== 'undefined') {
             localStorage.setItem('user_data', JSON.stringify(response.user));
@@ -94,19 +113,22 @@ class ApiClient {
         try {
             await this.request({
                 method: 'POST',
-                url: 'http://localhost:8000/logout',
+                url: '/logout',
             });
         } catch (error) {
             console.error('Logout error:', error);
         } finally {
             this.clearToken();
+            if (typeof window !== 'undefined') {
+                localStorage.removeItem('user_data');
+            }
         }
     }
 
     async getCurrentUser() {
         return this.request({
             method: 'GET',
-            url: 'http://localhost:8000/user',
+            url: '/user',
         });
     }
 
