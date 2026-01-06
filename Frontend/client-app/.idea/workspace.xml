@@ -5,11 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1b459c2-d94e-4fdc-a627-79371de693f9" name="Changes" comment="BEARER TOKEN DEBUGGING   ||| XSRF OK">
-      <change beforePath="$PROJECT_DIR$/../../Backend/laravel-api/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../Backend/laravel-api/app/Http/Controllers/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Backend/laravel-api/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../Backend/laravel-api/routes/web.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/assistant/page.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/exercises/page.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/profile/[id]/page.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/reports/page.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/treatments/page.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/weight/page.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/assistant/ChatbotPage.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/exercises/ExerciseLibrary.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/exercises/ExercisePrescription.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/exercises/NewExerciseModal.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/exercises/StatsCards.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/exercises/WeeklyProgress.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/exercises/WorkoutPlans.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/reports/ReportsPage.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/weight/Weight.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/context/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/context/AuthContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/clientProfile/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/client/ClientProfilePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/client/ClientProfilePage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/clientDashboard/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/clientDashboard/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/DashboardLayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/DashboardLayout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/treatments/NewTreatmentModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/treatments/NewTreatmentModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/treatments/Treatments.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/treatments/Treatments.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lib/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,12 +62,12 @@
       </list>
     </option>
   </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/K0LT/FinalProject.git",
-    "accountId": "b59946ae-39cd-49ad-8150-0855eebabcaa"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/K0LT/FinalProject.git&quot;,
+    &quot;accountId&quot;: &quot;b59946ae-39cd-49ad-8150-0855eebabcaa&quot;
   }
-}]]></component>
+}</component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="Laragon 8.3" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
@@ -58,27 +77,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JavaScript Debug.Next.js: debug client-side.executor&quot;: &quot;Debug&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev-updatingAuth&quot;,
-    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
-    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.Next.js: server-side.executor&quot;: &quot;Debug&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;E:\\tools\\devTools\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JavaScript Debug.Next.js: debug client-side.executor": "Debug",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "DEV-SideLP",
+    "js.debugger.nextJs.config.created.client": "true",
+    "js.debugger.nextJs.config.created.server": "true",
+    "last_opened_file_path": "C:/Users/marci/Desktop/FinalProject/Frontend/client-app/src/app/profile",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.Next.js: server-side.executor": "Debug",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "ts.external.directory.path": "E:\\tools\\devTools\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\marci\Desktop\FinalProject\Frontend\client-app\src\app\profile" />
+      <recent name="C:\Users\marci\Desktop\FinalProject\Frontend\client-app\src\app" />
+      <recent name="C:\Users\marci\Desktop\FinalProject\Frontend\client-app\src\components\weight" />
+      <recent name="C:\Users\marci\Desktop\FinalProject\Frontend\client-app\src\app\exercises" />
+      <recent name="C:\Users\marci\Desktop\FinalProject\Frontend\client-app\src\components\exercises" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\dev\active\finalProjectFiles\FinalProject\Frontend\client-app\src\components\booking" />
       <recent name="E:\dev\active\finalProjectFiles\FinalProject\Frontend\client-app\src\components\dashboard" />
@@ -163,6 +190,26 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="dev-updatingAuth" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="DEV-SideLP" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">

@@ -28,7 +28,7 @@ export default function Sidebar({
     const menuItems = [
         {
             label: "Perfil do Cliente",
-            href: "/patient/" + userId,
+            href: "/profile" + userId,
             icon: User,
             group: "Geral",
         },
@@ -63,8 +63,8 @@ export default function Sidebar({
             group: "Monitorização",
         },
         {
-            label: "Assistente IA",
-            href: "/ai-assistant",
+            label: "Assistente",
+            href: "/assistant",
             icon: Bot,
             group: "Ferramentas",
         },

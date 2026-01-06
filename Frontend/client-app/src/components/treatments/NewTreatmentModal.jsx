@@ -1,6 +1,52 @@
 import { useEffect, useRef, useState } from "react";
 import { postTreatment } from "@/services/treatments";
 
+const InputField = ({ label, name, value, onChange, placeholder, type = "text", required = false }) => (
+    <div className="flex flex-col">
+        <label className="text-sm text-gray-600 mb-1" htmlFor={name}>
+            {label}
+        </label>
+        <input
+            id={name}
+            name={name}
+            type={type}
+            inputMode="numeric"
+            className="rounded-xl border px-3 py-2"
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            required={required}
+        />
+    </div>
+);
+
+const CheckboxList = ({ acupoints, selectedAcupoints, setSelectedAcupoints }) => (
+    <div className="flex flex-col overflow-auto max-h-48 rounded-xl border px-3 py-2">
+        {acupoints.map((point, idx) => (
+            <label key={point.id} className="flex items-center gap-2 py-1">
+                <input
+                    type="checkbox"
+                    value={point.id}
+                    checked={selectedAcupoints[idx]?.isSelected ?? false}
+                    onChange={(e) =>
+                        setSelectedAcupoints((prev) => {
+                            const next = [...prev];
+                            next[idx] = {
+                                ...next[idx],
+                                id: point.id,
+                                name: point.name,
+                                isSelected: e.target.checked,
+                            };
+                            return next;
+                        })
+                    }
+                />
+                <span className="text-sm">{point.name}</span>
+            </label>
+        ))}
+    </div>
+);
+
 export default function NewTreatmentModal({ open, onClose }) {
     const ref = useRef(null);
 
@@ -17,7 +63,6 @@ export default function NewTreatmentModal({ open, onClose }) {
     };
 
     const [form, setForm] = useState({ ...templateTreatment });
-
 
     const commonAcupoints = [
         { id: "CV4", name: "CV4 - Guanyuan" },
@@ -96,10 +141,9 @@ export default function NewTreatmentModal({ open, onClose }) {
             notes: form.notes?.trim() || "",
         };
 
-
         postTreatment(payload)
             .then((response) => {
-                console.log("Treatment saved:", response);
+                console.log("Tratamento guardado:", response);
             })
             .catch((error) => console.log(error));
 
@@ -147,156 +191,78 @@ export default function NewTreatmentModal({ open, onClose }) {
                     </div>
                 </header>
 
-                {/* Meta */}
                 <section className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <div className="flex flex-col">
-                        <label className="text-sm text-gray-600 mb-1" htmlFor="patient_id">
-                            ID do Paciente
-                        </label>
-                        <input
-                            id="patient_id"
-                            name="patient_id"
-                            type="number"
-                            inputMode="numeric"
-                            className="rounded-xl border px-3 py-2"
-                            value={form.patient_id}
-                            onChange={handleNumberChange}
-                            placeholder="ex.: 14"
-                            required
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label className="text-sm text-gray-600 mb-1" htmlFor="profile_id">
-                            ID do Perfil
-                        </label>
-                        <input
-                            id="profile_id"
-                            name="profile_id"
-                            type="number"
-                            inputMode="numeric"
-                            className="rounded-xl border px-3 py-2"
-                            value={form.profile_id}
-                            onChange={handleNumberChange}
-                            placeholder="ex.: 3"
-                            required
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label className="text-sm text-gray-600 mb-1" htmlFor="diagnostic_id">
-                            ID do Diagnóstico
-                        </label>
-                        <input
-                            id="diagnostic_id"
-                            name="diagnostic_id"
-                            type="number"
-                            inputMode="numeric"
-                            className="rounded-xl border px-3 py-2"
-                            value={form.diagnostic_id}
-                            onChange={handleNumberChange}
-                            placeholder="ex.: 39"
-                            required
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label className="text-sm text-gray-600 mb-1" htmlFor="duration">
-                            Duração (minutos)
-                        </label>
-                        <input
-                            id="duration"
-                            name="duration"
-                            type="number"
-                            inputMode="numeric"
-                            className="rounded-xl border px-3 py-2"
-                            value={form.duration}
-                            onChange={handleNumberChange}
-                            placeholder="ex.: 60"
-                            required
-                        />
-                    </div>
+                    <InputField
+                        label="ID do Paciente"
+                        name="patient_id"
+                        value={form.patient_id}
+                        onChange={handleNumberChange}
+                        placeholder="ex.: 14"
+                        required
+                    />
+                    <InputField
+                        label="ID do Perfil"
+                        name="profile_id"
+                        value={form.profile_id}
+                        onChange={handleNumberChange}
+                        placeholder="ex.: 3"
+                        required
+                    />
+                    <InputField
+                        label="ID do Diagnóstico"
+                        name="diagnostic_id"
+                        value={form.diagnostic_id}
+                        onChange={handleNumberChange}
+                        placeholder="ex.: 39"
+                        required
+                    />
+                    <InputField
+                        label="Duração (minutos)"
+                        name="duration"
+                        value={form.duration}
+                        onChange={handleNumberChange}
+                        placeholder="ex.: 60"
+                        required
+                    />
                 </section>
 
-                {/* Session Dates */}
                 <section className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <div className="flex flex-col">
-                        <label className="text-sm text-gray-600 mb-1" htmlFor="session_date_time">
-                            Data e Hora da Sessão
-                        </label>
-                        <input
-                            id="session_date_time"
-                            name="session_date_time"
-                            type="datetime-local"
-                            className="rounded-xl border px-3 py-2"
-                            value={form.session_date_time}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label className="text-sm text-gray-600 mb-1" htmlFor="next_session">
-                            Próxima Sessão
-                        </label>
-                        <input
-                            id="next_session"
-                            name="next_session"
-                            type="date"
-                            className="rounded-xl border px-3 py-2"
-                            value={form.next_session}
-                            onChange={handleChange}
-                        />
-                    </div>
+                    <InputField
+                        label="Data e Hora da Sessão"
+                        name="session_date_time"
+                        value={form.session_date_time}
+                        onChange={handleChange}
+                        type="datetime-local"
+                        required
+                    />
+                    <InputField
+                        label="Próxima Sessão"
+                        name="next_session"
+                        value={form.next_session}
+                        onChange={handleChange}
+                        type="date"
+                    />
                 </section>
 
-                {/* Treatment Methods */}
                 <section className="mb-6">
-                    <div className="flex flex-col">
-                        <label className="text-sm text-gray-600 mb-1" htmlFor="treatment_methods">
-                            Métodos de Tratamento
-                        </label>
-                        <input
-                            id="treatment_methods"
-                            name="treatment_methods"
-                            type="text"
-                            className="rounded-xl border px-3 py-2"
-                            value={form.treatment_methods}
-                            onChange={handleChange}
-                            placeholder="ex.: Exercícios de respiração, Acupuntura"
-                            required
-                        />
-                    </div>
+                    <InputField
+                        label="Métodos de Tratamento"
+                        name="treatment_methods"
+                        value={form.treatment_methods}
+                        onChange={handleChange}
+                        placeholder="ex.: Exercícios de respiração, Acupuntura"
+                        required
+                    />
                 </section>
 
-                {/* Acupoints & Notes */}
                 <section className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div className="flex flex-col">
                         <label className="text-sm text-gray-600 mb-1">Pontos de Acupuntura</label>
-                        <div className="flex flex-col overflow-auto max-h-48 rounded-xl border px-3 py-2">
-                            {commonAcupoints.map((point, idx) => (
-                                <label key={point.id} className="flex items-center gap-2 py-1">
-                                    <input
-                                        type="checkbox"
-                                        value={point.id}
-                                        checked={selectedAcupoints[idx]?.isSelected ?? false}
-                                        onChange={(e) =>
-                                            setSelectedAcupoints((prev) => {
-                                                const next = [...prev];
-                                                next[idx] = {
-                                                    ...next[idx],
-                                                    id: point.id,
-                                                    name: point.name,
-                                                    isSelected: e.target.checked,
-                                                };
-                                                return next;
-                                            })
-                                        }
-                                    />
-                                    <span className="text-sm">{point.name}</span>
-                                </label>
-                            ))}
-                        </div>
+                        <CheckboxList
+                            acupoints={commonAcupoints}
+                            selectedAcupoints={selectedAcupoints}
+                            setSelectedAcupoints={setSelectedAcupoints}
+                        />
                     </div>
 
                     <div className="flex flex-col">

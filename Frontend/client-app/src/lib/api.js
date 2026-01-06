@@ -16,7 +16,6 @@ class ApiClient {
     setupInterceptors() {
         this.client.interceptors.request.use(
             (config) => {
-                debugger;
                 const token = this.getToken();
                 let xsrf = getCookie("XSRF-TOKEN");
                 if (!xsrf) xsrf = ensureCsrf();
@@ -61,7 +60,6 @@ class ApiClient {
     }
 
     async request(config) {
-        debugger;
         try {
             const response = await this.client(config);
             return response.data;
@@ -81,7 +79,6 @@ class ApiClient {
             url: 'http://localhost:8000/login',
             data: credentials,
         });
-        debugger;
         this.setToken(response.auth_token);
         if (typeof window !== 'undefined') {
             localStorage.setItem('user_data', JSON.stringify(response.user));
