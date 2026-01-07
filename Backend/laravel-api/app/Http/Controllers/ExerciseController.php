@@ -133,22 +133,35 @@ class ExerciseController extends Controller
 
     public function adminAddExerciseToPatient(Request $request, Patient $patient)
     {
-        $request->validate([
-            'exercise_id' => ['required', 'exists:exercises,id'],
+        $validated = $request->validate([
+            'exercise_id'       => ['required', 'exists:exercises,id'],
+            'prescribed_date'   => ['nullable', 'date'],
+            'frequency'         => ['nullable', 'string'],
+            'status'            => ['nullable', 'in:Em progresso,Concluído,Pendente'],
+            'compliance_rate'   => ['nullable', 'integer', 'min:0', 'max:100'],
+            'last_performed'    => ['nullable', 'date'],
+            'notes'             => ['nullable', 'string'],
         ]);
 
-        $exerciseId = $request->exercise_id;
+        $exerciseId = $validated['exercise_id'];
 
-        if ($patient->exercises()->where('exercises.id', $exerciseId)->exists()) {
+        if ($patient->exercises()->where('exercise_id', $exerciseId)->exists()) {
             return response()->json([
-                'message' => 'Paciente já tem esse exercício associado.'
+                'message' => 'Este exercício já está associado ao paciente.'
             ], 409);
         }
 
-        $patient->exercises()->attach($exerciseId);
+        $patient->exercises()->attach($exerciseId, [
+            'prescribed_date' => $validated['prescribed_date'] ?? now()->toDateString(),
+            'frequency'       => $validated['frequency'] ?? null,
+            'status'          => $validated['status'] ?? 'Pendente',
+            'compliance_rate' => $validated['compliance_rate'] ?? 0,
+            'last_performed'  => $validated['last_performed'] ?? null,
+            'notes'           => $validated['notes'] ?? null,
+        ]);
 
         return response()->json([
-            'message' => 'Added'
+            'message' => 'Exercício atribuído ao paciente com sucesso.'
         ], 201);
     }
 

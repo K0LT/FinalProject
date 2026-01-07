@@ -20,7 +20,7 @@ return new class extends Migration
                 ->constrained();
             $table->date('prescribed_date')->useCurrent();
             $table->string('frequency')->nullable();
-            $table->string('status');
+            $table->enum('status', ['Em progresso', 'Concluído', 'Pendente'])->change();
             $table->integer('compliance_rate')->default(0);
             $table->date('last_performed')->nullable();
             $table->text('notes')->nullable();
