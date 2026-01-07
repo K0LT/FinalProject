@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Diagnostic;
 use App\Models\Symptom;
 use App\Http\Requests\StoreSymptomRequest;
 use App\Http\Requests\UpdateSymptomRequest;
@@ -86,5 +87,50 @@ class SymptomController extends Controller
 
         return response()->json($symptom);
     }
+
+    public function adminAddSymptomToDiagnostic(Request $request, Diagnostic $diagnostic)
+    {
+        $request->validate([
+            'symptom_id' => ['required', 'exists:symptoms,id'],
+        ]);
+
+        $symptomId = $request->symptom_id;
+
+        if ($diagnostic->symptoms()->where('symptoms.id', $symptomId)->exists()) {
+            return response()->json([
+                'message' => 'O diagnóstico já tem esse sintoma associado.'
+            ], 409);
+        }
+
+        $diagnostic->symptoms()->attach($symptomId);
+
+        return response()->json([
+            'message' => 'Sintoma associado com sucesso.'
+        ], 201);
+    }
+
+    public function adminRemoveSymptomFromDiagnostic(Request $request, Diagnostic $diagnostic)
+    {
+        $request->validate([
+            'symptom_id' => ['required', 'exists:symptoms,id'],
+        ]);
+
+        $symptomId = $request->symptom_id;
+
+        if (! $diagnostic->symptoms()->where('symptoms.id', $symptomId)->exists()) {
+            return response()->json([
+                'message' => 'O diagnóstico não tem esse sintoma associado.'
+            ], 404);
+        }
+
+        $diagnostic->symptoms()->detach($symptomId);
+
+        return response()->json([
+            'message' => 'Sintoma removido com sucesso.'
+        ], 200);
+    }
+
+
+
 
 }

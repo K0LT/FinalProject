@@ -503,10 +503,6 @@ Route::get('soft_delete/roles/{role}', [\App\Http\Controllers\RoleController::cl
         ->middleware('can:isAdmin');
     Route::get('patients/{patient}/conditions/soft-deleted', [\App\Http\Controllers\ConditionController::class, 'patientConditionsSoftDelete'])
         ->middleware('can:isAdmin');
-    Route::post('diagnostics/{diagnostic}/conditions/add', [\App\Http\Controllers\ConditionController::class, 'adminAddConditionToDiagnostic'])
-        ->middleware('can:isAdmin');
-    Route::post('diagnostics/{diagnostic}/conditions/remove', [\App\Http\Controllers\ConditionController::class, 'adminRemoveConditionFromDiagnostic'])
-        ->middleware('can:isAdmin');
 
 // DAILY NUTRITIONS
     Route::get('patients/{patient}/daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'patientDailyNutritions'])
@@ -518,6 +514,10 @@ Route::get('soft_delete/roles/{role}', [\App\Http\Controllers\RoleController::cl
     Route::get('patients/{patient}/diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'patientDiagnostics'])
         ->middleware('can:isAdmin');
     Route::get('patients/{patient}/diagnostics/soft-deleted', [\App\Http\Controllers\DiagnosticController::class, 'patientDiagnosticsSoftDelete'])
+        ->middleware('can:isAdmin');
+    Route::post('diagnostics/{diagnostic}/symptoms/add', [\App\Http\Controllers\SymptomController::class, 'adminAddSymptomToDiagnostic'])
+        ->middleware('can:isAdmin');
+    Route::post('diagnostics/{diagnostic}/symptoms/remove', [\App\Http\Controllers\SymptomController::class, 'adminRemoveSymptomFromDiagnostic'])
         ->middleware('can:isAdmin');
 
 // EXERCISES
