@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Treatment;
+use App\Models\Patient;
 use App\Http\Requests\StoreTreatmentRequest;
 use App\Http\Requests\UpdateTreatmentRequest;
 use Illuminate\Http\Request;
