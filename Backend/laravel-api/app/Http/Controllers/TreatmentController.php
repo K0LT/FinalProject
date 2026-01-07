@@ -88,7 +88,7 @@ class TreatmentController extends Controller
         return response()->json($treatment, 200);
     }
 
-    public function userTreaments(Request $request)
+    public function userTreatments(Request $request)
     {
         $user = auth('sanctum')->user();
 
@@ -106,7 +106,7 @@ class TreatmentController extends Controller
             ], 404);
         }
 
-        $patient->load('treatments.treatmentGoals');
+        $patient->load('treatments');
 
         return response()->json([
             'patient' => $patient
