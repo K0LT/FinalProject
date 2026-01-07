@@ -135,6 +135,28 @@ class AppointmentController extends Controller
         ], 200);
     }
 
+    public function storeForPatient(Request $request)
+    {
+        $user = auth('sanctum')->user();
+        $patient = $user->patient;
 
+        $data = $request->validate([
+            'appointment_date_time' => [
+                'required',
+                'date',
+                'after_or_equal:' . now()->addDay()->format('Y-m-d')
+            ],
+            'duration' => 'nullable|integer',
+            'type' => 'nullable|string|max:255',
+            'notes' => 'nullable|string',
+        ]);
+
+        $data['patient_id'] = $patient->id;
+        $data['status'] = 'Pendente';
+
+        $appointment = Appointment::create($data);
+
+        return response()->json($appointment, 201);
+    }
 
 }

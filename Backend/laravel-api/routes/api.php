@@ -27,6 +27,8 @@ Route::middleware('auth:sanctum')->group(function () {
         ->middleware('can:isPatient');
     Route::get('user/appointments', [\App\Http\Controllers\AppointmentController::class, 'userAppointments'])
         ->middleware('can:isPatient');//Appointments + Progress Notes
+    Route::post('user/appointments/create', [\App\Http\Controllers\AppointmentController::class, 'storeForPatient'])
+        ->middleware('can:isPatient');
     Route::get('user/conditions', [\App\Http\Controllers\ConditionController::class, 'userConditions'])
         ->middleware('can:isPatient');
     Route::get('user/daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'userDailyNutritions'])
