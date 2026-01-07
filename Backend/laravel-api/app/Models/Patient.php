@@ -85,6 +85,7 @@ class Patient extends Model
     public function updateNextAppointment()
     {
         $nextAppointment = $this->appointments()
+            ->where('status', 'Confirmado')
             ->where('appointment_date_time', '>=', now())
             ->orderBy('appointment_date_time', 'asc')
             ->first();
