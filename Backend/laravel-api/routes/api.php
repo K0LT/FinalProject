@@ -37,7 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
         ->middleware('can:isPatient');
     Route::get('user/patient', [\App\Http\Controllers\PatientController::class, 'userPatient'])
         ->middleware('can:isPatient');
-    Route::get('user/treatments', [\App\Http\Controllers\TreatmentController::class, 'userTreaments'])
+    Route::get('user/treatments', [\App\Http\Controllers\TreatmentController::class, 'userTreatments'])
         ->middleware('can:isPatient');
     Route::get('user/weight_trackings', [\App\Http\Controllers\WeightTrackingController::class, 'userWeightTrackings'])
         ->middleware('can:isPatient');

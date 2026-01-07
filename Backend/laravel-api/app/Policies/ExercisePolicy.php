@@ -13,10 +13,7 @@ class ExercisePolicy
      */
     public function viewAny(User $user): bool
     {
-        if($user->role->name === "Admin"){
-            return true;
-        }
-        return false;
+        return true;
     }
 
     /**
@@ -24,10 +21,7 @@ class ExercisePolicy
      */
     public function view(User $user, Exercise $exercise): bool
     {
-        if($user->role->name === "Admin"){
-            return true;
-        }
-        return false;
+        return true;
     }
 
     /**
