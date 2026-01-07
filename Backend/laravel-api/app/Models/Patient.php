@@ -82,4 +82,15 @@ class Patient extends Model
             ->wherePivotNull('deleted_at');
     }
 
+    public function updateNextAppointment()
+    {
+        $nextAppointment = $this->appointments()
+            ->where('appointment_date_time', '>=', now())
+            ->orderBy('appointment_date_time', 'asc')
+            ->first();
+
+        $this->next_appointment = $nextAppointment?->appointment_date_time;
+        $this->save();
+    }
+
 }

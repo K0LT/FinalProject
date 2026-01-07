@@ -30,6 +30,7 @@ class AppointmentController extends Controller
         $data = $request->validated();
         $data['status'] = 'Confirmado';
         $appointment = Appointment::create($data);
+        $appointment->patient->updateNextAppointment();
 
         return response()->json($appointment);
     }
@@ -50,6 +51,7 @@ class AppointmentController extends Controller
     {
         $data = $request->validated();
         $appointment -> update($data);
+        $appointment->patient->updateNextAppointment();
         return response()->json($appointment);
     }
 
