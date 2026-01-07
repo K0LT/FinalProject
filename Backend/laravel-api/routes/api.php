@@ -503,9 +503,9 @@ Route::get('soft_delete/roles/{role}', [\App\Http\Controllers\RoleController::cl
         ->middleware('can:isAdmin');
     Route::get('patients/{patient}/conditions/soft-deleted', [\App\Http\Controllers\ConditionController::class, 'patientConditionsSoftDelete'])
         ->middleware('can:isAdmin');
-    Route::post('patients/{diagnostic}/conditions/add', [\App\Http\Controllers\ConditionController::class, 'adminAddConditionToDiagnostic'])
+    Route::post('diagnostics/{diagnostic}/conditions/add', [\App\Http\Controllers\ConditionController::class, 'adminAddConditionToDiagnostic'])
         ->middleware('can:isAdmin');
-    Route::post('patients/{diagnostic}/conditions/remove', [\App\Http\Controllers\ConditionController::class, 'adminRemoveConditionFromDiagnostic'])
+    Route::post('diagnostics/{diagnostic}/conditions/remove', [\App\Http\Controllers\ConditionController::class, 'adminRemoveConditionFromDiagnostic'])
         ->middleware('can:isAdmin');
 
 // DAILY NUTRITIONS
