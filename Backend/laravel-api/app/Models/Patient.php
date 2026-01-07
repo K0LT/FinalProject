@@ -56,7 +56,7 @@ class Patient extends Model
         return $this->hasMany(WeightTracking::class);
 }
 
-    public function nutritionGoals(){
+    public function nutritionalGoals(){
         return $this->hasMany(NutritionalGoal::class);
     }
 
