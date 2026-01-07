@@ -131,5 +131,49 @@ class ExerciseController extends Controller
         ], 200);
     }
 
+    public function adminAddExerciseToPatient(Request $request, Patient $patient)
+    {
+        $request->validate([
+            'exercise_id' => ['required', 'exists:exercises,id'],
+        ]);
+
+        $exerciseId = $request->exercise_id;
+
+        if ($patient->exercises()->where('exercises.id', $exerciseId)->exists()) {
+            return response()->json([
+                'message' => 'Paciente já tem esse exercício associado.'
+            ], 409);
+        }
+
+        $patient->exercises()->attach($exerciseId);
+
+        return response()->json([
+            'message' => 'Added'
+        ], 201);
+    }
+
+
+    public function adminRemoveExerciseFromPatient(Request $request, Patient $patient)
+    {
+        $request->validate([
+            'exercise_id' => ['required', 'exists:exercises,id'],
+        ]);
+
+        $exerciseId = $request->exercise_id;
+
+        if (! $patient->exercises()->where('exercises.id', $exerciseId)->exists()) {
+            return response()->json([
+                'message' => 'Paciente não tem esse exercício.'
+            ], 404);
+        }
+
+        $patient->exercises()->detach($exerciseId);
+
+        return response()->json([
+            'message' => 'Removed'
+        ], 200);
+    }
+
+
 
 }

@@ -135,4 +135,101 @@ class AllergyController extends Controller
             'allergies' => $allergies
         ], 200);
     }
+
+
+    public function adminAddAllergyToPatient(Request $request, Patient $patient)
+    {
+        $request->validate([
+            'allergy_id' => ['required', 'exists:allergies,id'],
+        ]);
+
+        $allergyId = $request->allergy_id;
+
+        if ($patient->allergies()->where('allergies.id', $allergyId)->exists()) {
+            return response()->json([
+                'message' => 'Paciente já tem essa alergia associada.'
+            ], 409);
+        }
+
+        $patient->allergies()->attach($allergyId);
+
+        return response()->json([
+            'message' => 'Added'
+        ], 201);
+    }
+
+
+    public function adminRemoveAllergyFromPatient(Request $request, Patient $patient)
+    {
+        $request->validate([
+            'allergy_id' => ['required', 'exists:allergies,id'],
+        ]);
+
+        $allergyId = $request->allergy_id;
+
+        if (! $patient->allergies()->where('allergies.id', $allergyId)->exists()) {
+            return response()->json([
+                'message' => 'Paciente não tem essa alergia.'
+            ], 404);
+        }
+
+        $patient->allergies()->detach($allergyId);
+
+        return response()->json([
+            'message' => 'Removed'
+        ], 200);
+    }
+
+
+    public function userAddAllergy(Request $request)
+    {
+        $request->validate([
+            'allergy_id' => ['required', 'exists:allergies,id'],
+        ]);
+
+        $user = auth('sanctum')->user();
+
+        $patient = $user->patient;
+        $allergyId = $request->allergy_id;
+
+        if ($patient->allergies()->where('allergies.id', $allergyId)->exists()) {
+            return response()->json([
+                'message' => 'Já tem esta alergia associada.'
+            ], 409);
+        }
+
+        $patient->allergies()->attach($allergyId);
+
+        return response()->json([
+            'message' => 'Added'
+        ], 201);
+    }
+
+
+    public function userRemoveAllergy(Request $request)
+    {
+        $request->validate([
+            'allergy_id' => ['required', 'exists:allergies,id'],
+        ]);
+
+        $user = auth('sanctum')->user();
+
+        $patient = $user->patient;
+        $allergyId = $request->allergy_id;
+
+        if (! $patient->allergies()->where('allergies.id', $allergyId)->exists()) {
+            return response()->json([
+                'message' => 'Não tem esta alergia.'
+            ], 404);
+        }
+
+        $patient->allergies()->detach($allergyId);
+
+        return response()->json([
+            'message' => 'Removed'
+        ], 200);
+    }
+
+
+
 }

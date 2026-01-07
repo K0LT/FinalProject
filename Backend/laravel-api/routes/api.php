@@ -21,6 +21,10 @@ Route::post('login', [\App\Http\Controllers\UserController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user/allergies', [\App\Http\Controllers\AllergyController::class, 'userAllergies'])
         ->middleware('can:isPatient');
+    Route::post('user/allergies/add', [\App\Http\Controllers\AllergyController::class, 'userAddAllergy'])
+        ->middleware('can:isPatient');
+    Route::post('user/allergies/remove', [\App\Http\Controllers\AllergyController::class, 'userRemoveAllergy'])
+        ->middleware('can:isPatient');
     Route::get('user/appointments', [\App\Http\Controllers\AppointmentController::class, 'userAppointments'])
         ->middleware('can:isPatient');//Appointments + Progress Notes
     Route::get('user/conditions', [\App\Http\Controllers\ConditionController::class, 'userConditions'])
@@ -30,6 +34,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user/diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'userDiagnostics'])
         ->middleware('can:isPatient');//Diagnostic + Symptoms
     Route::get('user/exercises', [\App\Http\Controllers\ExerciseController::class, 'userExercises'])
+        ->middleware('can:isPatient');
+    Route::post('user/exercises/add', [\App\Http\Controllers\ExerciseController::class, 'addExerciseToPatient'])
+        ->middleware('can:isPatient');
+    Route::post('user/exercises/remove', [\App\Http\Controllers\ExerciseController::class, 'removeExerciseFromPatient'])
         ->middleware('can:isPatient');
     Route::get('user/treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'userTreatmentGoals'])
         ->middleware('can:isPatient');//TreatmnentGoals + GoalMilestones
@@ -96,7 +104,6 @@ Route::get('soft_delete/allergies/{allergy}', [\App\Http\Controllers\AllergyCont
 // RESTORE
 Route::patch('soft_delete/allergies/restore/{allergy}', [\App\Http\Controllers\AllergyController::class, 'restoreSoftDelete'])
     ->middleware('can:restoreSoftDeleted');
-
 
 
 
@@ -470,11 +477,6 @@ Route::get('soft_delete/roles/{role}', [\App\Http\Controllers\RoleController::cl
         ->middleware('can:restoreSoftDeleted');
 
 
-    Route::get('patients/{patient}/allergies', [\App\Http\Controllers\AllergyController::class, 'patientAllergies'])
-        ->middleware('can:isAdmin');
-    Route::get('patients/{patient}/allergies/soft-deleted', [\App\Http\Controllers\AllergyController::class, 'patientAllergiesSoftDelete'])
-        ->middleware('can:isAdmin');
-
 
 
 //ADMIN GENERAL VIEWS
@@ -483,100 +485,74 @@ Route::get('soft_delete/roles/{role}', [\App\Http\Controllers\RoleController::cl
         ->middleware('can:isAdmin');
     Route::get('patients/{patient}/allergies/soft-deleted', [\App\Http\Controllers\AllergyController::class, 'patientAllergiesSoftDelete'])
         ->middleware('can:isAdmin');
-
+    Route::post('patients/{patient}/allergies/add', [\App\Http\Controllers\AllergyController::class, 'adminAddAllergyToPatient'])
+        ->middleware('can:isAdmin');
+    Route::post('patients/{patient}/allergies/remove', [\App\Http\Controllers\AllergyController::class, 'adminRemoveAllergyFromPatient'])
+        ->middleware('can:isAdmin');
 
 // APPOINTMENTS + PROGRESS NOTES
     Route::get('patients/{patient}/appointments',
         [\App\Http\Controllers\AppointmentController::class, 'patientAppointments']
     )->middleware('can:isAdmin');
-
     Route::get('patients/{patient}/appointments/soft-deleted',
         [\App\Http\Controllers\AppointmentController::class, 'patientAppointmentsSoftDelete']
     )->middleware('can:isAdmin');
 
-
 // CONDITIONS
-    Route::get('patients/{patient}/conditions',
-        [\App\Http\Controllers\ConditionController::class, 'patientConditions']
-    )->middleware('can:isAdmin');
-
-    Route::get('patients/{patient}/conditions/soft-deleted',
-        [\App\Http\Controllers\ConditionController::class, 'patientConditionsSoftDelete']
-    )->middleware('can:isAdmin');
-
-
+    Route::get('patients/{patient}/conditions', [\App\Http\Controllers\ConditionController::class, 'patientConditions'])
+        ->middleware('can:isAdmin');
+    Route::get('patients/{patient}/conditions/soft-deleted', [\App\Http\Controllers\ConditionController::class, 'patientConditionsSoftDelete'])
+        ->middleware('can:isAdmin');
+    Route::post('patients/{patient}/conditions/add', [\App\Http\Controllers\ConditionController::class, 'adminAddConditionToDiagnostic'])
+        ->middleware('can:isAdmin');
+    Route::post('patients/{patient}/conditions/remove', [\App\Http\Controllers\ConditionController::class, 'adminRemoveConditionFromDiagnostic'])
+        ->middleware('can:isAdmin');
 
 // DAILY NUTRITIONS
-    Route::get('patients/{patient}/daily_nutritions',
-        [\App\Http\Controllers\DailyNutritionController::class, 'patientDailyNutritions']
-    )->middleware('can:isAdmin');
-
-    Route::get('patients/{patient}/daily_nutritions/soft-deleted',
-        [\App\Http\Controllers\DailyNutritionController::class, 'patientDailyNutritionsSoftDelete']
-    )->middleware('can:isAdmin');
-
-
+    Route::get('patients/{patient}/daily_nutritions', [\App\Http\Controllers\DailyNutritionController::class, 'patientDailyNutritions'])
+        ->middleware('can:isAdmin');
+    Route::get('patients/{patient}/daily_nutritions/soft-deleted', [\App\Http\Controllers\DailyNutritionController::class, 'patientDailyNutritionsSoftDelete'])
+        ->middleware('can:isAdmin');
 
 // DIAGNOSTICS + SYMPTOMS
-    Route::get('patients/{patient}/diagnostics',
-        [\App\Http\Controllers\DiagnosticController::class, 'patientDiagnostics']
-    )->middleware('can:isAdmin');
-
-    Route::get('patients/{patient}/diagnostics/soft-deleted',
-        [\App\Http\Controllers\DiagnosticController::class, 'patientDiagnosticsSoftDelete']
-    )->middleware('can:isAdmin');
-
+    Route::get('patients/{patient}/diagnostics', [\App\Http\Controllers\DiagnosticController::class, 'patientDiagnostics'])
+        ->middleware('can:isAdmin');
+    Route::get('patients/{patient}/diagnostics/soft-deleted', [\App\Http\Controllers\DiagnosticController::class, 'patientDiagnosticsSoftDelete'])
+        ->middleware('can:isAdmin');
 
 // EXERCISES
-    Route::get('patients/{patient}/exercises',
-        [\App\Http\Controllers\ExerciseController::class, 'patientExercises']
-    )->middleware('can:isAdmin');
-
-    Route::get('patients/{patient}/exercises/soft-deleted',
-        [\App\Http\Controllers\ExerciseController::class, 'patientExercisesSoftDelete']
-    )->middleware('can:isAdmin');
-
+    Route::get('patients/{patient}/exercises', [\App\Http\Controllers\ExerciseController::class, 'patientExercises'])
+        ->middleware('can:isAdmin');
+    Route::get('patients/{patient}/exercises/soft-deleted', [\App\Http\Controllers\ExerciseController::class, 'patientExercisesSoftDelete'])
+        ->middleware('can:isAdmin');
+    Route::post('patients/{patient}/exercises/add', [\App\Http\Controllers\ExerciseController::class, 'adminAddExerciseToPatient'])
+        ->middleware('can:isAdmin');
+    Route::post('patients/{patient}/exercises/remove', [\App\Http\Controllers\ExerciseController::class, 'adminRemoveExerciseFromPatient'])
+        ->middleware('can:isAdmin');
 
 // TREATMENT GOALS + GOAL MILESTONES
-    Route::get('patients/{patient}/treatment_goals',
-        [\App\Http\Controllers\TreatmentGoalController::class, 'patientTreatmentGoals']
-    )->middleware('can:isAdmin');
-
-    Route::get('patients/{patient}/treatment_goals/soft-deleted',
-        [\App\Http\Controllers\TreatmentGoalController::class, 'patientTreatmentGoalsSoftDelete']
-    )->middleware('can:isAdmin');
-
+    Route::get('patients/{patient}/treatment_goals', [\App\Http\Controllers\TreatmentGoalController::class, 'patientTreatmentGoals'])
+        ->middleware('can:isAdmin');
+    Route::get('patients/{patient}/treatment_goals/soft-deleted', [\App\Http\Controllers\TreatmentGoalController::class, 'patientTreatmentGoalsSoftDelete'])
+        ->middleware('can:isAdmin');
 
 // NUTRITIONAL GOALS
-    Route::get('patients/{patient}/nutritional_goals',
-        [\App\Http\Controllers\NutritionalGoalController::class, 'patientNutritionalGoals']
-    )->middleware('can:isAdmin');
-
-    Route::get('patients/{patient}/nutritional_goals/soft-deleted',
-        [\App\Http\Controllers\NutritionalGoalController::class, 'patientNutritionalGoalsSoftDelete']
-    )->middleware('can:isAdmin');
-
-
+    Route::get('patients/{patient}/nutritional_goals', [\App\Http\Controllers\NutritionalGoalController::class, 'patientNutritionalGoals'])
+        ->middleware('can:isAdmin');
+    Route::get('patients/{patient}/nutritional_goals/soft-deleted', [\App\Http\Controllers\NutritionalGoalController::class, 'patientNutritionalGoalsSoftDelete'])
+        ->middleware('can:isAdmin');
 
 // TREATMENTS
-    Route::get('patients/{patient}/treatments',
-        [\App\Http\Controllers\TreatmentController::class, 'patientTreatments']
-    )->middleware('can:isAdmin');
-
-    Route::get('patients/{patient}/treatments/soft-deleted',
-        [\App\Http\Controllers\TreatmentController::class, 'patientTreatmentsSoftDelete']
-    )->middleware('can:isAdmin');
-
-
+    Route::get('patients/{patient}/treatments', [\App\Http\Controllers\TreatmentController::class, 'patientTreatments'])
+        ->middleware('can:isAdmin');
+    Route::get('patients/{patient}/treatments/soft-deleted', [\App\Http\Controllers\TreatmentController::class, 'patientTreatmentsSoftDelete'])
+        ->middleware('can:isAdmin');
 
 // WEIGHT TRACKINGS
-    Route::get('patients/{patient}/weight_trackings',
-        [\App\Http\Controllers\WeightTrackingController::class, 'patientWeightTrackings']
-    )->middleware('can:isAdmin');
-
-    Route::get('patients/{patient}/weight_trackings/soft-deleted',
-        [\App\Http\Controllers\WeightTrackingController::class, 'patientWeightTrackingsSoftDelete']
-    )->middleware('can:isAdmin');
+    Route::get('patients/{patient}/weight_trackings', [\App\Http\Controllers\WeightTrackingController::class, 'patientWeightTrackings'])
+        ->middleware('can:isAdmin');
+    Route::get('patients/{patient}/weight_trackings/soft-deleted', [\App\Http\Controllers\WeightTrackingController::class, 'patientWeightTrackingsSoftDelete'])
+        ->middleware('can:isAdmin');
 
 
 });

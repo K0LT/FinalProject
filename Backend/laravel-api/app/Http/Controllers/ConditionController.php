@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Condition;
 use App\Http\Requests\StoreConditionRequest;
 use App\Http\Requests\UpdateConditionRequest;
+use App\Models\Diagnostic;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 
@@ -129,5 +130,49 @@ class ConditionController extends Controller
             'conditions' => $conditions
         ], 200);
     }
+
+    public function adminAddConditionToDiagnostic(Request $request, Diagnostic $diagnostic)
+    {
+        $request->validate([
+            'condition_id' => ['required', 'exists:conditions,id'],
+        ]);
+
+        $conditionId = $request->condition_id;
+
+        if ($diagnostic->conditions()->where('conditions.id', $conditionId)->exists()) {
+            return response()->json([
+                'message' => 'Diagnostic já tem essa condition associada.'
+            ], 409);
+        }
+
+        $diagnostic->conditions()->attach($conditionId);
+
+        return response()->json([
+            'message' => 'Added'
+        ], 201);
+    }
+
+
+    public function adminRemoveConditionFromDiagnostic(Request $request, Diagnostic $diagnostic)
+    {
+        $request->validate([
+            'condition_id' => ['required', 'exists:conditions,id'],
+        ]);
+
+        $conditionId = $request->condition_id;
+
+        if (! $diagnostic->conditions()->where('conditions.id', $conditionId)->exists()) {
+            return response()->json([
+                'message' => 'Diagnostic não tem essa condition.'
+            ], 404);
+        }
+
+        $diagnostic->conditions()->detach($conditionId);
+
+        return response()->json([
+            'message' => 'Removed'
+        ], 200);
+    }
+
 
 }
