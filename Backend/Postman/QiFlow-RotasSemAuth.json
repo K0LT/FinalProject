@@ -1,0 +1,3638 @@
+{
+  "info": {
+    "name": "QiFlow",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Allergies",
+      "item": [
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/allergies/",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "allergies",
+                ""
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"allergen\": \"Create\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/allergies/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "allergies",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"allergen\" : \"Edit\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/allergies",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "allergies"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "IndexSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/allergies",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "allergies"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/allergies/restore/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "allergies",
+                "restore",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/allergies/{id}",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "allergies",
+                "{id}"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "ShowSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/allergies/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "allergies",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "SoftDelete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/allergies/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "allergies",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Appointments",
+      "item": [
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/appointments",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "appointments"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/appointments",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "appointments"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/appointments",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "appointments"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "IndexSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/softdelete/appointments",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "softdelete",
+                "appointments"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/softdelete/restore/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "softdelete",
+                "restore",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/appointments/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "appointments",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "ShowSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/softdelete/appointments/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "softdelete",
+                "appointments",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "SoftDelete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/appointments/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "appointments",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Conditions",
+      "item": [
+        {
+          "name": "Conditions",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/conditions/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "conditions",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/conditions",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "conditions"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/conditions",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "conditions"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "IndexSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/conditions",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "conditions"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/conditions/restore/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "conditions",
+                "restore",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/conditions/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "conditions",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "ShowSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/conditions/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "conditions",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "SoftDelete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/conditions/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "conditions",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Diagnostics",
+      "item": [
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/diagnostics",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "diagnostics"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/diagnostics/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "diagnostics",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/diagnostics",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "diagnostics"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patient_id\": 10,\n  \"diagnostic_date\": \"2026-01-01\",\n  \"western_diagnosis\": \"Teste\",\n  \"tcm_diagnosis\": \"Teste\",\n  \"severity\": \"Moderada\",\n  \"pulse_quality\": \"Fraca\",\n  \"tongue_description\": \"Teste\",\n  \"symptom_ids\": [2, 69]\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/diagnostics/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "diagnostics",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patient_id\": 10,\n  \"diagnostic_date\": \"2026-01-01\",\n  \"western_diagnosis\": \"Teste\",\n  \"tcm_diagnosis\": \"Teste\",\n  \"severity\": \"Moderada\",\n  \"pulse_quality\": \"Fraca\",\n  \"tongue_description\": \"Teste\",\n  \"symptom_ids\": [2, 69]\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "SoftDelete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/diagnostics/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "diagnostics",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "IndexSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/diagnostics",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "diagnostics"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "ShowSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/diagnostics/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "diagnostics",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/diagnostics/restore/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "diagnostics",
+                "restore",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "DailyNutritions",
+      "item": [
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/daily_nutritions",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "daily_nutritions"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "IndexSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/daily_nutritions",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "daily_nutritions"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/daily_nutritions/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "daily_nutritions",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/daily_nutritions/restore/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "daily_nutritions",
+                "restore",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/daily_nutritions/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "daily_nutritions",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "SoftDelete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/daily_nutritions/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "daily_nutritions",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "ShowSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/daily_nutritions/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "daily_nutritions",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/daily_nutritions/",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "daily_nutritions",
+                ""
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Exercises",
+      "item": [
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/exercises/",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "exercises",
+                ""
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/exercises/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "exercises",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/exercises",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "exercises"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Teste\",\n  \"description\": \"Técnica de respiração para relaxamento e redução do stress.\",\n  \"category\": \"Respiração\",\n  \"difficulty_level\": \"Fácil\",\n  \"instructions\": \"Inspirar profundamente pelo nariz e expirar lentamente pela boca.\",\n  \"benefits\": \"Diminui a ansiedade e melhora a oxigenação do corpo.\",\n  \"precautions\": \"Evitar ambientes com ar poluído.\",\n  \"video_url\": \"https://www.youtube.com/watch?v=998abc\",\n  \"image_url\": \"https://example.com/images/respiracao.jpg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/exercises/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "exercises",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Teste\",\n  \"description\": \"Técnica de respiração para relaxamento e redução do stress.\",\n  \"category\": \"Respiração\",\n  \"difficulty_level\": \"Fácil\",\n  \"instructions\": \"Inspirar profundamente pelo nariz e expirar lentamente pela boca.\",\n  \"benefits\": \"Diminui a ansiedade e melhora a oxigenação do corpo.\",\n  \"precautions\": \"Evitar ambientes com ar poluído.\",\n  \"video_url\": \"https://www.youtube.com/watch?v=998abc\",\n  \"image_url\": \"https://example.com/images/respiracao.jpg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "SoftDelete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/exercises/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "exercises",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "IndexSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/exercises",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "exercises"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "ShowSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/exercises/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "exercises",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/exercises/restore/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "exercises",
+                "restore",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "GoalMilestones",
+      "item": [
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/goal_milestones",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "goal_milestones"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/goal_milestones/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "goal_milestones",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/goal_milestones",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "goal_milestones"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{  \"id\": 1,\n  \"treatment_goal_id\": 43,\n  \"description\": \"teste\",\n  \"target_date\": \"2026-03-25\",\n  \"completed\": 0,\n  \"completion_date\": null,\n  \"notes\": \"teste\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/goal_milestones/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "goal_milestones",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \n  \"treatment_goal_id\": 43,\n  \"description\": \"Teste\",\n  \"target_date\": \"2026-03-25\",\n  \"completed\": 0,\n  \"completion_date\": null,\n  \"notes\": \"Teste\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "SoftDelete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/goal_milestones/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "goal_milestones",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "IndexSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/goal_milestones",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "goal_milestones"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "ShowSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/goal_milestones/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "goal_milestones",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/goal_milestones/restore/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "goal_milestones",
+                "restore",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Patients",
+      "item": [
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/patients",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "patients"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/patients/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "patients",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/patients/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "patients",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone_number\": \"Teste\",\n  \"address\": \"Teste\",\n  \"gender\": \"Outro\",\n  \"birth_date\": \"2000-01-01\",\n  \"emergency_contact_name\": \"Teste\",\n  \"emergency_contact_phone\": \"(224) 545-3498\",\n  \"emergency_contact_relation\": \"Teste\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{url}}/api/users",
+          "protocol": "",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"TEste\",\n  \"surname\": \"TEste\",\n  \"email\": \"TEste@TEste.com\",\n  \"address\" : \"TEste\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\",\n  \"phone_number\": \"TEste\",\n  \"birth_date\": \"1990-01-01\",\n  \"emergency_contact_name\": \"TEste\",\n  \"emergency_contact_phone\": \"TEste\",\n  \"emergency_contact_relation\": \"TEste\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ProgressNotes",
+      "item": [
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/progress_notes",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "progress_notes"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/progress_notes/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "progress_notes",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/progress_notes",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "progress_notes"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patient_id\": 22,\n  \"appointment_id\": 1,\n  \"note_date\": \"2025-11-15\",\n  \"subjective\": \"Teste\",\n  \"objective\": \"Teste\",\n  \"assessment\": \"Teste\",\n  \"plan\": \"Teste\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/progress_notes/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "progress_notes",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\n  \"patient_id\": 22,\n  \"appointment_id\": 1,\n  \"note_date\": \"2025-11-15\",\n  \"subjective\": \"Teste\",\n  \"objective\": \"Teste\",\n  \"assessment\": \"Teste\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "SoftDelete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/progress_notes/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "progress_notes",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "IndexSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/progress_notes",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "progress_notes"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "ShowSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/progress_notes/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "progress_notes",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/progress_notes/restore/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "progress_notes",
+                "restore",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Roles",
+      "item": [
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/roles",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "roles"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/roles/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "roles",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/roles",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "roles"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Teste\",\n  \"permissions\": null,\n  \"description\": \"Teste\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Edit /Cuidado, não editar 1 ou 2",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/roles/3",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "roles",
+                "3"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"TesteTeste\",\n  \"permissions\": null,\n  \"description\": \"TesTesteDescription\",\n  \"created_at\": null,\n  \"updated_at\": null,\n  \"deleted_at\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "SoftDelete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/roles/3",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "roles",
+                "3"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "IndexSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/roles",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "roles"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "ShowSoftDeletes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/roles/3",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "roles",
+                "3"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/roles/restore/3",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "roles",
+                "restore",
+                "3"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Treatments",
+      "item": [
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/treatments",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "treatments"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/treatments/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "treatments",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/treatments",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "treatments"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"diagnostic_id\": 54,\n  \"patient_id\": 22,\n  \"session_date_time\": \"2026-05-28 14:40:03\",\n  \"treatment_methods\": \"Teste\",\n  \"acupoints_used\": \"Teste,Teste\",\n  \"duration\": 90\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/treatments/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "treatments",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"diagnostic_id\": 54,\n  \"patient_id\": 22,\n  \"session_date_time\": \"2026-05-28 14:40:03\",\n  \"treatment_methods\": \"TESTE\",\n  \"acupoints_used\": \"TTTTTTTTTTT\",\n  \"duration\": 90\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "SoftDelete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/treatments/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "treatments",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "IndexSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/treatments",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "treatments"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "ShowSoftDeletes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/treatments/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "treatments",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/treatments/restore/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "treatments",
+                "restore",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "TreatmentGoals",
+      "item": [
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/treatment_goals",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "treatment_goals"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/treatment_goals/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "treatment_goals",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/treatment_goals",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "treatment_goals"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patient_id\": 2,\n  \"title\": \"CPR\",\n  \"description\": \"Deseja fortalecer o sistema imunitário e prevenir infeções recorrentes.\",\n  \"priority\": \"Média\",\n  \"status\": \"Em progresso\",\n  \"progress_percentage\": \"20.0\",\n  \"target_date\": \"2026-02-15\",\n  \"treatment_methods\": \"Ventosas\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/treatment_goals/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "treatment_goals",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"patient_id\": 22,\n    \"title\": \"Teste\",\n    \"description\": \"Sente-se esgotado mesmo após dormir adequadamente.\",\n    \"priority\": \"Média\",\n    \"status\": \"Em progresso\",\n    \"progress_percentage\": 10,\n    \"target_date\": \"2026-02-05\",\n    \"treatment_methods\": \"Eletroacupuntura\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "SoftDelete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/treatment_goals/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "treatment_goals",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "IndexSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/treatment_goals",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "treatment_goals"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "ShowSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/treatment_goals/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "treatment_goals",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/treatment_goals/restore/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "treatment_goals",
+                "restore",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "WeightTrackings",
+      "item": [
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/weight_trackings",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "weight_trackings"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/weight_trackings/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "weight_trackings",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/weight_trackings",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "weight_trackings"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patient_id\": 1,\n  \"weight\": 200,\n  \"body_fat_percentage\": \"26.2\",\n  \"measurement_date\": \"2025-12-07\",\n  \"notes\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/weight_trackings/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "weight_trackings",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patient_id\": 1,\n  \"weight\": 169,\n  \"body_fat_percentage\": \"26.4\",\n  \"measurement_date\": \"2025-12-07\",\n  \"notes\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "SoftDelete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/weight_trackings/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "weight_trackings",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "IndexSoftDeletes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/weight_trackings",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "weight_trackings"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "ShowSoftDeletes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/weight_trackings/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "weight_trackings",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/weight_trackings/restore/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "weight_trackings",
+                "restore",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Symptoms",
+      "item": [
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/symptoms",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "symptoms"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/symptoms/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "symptoms",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/symptoms",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "symptoms"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Teste\",\n  \"description\": \"Sensação de dor ou pressão na cabeça.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/symptoms/3",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "symptoms",
+                "3"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Teste\",\n  \"description\": \"Sensação de dor ou pressão na cabeça.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "SoftDelete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/symptoms/2",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "symptoms",
+                "2"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "IndexSoftDeletes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/symptoms",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "symptoms"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "ShowSoftDeletes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/symptoms/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "symptoms",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/symptoms/restore/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "symptoms",
+                "restore",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "disabled": false,
+            "type": "default"
+          }
+        ],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{url}}/api/login",
+          "protocol": "",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "login"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"mstoltenberg@example.com\",\n  \"password\": \"atec123\",\n  \"remember\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "CSRF-Token",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{url}}/sanctum/csrf-cookie",
+          "protocol": "",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "sanctum",
+            "csrf-cookie"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "UserAllergies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/user/allergies",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "allergies"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "UserAppointments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/user/appointments",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "appointments"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "UserConditions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/user/conditions",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "conditions"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "UserDailyNutritions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/user/daily_nutritions",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "daily_nutritions"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "UserDiagnostics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/user/diagnostics",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "diagnostics"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "UserExercises",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/user/exercises",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "exercises"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "UserGoalMilestones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/user/treatment_goals",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "treatment_goals"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "UserNutritionalGoals",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/user/nutritional_goals",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "nutritional_goals"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "UserPatient",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/user/patient",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "patient"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "userTreatments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/user/treatments",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "treatments"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "UserWeightTrackings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/user/weight_trackings",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "weight_trackings"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "NutritionalGoals",
+      "item": [
+        {
+          "name": "Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/nutritional_goals",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "nutritional_goals"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/nutritional_goals/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "nutritional_goals",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patient_id\": 1,\n  \"target_weight\": null,\n  \"target_body_fat\": \"99\",\n  \"daily_calories_goal\": 2203,\n  \"daily_protein_goal\": 170,\n  \"daily_carbs_goal\": null,\n  \"daily_fat_goal\": null,\n  \"start_date\": null,\n  \"target_date\": \"2026-02-19\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/nutritional_goals",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "nutritional_goals"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patient_id\": 1,\n  \"target_weight\": null,\n  \"target_body_fat\": \"35\",\n  \"daily_calories_goal\": 2203,\n  \"daily_protein_goal\": 170,\n  \"daily_carbs_goal\": null,\n  \"daily_fat_goal\": null,\n  \"start_date\": null,\n  \"target_date\": \"2026-02-19\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/nutritional_goals/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "nutritional_goals",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patient_id\": 2,\n  \"target_weight\": null,\n  \"target_body_fat\": \"22\",\n  \"daily_calories_goal\": 2203,\n  \"daily_protein_goal\": 170,\n  \"daily_carbs_goal\": null,\n  \"daily_fat_goal\": null,\n  \"start_date\": null,\n  \"target_date\": \"2026-02-19\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "SoftDelete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/nutritional_goals/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "nutritional_goals",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "IndexSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/nutritional_goals",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "nutritional_goals"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "ShowSoftDelete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/nutritional_goals/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "nutritional_goals",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{url}}/api/soft_delete/nutritional_goals/restore/1",
+              "protocol": "",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "soft_delete",
+                "nutritional_goals",
+                "restore",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "url",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "id",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}

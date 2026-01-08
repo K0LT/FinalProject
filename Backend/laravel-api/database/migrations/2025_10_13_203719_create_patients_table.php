@@ -18,7 +18,7 @@ return new class extends Migration
                 ->unique()->constrained()->cascadeOnDelete();
 
             $table->string('phone_number')->nullable();
-            $table->string('address')->nullable();
+            $table->string('address');
             $table->string('gender')->nullable();
             $table->date('birth_date')->nullable();
             $table->string('emergency_contact_name')->nullable();
@@ -28,6 +28,7 @@ return new class extends Migration
             $table->date('last_visit')->nullable();
             $table->date('next_appointment')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

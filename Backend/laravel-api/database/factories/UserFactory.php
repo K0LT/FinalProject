@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\Role;
-use App\Models\Profile;
+
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'name' => $this->faker->firstName(),
             'surname' => $this->faker->lastName(),
             'email' => fake()->unique()->safeEmail(),
-            'role_id' => 3,
+            'role_id' => 2,
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('atec123'),
             'remember_token' => Str::random(10),

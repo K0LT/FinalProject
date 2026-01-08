@@ -24,7 +24,6 @@ class StoreExercisePatientRequest extends FormRequest
         return [
             'patient_id'  => 'required|integer|exists:patients,id',
             'exercise_id'  => 'required|integer|exists:exercises,id',
-            'profile_id'  => 'nullable|integer|exists:profiles,id',
             'prescribed_date' => 'required|date',
             'frequency' => 'nullable|string',
             'status' => 'required|string|max:255',

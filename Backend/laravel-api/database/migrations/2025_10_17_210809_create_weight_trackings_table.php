@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('measurement_date');
             $table->text('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

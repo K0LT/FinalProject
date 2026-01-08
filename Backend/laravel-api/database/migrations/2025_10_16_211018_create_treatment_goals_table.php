@@ -21,10 +21,11 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->enum('priority', ['Mínima', 'Média', 'Alta'])->default('Media');
             $table->enum('status', ['Em progresso', 'Concluído', 'Cancelado'])->default('Em progresso');
-            $table->decimal('progress_percentage', 5,2)->default(0);
+            $table->integer('progress_percentage')->default(0);
             $table->date('target_date')->nullable();
             $table->string('treatment_methods')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

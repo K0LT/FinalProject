@@ -2,10 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Models\Exercise;
 use App\Models\ExercisePatient;
+use App\Models\Patient;
 use Database\Factories\ExercisePatientFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
+
 
 class ExercisePatientSeeder extends Seeder
 {
@@ -15,6 +19,14 @@ class ExercisePatientSeeder extends Seeder
     public function run(): void
     {
         //
-        ExercisePatient::factory(100)->create();
+        $patients = Patient::all();
+
+        foreach ($patients as $patient) {
+
+            $count = rand(1, 4);
+            ExercisePatient::factory()->count($count)->create([
+                    'patient_id' => $patient->id,
+                ]);
+        }
     }
 }

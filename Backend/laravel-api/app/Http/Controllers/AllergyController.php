@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Allergy;
 use App\Http\Requests\StoreAllergyRequest;
 use App\Http\Requests\UpdateAllergyRequest;
-
+use App\Models\Patient;
+use Illuminate\Http\Request;
 class AllergyController extends Controller
 {
     /**
@@ -13,29 +14,8 @@ class AllergyController extends Controller
      */
     public function index()
     {
-        try {
-
-            $allergies = Allergy::all();
-            return response()->json([
-                'data' => $allergies,
-                ], 200);
-
-        }catch(\Exception $e){
-
-            \Log::error('Ocorreu um erro ao obter alergias.' . $e->getMessage());
-            return response()->json([
-                'message' => 'Ocorreu um erro ao obter alergias.',
-            ], 500);
-        }
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $allergies = Allergy::all();
+        return response()->json($allergies, 200);
     }
 
     /**
@@ -43,22 +23,10 @@ class AllergyController extends Controller
      */
     public function store(StoreAllergyRequest $request)
     {
-        try {
-            $data = $request->validated();
-            $allergy = Allergy::create($data);
-            return Response()->json([
-                'success' => true,
-                'data' => $allergy
-            ], 200);
-        }
-            catch (\Exception $e) {
-            \Log::error('Ocorreu um erro a criar alergia' . $e->getMessage());
+        $data = $request->validated();
+        $allergy = Allergy::create($data);
 
-            return response()->json([
-                'success' => false,
-                'message' => 'Ocorreu um erro a criar alergia:'
-            ], 500);
-        }
+        return response()->json($allergy, 201);
     }
 
     /**
@@ -66,59 +34,202 @@ class AllergyController extends Controller
      */
     public function show(Allergy $allergy)
     {
-        try {
-            return response()->json([
-                'success' => true,
-                'data' => $allergy
-                ]);
-        }catch(\Exception $e){
-            \Log::error('Ocorreu um erro a mostrar uma alergia' . $e->getMessage());
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Ocorreu um erro a mostrar uma alergia',
-            ], 500);
-        }
+        return response()->json($allergy, 200);
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Allergy $allergy)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateAllergyRequest $request, Allergy $allergy)
     {
-
-        try {
-            $data = $request->validated();
-            $allergy -> update($data);
-            return response()->json([
-                'success' => true,
-                'data' => $allergy
-            ]);
-        }catch(\Exception $e){
-            \Log::error('Ocorreu um erro a editar uma alergia' . $e->getMessage());
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Ocorreu um erro a editar uma alergia.'
-            ], 500);
-        }
-
+        $data = $request->validated();
+        $allergy -> update($data);
+        return response()->json($allergy, 200);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * SoftDelete
      */
     public function destroy(Allergy $allergy)
     {
-        //
+        $allergy->delete();
+        return response()->json(null, 204);
     }
+
+
+    /**
+     * Index of SoftDelete
+     */
+    public function indexSoftDelete()
+    {
+        return response()->json(Allergy::onlyTrashed()->get(), 200);
+    }
+
+
+    /**
+     * Restore SoftDelete
+     */
+    public function restoreSoftDelete($id)
+    {
+        $allergy = Allergy::onlyTrashed()->findOrFail($id);
+        $allergy->restore();
+        return response()->json($allergy, 200);
+    }
+
+    /**
+     * Show SoftDeleted
+     */
+
+    public function showSoftDelete($id){
+        $allergy = Allergy::onlyTrashed()->findOrFail($id);
+        return response()->json($allergy, 200);
+    }
+
+    /**
+    *User Allergies
+    */
+
+    //Dentro do Request vem automaticamente o user, o front-end não precisa de enviar nada.
+    public function userAllergies(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Não está autenticado'
+            ], 401);
+        }
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado' //Caso o admin tente entrar
+            ], 404);
+        }
+
+        return response()->json([
+            'patient_id' => $patient->id,
+            'allergies' => $patient->allergies
+        ]);
+    }
+
+
+    public function patientAllergies(Patient $patient)
+    {
+        $patient->load('allergies');
+        return response()->json($patient, 200);
+    }
+
+
+    public function patientAllergiesSoftDelete(Patient $patient)
+    {
+        $allergies = $patient->allergies()
+            ->onlyTrashed()
+            ->get();
+
+        return response()->json([
+            'patient_id' => $patient,
+            'allergies' => $allergies
+        ], 200);
+    }
+
+
+    public function adminAddAllergyToPatient(Request $request, Patient $patient)
+    {
+        $request->validate([
+            'allergy_id' => ['required', 'exists:allergies,id'],
+        ]);
+
+        $allergyId = $request->allergy_id;
+
+        if ($patient->allergies()->where('allergies.id', $allergyId)->exists()) {
+            return response()->json([
+                'message' => 'Paciente já tem essa alergia associada.'
+            ], 409);
+        }
+
+        $patient->allergies()->attach($allergyId);
+
+        return response()->json([
+            'message' => 'Added'
+        ], 201);
+    }
+
+
+    public function adminRemoveAllergyFromPatient(Request $request, Patient $patient)
+    {
+        $request->validate([
+            'allergy_id' => ['required', 'exists:allergies,id'],
+        ]);
+
+        $allergyId = $request->allergy_id;
+
+        if (! $patient->allergies()->where('allergies.id', $allergyId)->exists()) {
+            return response()->json([
+                'message' => 'Paciente não tem essa alergia.'
+            ], 404);
+        }
+
+        $patient->allergies()->detach($allergyId);
+
+        return response()->json([
+            'message' => 'Removed'
+        ], 200);
+    }
+
+
+    public function userAddAllergy(Request $request)
+    {
+        $request->validate([
+            'allergy_id' => ['required', 'exists:allergies,id'],
+        ]);
+
+        $user = auth('sanctum')->user();
+
+        $patient = $user->patient;
+        $allergyId = $request->allergy_id;
+
+        if ($patient->allergies()->where('allergies.id', $allergyId)->exists()) {
+            return response()->json([
+                'message' => 'Já tem esta alergia associada.'
+            ], 409);
+        }
+
+        $patient->allergies()->attach($allergyId);
+
+        return response()->json([
+            'message' => 'Added'
+        ], 201);
+    }
+
+
+    public function userRemoveAllergy(Request $request)
+    {
+        $request->validate([
+            'allergy_id' => ['required', 'exists:allergies,id'],
+        ]);
+
+        $user = auth('sanctum')->user();
+
+        $patient = $user->patient;
+        $allergyId = $request->allergy_id;
+
+        if (! $patient->allergies()->where('allergies.id', $allergyId)->exists()) {
+            return response()->json([
+                'message' => 'Não tem esta alergia.'
+            ], 404);
+        }
+
+        $patient->allergies()->detach($allergyId);
+
+        return response()->json([
+            'message' => 'Removed'
+        ], 200);
+    }
+
+
+
 }

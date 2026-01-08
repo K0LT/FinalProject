@@ -13,6 +13,9 @@ class ProgressNotePolicy
      */
     public function viewAny(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -21,6 +24,9 @@ class ProgressNotePolicy
      */
     public function view(User $user, ProgressNote $progressNote): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -29,6 +35,9 @@ class ProgressNotePolicy
      */
     public function create(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -37,6 +46,9 @@ class ProgressNotePolicy
      */
     public function update(User $user, ProgressNote $progressNote): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -45,22 +57,10 @@ class ProgressNotePolicy
      */
     public function delete(User $user, ProgressNote $progressNote): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, ProgressNote $progressNote): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, ProgressNote $progressNote): bool
-    {
-        return false;
-    }
 }

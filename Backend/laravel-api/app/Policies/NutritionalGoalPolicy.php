@@ -13,6 +13,9 @@ class NutritionalGoalPolicy
      */
     public function viewAny(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -21,6 +24,9 @@ class NutritionalGoalPolicy
      */
     public function view(User $user, NutritionalGoal $nutritionalGoal): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -29,6 +35,9 @@ class NutritionalGoalPolicy
      */
     public function create(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -37,6 +46,9 @@ class NutritionalGoalPolicy
      */
     public function update(User $user, NutritionalGoal $nutritionalGoal): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -45,22 +57,10 @@ class NutritionalGoalPolicy
      */
     public function delete(User $user, NutritionalGoal $nutritionalGoal): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, NutritionalGoal $nutritionalGoal): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, NutritionalGoal $nutritionalGoal): bool
-    {
-        return false;
-    }
 }

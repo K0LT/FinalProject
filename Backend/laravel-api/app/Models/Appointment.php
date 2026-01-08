@@ -4,15 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Appointment extends Model
 {
     /** @use HasFactory<\Database\Factories\AppointmentFactory> */
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'patient_id',
-        'profile_id',
         'appointment_date_time',
         'duration',
         'type',
@@ -24,9 +25,6 @@ class Appointment extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function profile(){
-        return $this->belongsTo(Profile::class);
-    }
 
     public function progressNotes(){
         return $this->hasMany(ProgressNote::class);

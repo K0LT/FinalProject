@@ -11,23 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exercise_patients', function (Blueprint $table) {
+        Schema::create('exercise_patient', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('patient_id')
                 ->constrained()->cascadeOnDelete();
             $table->foreignId('exercise_id')
                 ->constrained();
-            $table->foreignId('profile_id')
-                ->nullable()->constrained();
-
             $table->date('prescribed_date')->useCurrent();
             $table->string('frequency')->nullable();
-            $table->string('status');
+            $table->enum('status', ['Em progresso', 'Concluído', 'Pendente'])->change();
             $table->integer('compliance_rate')->default(0);
             $table->date('last_performed')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -36,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exercise_patients');
+        Schema::dropIfExists('exercise_patient');
     }
 };

@@ -18,8 +18,6 @@ return new class extends Migration
                 ->constrained();
             $table->foreignId('patient_id')
                 ->constrained()->cascadeOnDelete();
-            $table->foreignId('profile_id')
-                ->nullable()->constrained();
 
             $table->dateTime('session_date_time');
             $table->string('treatment_methods')->nullable();
@@ -28,6 +26,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->date('next_session')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

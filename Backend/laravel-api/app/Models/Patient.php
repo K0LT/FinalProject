@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Patient extends Model
 {
     /** @use HasFactory<\Database\Factories\PatientFactory> */
     use HasFactory;
-
+    use SoftDeletes;
     protected $fillable = [
         'user_id',
         'phone_number',
@@ -44,22 +45,21 @@ class Patient extends Model
     }
 
     public function exercises(){
-        return $this->belongsToMany(Exercise::class, 'exercise_patients')
-            ->withPivot('profile_id', 'prescribed_date', 'frequency', 'status', 'compliance_rate', 'last_performed', 'notes')
-            ->withTimestamps();
+        return $this->belongsToMany(Exercise::class, 'exercise_patient')
+            ->using(ExercisePatient::class)
+            ->withPivot( 'prescribed_date', 'frequency', 'status', 'compliance_rate', 'last_performed', 'notes')
+            ->withTimestamps()
+            ->wherePivotNull('deleted_at');
     }
 
     public function weightTrackings(){
         return $this->hasMany(WeightTracking::class);
 }
 
-    public function nutritionGoals(){
+    public function nutritionalGoals(){
         return $this->hasMany(NutritionalGoal::class);
     }
 
-    public function allergies(){
-        return $this->hasMany(Allergy::class);
-    }
 
     public function conditions(){
         return $this->hasMany(Condition::class);
@@ -72,4 +72,26 @@ class Patient extends Model
     public function dailyNutritions(){
         return $this->hasMany(DailyNutrition::class);
     }
+
+    public function allergies()
+    {
+        return $this->belongsToMany(Allergy::class, 'allergy_patient')
+            ->using(AllergyPatient::class)
+            ->withTimestamps()
+            ->withPivot('deleted_at')
+            ->wherePivotNull('deleted_at');
+    }
+
+    public function updateNextAppointment()
+    {
+        $nextAppointment = $this->appointments()
+            ->where('status', 'Confirmado')
+            ->where('appointment_date_time', '>=', now())
+            ->orderBy('appointment_date_time', 'asc')
+            ->first();
+
+        $this->next_appointment = $nextAppointment?->appointment_date_time;
+        $this->save();
+    }
+
 }

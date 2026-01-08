@@ -61,11 +61,4 @@ class ExercisePatientController extends Controller
         return response()->json($exercisePatient);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ExercisePatient $exercisePatient)
-    {
-        //
-    }
 }

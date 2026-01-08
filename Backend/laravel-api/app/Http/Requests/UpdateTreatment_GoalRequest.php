@@ -24,10 +24,10 @@ class UpdateTreatment_GoalRequest extends FormRequest
         return [
             'patient_id' => 'required|integer|exists:patients,id',
             'title' => 'required|string',
-            'description' => 'nullable|text',
+            'description' => 'nullable|string|max:255',
             'priority' => 'required|string|in:Mínima,Média,Alta',
             'status' => 'required|string|in:Em progresso,Concluído,Cancelado',
-            'progress_percentage' => 'required|decimal:1',
+            'progress_percentage' => 'required|integer|min:0|max:100',
             'target_date' => 'nullable|date',
             'treatment_methods' => 'nullable|string',
         ];

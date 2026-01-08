@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TreatmentGoal extends Model
 {
     /** @use HasFactory<\Database\Factories\TreatmentGoalFactory> */
     use HasFactory;
-
+    use SoftDeletes;
 
     protected $fillable = [
         'patient_id',

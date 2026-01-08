@@ -23,8 +23,8 @@ class AuthController extends Controller
         ]);
 
         // ⚠️ Escolhe o role "por defeito" para novos utilizadores
-        // vê na tabela "roles" qual o ID que queres (por ex. 1 = paciente)
-        $defaultRoleId = 1;
+        // vê na tabela "roles" qual o ID que queres (por ex. 3 = Patient)
+        $defaultRoleId = 3;
 
         $user = User::create([
             'role_id'  => $defaultRoleId,

@@ -17,13 +17,6 @@ class RoleController extends Controller
         return response()->json($roles);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -43,13 +36,7 @@ class RoleController extends Controller
         return response()->json($role);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Role $role)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -66,6 +53,35 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        $role->delete();
+        return response()->json(null, 204);
+    }
+
+    /**
+     * List all soft deleted roles.
+     */
+    public function indexSoftDelete()
+    {
+        $roles = Role::onlyTrashed()->get();
+        return response()->json($roles, 200);
+    }
+
+    /**
+     * Show a specific soft deleted role.
+     */
+    public function showSoftDelete($id)
+    {
+        $role = Role::onlyTrashed()->findOrFail($id);
+        return response()->json($role, 200);
+    }
+
+    /**
+     * Restore a soft deleted role.
+     */
+    public function restoreSoftDelete($id)
+    {
+        $role = Role::onlyTrashed()->findOrFail($id);
+        $role->restore();
+        return response()->json($role, 200);
     }
 }

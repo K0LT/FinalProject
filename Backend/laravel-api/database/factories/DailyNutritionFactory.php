@@ -30,7 +30,7 @@ class DailyNutritionFactory extends Factory
 
             'water_intake' => $isEmptyDay ? null : (rand(0, 4) === 0 ? null : $this->faker->randomFloat(1, 0.5, 4.0)),
             'steps' => $isEmptyDay ? null : (rand(0, 6) === 0 ? null : $this->faker->numberBetween(1000, 15000)),
-            'sleep_hours' => $isEmptyDay ? null : (rand(0, 5) === 0 ? null : $this->faker->randomFloat(1, 4, 10)),
+            'sleep_hours' => $isEmptyDay ? null : (rand(0, 6) === 0 ? null : $this->faker->numberBetween(1, 24)),
             'calories_burned' => $isEmptyDay ? null : (rand(0, 5) === 0 ? null : $this->faker->numberBetween(150, 900)),
         ];
     }
