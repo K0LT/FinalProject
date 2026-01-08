@@ -1,8 +1,6 @@
 import { CheckCircle2 } from "lucide-react";
 import LoginIntro from "@/components/login/LoginIntro";
 import {LoginFormCard} from "@/components/login/LoginFormCard";
-
-import {LoginForm} from "@/components/login/LoginForm";
 import FeatureGrid from "@/components/login/FeatureGrid";
 import TestimonialsRight from "@/components/login/TestimonialsRight";
 import ShieldInfo from "@/components/login/ShieldInfo";

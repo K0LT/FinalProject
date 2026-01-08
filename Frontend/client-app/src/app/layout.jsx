@@ -1,6 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from '@/context/AuthContext';
+import { DevAuthProvider } from '@/context/DevAuthProvider';
 import DevControlPanel from "@/components/Auth/DevControlPanel";
 
 import LandingLayout from '@/components/landingPage/LandingLayout'
@@ -27,10 +27,10 @@ export default function RootLayout({ children }) {
     return (
         <html lang="pt-PT">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
-            <AuthProvider>
+            <DevAuthProvider>
                     {children}
-                    {/*{process.env.NODE_ENV === 'development' && <DevControlPanel />}*/}
-            </AuthProvider>
+                    {process.env.NODE_ENV === 'development' && <DevControlPanel />}
+            </DevAuthProvider>
         </body>
         </html>
     );

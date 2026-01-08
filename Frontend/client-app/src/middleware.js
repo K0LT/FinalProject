@@ -1,15 +1,22 @@
 import { NextResponse } from "next/server";
 
+/**
+ * Minimal middleware for protected routes
+ *
+ * Since middleware runs server-side and cannot access localStorage,
+ * we rely on the client-side AuthGuard component for actual auth checks.
+ * This middleware just ensures the routes are properly configured.
+ */
 export function middleware(req) {
-    const token = req.cookies.get('auth-token');
-
-    if (!token) {
-        return NextResponse.redirect(new URL("/login", req.url));
-    }
-
+    // Pass through - AuthGuard handles authentication on client-side
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ["/appointments/:path*", "/clientProfile/:path*", "/diagnoses/:path*"],
+    matcher: [
+        "/dashboard/:path*",
+        "/appointments/:path*",
+        "/clientProfile/:path*",
+        "/diagnoses/:path*"
+    ],
 };

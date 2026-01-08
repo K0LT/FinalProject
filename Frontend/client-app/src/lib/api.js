@@ -1,6 +1,39 @@
 import axios from 'axios';
-import {ensureCsrf, getCookie} from "@/lib/authClient";
 
+// CSRF and Cookie helpers (moved from authClient.js)
+function getCookie(name) {
+    if (typeof document === "undefined") return null;
+    const match = document.cookie.match(
+        new RegExp("(^|; )" + name + "=([^;]*)"),
+    );
+    return match ? decodeURIComponent(match[2]) : null;
+}
+
+function deleteCookie(name) {
+    if (typeof document === "undefined") return;
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+}
+
+async function ensureCsrf() {
+    if (typeof window === "undefined") return;
+
+    const ROOT = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000").replace(/\/api\/?$/, "");
+
+    await fetch(`${ROOT}/sanctum/csrf-cookie`, {
+        method: "GET",
+        credentials: "include",
+    });
+}
+
+async function refreshCsrfToken() {
+    if (typeof window === "undefined") return;
+
+    // Clear old XSRF token
+    deleteCookie("XSRF-TOKEN");
+
+    // Fetch new one
+    await ensureCsrf();
+}
 
 class ApiClient {
     constructor() {
@@ -16,31 +49,64 @@ class ApiClient {
     setupInterceptors() {
         this.client.interceptors.request.use(
             (config) => {
-                debugger;
                 const token = this.getToken();
-                let xsrf = getCookie("XSRF-TOKEN");
-                if (!xsrf) xsrf = ensureCsrf();
+                const xsrf = getCookie("XSRF-TOKEN");
+
                 if (token) {
                     config.headers.Authorization = `Bearer ${token}`;
                 }
                 config.headers['X-Requested-With'] = 'XMLHttpRequest';
-                config.headers['X-XSRF-TOKEN'] = xsrf;
+
+                // Only set XSRF token if it exists
+                if (xsrf) {
+                    config.headers['X-XSRF-TOKEN'] = xsrf;
+                }
+
                 return config;
             },
             (error) => Promise.reject(error)
         );
 
         this.client.interceptors.response.use(
-            /*(response) => response,
-            (error) => {
+            (response) => response,
+            async (error) => {
+                const originalRequest = error.config;
+
+                // Handle CSRF token mismatch (419)
+                if (error.response?.status === 419 && !originalRequest._retry) {
+                    originalRequest._retry = true;
+
+                    console.log('🔄 CSRF token mismatch detected, refreshing token...');
+
+                    try {
+                        // Refresh CSRF token
+                        await refreshCsrfToken();
+
+                        // Update the header with new token
+                        const newXsrf = getCookie("XSRF-TOKEN");
+                        if (newXsrf) {
+                            originalRequest.headers['X-XSRF-TOKEN'] = newXsrf;
+                        }
+
+                        // Retry the original request
+                        return this.client(originalRequest);
+                    } catch (refreshError) {
+                        console.error('Failed to refresh CSRF token:', refreshError);
+                        return Promise.reject(error);
+                    }
+                }
+
+                // Handle unauthorized (401)
                 if (error.response?.status === 401) {
                     this.clearToken();
                     if (typeof window !== 'undefined') {
+                        localStorage.removeItem('user_data');
                         window.location.href = '/login';
                     }
                 }
+
                 return Promise.reject(error);
-            }*/
+            }
         );
     }
 
@@ -61,7 +127,6 @@ class ApiClient {
     }
 
     async request(config) {
-        debugger;
         try {
             const response = await this.client(config);
             return response.data;
@@ -78,10 +143,9 @@ class ApiClient {
         await ensureCsrf();
         const response = await this.request({
             method: 'POST',
-            url: 'http://localhost:8000/login',
+            url: '/login',
             data: credentials,
         });
-        debugger;
         this.setToken(response.auth_token);
         if (typeof window !== 'undefined') {
             localStorage.setItem('user_data', JSON.stringify(response.user));
@@ -94,19 +158,22 @@ class ApiClient {
         try {
             await this.request({
                 method: 'POST',
-                url: 'http://localhost:8000/logout',
+                url: '/logout',
             });
         } catch (error) {
             console.error('Logout error:', error);
         } finally {
             this.clearToken();
+            if (typeof window !== 'undefined') {
+                localStorage.removeItem('user_data');
+            }
         }
     }
 
     async getCurrentUser() {
         return this.request({
             method: 'GET',
-            url: 'http://localhost:8000/user',
+            url: '/user',
         });
     }
 
