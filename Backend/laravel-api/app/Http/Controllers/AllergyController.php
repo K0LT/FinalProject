@@ -125,7 +125,7 @@ class AllergyController extends Controller
             ->get();
 
         return response()->json([
-            'patient_id' => $patient,
+            'patient' => $patient,
             'allergies' => $allergies
         ], 200);
     }
