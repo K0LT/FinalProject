@@ -105,10 +105,16 @@ class AppointmentController extends Controller
             ], 404);
         }
 
-        $patient->load(['appointments.progressNotes']);
+        $appointments = $patient->appointments;
+
+        $progressNotes = $patient->appointments
+            ->pluck('progressNotes')
+            ->flatten()
+            ->values();
 
         return response()->json([
-            'patient' => $patient
+            'appointments' => $appointments,
+            'progressNotes' => $progressNotes
         ], 200);
     }
 
