@@ -43,7 +43,10 @@ class DailyNutritionPolicy
      */
     public function update(User $user, DailyNutrition $dailyNutrition): bool
     {
-        return true;
+        if($user->role->name === "Admin" || $user->patient->id === $dailyNutrition->patient_id){
+            return true;
+        }
+        return false;
     }
 
     /**
