@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DailyNutritionResource;
 use App\Models\DailyNutrition;
 use App\Http\Requests\StoreDailyNutritionRequest;
 use App\Http\Requests\UpdateDailyNutritionRequest;
@@ -15,8 +16,7 @@ class DailyNutritionController extends Controller
      */
     public function index()
     {
-        $dailyNutritions = DailyNutrition::all();
-        return response()->json($dailyNutritions);
+        return DailyNutritionResource::collection(DailyNutrition::all());
     }
 
 
@@ -35,7 +35,7 @@ class DailyNutritionController extends Controller
      */
     public function show(DailyNutrition $dailyNutrition)
     {
-        return response ()->json($dailyNutrition);
+        return new DailyNutritionResource($dailyNutrition);
     }
 
 

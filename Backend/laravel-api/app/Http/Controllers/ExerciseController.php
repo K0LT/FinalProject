@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ExerciseResource;
 use App\Models\Exercise;
 use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
@@ -15,8 +16,7 @@ class ExerciseController extends Controller
      */
     public function index()
     {
-        $exercises = Exercise::all();
-        return response()->json($exercises);
+        return ExerciseResource::collection(Exercise::all());
     }
 
 
@@ -35,7 +35,7 @@ class ExerciseController extends Controller
      */
     public function show(Exercise $exercise)
     {
-        return response()->json($exercise);
+        return new ExerciseResource($exercise);
     }
 
     /**

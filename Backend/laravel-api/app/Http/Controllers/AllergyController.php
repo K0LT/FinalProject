@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AllergyResource;
+
 use App\Models\Allergy;
 use App\Http\Requests\StoreAllergyRequest;
 use App\Http\Requests\UpdateAllergyRequest;
@@ -14,8 +16,7 @@ class AllergyController extends Controller
      */
     public function index()
     {
-        $allergies = Allergy::all();
-        return response()->json($allergies, 200);
+        return AllergyResource::collection(Allergy::all());
     }
 
     /**
@@ -34,7 +35,7 @@ class AllergyController extends Controller
      */
     public function show(Allergy $allergy)
     {
-        return response()->json($allergy, 200);
+        return new AllergyResource($allergy);
 
     }
 

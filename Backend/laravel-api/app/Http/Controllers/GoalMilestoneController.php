@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GoalMilestoneResource;
 use App\Models\GoalMilestone;
 use App\Http\Requests\StoreGoalMilestoneRequest;
 use App\Http\Requests\UpdateGoalMilestoneRequest;
@@ -14,8 +15,7 @@ class GoalMilestoneController extends Controller
      */
     public function index()
     {
-        $goalMilestone = GoalMilestone::all();
-        return response()->json($goalMilestone);
+        return GoalMilestoneResource::collection(GoalMilestone::all());
     }
 
 
@@ -34,7 +34,7 @@ class GoalMilestoneController extends Controller
      */
     public function show(GoalMilestone $goalMilestone)
     {
-        return response()->json($goalMilestone);
+        return new GoalMilestoneResource($goalMilestone);
     }
 
 

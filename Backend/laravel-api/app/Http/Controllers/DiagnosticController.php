@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DiagnosticResource;
 use App\Models\Diagnostic;
 use App\Http\Requests\StoreDiagnosticRequest;
 use App\Http\Requests\UpdateDiagnosticRequest;
@@ -15,8 +16,7 @@ class DiagnosticController extends Controller
      */
     public function index()
     {
-        $diagnostics = Diagnostic::all();
-        return response()->json($diagnostics);
+        return DiagnosticResource::collection(Diagnostic::all());
     }
 
 
@@ -42,7 +42,7 @@ class DiagnosticController extends Controller
     {
         $diagnostic->load('symptoms');
 
-        return response()->json($diagnostic);
+        return new DiagnosticController($diagnostic);
     }
 
 
