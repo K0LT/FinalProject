@@ -51,4 +51,12 @@ class GoalMilestonePolicy
         }
         return false;
     }
+    public function delete(User $user, GoalMilestone $goalMilestone): bool
+    {
+        if($user->role->name === "Admin"){
+            return true;
+        }
+        return false;
+    }
 }
+
