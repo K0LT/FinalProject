@@ -11,7 +11,7 @@ import { apiClient } from '@/lib/api';
  * Get current patient's profile information
  */
 export const getUserPatient = async () => {
-    const response = await apiClient.get('/user/patient');
+    const response = await apiClient.get('api/user/patient');
     return response.data;
 };
 
@@ -19,7 +19,7 @@ export const getUserPatient = async () => {
  * Get current patient's appointments
  */
 export const getUserAppointments = async () => {
-    const response = await apiClient.get('/user/appointments');
+    const response = await apiClient.get('api/user/appointments');
     return response.data;
 };
 
@@ -28,7 +28,7 @@ export const getUserAppointments = async () => {
  * @param {Object} appointmentData - { appointment_date_time, notes }
  */
 export const requestAppointment = async (appointmentData) => {
-    const response = await apiClient.post('/user/appointments/create', appointmentData);
+    const response = await apiClient.post('api/user/appointments/create', appointmentData);
     return response.data;
 };
 
@@ -36,7 +36,7 @@ export const requestAppointment = async (appointmentData) => {
  * Get current patient's allergies
  */
 export const getUserAllergies = async () => {
-    const response = await apiClient.get('/user/allergies');
+    const response = await apiClient.get('api/user/allergies');
     return response.data;
 };
 
@@ -45,7 +45,7 @@ export const getUserAllergies = async () => {
  * @param {Object} allergyData - { allergy_id }
  */
 export const addUserAllergy = async (allergyData) => {
-    const response = await apiClient.post('/user/allergies/add', allergyData);
+    const response = await apiClient.post('api/user/allergies/add', allergyData);
     return response.data;
 };
 
@@ -54,7 +54,7 @@ export const addUserAllergy = async (allergyData) => {
  * @param {Object} allergyData - { allergy_id }
  */
 export const removeUserAllergy = async (allergyData) => {
-    const response = await apiClient.post('/user/allergies/remove', allergyData);
+    const response = await apiClient.post('api/user/allergies/remove', allergyData);
     return response.data;
 };
 
@@ -62,7 +62,7 @@ export const removeUserAllergy = async (allergyData) => {
  * Get current patient's conditions
  */
 export const getUserConditions = async () => {
-    const response = await apiClient.get('/user/conditions');
+    const response = await apiClient.get('api/user/conditions');
     return response.data;
 };
 
@@ -70,7 +70,7 @@ export const getUserConditions = async () => {
  * Get current patient's daily nutrition records
  */
 export const getUserDailyNutritions = async () => {
-    const response = await apiClient.get('/user/daily_nutritions');
+    const response = await apiClient.get('api/user/daily_nutritions');
     return response.data;
 };
 
@@ -78,7 +78,7 @@ export const getUserDailyNutritions = async () => {
  * Get current patient's diagnostics (includes symptoms)
  */
 export const getUserDiagnostics = async () => {
-    const response = await apiClient.get('/user/diagnostics');
+    const response = await apiClient.get('api/user/diagnostics');
     return response.data;
 };
 
@@ -86,7 +86,7 @@ export const getUserDiagnostics = async () => {
  * Get current patient's exercises
  */
 export const getUserExercises = async () => {
-    const response = await apiClient.get('/user/exercises');
+    const response = await apiClient.get('api/user/exercises');
     return response.data;
 };
 
@@ -95,7 +95,7 @@ export const getUserExercises = async () => {
  * @param {Object} exerciseData - { exercise_id, prescribed_date, frequency, notes }
  */
 export const addUserExercise = async (exerciseData) => {
-    const response = await apiClient.post('/user/exercises/add', exerciseData);
+    const response = await apiClient.post('api/user/exercises/add', exerciseData);
     return response.data;
 };
 
@@ -104,7 +104,7 @@ export const addUserExercise = async (exerciseData) => {
  * @param {Object} exerciseData - { exercise_id }
  */
 export const removeUserExercise = async (exerciseData) => {
-    const response = await apiClient.post('/user/exercises/remove', exerciseData);
+    const response = await apiClient.post('api/user/exercises/remove', exerciseData);
     return response.data;
 };
 
@@ -112,7 +112,7 @@ export const removeUserExercise = async (exerciseData) => {
  * Get current patient's treatment goals (includes milestones)
  */
 export const getUserTreatmentGoals = async () => {
-    const response = await apiClient.get('/user/treatment_goals');
+    const response = await apiClient.get('api/user/treatment_goals');
     return response.data;
 };
 
@@ -120,7 +120,7 @@ export const getUserTreatmentGoals = async () => {
  * Get current patient's nutritional goals
  */
 export const getUserNutritionalGoals = async () => {
-    const response = await apiClient.get('/user/nutritional_goals');
+    const response = await apiClient.get('api/user/nutritional_goals');
     return response.data;
 };
 
@@ -128,7 +128,7 @@ export const getUserNutritionalGoals = async () => {
  * Get current patient's treatments
  */
 export const getUserTreatments = async () => {
-    const response = await apiClient.get('/user/treatments');
+    const response = await apiClient.get('api/user/treatments');
     return response.data;
 };
 
@@ -136,6 +136,6 @@ export const getUserTreatments = async () => {
  * Get current patient's weight tracking records
  */
 export const getUserWeightTrackings = async () => {
-    const response = await apiClient.get('/user/weight_trackings');
+    const response = await apiClient.get('api/user/weight_trackings');
     return response.data;
 };
