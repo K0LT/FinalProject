@@ -108,9 +108,7 @@ class TreatmentGoalController extends Controller
             ], 404);
         }
 
-        $patient = Patient::with([
-            'treatmentGoals.goalMilestones'
-        ])->find($patient);
+        $patient->load('treatmentGoals.goalMilestones');
 
         return response()->json([
             'patient' => $patient
