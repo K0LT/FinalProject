@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SymptomResource;
 use App\Models\Diagnostic;
 use App\Models\Symptom;
 use App\Http\Requests\StoreSymptomRequest;
@@ -15,8 +16,7 @@ class SymptomController extends Controller
      */
     public function index()
     {
-        $symptoms = Symptom::all();
-        return response()->json($symptoms);
+        return SymptomResource::collection(Symptom::all());
     }
 
 
@@ -36,7 +36,7 @@ class SymptomController extends Controller
      */
     public function show(Symptom $symptom)
     {
-        return response()->json($symptom);
+        return new SymptomResource($symptom);
     }
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProgressNoteResource;
 use App\Models\ProgressNote;
 use App\Http\Requests\StoreProgressNoteRequest;
 use App\Http\Requests\UpdateProgressNoteRequest;
@@ -14,7 +15,7 @@ class ProgressNoteController extends Controller
     public function index()
     {
         $progressNotes = ProgressNote::all();
-        return response()->json($progressNotes);
+        return progressNoteResource::collection(ProgressNote::all());
     }
 
 
@@ -33,7 +34,7 @@ class ProgressNoteController extends Controller
      */
     public function show(ProgressNote $progressNote)
     {
-        return response()->json($progressNote);
+        return new ProgressNoteResource($progressNote);
     }
 
 

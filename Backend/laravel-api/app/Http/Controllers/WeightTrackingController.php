@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TreatmentResource;
+use App\Http\Resources\WeightTrackingResource;
 use App\Models\Patient;
 use App\Models\WeightTracking;
 use App\Http\Requests\StoreWeightTrackingRequest;
@@ -15,8 +17,7 @@ class WeightTrackingController extends Controller
      */
     public function index()
     {
-        $weightTrackings = WeightTracking::all();
-        return response()->json($weightTrackings);
+        return WeightTrackingResource::collection(WeightTracking::all());
     }
 
 
@@ -35,7 +36,7 @@ class WeightTrackingController extends Controller
      */
     public function show(WeightTracking $weightTracking)
     {
-        return response()->json($weightTracking);
+        return new WeightTrackingResource($weightTracking);
     }
 
 

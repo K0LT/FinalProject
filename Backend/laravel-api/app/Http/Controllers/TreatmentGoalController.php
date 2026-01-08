@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TreatmentGoalResource;
 use App\Models\Patient;
 use App\Models\TreatmentGoal;
 use App\Http\Requests\StoreTreatment_GoalRequest;
@@ -16,8 +17,7 @@ class TreatmentGoalController extends Controller
      */
     public function index()
     {
-        $treatmentgoals = TreatmentGoal::all();
-        return response()->json($treatmentgoals);
+        return TreatmentGoalResource::collection(TreatmentGoal::all());
     }
 
 
@@ -38,7 +38,6 @@ class TreatmentGoalController extends Controller
     {
         $treatment_goal -> load([
             'goalMilestones',
-
         ]);
         return response()->json($treatment_goal);
 

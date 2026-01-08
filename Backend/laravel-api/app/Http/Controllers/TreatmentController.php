@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TreatmentResource;
 use App\Models\Treatment;
 use App\Models\Patient;
 use App\Http\Requests\StoreTreatmentRequest;
@@ -15,8 +16,7 @@ class TreatmentController extends Controller
      */
     public function index()
     {
-        $treatments = Treatment::all();
-        return response()->json($treatments);
+        return TreatmentResource::collection(Treatment::all());
     }
 
 
@@ -36,7 +36,7 @@ class TreatmentController extends Controller
      */
     public function show(Treatment $treatment)
     {
-        return response()->json($treatment);
+        return new TreatmentResource($treatment);
     }
 
 
