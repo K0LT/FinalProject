@@ -1,24 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
-import { logout } from "@/lib/authClient";
+import { useAuth } from "@/context/AuthContext";
 import QiFlowBrand from "@/components/ui/QiFlowBrand";
 
 export default function Navbar() {
-    const [authenticated, setAuthenticated] = useState(false);
-
-    useEffect(() => {
-        const token = document.cookie
-            .split("; ")
-            .find((row) => row.startsWith("auth-token="));
-
-        setAuthenticated(!!token);
-    }, []);
+    const { isAuthenticated, logout } = useAuth();
 
     const handleLogout = async () => {
         await logout();
-        setAuthenticated(false);
         window.location.href = "/login";
     };
 
@@ -28,7 +19,7 @@ export default function Navbar() {
                 <div className="flex items-center justify-between">
                    <QiFlowBrand />
                     <div className="flex items-center gap-3">
-                        {!authenticated && (
+                        {!isAuthenticated && (
                             <>
                                 <Link
                                     href="/login"
@@ -46,7 +37,7 @@ export default function Navbar() {
                             </>
                         )}
 
-                        {authenticated && (
+                        {isAuthenticated && (
                             <>
                                 <Link
                                     href="/dashboard"

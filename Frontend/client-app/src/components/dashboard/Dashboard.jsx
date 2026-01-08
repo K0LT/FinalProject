@@ -50,12 +50,12 @@ export default function Dashboard() {
                 diagnosticsRes,
                 exercisesRes
             ] = await Promise.all([
-                get('/api/patients'),
-                get('/api/appointments'),
-                get('/api/treatment_goals'),
-                get('/api/progress_notes'),
-                get('/api/diagnostics'),
-                get('/api/exercises')
+                get('/patients'),
+                get('/appointments'),
+                get('/treatment_goals'),
+                get('/progress_notes'),
+                get('/diagnostics'),
+                get('/exercises')
             ]);
 
 
