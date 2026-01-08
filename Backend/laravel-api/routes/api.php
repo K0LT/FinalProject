@@ -489,7 +489,7 @@ Route::get('soft_delete/roles/{role}', [\App\Http\Controllers\RoleController::cl
         ->middleware('can:isAdmin');
     Route::post('patients/{patient}/allergies/add', [\App\Http\Controllers\AllergyController::class, 'adminAddAllergyToPatient'])
         ->middleware('can:isAdmin');
-    Route::post('patients/{patient}/allergies/remove', [\App\Http\Controllers\AllergyController::class, 'adminRemoveAllergyFromPatient'])
+    Route::delete('patients/{patient}/allergies/remove', [\App\Http\Controllers\AllergyController::class, 'adminRemoveAllergyFromPatient'])
         ->middleware('can:isAdmin');
 
 // APPOINTMENTS + PROGRESS NOTES
@@ -519,7 +519,7 @@ Route::get('soft_delete/roles/{role}', [\App\Http\Controllers\RoleController::cl
         ->middleware('can:isAdmin');
     Route::post('diagnostics/{diagnostic}/symptoms/add', [\App\Http\Controllers\SymptomController::class, 'adminAddSymptomToDiagnostic'])
         ->middleware('can:isAdmin');
-    Route::post('diagnostics/{diagnostic}/symptoms/remove', [\App\Http\Controllers\SymptomController::class, 'adminRemoveSymptomFromDiagnostic'])
+    Route::delete('diagnostics/{diagnostic}/symptoms/remove', [\App\Http\Controllers\SymptomController::class, 'adminRemoveSymptomFromDiagnostic'])
         ->middleware('can:isAdmin');
 
 // EXERCISES
@@ -529,7 +529,7 @@ Route::get('soft_delete/roles/{role}', [\App\Http\Controllers\RoleController::cl
         ->middleware('can:isAdmin');
     Route::post('patients/{patient}/exercises/add', [\App\Http\Controllers\ExerciseController::class, 'adminAddExerciseToPatient'])
         ->middleware('can:isAdmin');
-    Route::post('patients/{patient}/exercises/remove', [\App\Http\Controllers\ExerciseController::class, 'adminRemoveExerciseFromPatient'])
+    Route::delete('patients/{patient}/exercises/remove', [\App\Http\Controllers\ExerciseController::class, 'adminRemoveExerciseFromPatient'])
         ->middleware('can:isAdmin');
 
 // TREATMENT GOALS + GOAL MILESTONES
