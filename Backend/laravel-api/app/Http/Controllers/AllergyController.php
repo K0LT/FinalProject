@@ -27,7 +27,9 @@ class AllergyController extends Controller
         $data = $request->validated();
         $allergy = Allergy::create($data);
 
-        return response()->json($allergy, 201);
+        return (new AllergyResource($allergy))
+            ->response()
+            ->setStatusCode(201);
     }
 
     /**
@@ -47,7 +49,7 @@ class AllergyController extends Controller
     {
         $data = $request->validated();
         $allergy -> update($data);
-        return response()->json($allergy, 200);
+        return new AllergyResource($allergy);
     }
 
     /**
@@ -76,7 +78,7 @@ class AllergyController extends Controller
     {
         $allergy = Allergy::onlyTrashed()->findOrFail($id);
         $allergy->restore();
-        return response()->json($allergy, 200);
+        return new AllergyResource($allergy);
     }
 
     /**
@@ -107,9 +109,8 @@ class AllergyController extends Controller
 
         $allergies=$patient->allergies;
 
-        return response()->json([
-            'allergies' => $allergies
-        ]);
+
+        return AllergyResource::collection($allergies);
     }
 
 
