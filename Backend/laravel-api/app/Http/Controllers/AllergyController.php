@@ -105,7 +105,7 @@ class AllergyController extends Controller
         }
 
         return response()->json([
-            'patient_id' => $patient->id,
+            'patient' => $patient,
             'allergies' => $patient->allergies
         ]);
     }
