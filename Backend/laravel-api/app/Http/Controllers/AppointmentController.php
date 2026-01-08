@@ -17,8 +17,8 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $appointments = Appointment::all();
-        return response()->json($appointments);
+
+        return AppointmentResource::collection(Appointment::all());
     }
 
 
@@ -40,7 +40,7 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        return response()->json($appointment);
+        return new AppointmentResource($appointment);
     }
 
 

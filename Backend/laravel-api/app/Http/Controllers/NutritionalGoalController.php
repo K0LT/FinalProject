@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NutritionalGoalResource;
 use App\Models\NutritionalGoal;
 use App\Http\Requests\StoreNutritionalGoalRequest;
 use App\Http\Requests\UpdateNutritionalGoalRequest;
@@ -15,8 +16,7 @@ class NutritionalGoalController extends Controller
      */
     public function index()
     {
-        $nutritionalGoals = NutritionalGoal::all();
-        return response()->json($nutritionalGoals);
+        return NutritionalGoalResource::collection(NutritionalGoal::all());
     }
 
 
@@ -35,7 +35,7 @@ class NutritionalGoalController extends Controller
      */
     public function show(NutritionalGoal $nutritionalGoal)
     {
-        return response()->json($nutritionalGoal);
+        return new NutritionalGoalResource($nutritionalGoal);
     }
 
 

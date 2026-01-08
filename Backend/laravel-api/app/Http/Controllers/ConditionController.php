@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ConditionResource;
 use App\Models\Condition;
 use App\Http\Requests\StoreConditionRequest;
 use App\Http\Requests\UpdateConditionRequest;
@@ -16,8 +17,7 @@ class ConditionController extends Controller
      */
     public function index()
     {
-        $conditions = Condition::all();
-        return response()->json($conditions);
+        return ConditionResource::collection(Condition::all());
     }
 
 
@@ -36,7 +36,7 @@ class ConditionController extends Controller
      */
     public function show(Condition $condition)
     {
-        return response()->json($condition);
+        return new ConditionResource($condition);
     }
 
 
