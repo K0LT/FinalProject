@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,19 +20,30 @@ class AuthController extends Controller
             'name'                  => ['required', 'string', 'max:255'],
             'surname'               => ['nullable', 'string', 'max:255'],
             'email'                 => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password'              => ['required', 'string', 'min:8', 'confirmed'], // password_confirmation
+            'password'              => ['required', 'string', 'min:8', 'confirmed'],
+            'phone_number'          => ['nullable', 'string', 'max:20'],
+            'gender'                => ['nullable', 'string', 'max:50'],
+            'client_since'          => ['nullable', 'date'],
         ]);
 
-        // ⚠️ Escolhe o role "por defeito" para novos utilizadores
-        // vê na tabela "roles" qual o ID que queres (por ex. 3 = Patient)
+        // Role "por defeito" para novos utilizadores (3 = Patient)
         $defaultRoleId = 3;
 
         $user = User::create([
             'role_id'  => $defaultRoleId,
             'name'     => $data['name'],
-            'surname'  => $data['surname'] ?? '', // como a coluna NÃO é nullable
+            'surname'  => $data['surname'] ?? '',
             'email'    => $data['email'],
             'password' => Hash::make($data['password']),
+        ]);
+
+        // Create associated Patient record
+        $patient = Patient::create([
+            'user_id'      => $user->id,
+            'phone_number' => $data['phone_number'] ?? null,
+            'address'      => '',
+            'gender'       => $data['gender'] ?? null,
+            'client_since' => $data['client_since'] ?? now()->toDateString(),
         ]);
 
         Auth::login($user);
@@ -39,7 +51,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Registo efectuado com sucesso.',
-            'user'    => $user,
+            'user'    => $user->load('patient'),
         ], 201);
     }
 

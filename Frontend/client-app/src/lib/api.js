@@ -76,7 +76,7 @@ class ApiClient {
                 if (error.response?.status === 419 && !originalRequest._retry) {
                     originalRequest._retry = true;
 
-                    console.log('🔄 CSRF token mismatch detected, refreshing token...');
+                    console.log('CSRF token mismatch detected, refreshing token...');
 
                     try {
                         // Refresh CSRF token
