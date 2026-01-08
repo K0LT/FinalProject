@@ -79,8 +79,6 @@ class PatientController extends Controller
     {
         $user = auth('sanctum')->user();
 
-
-
         $patient = $user->patient;
 
         if (!$patient) {
@@ -89,10 +87,10 @@ class PatientController extends Controller
             ], 404);
         }
 
+        $patient->load('user');
 
         return response()->json([
-            'user' => $user,
-            'patient' => $patient
+            'patient' => $patient,
         ], 200);
     }
 }

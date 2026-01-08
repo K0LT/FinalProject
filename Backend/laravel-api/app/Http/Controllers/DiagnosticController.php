@@ -114,11 +114,16 @@ class DiagnosticController extends Controller
             ], 404);
         }
 
-        $patient->load('diagnostics.symptoms');
+        $diagnostics = $patient->diagnostics;
+
+        $symptoms = $patient->diagnostics
+            ->pluck('symptoms')
+            ->flatten()
+            ->values();
 
 
         return response()->json([
-            'patient' => $patient
+            'diagnostics' => $diagnostics,
         ], 200);
     }
 

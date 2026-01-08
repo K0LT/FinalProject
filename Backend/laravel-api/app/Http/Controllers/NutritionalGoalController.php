@@ -106,10 +106,11 @@ class NutritionalGoalController extends Controller
                 'message' => 'Paciente não encontrado'
             ], 404);
         }
-        $patient->load('nutritionalGoals');
+        $nutritionalGoals = $patient->nutritionalGoals;
+        ;
 
         return response()->json([
-            'patient' => $patient,
+            'nutritionalGoals' => $nutritionalGoals,
         ], 200);
     }
 

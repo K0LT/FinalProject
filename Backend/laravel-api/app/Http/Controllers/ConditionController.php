@@ -100,10 +100,10 @@ class ConditionController extends Controller
             ], 404);
         }
 
-        $patient->load('conditions');
+        $conditions = $patient->conditions;
 
         return response()->json([
-            'patient' => $patient
+            'conditions' => $conditions
         ], 200);
     }
 

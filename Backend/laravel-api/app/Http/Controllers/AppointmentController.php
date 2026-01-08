@@ -113,8 +113,7 @@ class AppointmentController extends Controller
             ->values();
 
         return response()->json([
-            'appointments' => $appointments,
-            'progressNotes' => $progressNotes
+            'appointments' => $appointments
         ], 200);
     }
 

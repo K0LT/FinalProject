@@ -110,8 +110,15 @@ class TreatmentGoalController extends Controller
 
         $patient->load('treatmentGoals.goalMilestones');
 
+        $treatmentGoals = $patient->treatmentGoals;
+
+        $goalMilestones = $patient->appointments
+            ->pluck('goalMilestones')
+            ->flatten()
+            ->values();
+
         return response()->json([
-            'patient' => $patient
+            'treatmentGoals' => $treatmentGoals
         ], 200);
     }
 

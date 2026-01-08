@@ -101,9 +101,10 @@ class ExerciseController extends Controller
             ], 404);
         }
 
-        $patient->load('exercises');
+        $exercises = $patient->exercises;
+
         return response()->json([
-            'patient_id' => $patient
+            'exercises' => $exercises
         ]);
     }
 

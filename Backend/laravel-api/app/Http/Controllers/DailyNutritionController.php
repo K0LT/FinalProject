@@ -99,10 +99,10 @@ class DailyNutritionController extends Controller
             ], 404);
         }
 
-        $patient->load('dailyNutritions');
+        $dailyNutritions = $patient->dailyNutritions;
 
         return response()->json([
-            'patient' => $patient
+            'dailyNutritions' => $dailyNutritions
         ], 200);
     }
 

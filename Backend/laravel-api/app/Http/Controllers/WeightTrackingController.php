@@ -102,10 +102,10 @@ class WeightTrackingController extends Controller
             ], 404);
         }
 
-        $patient->load('weightTrackings');
 
+        $weightTrackings = $patient->weightTrackings;
         return response()->json([
-            'patient' => $patient
+            'weightTrackings' => $weightTrackings
         ], 200);
     }
 
