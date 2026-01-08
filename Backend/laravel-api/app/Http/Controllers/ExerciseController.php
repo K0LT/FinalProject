@@ -92,22 +92,17 @@ class ExerciseController extends Controller
     {
         $user = auth('sanctum')->user();
 
-        if (!$user) {
-            return response()->json([
-                'message' => 'Não está autenticado'
-            ], 401);
-        }
 
         $patient = $user->patient;
 
         if (!$patient) {
             return response()->json([
-                'message' => 'Paciente não encontrado' //Caso o admin tente entrar
+                'message' => 'Paciente não encontrado'
             ], 404);
         }
 
         return response()->json([
-            'patient_id' => $patient->id,
+            'patient_id' => $patient,
             'exercises' => $patient->exercises
         ]);
     }

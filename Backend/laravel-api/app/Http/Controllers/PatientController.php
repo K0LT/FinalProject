@@ -74,39 +74,18 @@ class PatientController extends Controller
         return response()->json($patient, 200);
     }
 
-    /**
-     * Restore a soft deleted patien*
-     * public function get_relation(Patient $patient, $relation){
-     * $relationships = ['diagnostics', 'treatments', 'progress_notes','treatmentGoals',
-     * 'exercises', 'weightTrackings', 'nutritionGoals', 'dailyNutritions', 'allergies', 'conditions'];
-     *
-     * foreach($relationships as $relationship){
-     * if($relationship === $relation){
-     * return response()->json($patient->$relation);
-     * }
-     * }
-     *
-     * return response()->json("Error", 404);
-     * }
-     *
-     */
-
 
     public function userPatient(Request $request)
     {
         $user = auth('sanctum')->user();
 
-        if (!$user) {
-            return response()->json([
-                'message' => 'Unauthenticated'
-            ], 401);
-        }
+
 
         $patient = $user->patient;
 
         if (!$patient) {
             return response()->json([
-                'message' => 'Patient not found for this user'
+                'message' => 'Paciente não encontrado'
             ], 404);
         }
 

@@ -130,7 +130,4 @@ class SymptomController extends Controller
         ], 200);
     }
 
-
-
-
 }

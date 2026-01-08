@@ -92,17 +92,12 @@ class TreatmentController extends Controller
     {
         $user = auth('sanctum')->user();
 
-        if (!$user) {
-            return response()->json([
-                'message' => 'Unauthenticated'
-            ], 401);
-        }
 
         $patient = $user->patient;
 
         if (!$patient) {
             return response()->json([
-                'message' => 'Patient not found for this user'
+                'message' => 'Paciente não encontrado'
             ], 404);
         }
 

@@ -96,12 +96,6 @@ class AllergyController extends Controller
     {
         $user = auth('sanctum')->user();
 
-        if (!$user) {
-            return response()->json([
-                'message' => 'Não está autenticado'
-            ], 401);
-        }
-
         $patient = $user->patient;
 
         if (!$patient) {
