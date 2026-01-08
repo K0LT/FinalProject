@@ -13,7 +13,10 @@ class ExercisePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        if($user->role->name === "Admin"){
+            return true;
+        }
+        return false;
     }
 
     /**

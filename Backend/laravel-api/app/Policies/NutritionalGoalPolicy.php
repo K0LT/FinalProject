@@ -24,7 +24,7 @@ class NutritionalGoalPolicy
      */
     public function view(User $user, NutritionalGoal $nutritionalGoal): bool
     {
-        if($user->role->name === "Admin"){
+        if($user->role->name === "Admin" || $user->patient->id === $nutritionalGoal->patient_id){
             return true;
         }
         return false;

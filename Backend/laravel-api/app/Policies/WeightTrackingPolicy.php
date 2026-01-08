@@ -24,7 +24,7 @@ class WeightTrackingPolicy
      */
     public function view(User $user, WeightTracking $weightTracking): bool
     {
-        if($user->role->name === "Admin"){
+        if($user->role->name === "Admin" || $user->patient->id === $weightTracking->patient_id){
             return true;
         }
         return false;
@@ -46,7 +46,7 @@ class WeightTrackingPolicy
      */
     public function update(User $user, WeightTracking $weightTracking): bool
     {
-        if($user->role->name === "Admin"){
+        if($user->role->name === "Admin" || $user->patient->id === $weightTracking->patient_id){
             return true;
         }
         return false;
