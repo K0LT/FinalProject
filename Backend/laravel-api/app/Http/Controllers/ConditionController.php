@@ -17,9 +17,10 @@ class ConditionController extends Controller
      */
     public function index()
     {
-        return ConditionResource::collection(Condition::all());
+        return ConditionResource::collection(
+            Condition::orderBy('name', 'asc')->get()
+        );
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -28,7 +29,7 @@ class ConditionController extends Controller
     {
         $data = $request->validated();
         $condition = Condition::create($data);
-        return response()->json($condition);
+        return new ConditionResource($condition);
     }
 
     /**
@@ -39,7 +40,6 @@ class ConditionController extends Controller
         return new ConditionResource($condition);
     }
 
-
     /**
      * Update the specified resource in storage.
      */
@@ -47,7 +47,41 @@ class ConditionController extends Controller
     {
         $data = $request->validated();
         $condition -> update($data);
-        return response()->json($condition);
+        return new ConditionResource($condition);
+    }
+
+    /**
+     * User view: User conditions.
+     */
+
+    public function userConditions(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado'
+            ], 404);
+        }
+
+        $conditions = $patient->conditions;
+
+        return response()->json([
+            'conditions' => $conditions
+        ], 200);
+    }
+
+    /**
+     * Admin view: User conditions.
+     */
+    public function patientConditions(Patient $patient)
+    {
+        $patient->load('conditions');
+
+        return response()->json($patient, 200);
     }
 
     /**
@@ -56,7 +90,9 @@ class ConditionController extends Controller
     public function destroy(Condition $condition)
     {
         $condition->delete();
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Eliminado'
+        ], 204);
     }
 
     /**
@@ -87,32 +123,9 @@ class ConditionController extends Controller
         return response()->json($condition, 200);
     }
 
-    public function userConditions(Request $request)
-    {
-        $user = auth('sanctum')->user();
-
-
-        $patient = $user->patient;
-
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Paciente não encontrado'
-            ], 404);
-        }
-
-        $conditions = $patient->conditions;
-
-        return response()->json([
-            'conditions' => $conditions
-        ], 200);
-    }
-
-    public function patientConditions(Patient $patient)
-    {
-        $patient->load('conditions');
-
-        return response()->json($patient, 200);
-    }
+    /**
+     * Admin view: Restore a soft deleted condition
+     */
 
     public function patientConditionsSoftDelete(Patient $patient)
     {

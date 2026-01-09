@@ -16,7 +16,9 @@ class AllergyController extends Controller
      */
     public function index()
     {
-        return AllergyResource::collection(Allergy::all());
+        return AllergyResource::collection(
+            Allergy::orderBy('allergen', 'asc')->get()
+        );
     }
 
     /**
@@ -41,7 +43,6 @@ class AllergyController extends Controller
 
     }
 
-
     /**
      * Update the specified resource in storage.
      */
@@ -53,12 +54,55 @@ class AllergyController extends Controller
     }
 
     /**
-     * SoftDelete
+     *User Allergies
+     */
+    public function userAllergies(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado' //Caso o admin tente entrar
+            ], 404);
+        }
+
+        $allergies = $patient->allergies()
+            ->orderBy('allergen', 'asc')
+            ->get();
+
+        return AllergyResource::collection($allergies);
+    }
+
+    /**
+     *Admin View for Patient Allergies
+     */
+    public function patientAllergies(Patient $patient)
+    {
+        $allergies = $patient->allergies()
+            ->orderBy('allergen', 'asc')
+            ->get();
+
+        return AllergyResource::collection($allergies);
+    }
+
+
+
+    /**
+     *Soft Deletes Part:
+     */
+
+
+    /**
+     * Delete
      */
     public function destroy(Allergy $allergy)
     {
         $allergy->delete();
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Eliminado'
+        ], 204);
     }
 
 
@@ -67,7 +111,9 @@ class AllergyController extends Controller
      */
     public function indexSoftDelete()
     {
-        return response()->json(Allergy::onlyTrashed()->get(), 200);
+        return AllergyResource::collection(
+            Allergy::onlyTrashed()->orderBy('allergen', 'asc')->get()
+        );
     }
 
 
@@ -87,39 +133,15 @@ class AllergyController extends Controller
 
     public function showSoftDelete($id){
         $allergy = Allergy::onlyTrashed()->findOrFail($id);
-        return response()->json($allergy, 200);
+        return new AllergyResource(
+            Allergy::onlyTrashed()->findOrFail($id)
+        );
     }
+
 
     /**
-    *User Allergies
-    */
-
-    //Dentro do Request vem automaticamente o user, o front-end não precisa de enviar nada.
-    public function userAllergies(Request $request)
-    {
-        $user = auth('sanctum')->user();
-
-        $patient = $user->patient;
-
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Paciente não encontrado' //Caso o admin tente entrar
-            ], 404);
-        }
-
-        $allergies=$patient->allergies;
-
-
-        return AllergyResource::collection($allergies);
-    }
-
-
-    public function patientAllergies(Patient $patient)
-    {
-        $patient->load('allergies');
-        return response()->json($patient, 200);
-    }
-
+     * Show SoftDeleted of a Patient
+     */
 
     public function patientAllergiesSoftDelete(Patient $patient)
     {
@@ -127,11 +149,14 @@ class AllergyController extends Controller
             ->onlyTrashed()
             ->get();
 
-        return response()->json([
-            'patient' => $patient,
-            'allergies' => $allergies
-        ], 200);
+        return AllergyResource::collection($allergies);
     }
+
+
+    /**
+     * Add and remove allergies from a patient
+     */
+
 
 
     public function adminAddAllergyToPatient(Request $request, Patient $patient)
@@ -151,7 +176,7 @@ class AllergyController extends Controller
         $patient->allergies()->attach($allergyId);
 
         return response()->json([
-            'message' => 'Added'
+            'message' => 'Adicionado'
         ], 201);
     }
 
@@ -173,7 +198,7 @@ class AllergyController extends Controller
         $patient->allergies()->detach($allergyId);
 
         return response()->json([
-            'message' => 'Removed'
+            'message' => 'Removido'
         ], 200);
     }
 
@@ -186,8 +211,16 @@ class AllergyController extends Controller
 
         $user = auth('sanctum')->user();
 
+
+
         $patient = $user->patient;
         $allergyId = $request->allergy_id;
+
+        if (! $patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado'
+            ], 404);
+        }
 
         if ($patient->allergies()->where('allergies.id', $allergyId)->exists()) {
             return response()->json([
@@ -198,7 +231,7 @@ class AllergyController extends Controller
         $patient->allergies()->attach($allergyId);
 
         return response()->json([
-            'message' => 'Added'
+            'message' => 'Adicionado'
         ], 201);
     }
 
@@ -214,6 +247,12 @@ class AllergyController extends Controller
         $patient = $user->patient;
         $allergyId = $request->allergy_id;
 
+        if (! $patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado'
+            ], 404);
+        }
+
         if (! $patient->allergies()->where('allergies.id', $allergyId)->exists()) {
             return response()->json([
                 'message' => 'Não tem esta alergia.'
@@ -223,7 +262,7 @@ class AllergyController extends Controller
         $patient->allergies()->detach($allergyId);
 
         return response()->json([
-            'message' => 'Removed'
+            'message' => 'Removido'
         ], 200);
     }
 

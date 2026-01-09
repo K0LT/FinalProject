@@ -18,9 +18,9 @@ class AppointmentController extends Controller
     public function index()
     {
 
-        return AppointmentResource::collection(Appointment::all());
-    }
+        return Appointment::orderBy('appointment_date_time', 'desc')->get();
 
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -32,7 +32,7 @@ class AppointmentController extends Controller
         $appointment = Appointment::create($data);
         $appointment->patient->updateNextAppointment();
 
-        return response()->json($appointment);
+        return new AppointmentResource($appointment);
     }
 
     /**
@@ -43,7 +43,6 @@ class AppointmentController extends Controller
         return new AppointmentResource($appointment);
     }
 
-
     /**
      * Update the specified resource in storage.
      */
@@ -52,16 +51,87 @@ class AppointmentController extends Controller
         $data = $request->validated();
         $appointment -> update($data);
         $appointment->patient->updateNextAppointment();
-        return response()->json($appointment);
+        return new AppointmentResource($appointment);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * UServ view User appointments.
+     */
+
+    public function userAppointments(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado'
+            ], 404);
+        }
+
+        $appointments = $patient->appointments;
+
+        $progressNotes = $patient->appointments
+            ->pluck('progressNotes')
+            ->flatten()
+            ->values();
+
+        return response()->json([
+            'appointments' => $appointments
+        ], 200);
+    }
+
+    /**
+     * Admin view: User appointments.
+     */
+    public function patientAppointments(Patient $patient)
+    {
+        $patient->load('appointments.progressNotes');
+
+        return response()->json($patient, 200);
+    }
+
+    /**
+     * Method of user to create an appointment.
+     */
+    public function storeForPatient(Request $request)
+    {
+        $user = auth('sanctum')->user();
+        $patient = $user->patient;
+
+        $data = $request->validate([
+            'appointment_date_time' => [
+                'required',
+                'date',
+                'after_or_equal:' . now()->addDay()->format('Y-m-d')
+            ],
+            'duration' => 'nullable|integer',
+            'type' => 'nullable|string|max:255',
+            'notes' => 'nullable|string',
+        ]);
+
+        $data['patient_id'] = $patient->id;
+        $data['status'] = 'Pendente';
+
+        $appointment = Appointment::create($data);
+
+        return response()->json($appointment, 201);
+    }
+
+
+
+
+    /**
+     * SoftDelete.
      */
     public function destroy(Appointment $appointment)
     {
         $appointment->delete();
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Eliminado'
+        ], 204);
     }
 
     /**
@@ -91,38 +161,9 @@ class AppointmentController extends Controller
         return response()->json($appointment, 200);
     }
 
-
-    public function userAppointments(Request $request)
-    {
-        $user = auth('sanctum')->user();
-
-
-        $patient = $user->patient;
-
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Paciente não encontrado'
-            ], 404);
-        }
-
-        $appointments = $patient->appointments;
-
-        $progressNotes = $patient->appointments
-            ->pluck('progressNotes')
-            ->flatten()
-            ->values();
-
-        return response()->json([
-            'appointments' => $appointments
-        ], 200);
-    }
-
-    public function patientAppointments(Patient $patient)
-    {
-        $patient->load('appointments.progressNotes');
-
-        return response()->json($patient, 200);
-    }
+    /**
+     * SoftDeletesFrom a Patient
+     */
 
     public function patientAppointmentsSoftDelete(Patient $patient)
     {
@@ -135,30 +176,6 @@ class AppointmentController extends Controller
             'patient' => $patient,
             'appointments' => $appointments
         ], 200);
-    }
-
-    public function storeForPatient(Request $request)
-    {
-        $user = auth('sanctum')->user();
-        $patient = $user->patient;
-
-        $data = $request->validate([
-            'appointment_date_time' => [
-                'required',
-                'date',
-                'after_or_equal:' . now()->addDay()->format('Y-m-d')
-            ],
-            'duration' => 'nullable|integer',
-            'type' => 'nullable|string|max:255',
-            'notes' => 'nullable|string',
-        ]);
-
-        $data['patient_id'] = $patient->id;
-        $data['status'] = 'Pendente';
-
-        $appointment = Appointment::create($data);
-
-        return response()->json($appointment, 201);
     }
 
 }
