@@ -17,8 +17,6 @@ class ExercisePatientController extends Controller
         return response()->json($exercisesPatients);
     }
 
-
-
     /**
      * Store a newly created resource in storage.
      */

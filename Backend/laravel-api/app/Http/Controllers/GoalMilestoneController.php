@@ -25,8 +25,8 @@ class GoalMilestoneController extends Controller
     public function store(StoreGoalMilestoneRequest $request)
     {
         $data = $request->validated();
-        $goal_milestone = GoalMilestone::create($data);
-        return response()->json($goal_milestone );
+        $goalMilestone = GoalMilestone::create($data);
+        return new GoalMilestoneResource($goalMilestone);
     }
 
     /**
@@ -45,7 +45,7 @@ class GoalMilestoneController extends Controller
     {
         $data = $request->validated();
         $goalMilestone->update($data);
-        return response()->json($goalMilestone);
+        return new GoalMilestoneResource($goalMilestone);
     }
 
     public function destroy(GoalMilestone $goalMilestone)

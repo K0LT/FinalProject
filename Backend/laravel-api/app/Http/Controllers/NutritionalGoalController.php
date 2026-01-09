@@ -26,8 +26,8 @@ class NutritionalGoalController extends Controller
     public function store(StoreNutritionalGoalRequest $request)
     {
         $data = $request->validated();
-        $nutritional_goal = NutritionalGoal::create($data);
-        return response()->json($nutritional_goal);
+        $nutritionalGoal = NutritionalGoal::create($data);
+        return new NutritionalGoalResource($nutritionalGoal);
     }
 
     /**
@@ -47,7 +47,7 @@ class NutritionalGoalController extends Controller
     {
         $data = $request->validated();
         $nutritionalGoal->update($data);
-        return response()->json($nutritionalGoal);
+        return new NutritionalGoalResource($nutritionalGoal);
     }
 
     /**
@@ -62,6 +62,37 @@ class NutritionalGoalController extends Controller
         return response()->json([
             'message' => 'Eliminado'
         ], 204);
+    }
+
+    /**
+     * User view: User Nutritional Goals
+     */
+    public function userNutritionalGoals(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado'
+            ], 404);
+        }
+        $nutritionalGoals = $patient->nutritionalGoals;
+        ;
+
+        return NutritionalGoalResource::collection($nutritionalGoals);
+    }
+
+    /**
+     * Admin view: User Nutritional Goals
+     */
+    public function patientNutritionalGoals(Patient $patient)
+    {
+        $nutritionalGoals = $patient->nutritionalGoals;
+
+        return NutritionalGoalResource::collection($nutritionalGoals);
     }
 
     /**
@@ -96,33 +127,6 @@ class NutritionalGoalController extends Controller
     /**
      * Nutritional goals of the authenticated user's patient
      */
-    public function userNutritionalGoals(Request $request)
-    {
-        $user = auth('sanctum')->user();
-
-
-        $patient = $user->patient;
-
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Paciente não encontrado'
-            ], 404);
-        }
-        $nutritionalGoals = $patient->nutritionalGoals;
-        ;
-
-        return response()->json([
-            'nutritionalGoals' => $nutritionalGoals,
-        ], 200);
-    }
-
-    public function patientNutritionalGoals(Patient $patient)
-    {
-        $patient->load('nutritionalGoals');
-
-        return response()->json($patient, 200);
-    }
-
     public function patientNutritionalGoalsSoftDelete(Patient $patient)
     {
         $nutritionalGoals = $patient->nutritionalGoals()
