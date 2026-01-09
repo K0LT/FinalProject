@@ -16,7 +16,9 @@ class ExerciseController extends Controller
      */
     public function index()
     {
-        return ExerciseResource::collection(Exercise::all());
+        return ExerciseResource::collection(
+            Exercise::orderBy('name', 'asc')->get()
+        );
     }
 
 
@@ -27,7 +29,7 @@ class ExerciseController extends Controller
     {
         $data = $request->validated();
         $exercise = Exercise::create($data);
-        return response()->json($exercise);
+        return new ExerciseResource($exercise);
     }
 
     /**
@@ -45,12 +47,9 @@ class ExerciseController extends Controller
     {
         $data = $request->validated();
         $exercise->update($data);
-        return response()->json($exercise);
+        return new ExerciseResource($exercise);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     /**
      * Soft delete an exercise
      */
@@ -61,6 +60,37 @@ class ExerciseController extends Controller
             'message' => 'Eliminado'
         ], 204);
     }
+
+    /**
+     * User view: User Exercises
+     */
+    public function userExercises(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado'
+            ], 404);
+        }
+
+        $exercises = $patient->exercises()->orderBy('name', 'asc')->get();
+
+        return ExerciseResource::collection($exercises);
+    }
+
+    /**
+     * Admin view: User Exercises
+     */
+    public function patientExercises(Patient $patient)
+    {
+        $exercises = $patient->exercises;
+
+        return ExerciseResource::collection($exercises);
+    }
+
 
     /**
      * List all soft deleted exercises
@@ -90,32 +120,7 @@ class ExerciseController extends Controller
         return response()->json($exercise, 200);
     }
 
-    public function userExercises(Request $request)
-    {
-        $user = auth('sanctum')->user();
 
-
-        $patient = $user->patient;
-
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Paciente não encontrado'
-            ], 404);
-        }
-
-        $exercises = $patient->exercises;
-
-        return response()->json([
-            'exercises' => $exercises
-        ]);
-    }
-
-    public function patientExercises(Patient $patient)
-    {
-        $patient->load('exercises');
-
-        return response()->json($patient, 200);
-    }
 
     public function patientExercisesSoftDelete(Patient $patient)
     {
