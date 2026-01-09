@@ -17,7 +17,7 @@ class TreatmentController extends Controller
     public function index()
     {
         return TreatmentResource::collection(
-            Treatment::orderBy('name', 'asc')->get()
+            Treatment::orderBy('id', 'desc')->get()
         );
     }
 

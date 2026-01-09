@@ -42,8 +42,9 @@ class DiagnosticController extends Controller
     {
         $diagnostic->load('symptoms');
 
-        return new DiagnosticController($diagnostic);
+        return response()->json(['data' => $diagnostic->load('symptoms')], 200);
     }
+
 
 
     /**

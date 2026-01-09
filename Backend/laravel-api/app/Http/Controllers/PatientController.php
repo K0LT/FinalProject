@@ -15,9 +15,15 @@ class PatientController extends Controller
      */
     public function index()
     {
-        return PatientResource::collection(
-            Patient::orderBy('name', 'asc')->get()
-        );
+        $patients = Patient::with('user')
+            ->join('users', 'patients.user_id', '=', 'users.id')
+            ->orderBy('users.name', 'asc')
+            ->select('patients.*')
+            ->get();
+
+        return response()->json([
+            'data' => $patients
+        ]);
     }
 
     /**
@@ -25,7 +31,11 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        return new PatientResource($patient);
+        $patient->load('user');
+
+        return response()->json([
+            'data' => $patient
+        ], 200);
     }
 
 

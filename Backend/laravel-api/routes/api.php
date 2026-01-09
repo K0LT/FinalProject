@@ -291,7 +291,6 @@ Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index']
 // Route::post('patients', [\App\Http\Controllers\PatientController::class, 'store'])
    // ->middleware('can:create,' . \App\Models\Patient::class);
 
-
 // SHOW
 Route::get('patients/{patient}', [\App\Http\Controllers\PatientController::class, 'show'])
     ->middleware('can:view,patient');
