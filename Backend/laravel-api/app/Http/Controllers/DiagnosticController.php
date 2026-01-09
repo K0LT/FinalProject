@@ -61,9 +61,7 @@ class DiagnosticController extends Controller
 
         return response()->json($diagnostic->load('symptoms'));
     }
-    /**
-     * Remove the specified resource from storage.
-     */
+
     /**
      * Delete a diagnostic (soft delete)
      */
@@ -74,6 +72,51 @@ class DiagnosticController extends Controller
             'message' => 'Eliminado'
         ], 204);
     }
+
+    /**
+     * user View: User Diagnostics
+     */
+    public function userDiagnostics(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado'
+            ], 404);
+        }
+
+        $diagnostics = $patient->diagnostics;
+
+        $symptoms = $patient->diagnostics
+            ->pluck('symptoms')
+            ->flatten()
+            ->values();
+
+
+        return response()->json([
+            'diagnostics' => $diagnostics,
+        ], 200);
+    }
+
+    /**
+     * Admin View: User Diagnostics
+     */
+    public function patientDiagnostics(Patient $patient)
+    {
+        $patient->load('diagnostics.symptoms');
+
+        return response()->json($patient, 200);
+    }
+
+
+
+
+
+
 
     /**
      * List all soft deleted diagnostics
@@ -103,38 +146,6 @@ class DiagnosticController extends Controller
         return response()->json($diagnostic, 200);
     }
 
-    public function userDiagnostics(Request $request)
-    {
-        $user = auth('sanctum')->user();
-
-
-        $patient = $user->patient;
-
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Paciente não encontrado'
-            ], 404);
-        }
-
-        $diagnostics = $patient->diagnostics;
-
-        $symptoms = $patient->diagnostics
-            ->pluck('symptoms')
-            ->flatten()
-            ->values();
-
-
-        return response()->json([
-            'diagnostics' => $diagnostics,
-        ], 200);
-    }
-
-    public function patientDiagnostics(Patient $patient)
-    {
-        $patient->load('diagnostics.symptoms');
-
-        return response()->json($patient, 200);
-    }
 
     public function patientDiagnosticsSoftDelete(Patient $patient)
     {
