@@ -19,7 +19,6 @@ class DailyNutritionController extends Controller
         return DailyNutritionResource::collection(DailyNutrition::all());
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
@@ -38,7 +37,6 @@ class DailyNutritionController extends Controller
         return new DailyNutritionResource($dailyNutrition);
     }
 
-
     /**
      * Update the specified resource in storage.
      */
@@ -56,6 +54,63 @@ class DailyNutritionController extends Controller
     {
         $dailyNutrition->delete();
         return response()->json(null, 204);
+    }
+
+    /**
+     * User view: User Daily Nutritions.
+     */
+    public function userDailyNutritions(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado'
+            ], 404);
+        }
+
+        $dailyNutritions = $patient->dailyNutritions;
+
+        return response()->json([
+            'dailyNutritions' => $dailyNutritions
+        ], 200);
+    }
+
+    /**
+     * Admin view: User Daily Nutritions.
+     */
+    public function patientDailyNutritions(Patient $patient)
+    {
+        $patient->load('dailyNutritions');
+
+        return response()->json($patient, 200);
+    }
+
+
+
+    /**
+     *Soft Deletes Part:
+     */
+
+
+
+
+    /**
+     * User view: User Soft Deleted.
+     */
+    public function patientDailyNutritionsSoftDelete(Patient $patient)
+    {
+        $dailyNutritions = $patient->dailyNutritions()
+            ->onlyTrashed()
+            ->get();
+
+        return response()->json([
+            'patient' => $patient,
+            'daily_nutritions' => $dailyNutritions
+        ], 200);
     }
 
     /**
@@ -85,44 +140,4 @@ class DailyNutritionController extends Controller
         $dailyNutrition->restore();
         return response()->json($dailyNutrition, 200);
     }
-
-    public function userDailyNutritions(Request $request)
-    {
-        $user = auth('sanctum')->user();
-
-
-        $patient = $user->patient;
-
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Paciente não encontrado'
-            ], 404);
-        }
-
-        $dailyNutritions = $patient->dailyNutritions;
-
-        return response()->json([
-            'dailyNutritions' => $dailyNutritions
-        ], 200);
-    }
-
-    public function patientDailyNutritions(Patient $patient)
-    {
-        $patient->load('dailyNutritions');
-
-        return response()->json($patient, 200);
-    }
-
-    public function patientDailyNutritionsSoftDelete(Patient $patient)
-    {
-        $dailyNutritions = $patient->dailyNutritions()
-            ->onlyTrashed()
-            ->get();
-
-        return response()->json([
-            'patient' => $patient,
-            'daily_nutritions' => $dailyNutritions
-        ], 200);
-    }
-
 }

@@ -51,6 +51,17 @@ class ConditionController extends Controller
     }
 
     /**
+     * Delete a condition (soft delete)
+     */
+    public function destroy(Condition $condition)
+    {
+        $condition->delete();
+        return response()->json([
+            'message' => 'Eliminado'
+        ], 204);
+    }
+
+    /**
      * User view: User conditions.
      */
 
@@ -84,16 +95,12 @@ class ConditionController extends Controller
         return response()->json($patient, 200);
     }
 
+
     /**
-     * Delete a condition (soft delete)
+     *Soft Deletes Part:
      */
-    public function destroy(Condition $condition)
-    {
-        $condition->delete();
-        return response()->json([
-            'message' => 'Eliminado'
-        ], 204);
-    }
+
+
 
     /**
      * List all soft deleted conditions

@@ -55,6 +55,17 @@ class AppointmentController extends Controller
     }
 
     /**
+     * SoftDelete.
+     */
+    public function destroy(Appointment $appointment)
+    {
+        $appointment->delete();
+        return response()->json([
+            'message' => 'Eliminado'
+        ], 204);
+    }
+
+    /**
      * UServ view User appointments.
      */
 
@@ -122,17 +133,10 @@ class AppointmentController extends Controller
 
 
 
-
     /**
-     * SoftDelete.
+     *Soft Deletes Part:
      */
-    public function destroy(Appointment $appointment)
-    {
-        $appointment->delete();
-        return response()->json([
-            'message' => 'Eliminado'
-        ], 204);
-    }
+
 
     /**
      * Index of SoftDelete

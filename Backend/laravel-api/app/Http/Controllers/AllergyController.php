@@ -54,6 +54,17 @@ class AllergyController extends Controller
     }
 
     /**
+     * Delete
+     */
+    public function destroy(Allergy $allergy)
+    {
+        $allergy->delete();
+        return response()->json([
+            'message' => 'Eliminado'
+        ], 204);
+    }
+
+    /**
      *User Allergies
      */
     public function userAllergies(Request $request)
@@ -92,19 +103,6 @@ class AllergyController extends Controller
     /**
      *Soft Deletes Part:
      */
-
-
-    /**
-     * Delete
-     */
-    public function destroy(Allergy $allergy)
-    {
-        $allergy->delete();
-        return response()->json([
-            'message' => 'Eliminado'
-        ], 204);
-    }
-
 
     /**
      * Index of SoftDelete
