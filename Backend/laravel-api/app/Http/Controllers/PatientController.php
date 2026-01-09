@@ -15,7 +15,9 @@ class PatientController extends Controller
      */
     public function index()
     {
-        return PatientResource::collection(Patient::all());
+        return PatientResource::collection(
+            Patient::orderBy('name', 'asc')->get()
+        );
     }
 
     /**
@@ -34,7 +36,7 @@ class PatientController extends Controller
     {
         $data = $request->validated();
         $patient->update($data);
-        return response()->json($patient);
+        return new PatientResource($patient);
     }
 
     /**
@@ -47,6 +49,45 @@ class PatientController extends Controller
             'message' => 'Eliminado'
         ], 204);
     }
+
+    /**
+     * User view: User Patient.
+     */
+    public function userPatient(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado'
+            ], 404);
+        }
+
+        $patient->load('user');
+
+        return new PatientResource($patient);
+    }
+
+    /**
+     * User view: User Patient.
+     */
+    public function patientUser(Patient $patient)
+    {
+        $patient = $patient->load('user');
+
+        return new PatientResource($patient);
+    }
+
+
+
+    /**
+     * SOFT DELETES
+     */
+
+
+
 
     /**
      * List all soft deleted patients
@@ -74,25 +115,5 @@ class PatientController extends Controller
         $patient = Patient::onlyTrashed()->findOrFail($id);
         $patient->restore();
         return response()->json($patient, 200);
-    }
-
-
-    public function userPatient(Request $request)
-    {
-        $user = auth('sanctum')->user();
-
-        $patient = $user->patient;
-
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Paciente não encontrado'
-            ], 404);
-        }
-
-        $patient->load('user');
-
-        return response()->json([
-            'patient' => $patient,
-        ], 200);
     }
 }

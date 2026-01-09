@@ -37,7 +37,6 @@ class GoalMilestoneController extends Controller
         return new GoalMilestoneResource($goalMilestone);
     }
 
-
     /**
      * Update the specified resource in storage.
      */
@@ -55,6 +54,15 @@ class GoalMilestoneController extends Controller
             'message' => 'Eliminado'
         ], 204);
     }
+
+
+
+
+    /**
+     * SOFT DELETES
+     */
+
+
 
     /**
      * List all soft deleted goal milestones

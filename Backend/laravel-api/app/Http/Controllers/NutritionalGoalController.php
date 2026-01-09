@@ -19,7 +19,6 @@ class NutritionalGoalController extends Controller
         return NutritionalGoalResource::collection(NutritionalGoal::all());
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
@@ -38,8 +37,6 @@ class NutritionalGoalController extends Controller
         return new NutritionalGoalResource($nutritionalGoal);
     }
 
-
-
     /**
      * Update the specified resource in storage.
      */
@@ -50,9 +47,6 @@ class NutritionalGoalController extends Controller
         return new NutritionalGoalResource($nutritionalGoal);
     }
 
-    /**
-     * Nutritional goals of the authenticated user's patient
-     */
     /**
      * Soft delete a nutritional goal
      */
@@ -94,6 +88,14 @@ class NutritionalGoalController extends Controller
 
         return NutritionalGoalResource::collection($nutritionalGoals);
     }
+
+
+
+
+    /**
+     * SOFT DELETES
+     */
+
 
     /**
      * List all soft-deleted nutritional goals
