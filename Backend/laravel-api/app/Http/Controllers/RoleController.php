@@ -17,7 +17,6 @@ class RoleController extends Controller
         return RoleResource::collection(Role::all());
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
@@ -35,8 +34,6 @@ class RoleController extends Controller
     {
         return new RoleResource($role);
     }
-
-
 
     /**
      * Update the specified resource in storage.
@@ -58,6 +55,15 @@ class RoleController extends Controller
             'message' => 'Eliminado'
         ], 204);
     }
+
+
+
+    /**
+     * Soft Deletes.
+     */
+
+
+
 
     /**
      * List all soft deleted roles.

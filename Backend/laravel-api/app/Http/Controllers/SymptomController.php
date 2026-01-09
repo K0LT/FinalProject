@@ -16,7 +16,9 @@ class SymptomController extends Controller
      */
     public function index()
     {
-        return SymptomResource::collection(Symptom::all());
+        return SymptomResource::collection(
+            Symptom::orderBy('name', 'asc')->get()
+        );
     }
 
 
@@ -28,7 +30,7 @@ class SymptomController extends Controller
         $data = $request->validated();
 
         $symptom = Symptom::create($data);
-        return response()->json($symptom);
+        return new SymptomResource($symptom);
     }
 
     /**
@@ -47,7 +49,7 @@ class SymptomController extends Controller
     {
         $data = $request->validated();
         $symptom->update($data);
-        return response()->json($symptom);
+        return new SymptomResource($symptom);
     }
 
     /**
@@ -60,6 +62,18 @@ class SymptomController extends Controller
             'message' => 'Eliminado'
         ], 204);
     }
+
+
+
+
+
+    /**
+     * Soft Deletes.
+     */
+
+
+
+
 
     /**
      * List all soft deleted symptoms.
