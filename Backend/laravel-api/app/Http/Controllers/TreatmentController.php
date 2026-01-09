@@ -16,10 +16,10 @@ class TreatmentController extends Controller
      */
     public function index()
     {
-        return TreatmentResource::collection(Treatment::all());
+        return TreatmentResource::collection(
+            Treatment::orderBy('name', 'asc')->get()
+        );
     }
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -28,7 +28,7 @@ class TreatmentController extends Controller
     {
         $data = $request->validated();
         $treatment = Treatment::create($data);
-        return response()->json($treatment);
+        return new TreatmentResource($treatment);
     }
 
     /**
@@ -48,7 +48,7 @@ class TreatmentController extends Controller
     {
         $data = $request->validated();
         $treatment->update($data);
-        return response()->json($treatment);
+        return new TreatmentResource($treatment);
     }
 
     /**
