@@ -63,7 +63,9 @@ class TreatmentGoalController extends Controller
     public function destroy(TreatmentGoal $treatment_goal)
     {
         $treatment_goal->delete();
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Eliminado'
+        ], 204);
     }
 
     /**

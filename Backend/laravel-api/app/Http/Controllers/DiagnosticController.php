@@ -70,7 +70,9 @@ class DiagnosticController extends Controller
     public function destroy(Diagnostic $diagnostic)
     {
         $diagnostic->delete();
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Eliminado'
+        ], 204);
     }
 
     /**

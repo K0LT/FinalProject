@@ -25,8 +25,8 @@ class DailyNutritionController extends Controller
     public function store(StoreDailyNutritionRequest $request)
     {
         $data = $request->validated();
-        $daily_nutrition = DailyNutrition::create($data);
-        return response()->json($daily_nutrition);
+        $dailyNutrition = DailyNutrition::create($data);
+        return new DailyNutritionResource($dailyNutrition);
     }
 
     /**
@@ -44,7 +44,7 @@ class DailyNutritionController extends Controller
     {
         $data = $request->validated();
         $dailyNutrition -> update($data);
-        return response()->json($dailyNutrition);
+        return new DailyNutritionResource($dailyNutrition);
     }
 
     /**
@@ -53,7 +53,9 @@ class DailyNutritionController extends Controller
     public function destroy(DailyNutrition $dailyNutrition)
     {
         $dailyNutrition->delete();
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Eliminado'
+        ], 204);
     }
 
     /**

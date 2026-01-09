@@ -59,7 +59,9 @@ class NutritionalGoalController extends Controller
     public function destroy(NutritionalGoal $nutritionalGoal)
     {
         $nutritionalGoal->delete();
-        return response()->json($nutritionalGoal);
+        return response()->json([
+            'message' => 'Eliminado'
+        ], 204);
     }
 
     /**

@@ -56,7 +56,9 @@ class SymptomController extends Controller
     public function destroy(Symptom $symptom)
     {
         $symptom->delete();
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Eliminado'
+        ], 204);
     }
 
     /**

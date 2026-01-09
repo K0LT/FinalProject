@@ -51,7 +51,9 @@ class GoalMilestoneController extends Controller
     public function destroy(GoalMilestone $goalMilestone)
     {
         $goalMilestone->delete();
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Eliminado'
+        ], 204);
     }
 
     /**

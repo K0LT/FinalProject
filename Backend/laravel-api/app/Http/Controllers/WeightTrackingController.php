@@ -56,8 +56,9 @@ class WeightTrackingController extends Controller
     public function destroy(WeightTracking $weight_tracking)
     {
         $weight_tracking->delete();
-
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Eliminado'
+        ], 204);
     }
 
     /**

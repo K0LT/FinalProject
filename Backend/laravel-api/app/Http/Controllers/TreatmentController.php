@@ -57,7 +57,9 @@ class TreatmentController extends Controller
     public function destroy(Treatment $treatment)
     {
         $treatment->delete();
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Eliminado'
+        ], 204);
     }
 
     /**
