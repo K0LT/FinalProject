@@ -27,8 +27,8 @@ class WeightTrackingController extends Controller
     public function store(StoreWeightTrackingRequest $request)
     {
         $data = $request->validated();
-        $weight_tracking = WeightTracking::create($data);
-        return response()->json($weight_tracking);
+        $weightTracking = WeightTracking::create($data);
+        return new WeightTrackingResource($weightTracking);
     }
 
     /**
@@ -47,7 +47,7 @@ class WeightTrackingController extends Controller
     {
         $data = $request->validated();
         $weightTracking->update($data);
-        return response()->json($weightTracking);
+        return new WeightTrackingResource($weightTracking);
     }
 
     /**
@@ -60,6 +60,13 @@ class WeightTrackingController extends Controller
             'message' => 'Eliminado'
         ], 204);
     }
+
+
+
+    /**
+     * Soft Deletes.
+     */
+
 
     /**
      * List all soft deleted weight trackings.

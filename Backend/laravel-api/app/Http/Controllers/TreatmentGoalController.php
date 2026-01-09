@@ -28,7 +28,7 @@ class TreatmentGoalController extends Controller
     {
         $data = $request->validated();
         $treatment_goal = TreatmentGoal::create($data);
-        return response()->json($treatment_goal);
+        return new TreatmentGoalResource($treatment_goal);
     }
 
     /**
@@ -39,8 +39,7 @@ class TreatmentGoalController extends Controller
         $treatment_goal -> load([
             'goalMilestones',
         ]);
-        return response()->json($treatment_goal);
-
+        return new TreatmentGoalResource($treatment_goal);
     }
 
 
@@ -51,12 +50,10 @@ class TreatmentGoalController extends Controller
     {
         $data = $request->validated();
         $treatment_goal->update($data);
-        return response()->json($treatment_goal);
+        return new TreatmentGoalResource($treatment_goal);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     /**
      * Soft delete a treatment goal.
      */
@@ -67,6 +64,59 @@ class TreatmentGoalController extends Controller
             'message' => 'Eliminado'
         ], 204);
     }
+
+
+    /**
+     * User view: User TreamentGoals.
+     */
+    public function userTreatmentGoals(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado'
+            ], 404);
+        }
+
+
+        $treatmentGoals = $patient->treatmentGoals;
+
+        $goalMilestones = $patient->appointments
+            ->pluck('goalMilestones')
+            ->flatten()
+            ->values();
+
+        return response()->json([
+            'treatmentGoals' => $treatmentGoals
+        ], 200);
+    }
+
+    /**
+     * Admin View: user TreatmentGoals.
+     */
+    public function patientTreatmentGoals(Patient $patient)
+    {
+        $treatmentGoals = $patient->treatmentGoals;
+
+        $goalMilestones = $patient->appointments
+            ->pluck('goalMilestones')
+            ->flatten()
+            ->values();
+
+        return response()->json([
+            'treatmentGoals' => $treatmentGoals
+        ], 200);
+    }
+
+
+    /**
+     * Soft Deletes.
+     */
+
 
     /**
      * List all soft deleted treatment goals.
@@ -96,39 +146,7 @@ class TreatmentGoalController extends Controller
         return response()->json($goal, 200);
     }
 
-    public function userTreatmentGoals(Request $request)
-    {
-        $user = auth('sanctum')->user();
 
-
-        $patient = $user->patient;
-
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Paciente não encontrado'
-            ], 404);
-        }
-
-        $patient->load('treatmentGoals.goalMilestones');
-
-        $treatmentGoals = $patient->treatmentGoals;
-
-        $goalMilestones = $patient->appointments
-            ->pluck('goalMilestones')
-            ->flatten()
-            ->values();
-
-        return response()->json([
-            'treatmentGoals' => $treatmentGoals
-        ], 200);
-    }
-
-    public function patientTreatmentGoals(Patient $patient)
-    {
-        $patient->load('treatmentGoals.goalMilestones');
-
-        return response()->json($patient, 200);
-    }
 
     public function patientTreatmentGoalsSoftDelete(Patient $patient)
     {

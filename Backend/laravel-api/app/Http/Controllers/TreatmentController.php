@@ -62,6 +62,16 @@ class TreatmentController extends Controller
         ], 204);
     }
 
+
+
+
+    /**
+     * Soft Deletes.
+     */
+
+
+
+
     /**
      * List all soft deleted treatments.
      */
