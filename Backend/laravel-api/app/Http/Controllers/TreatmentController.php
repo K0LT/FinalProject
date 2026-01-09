@@ -39,8 +39,6 @@ class TreatmentController extends Controller
         return new TreatmentResource($treatment);
     }
 
-
-
     /**
      * Update the specified resource in storage.
      */
@@ -62,14 +60,49 @@ class TreatmentController extends Controller
         ], 204);
     }
 
+    /**
+     * User view: User treatments
+     */
+    public function userTreatments(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado'
+            ], 404);
+        }
+
+        $treatments = $patient->treatments;
+
+        return response()->json([
+            'treatments' => $treatments
+        ], 200);
+    }
+
+
+    /**
+     * Admin view: User treatments
+     */
+    public function patientTreatments(Patient $patient)
+    {
+        $treatments = $patient->treatments;
+
+        return response()->json([
+            'treatments' => $treatments
+        ], 200);
+    }
+
+
+
 
 
 
     /**
      * Soft Deletes.
      */
-
-
 
 
     /**
@@ -98,33 +131,6 @@ class TreatmentController extends Controller
         $treatment = Treatment::onlyTrashed()->findOrFail($id);
         $treatment->restore();
         return response()->json($treatment, 200);
-    }
-
-    public function userTreatments(Request $request)
-    {
-        $user = auth('sanctum')->user();
-
-
-        $patient = $user->patient;
-
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Paciente não encontrado'
-            ], 404);
-        }
-
-        $treatments = $patient->treatments;
-
-        return response()->json([
-            'treatments' => $treatments
-        ], 200);
-    }
-
-    public function patientTreatments(Patient $patient)
-    {
-        $patient->load('treatments');
-
-        return response()->json($patient, 200);
     }
 
     public function patientTreatmentsSoftDelete(Patient $patient)

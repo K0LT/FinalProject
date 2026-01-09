@@ -90,9 +90,11 @@ class ConditionController extends Controller
      */
     public function patientConditions(Patient $patient)
     {
-        $patient->load('conditions');
+        $conditions = $patient->conditions;
 
-        return response()->json($patient, 200);
+        return response()->json([
+            'conditions' => $conditions
+        ], 200);
     }
 
 

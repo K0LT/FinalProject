@@ -81,8 +81,6 @@ class TreatmentGoalController extends Controller
                 'message' => 'Paciente não encontrado'
             ], 404);
         }
-
-
         $treatmentGoals = $patient->treatmentGoals;
 
         $goalMilestones = $patient->appointments

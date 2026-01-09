@@ -83,7 +83,9 @@ class AllergyController extends Controller
             ->orderBy('allergen', 'asc')
             ->get();
 
-        return AllergyResource::collection($allergies);
+        return response()->json([
+            'allergies' => $allergies
+        ], 200);
     }
 
     /**
@@ -95,7 +97,9 @@ class AllergyController extends Controller
             ->orderBy('allergen', 'asc')
             ->get();
 
-        return AllergyResource::collection($allergies);
+        return response()->json([
+            'allergies' => $allergies
+        ], 200);
     }
 
 

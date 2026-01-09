@@ -76,9 +76,11 @@ class ExerciseController extends Controller
             ], 404);
         }
 
-        $exercises = $patient->exercises()->orderBy('name', 'asc')->get();
+        $exercises = $patient->exercises;
 
-        return ExerciseResource::collection($exercises);
+        return response()->json([
+            'exercises' => $exercises
+        ], 200);
     }
 
     /**
@@ -88,7 +90,9 @@ class ExerciseController extends Controller
     {
         $exercises = $patient->exercises;
 
-        return ExerciseResource::collection($exercises);
+        return response()->json([
+            'exercises' => $exercises
+        ], 200);
     }
 
 

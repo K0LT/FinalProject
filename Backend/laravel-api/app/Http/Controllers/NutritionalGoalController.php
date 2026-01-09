@@ -76,7 +76,9 @@ class NutritionalGoalController extends Controller
         $nutritionalGoals = $patient->nutritionalGoals;
         ;
 
-        return NutritionalGoalResource::collection($nutritionalGoals);
+        return response()->json([
+            'nutritionalGoals' => $nutritionalGoals
+        ], 200);
     }
 
     /**
@@ -86,7 +88,9 @@ class NutritionalGoalController extends Controller
     {
         $nutritionalGoals = $patient->nutritionalGoals;
 
-        return NutritionalGoalResource::collection($nutritionalGoals);
+        return response()->json([
+            'nutritionalGoals' => $nutritionalGoals
+        ], 200);
     }
 
 

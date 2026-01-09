@@ -66,7 +66,6 @@ class SymptomController extends Controller
 
 
 
-
     /**
      * Soft Deletes.
      */

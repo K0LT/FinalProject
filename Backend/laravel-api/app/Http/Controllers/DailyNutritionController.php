@@ -86,9 +86,11 @@ class DailyNutritionController extends Controller
      */
     public function patientDailyNutritions(Patient $patient)
     {
-        $patient->load('dailyNutritions');
+        $dailyNutritions = $patient->dailyNutritions;
 
-        return response()->json($patient, 200);
+        return response()->json([
+            'dailyNutritions' => $dailyNutritions
+        ], 200);
     }
 
 

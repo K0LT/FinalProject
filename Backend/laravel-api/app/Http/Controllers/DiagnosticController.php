@@ -98,7 +98,7 @@ class DiagnosticController extends Controller
 
 
         return response()->json([
-            'diagnostics' => $diagnostics,
+            'diagnostics' => $diagnostics
         ], 200);
     }
 
@@ -107,9 +107,16 @@ class DiagnosticController extends Controller
      */
     public function patientDiagnostics(Patient $patient)
     {
-        $patient->load('diagnostics.symptoms');
+        $diagnostics = $patient->diagnostics;
 
-        return response()->json($patient, 200);
+        $symptoms = $patient->diagnostics
+            ->pluck('symptoms')
+            ->flatten()
+            ->values();
+
+        return response()->json([
+            'diagnostics' => $diagnostics
+        ], 200);
     }
 
 

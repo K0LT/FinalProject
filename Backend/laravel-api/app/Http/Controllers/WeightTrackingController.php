@@ -61,6 +61,41 @@ class WeightTrackingController extends Controller
         ], 204);
     }
 
+    /**
+     * User View, User weightTrackings.
+     */
+
+    public function userWeightTrackings(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado'
+            ], 404);
+        }
+
+
+        $weightTrackings = $patient->weightTrackings;
+        return response()->json([
+            'weightTrackings' => $weightTrackings
+        ], 200);
+    }
+
+    /**
+     * Admin View, User weightTrackings.
+     */
+
+    public function patientWeightTrackings(Patient $patient)
+    {
+        $weightTrackings = $patient->weightTrackings;
+        return response()->json([
+            'weightTrackings' => $weightTrackings
+        ], 200);
+    }
+
 
 
     /**
@@ -97,32 +132,6 @@ class WeightTrackingController extends Controller
         $weightTracking->restore();
 
         return response()->json($weightTracking);
-    }
-
-    public function userWeightTrackings(Request $request)
-    {
-        $user = auth('sanctum')->user();
-
-        $patient = $user->patient;
-
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Paciente não encontrado'
-            ], 404);
-        }
-
-
-        $weightTrackings = $patient->weightTrackings;
-        return response()->json([
-            'weightTrackings' => $weightTrackings
-        ], 200);
-    }
-
-    public function patientWeightTrackings(Patient $patient)
-    {
-        $patient->load('weightTrackings');
-
-        return response()->json($patient, 200);
     }
 
     public function patientWeightTrackingsSoftDelete(Patient $patient)

@@ -18,7 +18,6 @@ class ProgressNoteController extends Controller
         return progressNoteResource::collection(ProgressNote::all());
     }
 
-
     /**
      * Store a newly created resource in storage.
      */

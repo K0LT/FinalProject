@@ -67,7 +67,9 @@ class PatientController extends Controller
 
         $patient->load('user');
 
-        return new PatientResource($patient);
+        return response()->json([
+            'patient' => $patient
+        ], 200);
     }
 
     /**
@@ -77,7 +79,9 @@ class PatientController extends Controller
     {
         $patient = $patient->load('user');
 
-        return new PatientResource($patient);
+        return response()->json([
+            'patient' => $patient
+        ], 200);
     }
 
 

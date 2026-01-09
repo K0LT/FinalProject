@@ -99,9 +99,16 @@ class AppointmentController extends Controller
      */
     public function patientAppointments(Patient $patient)
     {
-        $patient->load('appointments.progressNotes');
+        $appointments = $patient->appointments;
 
-        return response()->json($patient, 200);
+        $progressNotes = $patient->appointments
+            ->pluck('progressNotes')
+            ->flatten()
+            ->values();
+
+        return response()->json([
+            'appointments' => $appointments
+        ], 200);
     }
 
     /**
