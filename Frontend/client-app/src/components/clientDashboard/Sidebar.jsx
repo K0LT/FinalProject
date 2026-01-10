@@ -13,6 +13,8 @@ import {
     X,
 } from "lucide-react";
 import QiFlowBrand from "@/components/ui/QiFlowBrand";
+import {useAuth} from "@/context/AuthContext";
+import {useRouter} from "next/navigation";
 
 export default function Sidebar({
                                     isOpen,
@@ -24,7 +26,14 @@ export default function Sidebar({
                                     brandSubtitle = "Portal do Paciente",
                                 }) {
     const pathname = usePathname() || currentPath;
+    const router = useRouter();
 
+    const {logout} = useAuth();
+
+    const handleLogout = async () => {
+        await logout();
+        router.push('/login');
+    }
     const menuItems = [
         {
             label: "Perfil do Cliente",
@@ -141,7 +150,8 @@ export default function Sidebar({
             <div className="border-t border-sidebar-border px-3 py-3">
                 <button
                     type="button"
-                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all"
+                    onClick={handleLogout}
+                    className="w-full flex items-center px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all sticky bottom-0"
                 >
           <span className="flex items-center gap-2">
             <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-destructive/10 text-destructive">

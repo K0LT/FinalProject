@@ -4,10 +4,14 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useApi } from '@/hooks/useApi';
 import Calendar from '@/components/ui/Calendar';
+import {apiClient} from "@/lib/api";
+import {useParams} from "next/navigation";
+import {getUserAppointments} from "@/services/userServices";
 
 export default function AppointmentScheduler() {
     const { user, isAuthenticated } = useAuth();
     const { post, get, loading, error } = useApi();
+    const params = useParams();
 
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState('');
@@ -31,7 +35,9 @@ export default function AppointmentScheduler() {
 
     const loadUserAppointments = async () => {
         try {
-            const response = await get('/appointments');
+            const patientId = params?.id;
+
+            const response = await getUserAppointments();
 
 
             const userAppointments = Array.isArray(response) ? response :
@@ -78,19 +84,19 @@ export default function AppointmentScheduler() {
             setIsSubmitting(true);
 
             const appointmentData = {
-                appointment_date: selectedDate.toISOString().split('T')[0],
-                appointment_time: selectedTime,
-                patient_id: user?.patient?.id,
+                appointment_date_time: selectedDate.toISOString().split('T')[0] + " " + selectedTime,
+                //appointment_date_time: selectedTime,
+                patient_id: params?.id,
 
                 status: 'scheduled',
                 type: 'consultation'
             };
 
-            console.log('📤 Marcando appointment:', appointmentData);
+            console.log('Scheduling Appointment:', appointmentData);
 
-            const newAppointment = await post('/appointments', appointmentData);
+            const newAppointment = await post('api/user/appointments/create', appointmentData);
 
-            console.log('✅ Appointment marcado:', newAppointment);
+            console.log('Appointment scheduled:', newAppointment);
 
 
             setAppointments(prev => [...prev, newAppointment]);
@@ -255,7 +261,7 @@ export default function AppointmentScheduler() {
                                 {appointments.slice(0, 3).map(appointment => (
                                     <div key={appointment.id} className="border-l-4 border-blue-500 pl-4 py-2">
                                         <p className="font-medium">
-                                            {new Date(appointment.appointment_date).toLocaleDateString('pt-PT')}
+                                            {new Date(appointment.appointment_date_time).toLocaleDateString('pt-PT')}
                                         </p>
                                         <p className="text-sm text-gray-600">
                                             {appointment.appointment_time} • {appointment.status}

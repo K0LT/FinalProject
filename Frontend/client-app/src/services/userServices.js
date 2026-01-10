@@ -12,7 +12,7 @@ import { apiClient } from '@/lib/api';
  */
 export const getUserPatient = async () => {
     const response = await apiClient.get('api/user/patient');
-    return response.data;
+    return response.patient;
 };
 
 /**
@@ -20,7 +20,7 @@ export const getUserPatient = async () => {
  */
 export const getUserAppointments = async () => {
     const response = await apiClient.get('api/user/appointments');
-    return response.data;
+    return response.appointments || [];
 };
 
 /**
@@ -29,15 +29,15 @@ export const getUserAppointments = async () => {
  */
 export const requestAppointment = async (appointmentData) => {
     const response = await apiClient.post('api/user/appointments/create', appointmentData);
-    return response.data;
+    return response;
 };
 
 /**
  * Get current patient's allergies
  */
 export const getUserAllergies = async () => {
-    const response = await apiClient.get('api/user/allergies');
-    return response.data;
+    const response = await apiClient.get('/api/user/allergies');
+    return response.allergies || [];
 };
 
 /**
@@ -45,8 +45,8 @@ export const getUserAllergies = async () => {
  * @param {Object} allergyData - { allergy_id }
  */
 export const addUserAllergy = async (allergyData) => {
-    const response = await apiClient.post('api/user/allergies/add', allergyData);
-    return response.data;
+    const response = await apiClient.post('/api/user/allergies/add', allergyData);
+    return response;
 };
 
 /**
@@ -54,40 +54,40 @@ export const addUserAllergy = async (allergyData) => {
  * @param {Object} allergyData - { allergy_id }
  */
 export const removeUserAllergy = async (allergyData) => {
-    const response = await apiClient.post('api/user/allergies/remove', allergyData);
-    return response.data;
+    const response = await apiClient.post('/api/user/allergies/remove', allergyData);
+    return response;
 };
 
 /**
  * Get current patient's conditions
  */
 export const getUserConditions = async () => {
-    const response = await apiClient.get('api/user/conditions');
-    return response.data;
+    const response = await apiClient.get('/api/user/conditions');
+    return response.conditions || [];
 };
 
 /**
  * Get current patient's daily nutrition records
  */
 export const getUserDailyNutritions = async () => {
-    const response = await apiClient.get('api/user/daily_nutritions');
-    return response.data;
+    const response = await apiClient.get('/api/user/daily_nutritions');
+    return response.dailyNutritions || [];
 };
 
 /**
  * Get current patient's diagnostics (includes symptoms)
  */
 export const getUserDiagnostics = async () => {
-    const response = await apiClient.get('api/user/diagnostics');
-    return response.data;
+    const response = await apiClient.get('/api/user/diagnostics');
+    return response.diagnostics || [];
 };
 
 /**
  * Get current patient's exercises
  */
 export const getUserExercises = async () => {
-    const response = await apiClient.get('api/user/exercises');
-    return response.data;
+    const response = await apiClient.get('/api/user/exercises');
+    return response.exercises || [];
 };
 
 /**
@@ -95,8 +95,8 @@ export const getUserExercises = async () => {
  * @param {Object} exerciseData - { exercise_id, prescribed_date, frequency, notes }
  */
 export const addUserExercise = async (exerciseData) => {
-    const response = await apiClient.post('api/user/exercises/add', exerciseData);
-    return response.data;
+    const response = await apiClient.post('/api/user/exercises/add', exerciseData);
+    return response;
 };
 
 /**
@@ -104,38 +104,38 @@ export const addUserExercise = async (exerciseData) => {
  * @param {Object} exerciseData - { exercise_id }
  */
 export const removeUserExercise = async (exerciseData) => {
-    const response = await apiClient.post('api/user/exercises/remove', exerciseData);
-    return response.data;
+    const response = await apiClient.post('/api/user/exercises/remove', exerciseData);
+    return response;
 };
 
 /**
  * Get current patient's treatment goals (includes milestones)
  */
 export const getUserTreatmentGoals = async () => {
-    const response = await apiClient.get('api/user/treatment_goals');
-    return response.data;
+    const response = await apiClient.get('/api/user/treatment_goals');
+    return response.treatmentGoals || [];
 };
 
 /**
  * Get current patient's nutritional goals
  */
 export const getUserNutritionalGoals = async () => {
-    const response = await apiClient.get('api/user/nutritional_goals');
-    return response.data;
+    const response = await apiClient.get('/api/user/nutritional_goals');
+    return response.nutritionalGoals || [];
 };
 
 /**
  * Get current patient's treatments
  */
 export const getUserTreatments = async () => {
-    const response = await apiClient.get('api/user/treatments');
-    return response.data;
+    const response = await apiClient.get('/api/user/treatments');
+    return response.treatments || [];
 };
 
 /**
  * Get current patient's weight tracking records
  */
 export const getUserWeightTrackings = async () => {
-    const response = await apiClient.get('api/user/weight_trackings');
-    return response.data;
+    const response = await apiClient.get('/api/user/weight_trackings');
+    return response.weightTrackings || [];
 };

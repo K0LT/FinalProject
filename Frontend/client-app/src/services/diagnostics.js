@@ -1,16 +1,16 @@
-import {api} from "@/lib/api";
+import { apiClient } from "@/lib/api";
 
-export async function getDiagnostic(id){
-    const response = await api.get('/diagnostics/' + id);
-    return response.data;
+export async function getDiagnostic(patientId){
+    const response = await apiClient.get('/api/' + patientId + '/diagnostics/');
+    return response?.data || response;
 }
 
-export async function getDiagnostics(id){
-    const response = await api.get('/patients/' + id + '/diagnostics');
-    return response.data;
+export async function getDiagnostics(patientId){
+    const response = await apiClient.get('/api/patients/' + patientId + '/diagnostics');
+    return response?.diagnostics || response?.data || response || [];
 }
 
 export async function postDiagnostic(diagnostic) {
-    const response = await api.post('/diagnostics', diagnostic);
-    return response.data;
+    const response = await apiClient.post('/api/diagnostics', diagnostic);
+    return response;
 }

@@ -50,21 +50,29 @@ export default function Dashboard() {
                 diagnosticsRes,
                 exercisesRes
             ] = await Promise.all([
-                get('/patients'),
-                get('/appointments'),
-                get('/treatment_goals'),
-                get('/progress_notes'),
-                get('/diagnostics'),
-                get('/exercises')
+                get('/api/patients'),
+                get('/api/appointments'),
+                get('/api/treatment_goals'),
+                get('/api/progress_notes'),
+                get('/api/diagnostics'),
+                get('/api/exercises')
             ]);
 
 
-            setPatients(Array.isArray(patientsRes) ? patientsRes : []);
-            setAppointments(Array.isArray(appointmentsRes) ? appointmentsRes : []);
-            setTreatmentGoals(Array.isArray(goalsRes) ? goalsRes : []);
-            setProgressNotes(Array.isArray(notesRes) ? notesRes : []);
-            setDiagnostics(Array.isArray(diagnosticsRes) ? diagnosticsRes : []);
-            setExercises(Array.isArray(exercisesRes) ? exercisesRes : []);
+            // Extract data from responses - some return {data: [...]}, some return arrays directly
+            const patients = patientsRes?.data || patientsRes || [];
+            const appointments = Array.isArray(appointmentsRes) ? appointmentsRes : [];
+            const goals = goalsRes?.data || goalsRes || [];
+            const notes = notesRes?.data || notesRes || [];
+            const diagnostics = diagnosticsRes?.data || diagnosticsRes || [];
+            const exercises = exercisesRes?.data || exercisesRes || [];
+
+            setPatients(Array.isArray(patients) ? patients : []);
+            setAppointments(appointments);
+            setTreatmentGoals(Array.isArray(goals) ? goals : []);
+            setProgressNotes(Array.isArray(notes) ? notes : []);
+            setDiagnostics(Array.isArray(diagnostics) ? diagnostics : []);
+            setExercises(Array.isArray(exercises) ? exercises : []);
 
         } catch (err) {
             console.error('Erro ao carregar dados:', err);

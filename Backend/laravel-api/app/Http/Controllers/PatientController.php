@@ -23,7 +23,15 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
+<<<<<<< Updated upstream
         return response()->json($patient);
+=======
+        $patient->load(['user', 'conditions', 'allergies']);
+
+        return response()->json([
+            'data' => $patient
+        ], 200);
+>>>>>>> Stashed changes
     }
 
 

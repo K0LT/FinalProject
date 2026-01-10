@@ -74,6 +74,62 @@ class DiagnosticController extends Controller
     }
 
     /**
+<<<<<<< Updated upstream
+=======
+     * user View: User Diagnostics
+     */
+    public function userDiagnostics(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado'
+            ], 404);
+        }
+
+        $diagnostics = $patient->diagnostics;
+
+        $symptoms = $patient->diagnostics
+            ->pluck('symptoms')
+            ->flatten()
+            ->values();
+
+
+        return response()->json([
+            'diagnostics' => $diagnostics,
+            'symptoms' => $symptoms
+        ], 200);
+    }
+
+    /**
+     * Admin View: User Diagnostics
+     */
+    public function patientDiagnostics(Patient $patient)
+    {
+        $diagnostics = $patient->diagnostics;
+
+        $symptoms = $patient->diagnostics
+            ->pluck('symptoms')
+            ->flatten()
+            ->values();
+
+        return response()->json([
+            'diagnostics' => $diagnostics
+        ], 200);
+    }
+
+
+
+
+
+
+
+    /**
+>>>>>>> Stashed changes
      * List all soft deleted diagnostics
      */
     public function indexSoftDelete()
