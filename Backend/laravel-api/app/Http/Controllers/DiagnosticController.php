@@ -74,8 +74,6 @@ class DiagnosticController extends Controller
     }
 
     /**
-<<<<<<< Updated upstream
-=======
      * user View: User Diagnostics
      */
     public function userDiagnostics(Request $request)
@@ -122,16 +120,6 @@ class DiagnosticController extends Controller
         ], 200);
     }
 
-
-
-
-
-
-
-    /**
->>>>>>> Stashed changes
-     * List all soft deleted diagnostics
-     */
     public function indexSoftDelete()
     {
         $diagnostics = Diagnostic::onlyTrashed()->get();
@@ -155,39 +143,6 @@ class DiagnosticController extends Controller
         $diagnostic = Diagnostic::onlyTrashed()->findOrFail($id);
         $diagnostic->restore();
         return response()->json($diagnostic, 200);
-    }
-
-    public function userDiagnostics(Request $request)
-    {
-        $user = auth('sanctum')->user();
-
-        if (!$user) {
-            return response()->json([
-                'message' => 'Não'
-            ], 401);
-        }
-
-        $patient = $user->patient;
-
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Patient not found for this user'
-            ], 404);
-        }
-
-        $patient->load('diagnostics.symptoms');
-
-
-        return response()->json([
-            'patient' => $patient
-        ], 200);
-    }
-
-    public function patientDiagnostics(Patient $patient)
-    {
-        $patient->load('diagnostics.symptoms');
-
-        return response()->json($patient, 200);
     }
 
     public function patientDiagnosticsSoftDelete(Patient $patient)

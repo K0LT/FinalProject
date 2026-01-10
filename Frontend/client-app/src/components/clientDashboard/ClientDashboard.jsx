@@ -14,7 +14,7 @@ import { useAuth } from "@/context/AuthContext";
 import {
     getUserPatient,
     getUserAppointments,
-    getUserTreatmentGoals,
+    getUserTreatmentGoals, getUserTreatments,
 } from "@/services/userServices";
 
 function StatCard({ title, value, subtitle, icon: Icon, tone = "primary" }) {
@@ -150,7 +150,7 @@ export default function ClientDashboard() {
     const [loading, setLoading] = useState(true);
     const [patientData, setPatientData] = useState(null);
     const [appointments, setAppointments] = useState([]);
-    const [treatmentGoals, setTreatmentGoals] = useState([]);
+    const [treatments, setTreatments] = useState([]);
 
     useEffect(() => {
         if (isAuthenticated && user) {
@@ -164,12 +164,13 @@ export default function ClientDashboard() {
             const [patient, appointmentsData, goalsData] = await Promise.all([
                 getUserPatient(),
                 getUserAppointments(),
-                getUserTreatmentGoals(),
+                getUserTreatments(),
             ]);
 
             setPatientData(patient);
+            console.log(goalsData);
             setAppointments(Array.isArray(appointmentsData) ? appointmentsData : []);
-            setTreatmentGoals(Array.isArray(goalsData) ? goalsData : []);
+            setTreatments(Array.isArray(goalsData) ? goalsData : []);
         } catch (error) {
             console.error("Error loading patient data:", error);
         } finally {
@@ -211,9 +212,9 @@ export default function ClientDashboard() {
         }).length;
 
         // Calculate overall progress from treatment goals
-        const avgProgress = treatmentGoals.length > 0
-            ? Math.round(treatmentGoals.reduce((sum, goal) =>
-                sum + (goal.progress || goal.completion_percentage || 0), 0) / treatmentGoals.length)
+        const avgProgress = treatments.length > 0
+            ? Math.round(treatments.reduce((sum, goal) =>
+                sum + (goal.progress || goal.completion_percentage || 0), 0) / treatments.length)
             : 0;
 
         return {
@@ -368,7 +369,7 @@ export default function ClientDashboard() {
                     />
                     <StatCard
                         title="Objetivos Ativos"
-                        value={treatmentGoals.length}
+                        value={treatments.length}
                         subtitle="Em acompanhamento"
                         icon={TrendingUp}
                         tone="accent"
@@ -385,9 +386,9 @@ export default function ClientDashboard() {
                         Meu Progresso
                     </h2>
 
-                    {treatmentGoals.length > 0 ? (
+                    {treatments.length > 0 ? (
                         <div className="space-y-4">
-                            {treatmentGoals.slice(0, 4).map((goal) => (
+                            {treatments.slice(0, 4).map((goal) => (
                                 <ProgressBar
                                     key={goal.id}
                                     titulo={goal.title || goal.description || `Objetivo ${goal.id}`}

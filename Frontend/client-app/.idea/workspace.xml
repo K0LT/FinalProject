@@ -5,24 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1b459c2-d94e-4fdc-a627-79371de693f9" name="Changes" comment="BEARER TOKEN DEBUGGING   ||| XSRF OK">
+      <change beforePath="$PROJECT_DIR$/../../Backend/laravel-api/app/Http/Controllers/DiagnosticController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../Backend/laravel-api/app/Http/Controllers/DiagnosticController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Backend/laravel-api/app/Http/Controllers/PatientController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../Backend/laravel-api/app/Http/Controllers/PatientController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Backend/laravel-api/app/Policies/TreatmentPolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../Backend/laravel-api/app/Policies/TreatmentPolicy.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/appointments/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/appointments/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/diagnoses/[id]/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/diagnoses/[id]/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/diagnoses/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/diagnoses/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/patient/[id]/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/patient/[id]/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/appointments/AppointmentScheduler.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appointments/AppointmentScheduler.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/clientDashboard/ClientDashLayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/clientDashboard/ClientDashLayout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/clientDashboard/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/clientDashboard/Sidebar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Dashboard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/DashboardLayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/DashboardLayout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/diagnoses/DiagnosesPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/diagnoses/DiagnosesPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Sidebar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/patient/PatientProfilePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/patient/PatientProfilePage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/diagnostics.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/diagnostics.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/patients.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/patients.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/symptoms.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/symptoms.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/treatments.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/treatments.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/userServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/userServices.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/clientDashboard/ClientDashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/clientDashboard/ClientDashboard.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,12 +43,12 @@
       </list>
     </option>
   </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/K0LT/FinalProject.git",
-    "accountId": "dddfa444-62ba-48c0-9cf2-a9b0ab13337b"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/K0LT/FinalProject.git&quot;,
+    &quot;accountId&quot;: &quot;dddfa444-62ba-48c0-9cf2-a9b0ab13337b&quot;
   }
-}]]></component>
+}</component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="Laragon 8.3" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
@@ -78,7 +65,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "joao-dev-backend-updatingAuth-v2-final-merge",
+    "git-widget-placeholder": "dev",
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
     "node.js.detected.package.eslint": "true",
@@ -152,7 +139,7 @@
       <workItem from="1765904345516" duration="10119000" />
       <workItem from="1765991528718" duration="1000" />
       <workItem from="1765991557982" duration="11740000" />
-      <workItem from="1768064391808" duration="8522000" />
+      <workItem from="1768064391808" duration="9721000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard beginning">
       <option name="closed" value="true" />

@@ -113,12 +113,8 @@ class TreatmentGoalController extends Controller
             ], 404);
         }
 
-        $patient = Patient::with([
-            'treatmentGoals.goalMilestones'
-        ])->find($patient);
-
         return response()->json([
-            'patient' => $patient
+            'treatments' => $patient->treatments
         ], 200);
     }
 

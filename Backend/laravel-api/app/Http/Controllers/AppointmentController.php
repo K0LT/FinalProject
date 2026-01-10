@@ -113,7 +113,7 @@ class AppointmentController extends Controller
         $patient->load(['appointments.progressNotes']);
 
         return response()->json([
-            'patient' => $patient
+            'appointments' => $patient->appointments
         ], 200);
     }
 

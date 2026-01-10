@@ -109,7 +109,7 @@ class TreatmentController extends Controller
         $patient->load('treatments');
 
         return response()->json([
-            'patient' => $patient
+            'treatments' => $patient->treatments
         ], 200);
     }
 

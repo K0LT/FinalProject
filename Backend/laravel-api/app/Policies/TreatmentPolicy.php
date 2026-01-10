@@ -24,15 +24,6 @@ class TreatmentPolicy
      */
     public function view(User $user, Treatment $treatment): bool
     {
-<<<<<<< Updated upstream
-        if($user->role->name === "Admin"){
-=======
-
-        /*if($user->role->name === "Admin" || $user->patient->id === $treatment->patient_id){
->>>>>>> Stashed changes
-            return true;
-        }
-        return false;*/
         return true;
     }
 
