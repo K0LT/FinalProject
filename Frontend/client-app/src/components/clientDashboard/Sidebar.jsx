@@ -71,12 +71,6 @@ export default function Sidebar({
             icon: Scale,
             group: "Monitorização",
         },
-        {
-            label: "Assistente IA",
-            href: "/ai-assistant",
-            icon: Bot,
-            group: "Ferramentas",
-        },
     ];
 
     const groups = Array.from(new Set(menuItems.map((i) => i.group)));

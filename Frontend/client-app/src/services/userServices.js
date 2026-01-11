@@ -113,7 +113,7 @@ export const removeUserExercise = async (exerciseData) => {
  */
 export const getUserTreatmentGoals = async () => {
     const response = await apiClient.get('/api/user/treatment_goals');
-    return response.treatmentGoals || [];
+    return response.treatments || [];
 };
 
 /**

@@ -5,14 +5,13 @@ import { useParams } from "next/navigation";
 import ClientDashLayout from "@/components/clientDashboard/ClientDashLayout";
 import { AuthGuard } from "@/components/Auth/AuthGuard";
 import { useAuth } from "@/context/AuthContext";
-import { getUserTreatmentGoals } from "@/services/userServices";
+import {getUserTreatmentGoals, getUserTreatments} from "@/services/userServices";
 import TreatmentsCard from "@/components/treatments/Treatments";
 import { getTreatments } from "@/services/treatments";
 
 function TreatmentsPage() {
     const params = useParams();
     const { user } = useAuth();
-
     const [treatments, setTreatments] = useState([]);
     const [treatmentGoals, setTreatmentGoals] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -30,7 +29,7 @@ function TreatmentsPage() {
                 }
 
                 const [treatmentsData, goalsData] = await Promise.all([
-                    getTreatments(patientId),
+                    getUserTreatments(),
                     getUserTreatmentGoals()
                 ]);
 

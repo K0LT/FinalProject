@@ -2,9 +2,7 @@
 
 import Card from "@/components/ui/Card";
 import {useEffect, useState} from "react";
-import {getDiagnostics} from "@/services/diagnostics";
 import TreatmentsCard from "@/components/treatments/Treatments";
-import {getTreatments} from "@/services/treatments";
 import NewDiagnosticModal from "@/components/diagnoses/NewDiagnosticModal";
 import ButtonRow from "@/components/ui/ButtonRow";
 import DiagnosisCard from "@/components/diagnoses/DiagnosisCard";
@@ -24,6 +22,7 @@ export default function DiagnosesPage() {
     const params = useParams();
 
     const [diagnostics, setDiagnostics] = useState([]);
+    const [symptoms, setSymptoms] = useState([]);
     const [treatments, setTreatments] = useState([]);
 
     const [error, setError] = useState(null);
@@ -51,7 +50,8 @@ export default function DiagnosesPage() {
                     getUserTreatments()
                 ]);
 
-                setDiagnostics(Array.isArray(diagData) ? diagData : []);
+                setDiagnostics(diagData?.diagnostics ?? []);
+                setSymptoms(diagData?.symptoms ?? []);
                 setTreatments(Array.isArray(treatData) ? treatData : []);
             } catch (e) {
                 console.error('Error loading diagnoses/treatments:', e);
@@ -100,14 +100,12 @@ export default function DiagnosesPage() {
                         )}
                         {!loading && !error && diagnostics.length > 0 && (
                             <div>
-                                {diagnostics.symptoms.map((d, idx) => {
-                                    const symptoms =
-                                        Array.isArray(d.symptoms) ? d.symptoms
-                                            : typeof d.symptoms === 'string'
-                                                ? d.symptoms.split(',').map(s => s.trim()).filter(Boolean)
-                                                : [];
+                                {diagnostics.map((d, idx) => {
+                                    const diagSymptoms = symptoms
+                                        .filter(s => s.diagnostic_id === d.id)
+                                        .map(s => s.name);
 
-                                    return <DiagnosisCard key={d.id ?? idx} {...d} symptoms={symptoms} />;
+                                    return <DiagnosisCard key={d.id ?? idx} {...d} symptoms={diagSymptoms} />;
                                 })}
                             </div>
                         )}

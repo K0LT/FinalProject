@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1b459c2-d94e-4fdc-a627-79371de693f9" name="Changes" comment="BEARER TOKEN DEBUGGING   ||| XSRF OK">
-      <change beforePath="$PROJECT_DIR$/../../Backend/laravel-api/app/Http/Controllers/DiagnosticController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../Backend/laravel-api/app/Http/Controllers/DiagnosticController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Backend/laravel-api/app/Http/Controllers/PatientController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../Backend/laravel-api/app/Http/Controllers/PatientController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Backend/laravel-api/app/Policies/TreatmentPolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../Backend/laravel-api/app/Policies/TreatmentPolicy.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/clientProfile/page.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/treatments/[id]/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/treatments/[id]/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/client/ClientProfilePage.jsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/clientDashboard/ClientDashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/clientDashboard/ClientDashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/clientDashboard/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/clientDashboard/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/diagnoses/DiagnosesPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/diagnoses/DiagnosesPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,26 +61,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JavaScript Debug.Next.js: debug client-side.executor": "Debug",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "dev",
-    "js.debugger.nextJs.config.created.client": "true",
-    "js.debugger.nextJs.config.created.server": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "npm.Next.js: server-side.executor": "Debug",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "ts.external.directory.path": "C:\\Users\\Admin\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.Next.js: debug client-side.executor&quot;: &quot;Debug&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.Next.js: server-side.executor&quot;: &quot;Debug&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Admin\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\dev\active\finalProjectFiles\FinalProject\Frontend\client-app\src\components\booking" />
@@ -139,7 +142,8 @@
       <workItem from="1765904345516" duration="10119000" />
       <workItem from="1765991528718" duration="1000" />
       <workItem from="1765991557982" duration="11740000" />
-      <workItem from="1768064391808" duration="9721000" />
+      <workItem from="1768064391808" duration="10014000" />
+      <workItem from="1768125825749" duration="6848000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard beginning">
       <option name="closed" value="true" />

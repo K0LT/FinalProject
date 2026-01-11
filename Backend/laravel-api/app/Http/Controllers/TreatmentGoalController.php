@@ -114,7 +114,7 @@ class TreatmentGoalController extends Controller
         }
 
         return response()->json([
-            'treatments' => $patient->treatments
+            'treatments' => $patient->treatmentGoals
         ], 200);
     }
 
