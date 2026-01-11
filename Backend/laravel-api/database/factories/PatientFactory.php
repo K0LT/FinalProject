@@ -26,7 +26,7 @@ class PatientFactory extends Factory
             'birth_date' => $this->faker->date('Y-m-d', '2005-01-01'),
             'emergency_contact_name' => $this->faker->name(),
             'emergency_contact_phone' => $this->faker->phoneNumber(),
-            'emergency_contact_relation' => $this->faker->randomElement(['Parent', 'Sibling', 'Friend', 'Spouse']),
+            'emergency_contact_relation' => $this->faker->randomElement(['Familiar', 'Amigo', 'Esposo/Esposa', 'Outro']),
             'client_since' => $this->faker->date('Y-m-d', 'now'),
             'last_visit' => $this->faker->date('Y-m-d', 'now'),
             'next_appointment' => $this->faker->date('Y-m-d', '+1 year'),

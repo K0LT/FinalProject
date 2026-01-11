@@ -19,7 +19,7 @@ class ExercisePatientFactory extends Factory
     public function definition(): array
     {
 
-        $statuses = ['Em progresso', 'Concluído', 'Pendente'];
+        $statuses = ['Em progresso', 'Concluído', 'Cancelado'];
         $notes = [
             'Paciente realizou o exercício corretamente.',
             'Paciente sentiu leve desconforto durante o exercício.',
@@ -29,10 +29,10 @@ class ExercisePatientFactory extends Factory
         ];
 
         $frequencies = [
-            'Daily',
-            'Once a week',
-            'Fortnight',
-            'Once a month',
+            'Diariamente',
+            'Uma vez por semana',
+            'Duas vezes por semana',
+            'Uma vez por mês',
         ];
 
         $lastPerformed = $this->faker->optional()->dateTimeBetween('-1 month', 'now');
@@ -43,6 +43,8 @@ class ExercisePatientFactory extends Factory
             'frequency'        => $this->faker->randomElement($frequencies),
             'status'           => $this->faker->randomElement($statuses),
             'compliance_rate'  => $this->faker->numberBetween(0, 100),
+            'target_number'  => $this->faker->numberBetween(5, 15),
+            'actual_number'  => $this->faker->numberBetween(0, 5),
             'last_performed' => $lastPerformed ? $lastPerformed->format('Y-m-d') : null,
             'notes'            => $this->faker->optional()->randomElement($notes),
 

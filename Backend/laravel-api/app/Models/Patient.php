@@ -48,7 +48,7 @@ class Patient extends Model
     public function exercises(){
         return $this->belongsToMany(Exercise::class, 'exercise_patient')
             ->using(ExercisePatient::class)
-            ->withPivot( 'prescribed_date', 'frequency', 'status', 'compliance_rate', 'last_performed', 'notes')
+            ->withPivot('prescribed_date', 'frequency', 'status', 'compliance_rate', 'last_performed', 'actual_number', 'target_number', 'notes')
             ->withTimestamps()
             ->wherePivotNull('deleted_at');
     }
