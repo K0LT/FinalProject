@@ -4,7 +4,7 @@
 <div class="p-8">
     <!-- Header -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Dashboard Admin</h1>
+        <h1 class="text-3xl font-bold text-gray-900">Administrador</h1>
         <p class="text-gray-600 mt-2">Bem-vindo ao painel de administração</p>
     </div>
 
@@ -53,7 +53,7 @@
     <!-- Today's Appointments Section -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
         <h2 class="text-xl font-semibold text-gray-900 mb-6">Consultas de Hoje</h2>
-        
+
         @if($todayAppointments->count() > 0)
             <div class="space-y-3">
                 @foreach($todayAppointments as $appointment)
@@ -96,7 +96,7 @@
     <!-- Pending Appointments Section -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
         <h2 class="text-xl font-semibold text-gray-900 mb-6">Consultas Pendentes (Hoje em diante)</h2>
-        
+
         @if($pendingAppointments->count() > 0)
             <div class="space-y-3">
                 @foreach($pendingAppointments as $appointment)
@@ -158,7 +158,7 @@
     <!-- New Users Section -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <h2 class="text-xl font-semibold text-gray-900 mb-6">Novos Utilizadores (Últimos 30 dias)</h2>
-        
+
         @if($newUsers->count() > 0)
             <div class="overflow-x-auto">
                 <table class="w-full">
