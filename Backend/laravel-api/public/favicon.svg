@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="48" fill="#B8860B" stroke="#996F00" stroke-width="2"></circle>
+
+  <defs>
+    <radialGradient id="premiumGradient" cx="30%" cy="30%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.9"></stop>
+      <stop offset="100%" stop-color="#B8860B"></stop>
+    </radialGradient>
+
+    <pattern id="premiumPattern" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="0.4" fill="#FFFACD" opacity="0.3"></circle>
+    </pattern>
+  </defs>
+
+  <circle cx="50" cy="50" r="42" fill="url(#premiumGradient)"></circle>
+  <circle cx="50" cy="50" r="38" fill="url(#premiumPattern)"></circle>
+
+  <g fill="white" stroke="white" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M28 25 L72 25" stroke-width="2.5"></path>
+    <path d="M50 25 L50 75" stroke-width="2"></path>
+    <path d="M32 35 Q38 40 32 45 Q26 50 32 55" fill="none" stroke-width="2"></path>
+    <path d="M68 35 Q62 40 68 45 Q74 50 68 55" fill="none" stroke-width="2"></path>
+    <path d="M42 40 Q50 35 58 40 Q50 50 42 40" fill="none" stroke-width="1.8"></path>
+    <path d="M35 65 L65 65" stroke-width="2"></path>
+  </g>
+
+  <circle cx="50" cy="50" r="47" fill="none" stroke="#FFD700" stroke-width="0.8"></circle>
+  <circle cx="50" cy="50" r="44" fill="none" stroke="#FFFACD" stroke-width="0.5"></circle>
+</svg>
