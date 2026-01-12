@@ -195,6 +195,36 @@
         @endif
     </div>
 
+    <!-- Subscription Section -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#B8860B]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            Subscrição
+        </h2>
+
+        @if($patient && $patient->has_subscription)
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tipo de Plano</label>
+                    <p class="text-lg font-semibold text-green-600">{{ $patient->plan_type }}</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Data de Expiração</label>
+                    <p class="text-gray-900">{{ \Carbon\Carbon::parse($patient->expiring_subscription_date)->format('d/m/Y') }}</p>
+                </div>
+                <div class="p-3 rounded-lg bg-green-50 border border-green-200">
+                    <p class="text-sm text-green-700 font-medium">✓ Subscrição ativa</p>
+                </div>
+            </div>
+        @else
+            <div class="p-3 rounded-lg bg-gray-50 border border-gray-200">
+                <p class="text-sm text-gray-600">Nenhuma subscrição ativa</p>
+            </div>
+        @endif
+    </div>
+
     <!-- Edit Button -->
     <div class="flex gap-3">
         <a href="{{ route('user.profile.edit') }}" class="inline-flex items-center gap-2 bg-[#B8860B] text-white hover:bg-[#B8860B]/90 px-6 py-2 rounded-md font-medium transition-all">
@@ -204,7 +234,7 @@
             </svg>
             Editar Perfil
         </a>
-        <button onclick="document.getElementById('allergiesModal').showModal()" class="inline-flex items-center gap-2 bg-red-600 text-white hover:bg-red-700 px-6 py-2 rounded-md font-medium transition-all">
+        <button onclick="document.getElementById('allergiesModal').showModal()" class="inline-flex items-center gap-2 bg-[#B8860B] text-white hover:bg-[#B8860B]/90 px-6 py-2 rounded-md font-medium transition-all">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
             </svg>

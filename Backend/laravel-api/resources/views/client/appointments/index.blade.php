@@ -72,7 +72,7 @@
                     </div>
 
                     <!-- Appointment Details -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-gray-100">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-gray-100">
                         <!-- Duration -->
                         @if($appointment->duration)
                             <div>
@@ -88,12 +88,6 @@
                                 <p class="text-gray-900">{{ $appointment->type }}</p>
                             </div>
                         @endif
-
-                        <!-- Status Info -->
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 uppercase tracking-widest mb-1">Estado</label>
-                            <p class="text-gray-900">{{ $appointment->status }}</p>
-                        </div>
                     </div>
 
                     <!-- Notes -->

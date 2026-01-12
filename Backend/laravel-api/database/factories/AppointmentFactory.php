@@ -20,7 +20,7 @@ class AppointmentFactory extends Factory
 
     public function definition(): array
     {
-        $types = ['Acupunturista', 'Nutricionista', 'Treinador Pessoal', 'Medico'];
+        $types = ['Avaliação e Diagnóstico', 'Sessões Terapêuticas', 'Sessões Especializadas', 'Técnicas Complementares', 'Programas e Planos', 'Consulta de avaliação gratuita'];
         $statuses = ['Pendente', 'Confirmado', 'Cancelado', 'Concluído'];
         $durations = [30, 60, 90];
         $notes = [
@@ -38,7 +38,7 @@ class AppointmentFactory extends Factory
         return [
 
             'patient_id' => Patient::inRandomOrder()->first()->id,
-            'appointment_date_time' => $this->faker->dateTimeBetween('+1 day', '+1 month')->format('Y-m-d H:i:s'),
+            'appointment_date_time' => $this->faker->dateTimeBetween('-1 month', '+1 month')->format('Y-m-d H:i:s'),
             'duration' => $this->faker->randomElement($durations),
             'type' => $this->faker->randomElement($types),
             'notes' => $this->faker->randomElement($notes),

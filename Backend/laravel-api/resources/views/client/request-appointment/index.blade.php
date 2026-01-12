@@ -69,11 +69,12 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B8860B] focus:border-transparent @error('type') border-red-500 @enderror"
                 >
                     <option value="">Selecione um tipo</option>
-                    <option value="Acupuntura" {{ old('type') === 'Acupuntura' ? 'selected' : '' }}>Acupuntura</option>
-                    <option value="Massagem" {{ old('type') === 'Massagem' ? 'selected' : '' }}>Massagem</option>
-                    <option value="Consulta" {{ old('type') === 'Consulta' ? 'selected' : '' }}>Consulta</option>
-                    <option value="Avaliação" {{ old('type') === 'Avaliação' ? 'selected' : '' }}>Avaliação</option>
-                    <option value="Seguimento" {{ old('type') === 'Seguimento' ? 'selected' : '' }}>Seguimento</option>
+                    <option value="Avaliação e Diagnóstico" {{ old('type') === 'Avaliação e Diagnóstico' ? 'selected' : '' }}>Avaliação e Diagnóstico</option>
+                    <option value="Sessões Terapêuticas" {{ old('type') === 'Sessões Terapêuticas' ? 'selected' : '' }}>Sessões Terapêuticas</option>
+                    <option value="Sessões Especializadas" {{ old('type') === 'Sessões Especializadas' ? 'selected' : '' }}>Sessões Especializadas</option>
+                    <option value="Técnicas Complementares" {{ old('type') === 'Técnicas Complementares' ? 'selected' : '' }}>Técnicas Complementares</option>
+                    <option value="Programas e Planos" {{ old('type') === 'Programas e Planos' ? 'selected' : '' }}>Programas e Planos</option>
+                    <option value="Consulta de avaliação gratuita" {{ old('type') === 'Consulta de avaliação gratuita' ? 'selected' : '' }}>Consulta de avaliação gratuita</option>
                 </select>
                 @error('type')
                     <p class="text-red-600 text-sm mt-2">{{ $message }}</p>

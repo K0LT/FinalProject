@@ -23,6 +23,9 @@ class Patient extends Model
         'client_since',
         'last_visit',
         'next_appointment',
+        'has_subscription',
+        'plan_type',
+        'expiring_subscription_date',
     ];
 
     public function user(){

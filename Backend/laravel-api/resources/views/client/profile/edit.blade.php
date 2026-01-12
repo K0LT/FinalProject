@@ -202,16 +202,6 @@
                 </div>
             </div>
 
-            <!-- Info Box -->
-            <div class="p-4 rounded-lg border border-blue-200 bg-blue-50">
-                <p class="text-sm text-blue-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-2" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
-                    </svg>
-                    Os seus dados são confidenciais e protegidos pelo RGPD.
-                </p>
-            </div>
-
             <!-- Buttons -->
             <div class="flex gap-3 pt-4">
                 <button 

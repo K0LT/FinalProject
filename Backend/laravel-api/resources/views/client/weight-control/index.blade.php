@@ -314,79 +314,87 @@
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-6">Registos de Nutrição Diária</h2>
 
-            <div class="space-y-4">
-                @foreach($dailyNutrition as $nutrition)
-                    <div class="p-4 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors">
-                        <div class="flex items-start justify-between mb-3">
-                            <p class="font-semibold text-gray-900">
-                                {{ \Carbon\Carbon::parse($nutrition->date)->format('d/m/Y') }}
-                            </p>
-                            <p class="text-sm text-gray-600">
-                                {{ \Carbon\Carbon::parse($nutrition->date)
-    ->locale('pt')
-    ->translatedFormat('l') }}
-                            </p>
-                        </div>
-
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                            @if($nutrition->calories_consumed)
-                                <div class="bg-white rounded p-2 border border-black">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Calorias</label>
-                                    <p class="font-semibold text-gray-900">{{ $nutrition->calories_consumed }} kcal</p>
-                                </div>
-                            @endif
-
-                            @if($nutrition->protein_consumed)
-                                <div class="bg-white rounded p-2 border border-black">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Proteína</label>
-                                    <p class="font-semibold text-gray-900">{{ $nutrition->protein_consumed }}g</p>
-                                </div>
-                            @endif
-
-                            @if($nutrition->carbs_consumed)
-                                <div class="bg-white rounded p-2 border border-black">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Carboidratos</label>
-                                    <p class="font-semibold text-gray-900">{{ $nutrition->carbs_consumed }}g</p>
-                                </div>
-                            @endif
-
-                            @if($nutrition->fat_consumed)
-                                <div class="bg-white rounded p-2 border border-black">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Gordura</label>
-                                    <p class="font-semibold text-gray-900">{{ $nutrition->fat_consumed }}g</p>
-                                </div>
-                            @endif
-
-                            @if($nutrition->water_intake)
-                                <div class="bg-white rounded p-2 border border-black">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Água</label>
-                                    <p class="font-semibold text-gray-900">{{ $nutrition->water_intake }}L</p>
-                                </div>
-                            @endif
-
-                            @if($nutrition->steps)
-                                <div class="bg-white rounded p-2 border border-black">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Passos</label>
-                                    <p class="font-semibold text-gray-900">{{ number_format($nutrition->steps) }}</p>
-                                </div>
-                            @endif
-
-                            @if($nutrition->sleep_hours)
-                                <div class="bg-white rounded p-2 border border-black">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Sono</label>
-                                    <p class="font-semibold text-gray-900">{{ $nutrition->sleep_hours }}h</p>
-                                </div>
-                            @endif
-
-                            @if($nutrition->calories_burned)
-                                <div class="bg-white rounded p-2 border border-black">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Calorias Queimadas</label>
-                                    <p class="font-semibold text-gray-900">{{ $nutrition->calories_burned }} kcal</p>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                @endforeach
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b border-gray-200">
+                            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Data</th>
+                            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Calorias</th>
+                            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Proteína</th>
+                            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Carboidratos</th>
+                            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Gordura</th>
+                            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Água</th>
+                            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Passos</th>
+                            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Sono</th>
+                            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Calorias Queimadas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($dailyNutrition as $nutrition)
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-3 px-4 text-sm text-gray-900">
+                                    {{ \Carbon\Carbon::parse($nutrition->date)->format('d/m/Y') }}
+                                </td>
+                                <td class="py-3 px-4 text-sm text-gray-600">
+                                    @if($nutrition->calories_consumed)
+                                        {{ $nutrition->calories_consumed }} kcal
+                                    @else
+                                        <span class="text-gray-400">---</span>
+                                    @endif
+                                </td>
+                                <td class="py-3 px-4 text-sm text-gray-600">
+                                    @if($nutrition->protein_consumed)
+                                        {{ $nutrition->protein_consumed }}g
+                                    @else
+                                        <span class="text-gray-400">---</span>
+                                    @endif
+                                </td>
+                                <td class="py-3 px-4 text-sm text-gray-600">
+                                    @if($nutrition->carbs_consumed)
+                                        {{ $nutrition->carbs_consumed }}g
+                                    @else
+                                        <span class="text-gray-400">---</span>
+                                    @endif
+                                </td>
+                                <td class="py-3 px-4 text-sm text-gray-600">
+                                    @if($nutrition->fat_consumed)
+                                        {{ $nutrition->fat_consumed }}g
+                                    @else
+                                        <span class="text-gray-400">---</span>
+                                    @endif
+                                </td>
+                                <td class="py-3 px-4 text-sm text-gray-600">
+                                    @if($nutrition->water_intake)
+                                        {{ $nutrition->water_intake }}L
+                                    @else
+                                        <span class="text-gray-400">---</span>
+                                    @endif
+                                </td>
+                                <td class="py-3 px-4 text-sm text-gray-600">
+                                    @if($nutrition->steps)
+                                        {{ number_format($nutrition->steps) }}
+                                    @else
+                                        <span class="text-gray-400">---</span>
+                                    @endif
+                                </td>
+                                <td class="py-3 px-4 text-sm text-gray-600">
+                                    @if($nutrition->sleep_hours)
+                                        {{ $nutrition->sleep_hours }}h
+                                    @else
+                                        <span class="text-gray-400">---</span>
+                                    @endif
+                                </td>
+                                <td class="py-3 px-4 text-sm text-gray-600">
+                                    @if($nutrition->calories_burned)
+                                        {{ $nutrition->calories_burned }} kcal
+                                    @else
+                                        <span class="text-gray-400">---</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
 
             <!-- Pagination Links -->

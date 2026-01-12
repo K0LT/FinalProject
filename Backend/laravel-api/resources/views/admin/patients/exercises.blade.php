@@ -30,11 +30,35 @@
             @foreach($exercises as $exercise)
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all">
                     <div class="mb-4">
-                        <h3 class="text-lg font-semibold text-gray-900">{{ $exercise->name }}</h3>
+                        <h3 class="text-lg text-gray-900">{{ $exercise->name }}</h3>
                         <p class="text-sm text-gray-600 mt-1">
                             Prescrito em: {{ \Carbon\Carbon::parse($exercise->pivot->prescribed_date)->format('d/m/Y') }}
                         </p>
                     </div>
+
+                    @if($exercise->category)
+                        <div class="mb-3 inline-block">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs bg-blue-100 text-blue-700">
+                                {{ $exercise->category }}
+                            </span>
+                        </div>
+                    @endif
+
+                    @if($exercise->difficulty_level)
+                        <div class="mb-4 inline-block ml-2">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs
+                                @if($exercise->difficulty_level === 'Fácil')
+                                    bg-green-100 text-green-700
+                                @elseif($exercise->difficulty_level === 'Moderado')
+                                    bg-yellow-100 text-yellow-700
+                                @else
+                                    bg-red-100 text-red-700
+                                @endif
+                            ">
+                                {{ $exercise->difficulty_level }}
+                            </span>
+                        </div>
+                    @endif
 
                     @if($exercise->description)
                         <div class="mb-4 p-3 bg-gray-50 rounded border border-gray-200">
@@ -42,18 +66,18 @@
                         </div>
                     @endif
 
-                    <div class="grid grid-cols-3 gap-4 mb-4">
-                        <div class="bg-gray-50 rounded p-3">
-                            <p class="text-xs font-medium text-gray-600">Alvo</p>
-                            <p class="text-lg font-semibold text-gray-900">{{ $exercise->pivot->target_number }}</p>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                        <div class="bg-blue-50 rounded p-3 border border-blue-100">
+                            <p class="text-xs text-gray-600">Alvo</p>
+                            <p class="text-lg text-gray-900 mt-1">{{ $exercise->pivot->target_number }}</p>
                         </div>
-                        <div class="bg-gray-50 rounded p-3">
-                            <p class="text-xs font-medium text-gray-600">Realizado</p>
-                            <p class="text-lg font-semibold text-gray-900">{{ $exercise->pivot->actual_number }}</p>
+                        <div class="bg-green-50 rounded p-3 border border-green-100">
+                            <p class="text-xs text-gray-600">Realizado</p>
+                            <p class="text-lg text-gray-900 mt-1">{{ $exercise->pivot->actual_number }}</p>
                         </div>
-                        <div class="bg-gray-50 rounded p-3">
-                            <p class="text-xs font-medium text-gray-600">Taxa de Conformidade</p>
-                            <p class="text-lg font-semibold text-gray-900">
+                        <div class="bg-purple-50 rounded p-3 border border-purple-100">
+                            <p class="text-xs text-gray-600">Taxa</p>
+                            <p class="text-lg text-gray-900 mt-1">
                                 @if($exercise->pivot->target_number > 0)
                                     {{ round(($exercise->pivot->actual_number / $exercise->pivot->target_number) * 100) }}%
                                 @else
@@ -63,10 +87,16 @@
                         </div>
                     </div>
 
-                    <div class="pt-4 border-t border-gray-100">
+                    @if($exercise->pivot->frequency)
+                        <div class="mb-3 p-2 bg-gray-50 rounded text-sm text-gray-700">
+                            Frequência: {{ $exercise->pivot->frequency }}
+                        </div>
+                    @endif
+
+                    <div class="pt-4 border-t border-gray-100 mb-4">
                         <div class="flex items-center justify-between mb-2">
-                            <label class="block text-sm font-semibold text-gray-700">Progresso</label>
-                            <span class="text-sm font-semibold text-gray-900">
+                            <label class="text-sm text-gray-700">Progresso</label>
+                            <span class="text-sm text-gray-900">
                                 @if($exercise->pivot->target_number > 0)
                                     {{ round(($exercise->pivot->actual_number / $exercise->pivot->target_number) * 100) }}%
                                 @else
@@ -80,8 +110,36 @@
                     </div>
 
                     @if($exercise->pivot->last_performed)
-                        <div class="mt-4 text-sm text-gray-600">
-                            <p>Última execução: {{ \Carbon\Carbon::parse($exercise->pivot->last_performed)->format('d/m/Y') }}</p>
+                        <div class="mb-3 text-sm text-gray-600">
+                            Última execução: {{ \Carbon\Carbon::parse($exercise->pivot->last_performed)->format('d/m/Y') }}
+                        </div>
+                    @endif
+
+                    @if($exercise->pivot->notes)
+                        <div class="mb-3 p-3 bg-gray-50 rounded border border-gray-100">
+                            <p class="text-xs text-gray-600">Notas</p>
+                            <p class="text-sm text-gray-900 mt-1">{{ $exercise->pivot->notes }}</p>
+                        </div>
+                    @endif
+
+                    @if($exercise->instructions)
+                        <div class="mb-3 p-3 bg-gray-50 rounded border border-gray-100">
+                            <p class="text-xs text-gray-600">Instruções</p>
+                            <p class="text-sm text-gray-900 mt-1">{{ $exercise->instructions }}</p>
+                        </div>
+                    @endif
+
+                    @if($exercise->benefits)
+                        <div class="mb-3 p-3 bg-gray-50 rounded border border-gray-100">
+                            <p class="text-xs text-gray-600">Benefícios</p>
+                            <p class="text-sm text-gray-900 mt-1">{{ $exercise->benefits }}</p>
+                        </div>
+                    @endif
+
+                    @if($exercise->precautions)
+                        <div class="p-3 bg-gray-50 rounded border border-gray-100">
+                            <p class="text-xs text-gray-600">Precauções</p>
+                            <p class="text-sm text-gray-900 mt-1">{{ $exercise->precautions }}</p>
                         </div>
                     @endif
                 </div>

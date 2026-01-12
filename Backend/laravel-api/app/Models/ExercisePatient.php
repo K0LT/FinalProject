@@ -23,6 +23,8 @@ class ExercisePatient extends Pivot
         'status',
         'compliance_rate',
         'last_performed',
+        'actual_number',
+        'target_number',
         'notes',
     ];
 

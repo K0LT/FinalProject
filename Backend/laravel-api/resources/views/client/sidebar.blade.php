@@ -91,7 +91,7 @@
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
                     <path d="M12 6v6l4 2"></path>
                 </svg>
-                <span>Assistente IA</span>
+                <span>Perguntas Frequentes</span>
             </a>
         </nav>
 

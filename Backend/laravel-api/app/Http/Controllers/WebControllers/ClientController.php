@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Allergy;
 use App\Models\Appointment;
 use App\Models\Exercise;
+use App\Models\WeightTracking;
+use App\Models\DailyNutrition;
 use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
     /**
-     * Show the client profile/dashboard
+     * Controlador da view de paciente
      */
     public function profile()
     {
@@ -52,7 +54,7 @@ class ClientController extends Controller
 
 
     /**
-     * Show client appointments
+     * Controlador da view de ver as consultas do paciente autenticado
      */
     public function appointments()
     {
@@ -72,7 +74,7 @@ class ClientController extends Controller
     }
 
     /**
-     * Show client diagnostics and treatments
+     * Controlador da view de ver os diagnosticos do paciente autenticado
      */
     public function diagnostics()
     {
@@ -99,7 +101,7 @@ class ClientController extends Controller
     }
 
     /**
-     * Objetivos Page
+     * Controlador da view de ver os objetivos de saude do paciente autenticado
      */
     public function objectives()
     {
@@ -132,7 +134,7 @@ class ClientController extends Controller
     }
 
     /**
-     * Exercises Page
+     * Controlador da view de ver os exercicios do paciente autenticado
      */
     public function exercises()
     {
@@ -151,7 +153,7 @@ class ClientController extends Controller
     }
 
     /**
-     * WeightControl Page
+     * Controlador da view de ver o controlo de saude do paciente autenticado
      */
     public function weightControl()
     {
@@ -187,7 +189,7 @@ class ClientController extends Controller
     }
 
     /**
-     * Show AI assistant
+     * Para fazer
      */
     public function aiAssistant()
     {
@@ -199,7 +201,7 @@ class ClientController extends Controller
     }
 
     /**
-     * Show appointment request form
+     * Controlador da view para fazer um pedido de consulta de um paciente
      */
     public function requestAppointmentForm()
     {
@@ -211,7 +213,7 @@ class ClientController extends Controller
     }
 
     /**
-     * Store appointment request
+     * Controlador para criar um pedido de consulta
      */
     public function storeAppointmentRequest()
     {
@@ -239,7 +241,7 @@ class ClientController extends Controller
         $data = [
             'patient_id' => $patient->id,
             'appointment_date_time' => $appointmentDateTime,
-            'status' => 'Pendente',
+            'status' => 'Pendente', //Sempre como pendente para o Admin aceitar
             'type' => $validated['type'],
             'notes' => $validated['notes'],
         ];
@@ -248,11 +250,11 @@ class ClientController extends Controller
         Appointment::create($data);
 
         
-        return redirect()->route('user.appointments')->with('success', 'Consulta solicitada com sucesso!');
+        return redirect()->route('user.appointments');
     }
 
     /**
-     * Mark exercise as complete and increase actual number
+     * Controlador para aumentar o numero de vezes que o paciente faz o exercico
      */
     public function completeExercise(Exercise $exercise)
     {
@@ -263,32 +265,34 @@ class ClientController extends Controller
             ->where('exercise_id', $exercise->id)
             ->first();
         
+            //Verificação de exercicio está associado ao paciente
         if (!$exercisePatient) {
-            return redirect()->route('user.exercises')->with('error', 'Exercício não encontrado.');
+            return redirect()->route('user.exercises');
         }
         
-        // Increment actual_number (max target_number)
+        // Melhorar isto. Min é uma função que retorna o menor dos 2 numeros no array(actualNumber e targetNumber), se o actualNumber for maior que 10, retorna sempre o target
+        // date. Assim fica sempre o target date.
         $newActualNumber = min($exercisePatient->pivot->actual_number + 1, $exercisePatient->pivot->target_number);
         
-        // Calculate new compliance rate (prevent division by zero)
+        // Calcular o novo compliance_rate
         $newComplianceRate = $exercisePatient->pivot->target_number > 0 
             ? round(($newActualNumber / $exercisePatient->pivot->target_number) * 100)
             : 0;
         
-        // Update the pivot record
+        
         $patient->exercises()->updateExistingPivot($exercise->id, [
             'actual_number' => $newActualNumber,
             'compliance_rate' => $newComplianceRate,
             'last_performed' => now(),
         ]);
         
-        return redirect()->route('user.exercises')->with('success', 'Exercício marcado como completo! ' . $newActualNumber . '/' . $exercisePatient->pivot->target_number);
+        return redirect()->route('user.exercises');
     }
 
 
 
     /**
-     * Add weight tracking record
+     * Controlador de adiconar um registo de peso a um user autenticado
      */
     public function addWeight()
     {
@@ -303,13 +307,13 @@ class ClientController extends Controller
         $validated['patient_id'] = $patient->id;
         $validated['measurement_date'] = now();
         
-        \App\Models\WeightTracking::create($validated);
+        WeightTracking::create($validated);
         
-        return redirect()->route('user.weight-control')->with('success', 'Peso registado com sucesso!');
+        return redirect()->route('user.weight-control');
     }
 
     /**
-     * Add daily nutrition record
+     * Controlador de adicionar um registo de nutrição(dailyNutrition) do user autenticado
      */
     public function addNutrition()
     {
@@ -330,16 +334,16 @@ class ClientController extends Controller
         $validated['patient_id'] = $patient->id;
         $validated['date'] = now()->format('Y-m-d');
         
-        \App\Models\DailyNutrition::create($validated);
+        DailyNutrition::create($validated);
         
-        return redirect()->route('user.weight-control')->with('success', 'Registro de nutrição adicionado com sucesso!');
+        return redirect()->route('user.weight-control');
     }
 
 
 
 
     /**
-     * Show edit profile form
+     * Controlador de deolver uma view de editar perfil
      */
     public function editProfile()
     {
@@ -353,7 +357,7 @@ class ClientController extends Controller
     }
 
     /**
-     * Update user profile
+     * Controlador de guardar o editar de um user autenticado
      */
     public function updateProfile()
     {
@@ -363,7 +367,7 @@ class ClientController extends Controller
         $validated = request()->validate([
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id, //Maneira de contornar ao editar, o email não dar unique, se o user não tiver editado o email. assim verifica na conula do id do user autenticado, se for o mesmo, deixa passar
             'phone_number' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:500',
             'birth_date' => 'nullable|date',
@@ -373,14 +377,14 @@ class ClientController extends Controller
             'emergency_contact_relation' => 'nullable|string|max:100',
         ]);
         
-        // Update user
+        // Update nos campos do user
         $user->update([
             'name' => $validated['name'],
             'surname' => $validated['surname'],
             'email' => $validated['email'],
         ]);
         
-        // Update patient
+        // Update nos campos do paciente
         $patient->update([
             'phone_number' => $validated['phone_number'],
             'address' => $validated['address'],
@@ -391,13 +395,13 @@ class ClientController extends Controller
             'emergency_contact_relation' => $validated['emergency_contact_relation'],
         ]);
         
-        return redirect()->route('user.profile')->with('success', 'Perfil atualizado com sucesso!');
+        return redirect()->route('user.profile');
     }
 
 
 
     /**
-     * Add allergy to patient
+     * Controlador de adcionar uma alergia ao user autenticado
      */
     public function addAllergy()
     {
@@ -408,18 +412,18 @@ class ClientController extends Controller
             'allergy_id' => 'required|exists:allergies,id',
         ]);
         
-        // Check if patient already has this allergy
+        // Dar check se o user já tem essa alergia
         if ($patient->allergies()->where('allergy_id', $validated['allergy_id'])->exists()) {
-            return redirect()->route('user.profile')->with('error', 'Já tem esta alergia registada!');
+            return redirect()->route('user.profile');
         }
         
         $patient->allergies()->attach($validated['allergy_id']);
         
-        return redirect()->route('user.profile')->with('success', 'Alergia adicionada com sucesso!');
+        return redirect()->route('user.profile');
     }
 
     /**
-     * Remove allergy from patient
+     * Controlador de remover a alergia ao user auntenticado
      */
     public function removeAllergy()
     {
@@ -432,6 +436,6 @@ class ClientController extends Controller
         
         $patient->allergies()->detach($validated['allergy_id']);
         
-        return redirect()->route('user.profile')->with('success', 'Alergia removida com sucesso!');
+        return redirect()->route('user.profile');
     }
 }

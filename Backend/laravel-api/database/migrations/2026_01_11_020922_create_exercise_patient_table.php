@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('compliance_rate')->default(0);
             $table->date('last_performed')->nullable();
             $table->integer('actual_number')->default(0);
-            $table->integer('target_number')->default(1);
+            $table->integer('target_number');
             $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();

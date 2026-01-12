@@ -27,6 +27,9 @@ return new class extends Migration
             $table->date('client_since')->nullable();
             $table->date('last_visit')->nullable();
             $table->date('next_appointment')->nullable();
+            $table->boolean('has_subscription')->default(false);
+            $table->date('expiring_subscription_date')->nullable();
+            $table->enum('plan_type', ['Plano Transformação', 'Programa Completo'])->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

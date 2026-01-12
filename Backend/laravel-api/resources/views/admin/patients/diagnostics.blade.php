@@ -51,7 +51,7 @@
                                 <p class="text-sm text-gray-900 mt-1">{{ $diagnostic->western_diagnosis }}</p>
                             </div>
                         @endif
-                        
+
                         @if($diagnostic->tcm_diagnosis)
                             <div class="p-3 bg-green-50 rounded border border-green-200">
                                 <p class="text-xs font-medium text-green-700">Diagnóstico TCM</p>
@@ -60,52 +60,144 @@
                         @endif
                     </div>
 
-                    @if($diagnostic->severity)
-                        <div class="mb-4 p-3 bg-gray-50 rounded border border-gray-200">
-                            <p class="text-xs font-medium text-gray-600">Severidade</p>
-                            <p class="text-sm text-gray-900 mt-1">{{ $diagnostic->severity }}</p>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        @if($diagnostic->severity)
+                            <div class="p-3 bg-orange-50 rounded border border-orange-200">
+                                <p class="text-xs font-medium text-orange-700">Severidade</p>
+                                <p class="text-sm text-gray-900 mt-1">{{ $diagnostic->severity }}</p>
+                            </div>
+                        @endif
+
+                        @if($diagnostic->pulse_quality)
+                            <div class="p-3 bg-purple-50 rounded border border-purple-200">
+                                <p class="text-xs font-medium text-purple-700">Qualidade do Pulso</p>
+                                <p class="text-sm text-gray-900 mt-1">{{ $diagnostic->pulse_quality }}</p>
+                            </div>
+                        @endif
+                    </div>
+
+                    @if($diagnostic->tongue_description)
+                        <div class="mb-4 p-3 bg-pink-50 rounded border border-pink-200">
+                            <p class="text-xs font-medium text-pink-700">Descrição da Língua</p>
+                            <p class="text-sm text-gray-900 mt-1">{{ $diagnostic->tongue_description }}</p>
                         </div>
                     @endif
 
                     @if($diagnostic->symptoms->count() > 0)
                         <div class="mt-4">
-                            <p class="text-sm font-medium text-gray-700 mb-2">Sintomas:</p>
+                            <div class="flex items-center justify-between mb-3">
+                                <p class="text-sm text-gray-700">Sintomas ({{ $diagnostic->symptoms->count() }}):</p>
+                                <button type="button" onclick="openSymptomModal({{ $diagnostic->id }})" class="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </button>
+                            </div>
                             <div class="space-y-2">
                                 @foreach($diagnostic->symptoms as $symptom)
-                                    <div class="flex items-start gap-2 p-2 rounded bg-yellow-50">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-600 mt-0.5" viewBox="0 0 24 24" fill="currentColor">
+                                    <div class="flex items-start gap-3 p-3 rounded bg-yellow-50 border border-yellow-100">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-600 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
                                         </svg>
-                                        <div>
-                                            <p class="text-sm font-medium text-gray-900">{{ $symptom->name }}</p>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm text-gray-900">{{ $symptom->name }}</p>
                                             @if($symptom->description)
-                                                <p class="text-xs text-gray-600 mt-0.5">{{ $symptom->description }}</p>
+                                                <p class="text-xs text-gray-600 mt-1">{{ $symptom->description }}</p>
                                             @endif
                                         </div>
+                                        <form action="{{ route('admin.patient.diagnostics.symptoms.delete', [$patient->id, $diagnostic->id, $symptom->id]) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-red-700 flex-shrink-0" onclick="return confirm('Tem a certeza que deseja remover este sintoma?')">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                </svg>
+                                            </button>
+                                        </form>
                                     </div>
                                 @endforeach
                             </div>
+                        </div>
+                    @else
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm text-gray-700">Sintomas:</p>
+                                <button type="button" onclick="openSymptomModal({{ $diagnostic->id }})" class="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </button>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2">Nenhum sintoma registado</p>
                         </div>
                     @endif
 
                     @if($diagnostic->treatments->count() > 0)
                         <div class="mt-4">
-                            <p class="text-sm font-medium text-gray-700 mb-2">Tratamentos Associados:</p>
-                            <div class="space-y-2">
+                            <div class="flex items-center justify-between mb-3">
+                                <p class="text-sm text-gray-700">Tratamentos Associados ({{ $diagnostic->treatments->count() }}):</p>
+                                <button type="button" onclick="openTreatmentFormModal({{ $diagnostic->id }})" class="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </button>
+                            </div>
+                            <div class="space-y-3">
                                 @foreach($diagnostic->treatments as $treatment)
-                                    <button type="button" onclick="openTreatmentModal({{ $treatment->id }}, '{{ $treatment->session_date_time ? \Carbon\Carbon::parse($treatment->session_date_time)->format('d/m/Y H:i') : 'Sem data' }}', '{{ $treatment->treatment_methods ?? '' }}', '{{ $treatment->acupoints_used ?? '' }}', '{{ $treatment->duration ?? '' }}', '{{ $treatment->notes ?? '' }}', '{{ $treatment->next_session ? \Carbon\Carbon::parse($treatment->next_session)->format('d/m/Y') : '' }}')" class="w-full text-left flex items-start gap-2 p-3 rounded bg-blue-50 hover:bg-blue-100 transition-all cursor-pointer border border-blue-200">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M10 15.172l9.192-9.193a1 1 0 1 1 1.415 1.414l-10.606 10.606a1 1 0 0 1-1.414 0l-4.243-4.243a1 1 0 1 1 1.414-1.414l3.242 3.243z"></path>
-                                        </svg>
-                                        <div class="flex-1">
-                                            <p class="text-sm font-medium text-gray-900">{{ $treatment->session_date_time ? \Carbon\Carbon::parse($treatment->session_date_time)->format('d/m/Y H:i') : 'Sem data' }}</p>
+                                    <div class="flex items-start gap-3 p-4 rounded bg-blue-50 border border-blue-100">
+                                        <button type="button" onclick="openTreatmentModal({{ $treatment->id }}, '{{ $treatment->session_date_time ? \Carbon\Carbon::parse($treatment->session_date_time)->format('d/m/Y H:i') : 'Sem data' }}', '{{ $treatment->treatment_methods ?? '' }}', '{{ $treatment->acupoints_used ?? '' }}', '{{ $treatment->duration ?? '' }}', '{{ $treatment->notes ?? '' }}', '{{ $treatment->next_session ? \Carbon\Carbon::parse($treatment->next_session)->format('d/m/Y') : '' }}')" class="flex-1 text-left cursor-pointer hover:opacity-80 transition-all">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 mb-2" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M10 15.172l9.192-9.193a1 1 0 1 1 1.415 1.414l-10.606 10.606a1 1 0 0 1-1.414 0l-4.243-4.243a1 1 0 1 1 1.414-1.414l3.242 3.243z"></path>
+                                            </svg>
+                                            <p class="text-sm text-gray-900">{{ $treatment->session_date_time ? \Carbon\Carbon::parse($treatment->session_date_time)->format('d/m/Y H:i') : 'Sem data' }}</p>
                                             @if($treatment->treatment_methods)
-                                                <p class="text-xs text-gray-600 mt-0.5">{{ $treatment->treatment_methods }}</p>
+                                                <p class="text-xs text-gray-600 mt-1">Métodos: {{ $treatment->treatment_methods }}</p>
                                             @endif
-                                        </div>
-                                    </button>
+                                            @if($treatment->acupoints_used)
+                                                <p class="text-xs text-gray-600 mt-0.5">Pontos: {{ $treatment->acupoints_used }}</p>
+                                            @endif
+                                            @if($treatment->duration)
+                                                <p class="text-xs text-gray-600 mt-0.5">Duração: {{ $treatment->duration }} min</p>
+                                            @endif
+                                        </button>
+                                        <form action="{{ route('admin.patient.diagnostics.treatments.delete', [$patient->id, $diagnostic->id, $treatment->id]) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-red-700 flex-shrink-0" onclick="return confirm('Tem a certeza que deseja remover este tratamento?')">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
                                 @endforeach
                             </div>
+                        </div>
+                    @else
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm text-gray-700">Tratamentos Associados:</p>
+                                <button type="button" onclick="openTreatmentFormModal({{ $diagnostic->id }})" class="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </button>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2">Nenhum tratamento registado</p>
                         </div>
                     @endif
                 </div>
@@ -148,19 +240,24 @@
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
-                <p class="text-gray-900 whitespace-pre-wrap" id="modalNotes">-</p>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Qualidade do Pulso</label>
+                <p class="text-gray-900" id="modalPulseQuality">-</p>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Descrição da Língua</label>
+                <p class="text-gray-900 whitespace-pre-wrap" id="modalTongueDescription">-</p>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-function openTreatmentModal(id, sessionDate, treatmentMethods, acupointsUsed, duration, notes, nextSession) {
+function openTreatmentModal(treatmentId, sessionDateTime, treatmentMethods, acupointsUsed, duration, notes, nextSession) {
     document.getElementById('modalTreatmentMethods').textContent = treatmentMethods || '-';
     document.getElementById('modalAcupointsUsed').textContent = acupointsUsed || '-';
-    document.getElementById('modalDuration').textContent = duration ? duration + ' min' : '-';
-    document.getElementById('modalNotes').textContent = notes || '-';
+    document.getElementById('modalDuration').textContent = (duration ? duration + ' min' : '-');
+    document.getElementById('modalTongueDescription').textContent = notes || '-';
     document.getElementById('treatmentModal').classList.remove('hidden');
 }
 
@@ -173,7 +270,152 @@ document.getElementById('treatmentModal').addEventListener('click', function(e) 
         closeTreatmentModal();
     }
 });
+
+function openSymptomModal(diagnosticId) {
+    const form = document.getElementById('symptomForm');
+    form.action = `/admin/patients/{{ $patient->id }}/diagnostics/${diagnosticId}/symptoms`;
+    document.getElementById('symptomDiagnosticId').value = diagnosticId;
+    document.getElementById('symptomModal').classList.remove('hidden');
+}
+
+function closeSymptomModal() {
+    document.getElementById('symptomModal').classList.add('hidden');
+}
+
+document.getElementById('symptomModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeSymptomModal();
+    }
+});
+
+function openTreatmentFormModal(diagnosticId) {
+    const form = document.getElementById('treatmentForm');
+    form.action = `/admin/patients/{{ $patient->id }}/diagnostics/${diagnosticId}/treatments`;
+    document.getElementById('treatmentFormModal').classList.remove('hidden');
+}
+
+function closeTreatmentFormModal() {
+    document.getElementById('treatmentFormModal').classList.add('hidden');
+    document.getElementById('treatmentForm').reset();
+}
+
+document.getElementById('treatmentFormModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeTreatmentFormModal();
+    }
+});
+
+function openDiagnosticModal() {
+    document.getElementById('diagnosticModal').classList.remove('hidden');
+}
+
+function closeDiagnosticModal() {
+    document.getElementById('diagnosticModal').classList.add('hidden');
+}
+
+document.getElementById('diagnosticModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeDiagnosticModal();
+    }
+});
 </script>
+
+<!-- Symptom Modal -->
+<div id="symptomModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-lg max-w-md w-full">
+        <div class="border-b border-gray-200 p-6 flex items-center justify-between">
+            <h2 class="text-2xl font-bold text-gray-900">Adicionar Sintoma</h2>
+            <button type="button" onclick="closeSymptomModal()" class="text-gray-500 hover:text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <form id="symptomForm" method="POST" class="p-6 space-y-4">
+            @csrf
+            <input type="hidden" id="symptomDiagnosticId">
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Sintoma</label>
+                <select name="symptom_id" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Selecione um sintoma</option>
+                    @foreach($symptoms ?? [] as $symptom)
+                        <option value="{{ $symptom->id }}">{{ $symptom->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="flex gap-2 pt-4">
+                <button type="submit" class="flex-1 bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg font-medium transition-all">
+                    Adicionar
+                </button>
+                <button type="button" onclick="closeSymptomModal()" class="flex-1 bg-gray-200 text-gray-900 hover:bg-gray-300 px-4 py-2 rounded-lg font-medium transition-all">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Treatment Form Modal -->
+<div id="treatmentFormModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-lg max-w-md w-full">
+        <div class="border-b border-gray-200 p-6 flex items-center justify-between">
+            <h2 class="text-2xl font-bold text-gray-900">Adicionar Tratamento</h2>
+            <button type="button" onclick="closeTreatmentFormModal()" class="text-gray-500 hover:text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <form id="treatmentForm" method="POST" class="p-6 space-y-4 max-h-96 overflow-y-auto">
+            @csrf
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Data da Sessão</label>
+                <input type="datetime-local" name="session_date_time" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Métodos de Tratamento</label>
+                <textarea name="treatment_methods" rows="2" placeholder="Ex: Acupuntura, Moxabustão" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Pontos de Acupuntura</label>
+                <input type="text" name="acupoints_used" placeholder="Ex: LI4, ST36" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Duração (minutos)</label>
+                <input type="number" name="duration" placeholder="Ex: 30" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Próxima Sessão</label>
+                <input type="date" name="next_session" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
+                <textarea name="notes" rows="2" placeholder="Adicione notas..." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+
+            <div class="flex gap-2 pt-4">
+                <button type="submit" class="flex-1 bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg font-medium transition-all">
+                    Adicionar
+                </button>
+                <button type="button" onclick="closeTreatmentFormModal()" class="flex-1 bg-gray-200 text-gray-900 hover:bg-gray-300 px-4 py-2 rounded-lg font-medium transition-all">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <!-- Diagnostic Modal -->
 <div id="diagnosticModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
@@ -190,7 +432,7 @@ document.getElementById('treatmentModal').addEventListener('click', function(e) 
 
         <form action="{{ route('admin.patient.diagnostics.store', $patient->id) }}" method="POST" class="p-6 space-y-4 max-h-96 overflow-y-auto">
             @csrf
-            
+
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Data do Diagnóstico</label>
                 <input type="date" name="diagnostic_date" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -234,6 +476,58 @@ document.getElementById('treatmentModal').addEventListener('click', function(e) 
 </div>
 
 <script>
+function openTreatmentModal(treatmentId, sessionDateTime, treatmentMethods, acupointsUsed, duration, notes, nextSession) {
+    document.getElementById('modalTreatmentMethods').textContent = treatmentMethods || '-';
+    document.getElementById('modalAcupointsUsed').textContent = acupointsUsed || '-';
+    document.getElementById('modalDuration').textContent = (duration ? duration + ' min' : '-');
+    document.getElementById('modalTongueDescription').textContent = notes || '-';
+    document.getElementById('treatmentModal').classList.remove('hidden');
+}
+
+function closeTreatmentModal() {
+    document.getElementById('treatmentModal').classList.add('hidden');
+}
+
+document.getElementById('treatmentModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeTreatmentModal();
+    }
+});
+
+function openSymptomModal(diagnosticId) {
+    const form = document.getElementById('symptomForm');
+    form.action = `/admin/patients/{{ $patient->id }}/diagnostics/${diagnosticId}/symptoms`;
+    document.getElementById('symptomDiagnosticId').value = diagnosticId;
+    document.getElementById('symptomModal').classList.remove('hidden');
+}
+
+function closeSymptomModal() {
+    document.getElementById('symptomModal').classList.add('hidden');
+}
+
+document.getElementById('symptomModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeSymptomModal();
+    }
+});
+
+function openTreatmentFormModal(diagnosticId) {
+    const form = document.getElementById('treatmentForm');
+    form.action = `/admin/patients/{{ $patient->id }}/diagnostics/${diagnosticId}/treatments`;
+    document.getElementById('treatmentFormModal').classList.remove('hidden');
+}
+
+function closeTreatmentFormModal() {
+    document.getElementById('treatmentFormModal').classList.add('hidden');
+    document.getElementById('treatmentForm').reset();
+}
+
+document.getElementById('treatmentFormModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeTreatmentFormModal();
+    }
+});
+
 function openDiagnosticModal() {
     document.getElementById('diagnosticModal').classList.remove('hidden');
 }

@@ -21,15 +21,27 @@
             @foreach($progressNotes as $note)
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all">
                     <div class="mb-4">
-                        <h3 class="text-lg font-semibold text-gray-900">Nota de Progresso</h3>
-                        <p class="text-sm text-gray-600 mt-1">
-                            {{ \Carbon\Carbon::parse($note->note_date)->format('d/m/Y') }}
-                        </p>
+                        <h3 class="text-lg text-gray-900">Nota de Progresso</h3>
+                        <div class="flex items-center gap-4 mt-2">
+                            <p class="text-sm text-gray-600">
+                                Data: {{ \Carbon\Carbon::parse($note->note_date)->format('d/m/Y') }}
+                            </p>
+                            @if($note->appointment)
+                                <p class="text-sm text-gray-600">
+                                    Consulta: {{ \Carbon\Carbon::parse($note->appointment->appointment_date_time)->format('d/m/Y H:i') }}
+                                </p>
+                                @if($note->appointment->type)
+                                    <p class="text-sm text-gray-600">
+                                        Tipo: {{ $note->appointment->type }}
+                                    </p>
+                                @endif
+                            @endif
+                        </div>
                     </div>
 
                     @if($note->subjective)
                         <div class="mb-4">
-                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Subjetivo</h4>
+                            <h4 class="text-sm text-gray-700 mb-2">Subjetivo</h4>
                             <div class="p-3 bg-blue-50 rounded border border-blue-200">
                                 <p class="text-sm text-gray-700">{{ $note->subjective }}</p>
                             </div>
@@ -38,7 +50,7 @@
 
                     @if($note->objective)
                         <div class="mb-4">
-                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Objetivo</h4>
+                            <h4 class="text-sm text-gray-700 mb-2">Objetivo</h4>
                             <div class="p-3 bg-green-50 rounded border border-green-200">
                                 <p class="text-sm text-gray-700">{{ $note->objective }}</p>
                             </div>
@@ -47,7 +59,7 @@
 
                     @if($note->assessment)
                         <div class="mb-4">
-                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Avaliação</h4>
+                            <h4 class="text-sm text-gray-700 mb-2">Avaliação</h4>
                             <div class="p-3 bg-yellow-50 rounded border border-yellow-200">
                                 <p class="text-sm text-gray-700">{{ $note->assessment }}</p>
                             </div>
@@ -56,7 +68,7 @@
 
                     @if($note->plan)
                         <div class="mb-4">
-                            <h4 class="text-sm font-semibold text-gray-700 mb-2">Plano</h4>
+                            <h4 class="text-sm text-gray-700 mb-2">Plano</h4>
                             <div class="p-3 bg-purple-50 rounded border border-purple-200">
                                 <p class="text-sm text-gray-700">{{ $note->plan }}</p>
                             </div>
@@ -64,7 +76,7 @@
                     @endif
 
                     <div class="mt-4 text-xs text-gray-500">
-                        <p>Registada em: {{ \Carbon\Carbon::parse($note->created_at)->format('d/m/Y H:i') }}</p>
+                        Registada em: {{ \Carbon\Carbon::parse($note->created_at)->format('d/m/Y H:i') }}
                     </div>
                 </div>
             @endforeach
