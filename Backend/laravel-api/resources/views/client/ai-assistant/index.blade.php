@@ -7,7 +7,7 @@
     <!-- Header -->
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-gray-900">FAQ's</h1>
-        <p class="text-gray-600 mt-2">Clique em uma pergunta para obter informações</p>
+        <p class="text-gray-600 mt-2">Clique numa pergunta para obter informações</p>
     </div>
 
     <!-- Answer Display (moved to top) -->
