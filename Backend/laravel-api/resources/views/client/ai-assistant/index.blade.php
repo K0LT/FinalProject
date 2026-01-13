@@ -6,7 +6,7 @@
 <div class="p-8">
     <!-- Header -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Perguntas Frequentes</h1>
+        <h1 class="text-3xl font-bold text-gray-900">FAQ's</h1>
         <p class="text-gray-600 mt-2">Clique em uma pergunta para obter informações</p>
     </div>
 
@@ -260,7 +260,7 @@
             title: 'Porquê uma Subscrição',
             content: `
                 <p class="mb-4">Conheça os nossos planos de subscrição e escolha o que melhor se adequa aos seus objetivos:</p>
-                
+
                 <div class="space-y-4">
                     <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
                         <div class="flex items-start justify-between mb-3">
@@ -308,7 +308,7 @@
             title: 'Tipos de Consultas',
             content: `
                 <p class="mb-4">Conheça os diferentes tipos de consultas disponíveis:</p>
-                
+
                 <div class="space-y-3">
                     <div class="p-3 bg-gray-50 rounded border border-gray-200">
                         <p class="font-semibold text-gray-900">Avaliação e Diagnóstico</p>
@@ -352,7 +352,7 @@
             e.preventDefault();
             const questionId = button.getAttribute('data-question-id');
             const answer = answers[questionId];
-            
+
             if (answer) {
                 answerTitle.textContent = answer.title;
                 answerContent.innerHTML = answer.content;
