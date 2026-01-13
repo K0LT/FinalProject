@@ -10,6 +10,24 @@
         <p class="text-gray-600 mt-2">Clique em uma pergunta para obter informações</p>
     </div>
 
+    <!-- Answer Display (moved to top) -->
+    <div id="answerContainer" class="mb-8 hidden">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+            <div class="flex items-start justify-between mb-6">
+                <div>
+                    <h2 id="answerTitle" class="text-2xl font-bold text-gray-900"></h2>
+                </div>
+                <button id="closeAnswer" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div id="answerContent" class="text-gray-700 leading-relaxed space-y-4"></div>
+        </div>
+    </div>
+
     <!-- Questions List -->
     <div class="space-y-4">
         <button class="faqButton text-left w-full p-6 rounded-lg border border-gray-200 hover:border-[#B8860B] hover:bg-[#B8860B]/5 transition-all bg-white" data-question-id="1">
@@ -57,24 +75,6 @@
             <p class="text-sm text-gray-600 mt-1">Descubra os diferentes tipos de consultas disponíveis</p>
         </button>
     </div>
-
-    <!-- Answer Display -->
-    <div id="answerContainer" class="mt-8 hidden">
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-            <div class="flex items-start justify-between mb-6">
-                <div>
-                    <h2 id="answerTitle" class="text-2xl font-bold text-gray-900"></h2>
-                </div>
-                <button id="closeAnswer" class="text-gray-400 hover:text-gray-600 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-            <div id="answerContent" class="text-gray-700 leading-relaxed space-y-4"></div>
-        </div>
-    </div>
 </div>
 
 <script>
@@ -113,7 +113,7 @@
                     <li><strong>Frequência:</strong> Realize os exercícios conforme prescrito</li>
                     <li><strong>Descanso:</strong> Respeite os períodos de descanso recomendados</li>
                 </ol>
-                <p class="mt-4 text-yellow-700 bg-yellow-50 p-3 rounded">⚠️ Se sentir dor ou desconforto, pare imediatamente e contacte seu terapeuta.</p>
+                <p class="mt-4 text-gray-700 bg-gray-50 p-3 rounded">⚠️ Se sentir dor ou desconforto, pare imediatamente e contacte seu terapeuta.</p>
             `
         },
         3: {
@@ -121,17 +121,17 @@
             content: `
                 <p>Uma alimentação adequada é fundamental para o seu bem-estar:</p>
                 <div class="mt-4 space-y-3">
-                    <div class="p-3 bg-green-50 rounded border border-green-200">
-                        <p class="font-semibold text-green-900">✓ Alimentos Recomendados:</p>
-                        <p class="text-sm text-green-800 mt-1">Frutas, vegetais, proteínas magras, grãos integrais, legumes</p>
+                    <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <p class="font-semibold text-gray-900">✓ Alimentos Recomendados:</p>
+                        <p class="text-sm text-gray-700 mt-1">Frutas, vegetais, proteínas magras, grãos integrais, legumes</p>
                     </div>
-                    <div class="p-3 bg-red-50 rounded border border-red-200">
-                        <p class="font-semibold text-red-900">✗ Alimentos a Evitar:</p>
-                        <p class="text-sm text-red-800 mt-1">Alimentos processados, açúcares refinados, gorduras saturadas</p>
+                    <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <p class="font-semibold text-gray-900">✗ Alimentos a Evitar:</p>
+                        <p class="text-sm text-gray-700 mt-1">Alimentos processados, açúcares refinados, gorduras saturadas</p>
                     </div>
-                    <div class="p-3 bg-blue-50 rounded border border-blue-200">
-                        <p class="font-semibold text-blue-900">💧 Hidratação:</p>
-                        <p class="text-sm text-blue-800 mt-1">Beba pelo menos 2 litros de água por dia</p>
+                    <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <p class="font-semibold text-gray-900">💧 Hidratação:</p>
+                        <p class="text-sm text-gray-700 mt-1">Beba pelo menos 2 litros de água por dia</p>
                     </div>
                 </div>
                 <p class="mt-4">Consulte seu terapeuta para um plano nutricional personalizado.</p>
@@ -142,21 +142,21 @@
             content: `
                 <p>Aqui estão estratégias práticas para melhorar seu bem-estar:</p>
                 <div class="mt-4 space-y-3">
-                    <div class="p-3 bg-purple-50 rounded border border-purple-200">
-                        <p class="font-semibold text-purple-900">🧘 Meditação e Mindfulness</p>
-                        <p class="text-sm text-purple-800 mt-1">Dedique 10-15 minutos diários a práticas de relaxamento</p>
+                    <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <p class="font-semibold text-gray-900">🧘 Meditação e Mindfulness</p>
+                        <p class="text-sm text-gray-700 mt-1">Dedique 10-15 minutos diários a práticas de relaxamento</p>
                     </div>
-                    <div class="p-3 bg-orange-50 rounded border border-orange-200">
-                        <p class="font-semibold text-orange-900">🚶 Atividade Física</p>
-                        <p class="text-sm text-orange-800 mt-1">Caminhe 30 minutos por dia ou pratique exercícios leves</p>
+                    <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <p class="font-semibold text-gray-900">🚶 Atividade Física</p>
+                        <p class="text-sm text-gray-700 mt-1">Caminhe 30 minutos por dia ou pratique exercícios leves</p>
                     </div>
-                    <div class="p-3 bg-indigo-50 rounded border border-indigo-200">
-                        <p class="font-semibold text-indigo-900">😴 Sono de Qualidade</p>
-                        <p class="text-sm text-indigo-800 mt-1">Mantenha uma rotina regular de sono (7-8 horas)</p>
+                    <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <p class="font-semibold text-gray-900">😴 Sono de Qualidade</p>
+                        <p class="text-sm text-gray-700 mt-1">Mantenha uma rotina regular de sono (7-8 horas)</p>
                     </div>
-                    <div class="p-3 bg-pink-50 rounded border border-pink-200">
-                        <p class="font-semibold text-pink-900">🤝 Conexões Sociais</p>
-                        <p class="text-sm text-pink-800 mt-1">Passe tempo com família e amigos regularmente</p>
+                    <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <p class="font-semibold text-gray-900">🤝 Conexões Sociais</p>
+                        <p class="text-sm text-gray-700 mt-1">Passe tempo com família e amigos regularmente</p>
                     </div>
                 </div>
             `
@@ -218,10 +218,10 @@
             title: 'Horário Disponível',
             content: `
                 <div class="space-y-4">
-                    <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                        <p class="font-semibold text-blue-900 mb-2">📅 Horário de Atendimento</p>
-                        <p class="text-blue-800">Segunda a Sexta, fora feriados</p>
-                        <p class="text-lg font-bold text-blue-900 mt-2">09:00 - 18:00</p>
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <p class="font-semibold text-gray-900 mb-2">📅 Horário de Atendimento</p>
+                        <p class="text-gray-700">Segunda a Sexta, fora feriados</p>
+                        <p class="text-lg font-bold text-gray-900 mt-2">09:00 - 18:00</p>
                     </div>
                     <p class="text-gray-700">Estamos disponíveis para atendê-lo durante estes horários. Para agendar uma consulta fora deste período, contacte-nos diretamente.</p>
                 </div>
@@ -262,15 +262,15 @@
                 <p class="mb-4">Conheça os nossos planos de subscrição e escolha o que melhor se adequa aos seus objetivos:</p>
                 
                 <div class="space-y-4">
-                    <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
                         <div class="flex items-start justify-between mb-3">
                             <div>
-                                <p class="font-bold text-blue-900 text-lg">Plano Transformação</p>
-                                <p class="text-sm text-blue-800">Mais popular para resultados sustentáveis</p>
+                                <p class="font-bold text-gray-900 text-lg">Plano Transformação</p>
+                                <p class="text-sm text-gray-700">Mais popular para resultados sustentáveis</p>
                             </div>
-                            <p class="font-bold text-blue-900 text-xl">280€<span class="text-sm">/mês</span></p>
+                            <p class="font-bold text-gray-900 text-xl">280€<span class="text-sm">/mês</span></p>
                         </div>
-                        <ul class="space-y-1 text-sm text-blue-800">
+                        <ul class="space-y-1 text-sm text-gray-700">
                             <li>✓ 4 consultas mensais</li>
                             <li>✓ Acompanhamento semanal</li>
                             <li>✓ Plano nutricional personalizado</li>
@@ -281,15 +281,15 @@
                         </ul>
                     </div>
 
-                    <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
                         <div class="flex items-start justify-between mb-3">
                             <div>
-                                <p class="font-bold text-green-900 text-lg">Programa Completo</p>
-                                <p class="text-sm text-green-800">Transformação completa garantida</p>
+                                <p class="font-bold text-gray-900 text-lg">Programa Completo</p>
+                                <p class="text-sm text-gray-700">Transformação completa garantida</p>
                             </div>
-                            <p class="font-bold text-green-900 text-xl">720€<span class="text-sm">/3 meses</span></p>
+                            <p class="font-bold text-gray-900 text-xl">720€<span class="text-sm">/3 meses</span></p>
                         </div>
-                        <ul class="space-y-1 text-sm text-green-800">
+                        <ul class="space-y-1 text-sm text-gray-700">
                             <li>✓ Tudo do Plano Transformação</li>
                             <li>✓ 12 consultas em 3 meses</li>
                             <li>✓ Sessões de coaching</li>
@@ -310,34 +310,34 @@
                 <p class="mb-4">Conheça os diferentes tipos de consultas disponíveis:</p>
                 
                 <div class="space-y-3">
-                    <div class="p-3 bg-purple-50 rounded border border-purple-200">
-                        <p class="font-semibold text-purple-900">Avaliação e Diagnóstico</p>
-                        <p class="text-sm text-purple-800 mt-1">Avaliação completa da sua condição de saúde e diagnóstico personalizado</p>
+                    <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <p class="font-semibold text-gray-900">Avaliação e Diagnóstico</p>
+                        <p class="text-sm text-gray-700 mt-1">Avaliação completa da sua condição de saúde e diagnóstico personalizado</p>
                     </div>
 
-                    <div class="p-3 bg-blue-50 rounded border border-blue-200">
-                        <p class="font-semibold text-blue-900">Sessões Terapêuticas</p>
-                        <p class="text-sm text-blue-800 mt-1">Sessões de acupuntura, massagem e outras terapias tradicionais</p>
+                    <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <p class="font-semibold text-gray-900">Sessões Terapêuticas</p>
+                        <p class="text-sm text-gray-700 mt-1">Sessões de acupuntura, massagem e outras terapias tradicionais</p>
                     </div>
 
-                    <div class="p-3 bg-green-50 rounded border border-green-200">
-                        <p class="font-semibold text-green-900">Sessões Especializadas</p>
-                        <p class="text-sm text-green-800 mt-1">Sessões focadas em áreas específicas (dor, stress, performance)</p>
+                    <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <p class="font-semibold text-gray-900">Sessões Especializadas</p>
+                        <p class="text-sm text-gray-700 mt-1">Sessões focadas em áreas específicas (dor, stress, performance)</p>
                     </div>
 
-                    <div class="p-3 bg-orange-50 rounded border border-orange-200">
-                        <p class="font-semibold text-orange-900">Técnicas Complementares</p>
-                        <p class="text-sm text-orange-800 mt-1">Técnicas complementares para potenciar resultados</p>
+                    <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <p class="font-semibold text-gray-900">Técnicas Complementares</p>
+                        <p class="text-sm text-gray-700 mt-1">Técnicas complementares para potenciar resultados</p>
                     </div>
 
-                    <div class="p-3 bg-pink-50 rounded border border-pink-200">
-                        <p class="font-semibold text-pink-900">Programas e Planos</p>
-                        <p class="text-sm text-pink-800 mt-1">Programas estruturados para transformação completa</p>
+                    <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <p class="font-semibold text-gray-900">Programas e Planos</p>
+                        <p class="text-sm text-gray-700 mt-1">Programas estruturados para transformação completa</p>
                     </div>
 
-                    <div class="p-3 bg-yellow-50 rounded border border-yellow-200">
-                        <p class="font-semibold text-yellow-900">Consulta de Avaliação Gratuita</p>
-                        <p class="text-sm text-yellow-800 mt-1">Primeira consulta gratuita para conhecer o método QiFlow</p>
+                    <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                        <p class="font-semibold text-gray-900">Consulta de Avaliação Gratuita</p>
+                        <p class="text-sm text-gray-700 mt-1">Primeira consulta gratuita para conhecer o método QiFlow</p>
                     </div>
                 </div>
 

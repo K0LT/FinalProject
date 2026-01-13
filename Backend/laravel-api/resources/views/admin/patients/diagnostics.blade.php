@@ -46,15 +46,15 @@
 
                     <div class="grid grid-cols-2 gap-4 mb-4">
                         @if($diagnostic->western_diagnosis)
-                            <div class="p-3 bg-blue-50 rounded border border-blue-200">
-                                <p class="text-xs font-medium text-blue-700">Diagnóstico Ocidental</p>
+                            <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                                <p class="text-xs font-medium text-gray-700">Diagnóstico Ocidental</p>
                                 <p class="text-sm text-gray-900 mt-1">{{ $diagnostic->western_diagnosis }}</p>
                             </div>
                         @endif
 
                         @if($diagnostic->tcm_diagnosis)
-                            <div class="p-3 bg-green-50 rounded border border-green-200">
-                                <p class="text-xs font-medium text-green-700">Diagnóstico TCM</p>
+                            <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                                <p class="text-xs font-medium text-gray-700">Diagnóstico TCM</p>
                                 <p class="text-sm text-gray-900 mt-1">{{ $diagnostic->tcm_diagnosis }}</p>
                             </div>
                         @endif
@@ -62,23 +62,23 @@
 
                     <div class="grid grid-cols-2 gap-4 mb-4">
                         @if($diagnostic->severity)
-                            <div class="p-3 bg-orange-50 rounded border border-orange-200">
-                                <p class="text-xs font-medium text-orange-700">Severidade</p>
+                            <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                                <p class="text-xs font-medium text-gray-700">Severidade</p>
                                 <p class="text-sm text-gray-900 mt-1">{{ $diagnostic->severity }}</p>
                             </div>
                         @endif
 
                         @if($diagnostic->pulse_quality)
-                            <div class="p-3 bg-purple-50 rounded border border-purple-200">
-                                <p class="text-xs font-medium text-purple-700">Qualidade do Pulso</p>
+                            <div class="p-3 bg-gray-50 rounded border border-gray-200">
+                                <p class="text-xs font-medium text-gray-700">Qualidade do Pulso</p>
                                 <p class="text-sm text-gray-900 mt-1">{{ $diagnostic->pulse_quality }}</p>
                             </div>
                         @endif
                     </div>
 
                     @if($diagnostic->tongue_description)
-                        <div class="mb-4 p-3 bg-pink-50 rounded border border-pink-200">
-                            <p class="text-xs font-medium text-pink-700">Descrição da Língua</p>
+                        <div class="mb-4 p-3 bg-gray-50 rounded border border-gray-200">
+                            <p class="text-xs font-medium text-gray-700">Descrição da Língua</p>
                             <p class="text-sm text-gray-900 mt-1">{{ $diagnostic->tongue_description }}</p>
                         </div>
                     @endif

@@ -16,7 +16,7 @@
                 <!-- Treatment Goal Card -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <!-- Goal Header -->
-                    <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-6 border-b border-gray-200">
+                    <div class="bg-gradient-to-r from-[#B8860B]/10 to-[#B8860B]/5 p-6 border-b border-gray-200">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex-1">
                                 <h3 class="text-2xl font-semibold text-gray-900 mb-2">{{ $goal->title }}</h3>
@@ -70,7 +70,7 @@
                                 </span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="bg-gradient-to-r from-purple-500 to-blue-500 h-3 rounded-full transition-all" style="width: {{ $goal->progress_percentage }}%"></div>
+                                <div class="bg-gradient-to-r from-[#B8860B] to-[#996F00] h-3 rounded-full transition-all" style="width: {{ $goal->progress_percentage }}%"></div>
                             </div>
                         </div>
 

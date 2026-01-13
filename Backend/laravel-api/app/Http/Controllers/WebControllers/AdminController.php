@@ -20,6 +20,7 @@ class AdminController extends Controller
      * Muitas das questies são feitas com o eloquent, e são subentendidas.
      * validatePatientUser($patientId) Função que valida se o patient existe, e retorna user com a relação de paciente já carregada.
      * Informação importante, o Laravel consegue atraves de metodos mágicos encontrar propriedades nas relações, se não existir
+     * Hello
      */
 
     public function dashboard()
@@ -27,21 +28,21 @@ class AdminController extends Controller
         $todayAppointments = Appointment::whereDate('appointment_date_time', today())
             ->orderBy('appointment_date_time', 'asc')
             ->get();
-        
+
         $pendingAppointments = Appointment::where('status', 'Pendente')
             ->where('appointment_date_time', '>=', now()->startOfDay())
             ->orderBy('appointment_date_time', 'asc')
             ->paginate(10);
-        
+
         $newUsers = User::where('created_at', '>=', now()->subDays(30))
             ->orderByDesc('created_at')
             ->get();
-        
+
         $newUsersCount = $newUsers->count();
         $pendingAppointmentsCount = Appointment::where('status', 'Pendente')
             ->where('appointment_date_time', '>=', now()->startOfDay())
             ->count();
-        
+
         return view('admin.dashboard', [
             'pendingAppointments' => $pendingAppointments,
             'pendingAppointmentsCount' => $pendingAppointmentsCount,
@@ -56,13 +57,13 @@ class AdminController extends Controller
      */
     public function patients()
     {
-        //Query com o user porque preciso dos dados do user. 
-        $patients = User::where('role_id', 3) 
+        //Query com o user porque preciso dos dados do user.
+        $patients = User::where('role_id', 3)
             ->with('patient')
             ->orderBy('name', 'asc')
             ->orderBy('surname', 'asc')
             ->paginate(20);
-        
+
         return view('admin.patients.index', [
             'patients' => $patients,
         ]);
@@ -74,7 +75,7 @@ class AdminController extends Controller
     public function patientDetail($patientId)
     {
         $user = $this->validatePatientUser($patientId);
-        
+
         //Estrutura de deccisão, verifica se tem subscrição, se sim, compara à data atual, se a data atua for > que o expiring_subscrition_Date, dá update para false.
         if ($user->has_subscription) {
             if (now()->isAfter($this->expiring_subscription_date)) {
@@ -84,20 +85,20 @@ class AdminController extends Controller
                 ]);
             }
         }
-        
+
         $user->patient->load('appointments', 'conditions', 'allergies', 'exercises', 'diagnostics', 'treatmentGoals', 'weightTrackings', 'nutritionalGoals', 'progressNotes');
-        
-        
+
+
         $nextAppointment = $user->patient->appointments()
             ->where('status', 'Confirmado')
             ->where('appointment_date_time', '>=', now())
             ->orderBy('appointment_date_time', 'asc')
             ->first();
-        
-        
+
+
         $allergies = Allergy::orderBy('allergen', 'asc')->get();
-    
-        
+
+
         return view('admin.patients.detail', [
             'patient' => $user,
             'patientData' => $user->patient,
@@ -114,7 +115,7 @@ class AdminController extends Controller
     {
         $user = $this->validatePatientUser($patientId);
         $appointments = $user ->patient->appointments()->orderByDesc('appointment_date_time')->get();
-        
+
         return view('admin.patients.appointments', [
             'patient' => $user ,
             'appointments' => $appointments,
@@ -127,7 +128,7 @@ class AdminController extends Controller
     public function storePatientAppointment($patientId)
     {
         $user = $this->validatePatientUser($patientId);
-        
+
         $validated = request()->validate([
             'appointment_date' => [
                 'required',
@@ -141,10 +142,10 @@ class AdminController extends Controller
             'type' => 'nullable|string|max:255',
             'notes' => 'nullable|string',
         ]);
-        
+
         //String manipulation. Juntar date + time, porque na base de dados é esperado dateTime
         $appointmentDateTime = $validated['appointment_date'] . ' ' . $validated['appointment_time'] . ':00:00';
-        
+
         $data = [
             'patient_id' => $user->patient->id,
             'appointment_date_time' => $appointmentDateTime,
@@ -152,9 +153,9 @@ class AdminController extends Controller
             'type' => $validated['type'],
             'notes' => $validated['notes'],
         ];
-        
+
         Appointment::create($data);
-        
+
         return redirect()->route('admin.patient.appointments', $patientId);
     }
 
@@ -165,11 +166,11 @@ class AdminController extends Controller
     {
         $user = $this->validatePatientUser($patientId);
         $appointment = Appointment::findOrFail($appointmentId);
-        
+
         if ($appointment->patient_id !== $user->patient->id) {
             abort(403, 'Acesso negado');
         }
-        
+
         $validated = request()->validate([
             'appointment_date' => 'required|date_format:Y-m-d',
             'appointment_time' => 'required|in:09,10,11,12,13,14,15,16,17',
@@ -178,10 +179,10 @@ class AdminController extends Controller
             'status' => 'required|in:Pendente,Confirmado,Cancelado,Concluído',
             'notes' => 'nullable|string',
         ]);
-        
+
         //String manipulation. Juntar date + time, porque na base de dados é esperado dateTime. FAZ FUNÇÃO
         $appointmentDateTime = $validated['appointment_date'] . ' ' . $validated['appointment_time'] . ':00:00';
-        
+
         $appointment->update([
             'appointment_date_time' => $appointmentDateTime,
             'type' => $validated['type'],
@@ -189,7 +190,7 @@ class AdminController extends Controller
             'status' => $validated['status'],
             'notes' => $validated['notes'],
         ]);
-        
+
         return redirect()->route('admin.patient.appointments', $patientId);
     }
 
@@ -202,7 +203,7 @@ class AdminController extends Controller
         $diagnostics = $user->patient->diagnostics()->with('symptoms', 'treatments')->orderByDesc('diagnostic_date')->get();
         //Sintomas, para eu depois se quiser adicionar na página
         $symptoms = Symptom::orderBy('name', 'asc')->get();
-        
+
         return view('admin.patients.diagnostics', [
             'patient' => $user,
             'diagnostics' => $diagnostics,
@@ -216,7 +217,7 @@ class AdminController extends Controller
     public function storePatientDiagnostic($patientId)
     {
         $user = $this->validatePatientUser($patientId);
-        
+
         $validated = request()->validate([
             'diagnostic_date' => 'required|date_format:Y-m-d',
             'western_diagnosis' => 'nullable|string|max:255',
@@ -225,10 +226,10 @@ class AdminController extends Controller
             'pulse_quality' => 'nullable|string|max:255',
             'tongue_description' => 'nullable|string',
         ]);
-        
-        
+
+
         $diagnostic = $user->patient->diagnostics()->create($validated);
-        
+
         return redirect()->route('admin.patient.diagnostics', $patientId);;
     }
 
@@ -239,22 +240,22 @@ class AdminController extends Controller
     {
         $user = $this->validatePatientUser($patientId);
         $diagnostic = $user->patient->diagnostics()->findOrFail($diagnosticId);
-        
+
         $validated = request()->validate([
             'symptom_id' => 'required|exists:symptoms,id',
         ]);
-        
-        
+
+
         $exists = $diagnostic->symptoms()
             ->where('symptom_id', $validated['symptom_id'])
             ->exists();
-        
+
         if ($exists) {
             return redirect()->route('admin.patient.diagnostics', $patientId);
         }
-        
+
         $diagnostic->symptoms()->attach($validated['symptom_id']);
-        
+
         return redirect()->route('admin.patient.diagnostics', $patientId);
     }
 
@@ -266,7 +267,7 @@ class AdminController extends Controller
         $user = $this->validatePatientUser($patientId);
         $diagnostic = $user->patient->diagnostics()->findOrFail($diagnosticId);
         $diagnostic->symptoms()->detach($symptomId);
-        
+
         return redirect()->route('admin.patient.diagnostics', $patientId);
     }
 
@@ -277,7 +278,7 @@ class AdminController extends Controller
     {
         $user = $this->validatePatientUser($patientId);
         $diagnostic = $user->patient->diagnostics()->findOrFail($diagnosticId);
-        
+
         $validated = request()->validate([
             'session_date_time' => 'nullable|date_format:Y-m-d\TH:i',
             'treatment_methods' => 'nullable|string',
@@ -286,12 +287,12 @@ class AdminController extends Controller
             'next_session' => 'nullable|date_format:Y-m-d',
             'notes' => 'nullable|string',
         ]);
-        
+
         // dd($validated['session_date_time'])
         if ($validated['session_date_time']) {
             $validated['session_date_time'] = str_replace('T', ' ', $validated['session_date_time']) . ':00';
         }
-        
+
         $diagnostic->treatments()->create([
             'patient_id' => $user->patient->id,
             'session_date_time' => $validated['session_date_time'],
@@ -301,7 +302,7 @@ class AdminController extends Controller
             'next_session' => $validated['next_session'],
             'notes' => $validated['notes'],
         ]);
-        
+
         return redirect()->route('admin.patient.diagnostics', $patientId);
     }
 
@@ -314,7 +315,7 @@ class AdminController extends Controller
         $diagnostic = $user->patient->diagnostics()->findOrFail($diagnosticId);
         $treatment = $diagnostic->treatments()->findOrFail($treatmentId);
         $treatment->delete();
-        
+
         return redirect()->route('admin.patient.diagnostics', $patientId);
     }
 
@@ -326,7 +327,7 @@ class AdminController extends Controller
         $user = $this->validatePatientUser($patientId);
         $exercises = $user->patient->exercises()->orderByDesc('pivot_prescribed_date')->get();
         $allExercises = Exercise::orderBy('name', 'asc')->get();
-        
+
         return view('admin.patients.exercises', [
             'patient' => $user,
             'exercises' => $exercises,
@@ -340,7 +341,7 @@ class AdminController extends Controller
     public function attachPatientExercise($patientId)
     {
         $user = $this->validatePatientUser($patientId);
-        
+
         $validated = request()->validate([
             'exercise_id' => 'required|exists:exercises,id',
             'prescribed_date' => 'required|date_format:Y-m-d',
@@ -349,18 +350,18 @@ class AdminController extends Controller
             'status' => 'required|in:Em progresso,Concluído,Cancelado',
             'notes' => 'nullable|string',
         ]);
-        
+
         //Verificação para ver se o exercicio passado, já está atribuido.
         $exists = $user->patient->exercises()
             ->where('exercise_id', $validated['exercise_id'])
             ->wherePivotNull('deleted_at')
             ->exists();
-        
+
         //Return mais cedo
         if ($exists) {
             return redirect()->route('admin.patient.exercises', $patientId);
         }
-        
+
         //Adicionar à tabela pivot os dados, (acutal Number e compliance rate default 0)
         ExercisePatient::create([
             'patient_id' => $user->patient->id,
@@ -373,7 +374,7 @@ class AdminController extends Controller
             'status' => $validated['status'],
             'notes' => $validated['notes'],
         ]);
-        
+
         return redirect()->route('admin.patient.exercises', $patientId);
     }
 
@@ -384,7 +385,7 @@ class AdminController extends Controller
     {
         $user = $this->validatePatientUser($patientId);
         $objectives = $user->patient->treatmentGoals()->with('goalMilestones')->orderByDesc('created_at')->get();
-        
+
         return view('admin.patients.objectives', [
             'patient' => $user,
             'objectives' => $objectives,
@@ -397,7 +398,7 @@ class AdminController extends Controller
     public function storePatientObjective($patientId)
     {
         $user = $this->validatePatientUser($patientId);
-        
+
         $validated = request()->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -406,9 +407,9 @@ class AdminController extends Controller
             'target_date' => 'nullable|date_format:Y-m-d',
             'treatment_methods' => 'nullable|string|max:255',
         ]);
-        
+
         $user->patient->treatmentGoals()->create($validated);
-        
+
         return redirect()->route('admin.patient.objectives', $patientId);
     }
 
@@ -419,14 +420,14 @@ class AdminController extends Controller
     {
         $user = $this->validatePatientUser($patientId);
         $objective = $user->patient->treatmentGoals()->findOrFail($objectiveId);
-        
+
         $validated = request()->validate([
             'description' => 'required|string',
             'target_date' => 'required|date_format:Y-m-d',
         ]);
-        
+
         $objective->goalMilestones()->create($validated);
-        
+
         return redirect()->route('admin.patient.objectives', $patientId);
     }
 
@@ -437,18 +438,18 @@ class AdminController extends Controller
     {
         $user = $this->validatePatientUser($patientId);
         $milestone = \App\Models\GoalMilestone::findOrFail($milestoneId);
-        
+
         // Verificação se o treatmentGoal é o mesmo do id do paciente.
         $objective = $milestone->treatmentGoal;
         if ($objective->patient_id !== $user->patient->id) {
             abort(403, 'Acesso negado');
         }
-        
+
         $milestone->update([
             'completed' => !$milestone->completed,
             'completion_date' => !$milestone->completed ? now()->format('Y-m-d') : null,
         ]);
-        
+
         return redirect()->route('admin.patient.objectives', $patientId);
     }
 
@@ -459,7 +460,7 @@ class AdminController extends Controller
     {
         $user = $this->validatePatientUser($patientId);
         $progressNotes = $user->patient->progressNotes()->orderByDesc('note_date')->get();
-        
+
         return view('admin.patients.progress-notes', [
             'patient' => $user,
             'progressNotes' => $progressNotes,
@@ -472,7 +473,7 @@ class AdminController extends Controller
     public function storeProgressNote($patientId)
     {
         $user = $this->validatePatientUser($patientId);
-        
+
         $validated = request()->validate([
             'appointment_id' => 'required|exists:appointments,id',
             'subjective' => 'nullable|string',
@@ -480,13 +481,13 @@ class AdminController extends Controller
             'assessment' => 'nullable|string',
             'plan' => 'nullable|string',
         ]);
-        
+
         // Verificação se o appointment patient_id é o mesmo que o patient id passado
         $appointment = Appointment::findOrFail($validated['appointment_id']);
         if ($appointment->patient_id !== $user->patient->id) {
             abort(403, 'Acesso negado');
         }
-        
+
         $user->patient->progressNotes()->create([
             'appointment_id' => $validated['appointment_id'],
             'note_date' => now()->format('Y-m-d'),
@@ -495,7 +496,7 @@ class AdminController extends Controller
             'assessment' => $validated['assessment'],
             'plan' => $validated['plan'],
         ]);
-        
+
         return redirect()->route('admin.patient.appointments', $patientId);
     }
 
@@ -505,15 +506,15 @@ class AdminController extends Controller
     public function storePatientCondition($patientId)
     {
         $user = $this->validatePatientUser($patientId);
-        
+
         $validated = request()->validate([
             'name' => 'required|string|max:255',
             'diagnosed_date' => 'required|date_format:Y-m-d',
             'status' => 'nullable|string|max:255',
         ]);
-        
+
         $user->patient->conditions()->create($validated);
-        
+
         return redirect()->route('admin.patient.detail', $patientId);
     }
 
@@ -523,22 +524,22 @@ class AdminController extends Controller
     public function storePatientAllergy($patientId)
     {
         $user = $this->validatePatientUser($patientId);
-        
+
         $validated = request()->validate([
             'allergy_id' => 'required|exists:allergies,id',
         ]);
-        
+
         // verificação para ver se o paciente já tem a alergia.
         $exists = $user->patient->allergies()
             ->where('allergy_id', $validated['allergy_id'])
             ->exists();
-        
+
         if ($exists) {
             return redirect()->route('admin.patient.detail', $patientId);
         }
-        
+
         $user->patient->allergies()->attach($validated['allergy_id']);
-        
+
         return redirect()->route('admin.patient.detail', $patientId);
     }
 
@@ -550,7 +551,7 @@ class AdminController extends Controller
         $user = $this->validatePatientUser($patientId);
         $condition = $user->patient->conditions()->findOrFail($conditionId);
         $condition->delete();
-        
+
         return redirect()->route('admin.patient.detail', $patientId);
     }
 
@@ -561,7 +562,7 @@ class AdminController extends Controller
     {
         $user = $this->validatePatientUser($patientId);
         $user->patient->allergies()->detach($allergyId);
-        
+
         return redirect()->route('admin.patient.detail', $patientId);
     }
 
@@ -571,7 +572,7 @@ class AdminController extends Controller
     public function addPatientSubscription($patientId)
     {
         $user = $this->validatePatientUser($patientId);
-        
+
         $validated = request()->validate([
             'subscription_months' => 'required|in:1,3',
         ]);
@@ -582,13 +583,13 @@ class AdminController extends Controller
         $expiringDate = now()->addMonths($months)->format('Y-m-d');
         // Operador ternario para ver se for 1 mes -> Plano de Transformação, se não for Programa completo (Provavelmente tenta adicionar um if, para dar no futuro mais planoss)
         $planType = $months === 1 ? 'Plano Transformação' : 'Programa Completo';
-        
+
         $user->patient->update([
             'has_subscription' => true,
             'expiring_subscription_date' => $expiringDate,
             'plan_type' => $planType,
         ]);
-        
+
         return redirect()->route('admin.patient.detail', $patientId);
     }
 
@@ -598,25 +599,25 @@ class AdminController extends Controller
     public function removePatientSubscription($patientId)
     {
         $user = $this->validatePatientUser($patientId);
-        
+
         // Se removida, tudo a null
         $user->patient->update([
             'has_subscription' => false,
             'expiring_subscription_date' => null,
         ]);
-        
+
         return redirect()->route('admin.patient.detail', $patientId);
     }
 
     /**
-     * Controlador da view de Controlo de saude de um paciente 
+     * Controlador da view de Controlo de saude de um paciente
      */
     public function patientHealthControl($patientId)
     {
         $user = $this->validatePatientUser($patientId);
         $weightTrackings = $user->patient->weightTrackings()->orderByDesc('created_at')->get();
         $dailyNutrition = $user->patient->dailyNutritions()->orderByDesc('created_at')->paginate(15);
-        
+
         return view('admin.patients.health-control', [
             'patient' => $user,
             'weightTrackings' => $weightTrackings,
@@ -631,7 +632,7 @@ class AdminController extends Controller
     {
 
         $exercises = Exercise::orderBy('name', 'asc')->get();
-        
+
         return view('admin.exercises.index', [
             'exercises' => $exercises,
         ]);
@@ -653,9 +654,9 @@ class AdminController extends Controller
             'video_url' => 'nullable|url',
             'image_url' => 'nullable|url',
         ]);
-        
+
         Exercise::create($validated);
-        
+
         return redirect()->route('admin.exercises');
     }
 
@@ -666,7 +667,7 @@ class AdminController extends Controller
     {
         $exercise = Exercise::findOrFail($exerciseId);
         $exercise->delete();
-        
+
         return redirect()->route('admin.exercises');
     }
 
@@ -675,24 +676,24 @@ class AdminController extends Controller
      */
     public function appointments()
     {
-        
+
         //Hoje
         $todayAppointments = Appointment::whereDate('appointment_date_time', today())
             ->orderBy('appointment_date_time', 'asc')
             ->get();
-        
+
         // Pendentes
         $pendingAppointments = Appointment::where('status', 'Pendente')
             ->where('appointment_date_time', '>=', now()->startOfDay())
             ->orderBy('appointment_date_time', 'asc')
             ->get();
-        
+
         // Completos
         $completedAppointments = Appointment::where('status', 'Concluído')
             ->where('appointment_date_time', '<=', now()->endOfDay())
             ->orderByDesc('appointment_date_time')
             ->paginate(10);
-        
+
         return view('admin.appointments.index', [
             'todayAppointments' => $todayAppointments,
             'pendingAppointments' => $pendingAppointments,
@@ -710,7 +711,7 @@ class AdminController extends Controller
             ->with('user')
             ->orderBy('user_id')
             ->paginate(20);
-        
+
         return view('admin.clients-with-plan.index', [
             'clients' => $clients,
         ]);
@@ -722,7 +723,7 @@ class AdminController extends Controller
     public function symptoms()
     {
         $symptoms = Symptom::orderBy('name', 'asc')->get();
-        
+
         return view('admin.symptoms.index', [
             'symptoms' => $symptoms,
         ]);
@@ -737,9 +738,9 @@ class AdminController extends Controller
             'name' => 'required|string|max:255|unique:symptoms,name',
             'description' => 'nullable|string',
         ]);
-        
+
         Symptom::create($validated);
-        
+
         return redirect()->route('admin.symptoms')->with('success', 'Sintoma criado com sucesso!');
     }
 
@@ -750,7 +751,7 @@ class AdminController extends Controller
     {
         $symptom = Symptom::findOrFail($symptomId);
         $symptom->delete();
-        
+
         return redirect()->route('admin.symptoms');
     }
 
@@ -759,9 +760,9 @@ class AdminController extends Controller
      */
     public function allergies()
     {
-  
+
         $allergies = Allergy::orderBy('allergen', 'asc')->get();
-        
+
         return view('admin.allergies.index', [
             'allergies' => $allergies,
         ]);
@@ -776,9 +777,9 @@ class AdminController extends Controller
             'allergen' => 'required|string|max:255|unique:allergies,allergen',
             'description' => 'nullable|string',
         ]);
-        
+
         Allergy::create($validated);
-        
+
         return redirect()->route('admin.allergies');
     }
 
@@ -789,7 +790,7 @@ class AdminController extends Controller
     {
         $allergy = Allergy::findOrFail($allergyId);
         $allergy->delete();
-        
+
         return redirect()->route('admin.allergies');
     }
 
@@ -800,11 +801,11 @@ class AdminController extends Controller
     {
         $patient = User::with('patient')->findOrFail($patientId);
         //dd($patient);
-        
+
         if ($patient->role_id !== 3) {
             abort(403, 'Utilizador não é um paciente');
         }
-        
+
         return $patient;
     }
 }

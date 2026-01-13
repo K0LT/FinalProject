@@ -16,7 +16,7 @@
                 <!-- Diagnostic Card -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <!-- Diagnostic Header -->
-                    <div class="bg-gradient-to-r from-[#B8860B]/10 to-blue-50 p-6 border-b border-gray-200">
+                    <div class="bg-gradient-to-r from-[#B8860B]/10 to-[#B8860B]/5 p-6 border-b border-gray-200">
                         <div class="flex items-start justify-between mb-4">
                             <div>
                                 <h3 class="text-xl font-semibold text-gray-900 mb-2">Diagnóstico</h3>

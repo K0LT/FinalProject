@@ -148,8 +148,8 @@
         @if($allergies && count($allergies) > 0)
             <div class="space-y-2">
                 @foreach($allergies as $allergy)
-                    <div class="flex items-center gap-3 p-3 rounded-lg border border-red-100 bg-red-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-600" viewBox="0 0 24 24" fill="currentColor">
+                    <div class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 bg-gray-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#B8860B]" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
                         </svg>
                         <div class="flex-1">
@@ -282,7 +282,7 @@
             <!-- Allergies List -->
             <div class="space-y-2 max-h-64 overflow-y-auto">
                 @forelse($allergies as $allergy)
-                    <div class="flex items-center justify-between p-3 rounded-lg border border-red-100 bg-red-50">
+                    <div class="flex items-center justify-between p-3 rounded-lg border border-gray-100 bg-gray-50">
                         <div class="flex-1">
                             <p class="text-gray-900 font-medium">{{ $allergy->allergen }}</p>
                             @if($allergy->description)

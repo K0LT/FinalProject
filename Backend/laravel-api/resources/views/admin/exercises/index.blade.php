@@ -58,23 +58,23 @@
                     @endif
                     
                     @if($exercise->instructions)
-                        <div class="mb-4 p-3 bg-blue-50 rounded border border-blue-200">
-                            <p class="text-sm font-medium text-blue-900 mb-1">Instruções:</p>
-                            <p class="text-sm text-blue-800 whitespace-pre-wrap">{{ $exercise->instructions }}</p>
+                        <div class="mb-4 p-3 bg-gray-50 rounded border border-gray-200">
+                            <p class="text-sm font-medium text-gray-900 mb-1">Instruções:</p>
+                            <p class="text-sm text-gray-700 whitespace-pre-wrap">{{ $exercise->instructions }}</p>
                         </div>
                     @endif
 
                     @if($exercise->benefits)
-                        <div class="mb-4 p-3 bg-green-50 rounded border border-green-200">
-                            <p class="text-sm font-medium text-green-900 mb-1">Benefícios:</p>
-                            <p class="text-sm text-green-800 whitespace-pre-wrap">{{ $exercise->benefits }}</p>
+                        <div class="mb-4 p-3 bg-gray-50 rounded border border-gray-200">
+                            <p class="text-sm font-medium text-gray-900 mb-1">Benefícios:</p>
+                            <p class="text-sm text-gray-700 whitespace-pre-wrap">{{ $exercise->benefits }}</p>
                         </div>
                     @endif
 
                     @if($exercise->precautions)
-                        <div class="mb-4 p-3 bg-orange-50 rounded border border-orange-200">
-                            <p class="text-sm font-medium text-orange-900 mb-1">Precauções:</p>
-                            <p class="text-sm text-orange-800 whitespace-pre-wrap">{{ $exercise->precautions }}</p>
+                        <div class="mb-4 p-3 bg-gray-50 rounded border border-gray-200">
+                            <p class="text-sm font-medium text-gray-900 mb-1">Precauções:</p>
+                            <p class="text-sm text-gray-700 whitespace-pre-wrap">{{ $exercise->precautions }}</p>
                         </div>
                     @endif
                 </div>

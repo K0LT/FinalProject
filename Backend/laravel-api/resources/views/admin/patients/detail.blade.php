@@ -205,8 +205,8 @@
             @if($patientData->allergies->count() > 0)
                 <div class="space-y-2">
                     @foreach($patientData->allergies as $allergy)
-                        <div class="flex items-center gap-2 p-2 rounded bg-red-50">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-600" viewBox="0 0 24 24" fill="currentColor">
+                        <div class="flex items-center gap-2 p-2 rounded bg-gray-50">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
                             </svg>
                             <span class="text-gray-900">{{ $allergy->allergen }}</span>
@@ -342,7 +342,7 @@
                 <select name="allergy_id" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="">Selecione uma alergia</option>
                     @foreach($allergies as $allergy)
-                        <option value="{{ $allergy->id }}">{{ $allergy->allergen }} - {{ $allergy->description }}</option>
+                        <option value="{{ $allergy->id }}">{{ $allergy->allergen }}</option>
                     @endforeach
                 </select>
             </div>

@@ -167,7 +167,7 @@
                             <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Nome</th>
                             <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Email</th>
                             <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Data de Registo</th>
-                            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Role</th>
+                            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Telemóvel</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -184,10 +184,8 @@
                                 <td class="py-3 px-4 text-sm text-gray-600">
                                     {{ \Carbon\Carbon::parse($newUser->created_at)->format('d/m/Y H:i') }}
                                 </td>
-                                <td class="py-3 px-4 text-sm">
-                                    <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs font-medium">
-                                        {{ $newUser->role->name ?? 'N/A' }}
-                                    </span>
+                                <td class="py-3 px-4 text-sm text-gray-600">
+                                    {{ $newUser->patient->phone_number ?? 'N/A' }}
                                 </td>
                             </tr>
                         @endforeach

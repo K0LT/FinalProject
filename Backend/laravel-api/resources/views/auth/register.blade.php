@@ -20,9 +20,6 @@
                 <div class="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border-0">
                     <div class="px-6 pt-6">
                         <h4 class="text-2xl mb-2">Criar Conta</h4>
-                        <p class="text-gray-600 text-sm">
-                            Todos os dados são confidenciais e protegidos pelo RGPD
-                        </p>
                     </div>
 
                     <div class="px-6 pb-6">
@@ -268,9 +265,6 @@
                                         @error('terms')
                                             <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
                                         @enderror
-                                        <p class="text-xs text-gray-600 mt-1">
-                                            Todos os dados são confidenciais e protegidos pelo RGPD.
-                                        </p>
                                     </div>
                                 </div>
                             </div>

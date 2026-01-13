@@ -233,34 +233,34 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 @if($nutritionalGoals->daily_calories_goal)
-                    <div class="p-4 rounded-lg bg-blue-50 border border-blue-200">
+                    <div class="p-4 rounded-lg bg-[#DAA520]/10 border border-[#DAA520]/30">
                         <label class="block text-xs font-semibold text-gray-600 uppercase tracking-widest mb-2">Calorias Diárias</label>
-                        <p class="text-2xl font-bold text-blue-900">{{ $nutritionalGoals->daily_calories_goal }}</p>
-                        <p class="text-xs text-blue-700 mt-1">kcal/dia</p>
+                        <p class="text-2xl font-bold text-[#DAA520]">{{ $nutritionalGoals->daily_calories_goal }}</p>
+                        <p class="text-xs text-[#B8860B] mt-1">kcal/dia</p>
                     </div>
                 @endif
 
                 @if($nutritionalGoals->daily_protein_goal)
-                    <div class="p-4 rounded-lg bg-red-50 border border-red-200">
+                    <div class="p-4 rounded-lg bg-[#B8860B]/10 border border-[#B8860B]/30">
                         <label class="block text-xs font-semibold text-gray-600 uppercase tracking-widest mb-2">Proteína</label>
-                        <p class="text-2xl font-bold text-red-900">{{ $nutritionalGoals->daily_protein_goal }}</p>
-                        <p class="text-xs text-red-700 mt-1">g/dia</p>
+                        <p class="text-2xl font-bold text-[#B8860B]">{{ $nutritionalGoals->daily_protein_goal }}</p>
+                        <p class="text-xs text-[#996F00] mt-1">g/dia</p>
                     </div>
                 @endif
 
                 @if($nutritionalGoals->daily_carbs_goal)
-                    <div class="p-4 rounded-lg bg-yellow-50 border border-yellow-200">
+                    <div class="p-4 rounded-lg bg-[#DAA520]/10 border border-[#DAA520]/30">
                         <label class="block text-xs font-semibold text-gray-600 uppercase tracking-widest mb-2">Carboidratos</label>
-                        <p class="text-2xl font-bold text-yellow-900">{{ $nutritionalGoals->daily_carbs_goal }}</p>
-                        <p class="text-xs text-yellow-700 mt-1">g/dia</p>
+                        <p class="text-2xl font-bold text-[#DAA520]">{{ $nutritionalGoals->daily_carbs_goal }}</p>
+                        <p class="text-xs text-[#B8860B] mt-1">g/dia</p>
                     </div>
                 @endif
 
                 @if($nutritionalGoals->daily_fat_goal)
-                    <div class="p-4 rounded-lg bg-orange-50 border border-orange-200">
+                    <div class="p-4 rounded-lg bg-[#B8860B]/10 border border-[#B8860B]/30">
                         <label class="block text-xs font-semibold text-gray-600 uppercase tracking-widest mb-2">Gordura</label>
-                        <p class="text-2xl font-bold text-orange-900">{{ $nutritionalGoals->daily_fat_goal }}</p>
-                        <p class="text-xs text-orange-700 mt-1">g/dia</p>
+                        <p class="text-2xl font-bold text-[#B8860B]">{{ $nutritionalGoals->daily_fat_goal }}</p>
+                        <p class="text-xs text-[#996F00] mt-1">g/dia</p>
                     </div>
                 @endif
             </div>

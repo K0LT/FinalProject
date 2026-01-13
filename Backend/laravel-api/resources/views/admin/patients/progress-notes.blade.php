@@ -42,7 +42,7 @@
                     @if($note->subjective)
                         <div class="mb-4">
                             <h4 class="text-sm text-gray-700 mb-2">Subjetivo</h4>
-                            <div class="p-3 bg-blue-50 rounded border border-blue-200">
+                            <div class="p-3 bg-gray-50 rounded border border-gray-200">
                                 <p class="text-sm text-gray-700">{{ $note->subjective }}</p>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                     @if($note->objective)
                         <div class="mb-4">
                             <h4 class="text-sm text-gray-700 mb-2">Objetivo</h4>
-                            <div class="p-3 bg-green-50 rounded border border-green-200">
+                            <div class="p-3 bg-gray-50 rounded border border-gray-200">
                                 <p class="text-sm text-gray-700">{{ $note->objective }}</p>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                     @if($note->assessment)
                         <div class="mb-4">
                             <h4 class="text-sm text-gray-700 mb-2">Avaliação</h4>
-                            <div class="p-3 bg-yellow-50 rounded border border-yellow-200">
+                            <div class="p-3 bg-gray-50 rounded border border-gray-200">
                                 <p class="text-sm text-gray-700">{{ $note->assessment }}</p>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                     @if($note->plan)
                         <div class="mb-4">
                             <h4 class="text-sm text-gray-700 mb-2">Plano</h4>
-                            <div class="p-3 bg-purple-50 rounded border border-purple-200">
+                            <div class="p-3 bg-gray-50 rounded border border-gray-200">
                                 <p class="text-sm text-gray-700">{{ $note->plan }}</p>
                             </div>
                         </div>
