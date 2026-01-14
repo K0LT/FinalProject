@@ -17,13 +17,6 @@ class ProgressNoteController extends Controller
         return response()->json($progressNotes);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -43,13 +36,6 @@ class ProgressNoteController extends Controller
         return response()->json($progressNote);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ProgressNote $progressNote)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -64,8 +50,42 @@ class ProgressNoteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    /**
+     * Soft delete a progress note
+     */
     public function destroy(ProgressNote $progressNote)
     {
-        //
+        $progressNote->delete();
+        return response()->json(null, 204);
     }
+
+    /**
+     * List all soft deleted progress notes
+     */
+    public function indexSoftDelete()
+    {
+        $notes = ProgressNote::onlyTrashed()->get();
+        return response()->json($notes, 200);
+    }
+
+    /**
+     * Show a specific soft deleted progress note
+     */
+    public function showSoftDelete($id)
+    {
+        $note = ProgressNote::onlyTrashed()->findOrFail($id);
+        return response()->json($note, 200);
+    }
+
+    /**
+     * Restore a soft deleted progress note
+     */
+    public function restoreSoftDelete($id)
+    {
+        $note = ProgressNote::onlyTrashed()->findOrFail($id);
+        $note->restore();
+        return response()->json($note, 200);
+    }
+
+
 }

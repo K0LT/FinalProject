@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
 use App\Models\WeightTracking;
 use App\Http\Requests\StoreWeightTrackingRequest;
 use App\Http\Requests\UpdateWeightTrackingRequest;
+use Illuminate\Http\Request;
 
 class WeightTrackingController extends Controller
 {
@@ -17,13 +19,6 @@ class WeightTrackingController extends Controller
         return response()->json($weightTrackings);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -43,13 +38,6 @@ class WeightTrackingController extends Controller
         return response()->json($weightTracking);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(WeightTracking $weightTracking)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -62,10 +50,88 @@ class WeightTrackingController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Soft delete the specified resource.
      */
-    public function destroy(WeightTracking $weightTracking)
+    public function destroy(WeightTracking $weight_tracking)
     {
-        //
+        $weight_tracking->delete();
+
+        return response()->json(null, 204);
     }
+
+    /**
+     * List all soft deleted weight trackings.
+     */
+    public function indexSoftDelete()
+    {
+        return response()->json(
+            WeightTracking::onlyTrashed()->get()
+        );
+    }
+
+    /**
+     * Show a specific soft deleted weight tracking.
+     */
+    public function showSoftDelete($id)
+    {
+        $weightTracking = WeightTracking::onlyTrashed()->findOrFail($id);
+
+        return response()->json($weightTracking);
+    }
+
+    /**
+     * Restore a soft deleted weight tracking.
+     */
+    public function restoreSoftDelete($id)
+    {
+        $weightTracking = WeightTracking::onlyTrashed()->findOrFail($id);
+        $weightTracking->restore();
+
+        return response()->json($weightTracking);
+    }
+
+    public function userWeightTrackings(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Não'
+            ], 401);
+        }
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found for this user'
+            ], 404);
+        }
+
+        $patient->load('weightTrackings');
+
+        return response()->json([
+            'patient' => $patient
+        ], 200);
+    }
+
+    public function patientWeightTrackings(Patient $patient)
+    {
+        $patient->load('weightTrackings');
+
+        return response()->json($patient, 200);
+    }
+
+    public function patientWeightTrackingsSoftDelete(Patient $patient)
+    {
+        $weightTrackings = $patient->weightTrackings()
+            ->onlyTrashed()
+            ->get();
+
+        return response()->json([
+            'patient' => $patient,
+            'weight_trackings' => $weightTrackings
+        ], 200);
+    }
+
 }

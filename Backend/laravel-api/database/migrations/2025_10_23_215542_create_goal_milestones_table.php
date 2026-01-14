@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('completion_date')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -13,7 +13,7 @@ class AllergyPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class AllergyPolicy
      */
     public function view(User $user, Allergy $allergy): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,6 +29,9 @@ class AllergyPolicy
      */
     public function create(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -37,6 +40,9 @@ class AllergyPolicy
      */
     public function update(User $user, Allergy $allergy): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -45,22 +51,10 @@ class AllergyPolicy
      */
     public function delete(User $user, Allergy $allergy): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Allergy $allergy): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Allergy $allergy): bool
-    {
-        return false;
-    }
 }

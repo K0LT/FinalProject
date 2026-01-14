@@ -1,13 +1,15 @@
 'use client';
 
-import { AuthGuard} from "@/components/Auth/AuthGuard";
-
+import { AuthGuard } from "@/components/Auth/AuthGuard";
 import AppointmentScheduler from "@/components/appointments/AppointmentScheduler";
+import ClientDashLayout from "@/components/clientDashboard/ClientDashLayout";
 
 export default function AppointmentsPage() {
     return (
-        <AuthGuard>
-            <AppointmentScheduler />;
+        <AuthGuard requireAuth={true}>
+            <ClientDashLayout>
+                <AppointmentScheduler />
+            </ClientDashLayout>
         </AuthGuard>
     );
 }

@@ -13,7 +13,7 @@ class ExercisePolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class ExercisePolicy
      */
     public function view(User $user, Exercise $exercise): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,6 +29,9 @@ class ExercisePolicy
      */
     public function create(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -37,6 +40,9 @@ class ExercisePolicy
      */
     public function update(User $user, Exercise $exercise): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -45,6 +51,9 @@ class ExercisePolicy
      */
     public function delete(User $user, Exercise $exercise): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -53,6 +62,9 @@ class ExercisePolicy
      */
     public function restore(User $user, Exercise $exercise): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -61,6 +73,9 @@ class ExercisePolicy
      */
     public function forceDelete(User $user, Exercise $exercise): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 }

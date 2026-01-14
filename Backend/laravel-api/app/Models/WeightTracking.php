@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class WeightTracking extends Model
 {
     /** @use HasFactory<\Database\Factories\WeightTrackingFactory> */
     use HasFactory;
-
+    use SoftDeletes;
     protected $fillable = [
         'patient_id',
         'weight',

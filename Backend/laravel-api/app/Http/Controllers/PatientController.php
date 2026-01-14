@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Patient;
 use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
+use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
@@ -18,56 +19,17 @@ class PatientController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePatientRequest $request)
-    {
-        $data = $request->validated();
-        $patient = Patient::create($data);
-        return response()->json($patient);
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(Patient $patient)
     {
-        $patient->load([
-            'user',
-            'appointments',
-            'diagnostics',
-            'diagnostics.symptoms',
-            'treatments',
-            'treatmentGoals',
-            'treatmentGoals.goalMilestones',
-            'exercises',
-            'weightTrackings',
-            'nutritionGoals',
-            'dailyNutritions',
-            'allergies',
-            'conditions',
-            'progressNotes',
-        ]);
-        return response()->json($patient);
+        $patient->load(['user', 'conditions', 'allergies']);
+
+        return response()->json([
+            'data' => $patient
+        ], 200);
     }
 
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Patient $patient)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -84,18 +46,78 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        //
+        $patient->delete();
+        return response()->json(null, 204);
     }
-    public function get_relation(Patient $patient, $relation){
-        $relationships = ['diagnostics', 'treatments', 'progress_notes','treatmentGoals',
-            'exercises', 'weightTrackings', 'nutritionGoals', 'dailyNutritions', 'allergies', 'conditions'];
 
-        foreach($relationships as $relationship){
-            if($relationship === $relation){
-                return response()->json($patient->$relation);
-            }
+    /**
+     * List all soft deleted patients
+     */
+    public function indexSoftDelete()
+    {
+        $patients = Patient::onlyTrashed()->get();
+        return response()->json($patients, 200);
+    }
+
+    /**
+     * Show a specific soft deleted patient
+     */
+    public function showSoftDelete($id)
+    {
+        $patient = Patient::onlyTrashed()->findOrFail($id);
+        return response()->json($patient, 200);
+    }
+
+    /**
+     * Restore a soft deleted patient
+     */
+    public function restoreSoftDelete($id)
+    {
+        $patient = Patient::onlyTrashed()->findOrFail($id);
+        $patient->restore();
+        return response()->json($patient, 200);
+    }
+
+    /**
+     * Restore a soft deleted patien*
+     * public function get_relation(Patient $patient, $relation){
+     * $relationships = ['diagnostics', 'treatments', 'progress_notes','treatmentGoals',
+     * 'exercises', 'weightTrackings', 'nutritionGoals', 'dailyNutritions', 'allergies', 'conditions'];
+     *
+     * foreach($relationships as $relationship){
+     * if($relationship === $relation){
+     * return response()->json($patient->$relation);
+     * }
+     * }
+     *
+     * return response()->json("Error", 404);
+     * }
+     *
+     */
+
+
+    public function userPatient(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthenticated'
+            ], 401);
         }
 
-        return response()->json("Error", 404);
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found for this user'
+            ], 404);
+        }
+
+
+        return response()->json([
+            'user' => $user,
+            'patient' => $patient
+        ], 200);
     }
 }

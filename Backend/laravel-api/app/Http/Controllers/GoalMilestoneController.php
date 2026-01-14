@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\GoalMilestone;
 use App\Http\Requests\StoreGoalMilestoneRequest;
 use App\Http\Requests\UpdateGoalMilestoneRequest;
+use Illuminate\Http\Request;
 
 class GoalMilestoneController extends Controller
 {
@@ -17,13 +18,6 @@ class GoalMilestoneController extends Controller
         return response()->json($goalMilestone);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -43,13 +37,6 @@ class GoalMilestoneController extends Controller
         return response()->json($goalMilestone);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(GoalMilestone $goalMilestone)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -61,11 +48,39 @@ class GoalMilestoneController extends Controller
         return response()->json($goalMilestone);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(GoalMilestone $goalMilestone)
     {
-        //
+        $goalMilestone->delete();
+        return response()->json(null, 204);
     }
+
+    /**
+     * List all soft deleted goal milestones
+     */
+    public function indexSoftDelete()
+    {
+        $milestones = GoalMilestone::onlyTrashed()->get();
+        return response()->json($milestones, 200);
+    }
+
+    /**
+     * Show a specific soft deleted goal milestone
+     */
+    public function showSoftDelete($id)
+    {
+        $milestone = GoalMilestone::onlyTrashed()->findOrFail($id);
+        return response()->json($milestone, 200);
+    }
+
+    /**
+     * Restore a soft deleted goal milestone
+     */
+    public function restoreSoftDelete($id)
+    {
+        $milestone = GoalMilestone::onlyTrashed()->findOrFail($id);
+        $milestone->restore();
+        return response()->json($milestone, 200);
+    }
+
+
 }

@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('allergies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained()->cascadeOnDelete();
             $table->string('allergen');
-            $table->string('reaction_type');
-            $table->enum('severity', ['Leve', 'Moderada', 'Grave']);
-            $table->string('notes')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

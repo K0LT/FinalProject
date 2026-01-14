@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Diagnostic;
 use App\Models\Symptom;
 use App\Http\Requests\StoreSymptomRequest;
 use App\Http\Requests\UpdateSymptomRequest;
+use Illuminate\Http\Request;
 
 class SymptomController extends Controller
 {
@@ -17,13 +19,6 @@ class SymptomController extends Controller
         return response()->json($symptoms);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,13 +39,6 @@ class SymptomController extends Controller
         return response()->json($symptom);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Symptom $symptom)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -63,10 +51,86 @@ class SymptomController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Soft delete a symptom.
      */
     public function destroy(Symptom $symptom)
     {
-        //
+        $symptom->delete();
+        return response()->json(null, 204);
     }
+
+    /**
+     * List all soft deleted symptoms.
+     */
+    public function indexSoftDelete()
+    {
+        $symptoms = Symptom::onlyTrashed()->get();
+        return response()->json($symptoms);
+    }
+
+    /**
+     * Show a specific soft deleted symptom.
+     */
+    public function showSoftDelete($id)
+    {
+        $symptom = Symptom::onlyTrashed()->findOrFail($id);
+        return response()->json($symptom);
+    }
+
+    /**
+     * Restore a soft deleted symptom.
+     */
+    public function restoreSoftDelete($id)
+    {
+        $symptom = Symptom::onlyTrashed()->findOrFail($id);
+        $symptom->restore();
+
+        return response()->json($symptom);
+    }
+
+    public function adminAddSymptomToDiagnostic(Request $request, Diagnostic $diagnostic)
+    {
+        $request->validate([
+            'symptom_id' => ['required', 'exists:symptoms,id'],
+        ]);
+
+        $symptomId = $request->symptom_id;
+
+        if ($diagnostic->symptoms()->where('symptoms.id', $symptomId)->exists()) {
+            return response()->json([
+                'message' => 'O diagnóstico já tem esse sintoma associado.'
+            ], 409);
+        }
+
+        $diagnostic->symptoms()->attach($symptomId);
+
+        return response()->json([
+            'message' => 'Sintoma associado com sucesso.'
+        ], 201);
+    }
+
+    public function adminRemoveSymptomFromDiagnostic(Request $request, Diagnostic $diagnostic)
+    {
+        $request->validate([
+            'symptom_id' => ['required', 'exists:symptoms,id'],
+        ]);
+
+        $symptomId = $request->symptom_id;
+
+        if (! $diagnostic->symptoms()->where('symptoms.id', $symptomId)->exists()) {
+            return response()->json([
+                'message' => 'O diagnóstico não tem esse sintoma associado.'
+            ], 404);
+        }
+
+        $diagnostic->symptoms()->detach($symptomId);
+
+        return response()->json([
+            'message' => 'Sintoma removido com sucesso.'
+        ], 200);
+    }
+
+
+
+
 }

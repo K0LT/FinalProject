@@ -1,16 +1,16 @@
-import {api} from '@/lib/api';
+import {apiClient} from '@/lib/api';
 
 export async function getPatient(id){
-    const response = await api.get('/patients/' + id);
+    const response = await apiClient.get('/patients/' + id);
     return response.data;
 }
 
 export async function getPatients(){
-    const response = await api.get('/patients');
+    const response = await apiClient.get('/patients');
     return response.data;
 }
 
 export async function updatePatient(id, patient){
-    const response = await api.put('/patients/' + id, patient);
+    const response = await apiClient.put('/patients/' + id, patient);
     return response.data;
 }

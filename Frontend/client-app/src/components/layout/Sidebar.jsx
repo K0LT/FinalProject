@@ -1,9 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import QiFlowBrand from "@/components/ui/QiFlowBrand";
+import {useAuth} from "@/context/AuthContext";
+
 export default function Sidebar({ userId, onClose }) {
+    const {logout} = useAuth();
+    const router = useRouter();
+    console.log('useAuth() value:', logout);
     const pathname = usePathname();
 
     const menuItems = [
@@ -15,6 +20,11 @@ export default function Sidebar({ userId, onClose }) {
         { label: "Controlo de Peso", href: "/weight/" + userId },
         { label: "Assistente IA", href: "/ai-assistant" },
     ];
+
+    const handleLogout = async () => {
+        await logout();
+        router.push("/login");
+    };
 
     return (
         <div className="h-full flex flex-col bg-white">
@@ -47,8 +57,11 @@ export default function Sidebar({ userId, onClose }) {
             </nav>
 
             <div className="p-3 border-t">
-                <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                    <span className="text-lg">🚪</span>
+                <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                >
                     <span>Terminar Sessão</span>
                 </button>
             </div>

@@ -38,11 +38,8 @@ class AllergyFactory extends Factory
         ];
 
         return [
-            'patient_id' => Patient::inRandomOrder()->first()?->id,
             'allergen' => $this->faker->randomElement($allergens),
-            'reaction_type' => $this->faker->randomElement($reactionTypes),
-            'severity' => $this->faker->randomElement($severities),
-            'notes' => (rand(0, 5) === 0) ? null : $this->faker->optional()->randomElement($notes),
+            'description' => $this->faker->text(),
             'created_at' => $this->faker->dateTimeBetween('-6 months', 'now'),
         ];
     }

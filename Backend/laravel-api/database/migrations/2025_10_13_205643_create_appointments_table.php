@@ -16,8 +16,6 @@ return new class extends Migration
 
             $table->foreignId('patient_id')
                 ->constrained()->cascadeOnDelete();
-            $table->foreignId('profile_id')
-                ->nullable()->constrained();
 
             $table->dateTime('appointment_date_time');
             $table->integer('duration')->nullable();
@@ -25,6 +23,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->enum('status', ['Pendente', 'Confirmado', 'Cancelado', 'Concluído']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

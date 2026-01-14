@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Diagnostic;
 use App\Http\Requests\StoreDiagnosticRequest;
 use App\Http\Requests\UpdateDiagnosticRequest;
+use App\Models\Patient;
+use Illuminate\Http\Request;
 
 class DiagnosticController extends Controller
 {
@@ -17,13 +19,6 @@ class DiagnosticController extends Controller
         return response()->json($diagnostics);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -49,13 +44,7 @@ class DiagnosticController extends Controller
 
         return response()->json($diagnostic);
     }
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Diagnostic $diagnostic)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -75,9 +64,99 @@ class DiagnosticController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    /**
+     * Delete a diagnostic (soft delete)
+     */
     public function destroy(Diagnostic $diagnostic)
     {
-        //
+        $diagnostic->delete();
+        return response()->json(null, 204);
     }
+
+    /**
+     * user View: User Diagnostics
+     */
+    public function userDiagnostics(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Paciente não encontrado'
+            ], 404);
+        }
+
+        $diagnostics = $patient->diagnostics;
+
+        $symptoms = $patient->diagnostics
+            ->pluck('symptoms')
+            ->flatten()
+            ->values();
+
+
+        return response()->json([
+            'diagnostics' => $diagnostics,
+            'symptoms' => $symptoms
+        ], 200);
+    }
+
+    /**
+     * Admin View: User Diagnostics
+     */
+    public function patientDiagnostics(Patient $patient)
+    {
+        $diagnostics = $patient->diagnostics;
+
+        $symptoms = $patient->diagnostics
+            ->pluck('symptoms')
+            ->flatten()
+            ->values();
+
+        return response()->json([
+            'diagnostics' => $diagnostics
+        ], 200);
+    }
+
+    public function indexSoftDelete()
+    {
+        $diagnostics = Diagnostic::onlyTrashed()->get();
+        return response()->json($diagnostics, 200);
+    }
+
+    /**
+     * Show a specific soft deleted diagnostic
+     */
+    public function showSoftDelete($id)
+    {
+        $diagnostic = Diagnostic::onlyTrashed()->findOrFail($id);
+        return response()->json($diagnostic, 200);
+    }
+
+    /**
+     * Restore a soft deleted diagnostic
+     */
+    public function restoreSoftDelete($id)
+    {
+        $diagnostic = Diagnostic::onlyTrashed()->findOrFail($id);
+        $diagnostic->restore();
+        return response()->json($diagnostic, 200);
+    }
+
+    public function patientDiagnosticsSoftDelete(Patient $patient)
+    {
+        $diagnostics = $patient->diagnostics()
+            ->onlyTrashed()
+            ->with('symptoms')
+            ->get();
+
+        return response()->json([
+            'patient' => $patient,
+            'diagnostics' => $diagnostics
+        ], 200);
+    }
+
 
 }

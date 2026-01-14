@@ -22,8 +22,7 @@ class StorePatientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|integer|exists:users,id',
-            'phone_number'  => 'nullable|integer|',
+            'phone_number'  => 'required|string',
             'address'  => 'nullable|string',
             'birth_date'  => 'nullable|date',
             'emergency_contact_name'  => 'nullable|string',

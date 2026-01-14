@@ -1,47 +1,49 @@
 'use client'
-import {useContext, useEffect, useState} from "react";
-import {getPatient} from "@/services/patients";
+import {useEffect, useState} from "react";
 import InfoRow from "@/components/ui/InfoRow";
 import Card from "@/components/ui/Card";
 import {useParams} from "next/navigation";
 import UpdatePatientModal from "@/components/patient/UpdatePatientModal";
-import { AuthProvider } from '@/context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import {apiClient} from "@/lib/api";
 
 export function PatientProfilePage() {
-    const [patient, setPatient] = useState([]);
+    const [patient, setPatient] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
 
-    const authPatient = useContext(AuthProvider);
-
+    const { user } = useAuth();
     const params = useParams();
 
     useEffect(() => {
-        const ctrl = new AbortController();
-        (async () => {
+        const fetchPatient = async () => {
             try {
-                const data = await apiClient.get('/patients');
-                setPatient(data);
-                console.log("Fetched patient:", data);
-            } catch (e) {
-                if (e.name !== "CanceledError") setError(e);
-                console.error("Error:", e);
+                // Get patient ID from URL params, fallback to authenticated user's ID
+                const patientId = params?.id;
 
+                if (!patientId) {
+                    setError(new Error('ID do paciente não fornecido'));
+                    setLoading(false);
+                    return;
+                }
+
+                const response = await apiClient.get(`api/patients/${patientId}`);
+                // API returns { data: patient }
+                const patientData = response?.data || response;
+                setPatient(patientData);
+            } catch (e) {
+                console.error("Error fetching patient:", e);
+                setError(e);
             } finally {
                 setLoading(false);
             }
-        })();
-        return () => ctrl.abort();
-    }, []);
+        };
 
+        fetchPatient();
+    }, [params?.id]);
 
-    useEffect(() => {
-        if (patient) console.log("State updated:", patient);
-    }, [patient]);
-
-    if (error) return <div className="p-6 text-red-600">Falha ao carregar.</div>;
+    if (error) return <div className="p-6 text-red-600">Falha ao carregar: {error.message}</div>;
     if (loading) return <div className="p-6">A carregar…</div>;
     if (!patient) return <div className="p-6">PATIENT LOADING ERROR</div>;
 

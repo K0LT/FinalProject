@@ -16,8 +16,6 @@ return new class extends Migration
 
             $table->foreignId('patient_id')
                 ->constrained()->cascadeOnDelete();
-            $table->foreignId('profile_id')
-                ->nullable()->constrained();
 
             $table->date('diagnostic_date');
             $table->string('western_diagnosis')->nullable();
@@ -26,6 +24,7 @@ return new class extends Migration
             $table->string('pulse_quality')->nullable();
             $table->text('tongue_description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

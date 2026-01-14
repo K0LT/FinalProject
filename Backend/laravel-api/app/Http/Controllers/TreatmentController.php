@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Treatment;
+use App\Models\Patient;
 use App\Http\Requests\StoreTreatmentRequest;
 use App\Http\Requests\UpdateTreatmentRequest;
+use Illuminate\Http\Request;
 
 class TreatmentController extends Controller
 {
@@ -17,13 +19,7 @@ class TreatmentController extends Controller
         return response()->json($treatments);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -43,13 +39,7 @@ class TreatmentController extends Controller
         return response()->json($treatment);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Treatment $treatment)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -62,10 +52,84 @@ class TreatmentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Soft delete a treatment.
      */
     public function destroy(Treatment $treatment)
     {
-        //
+        $treatment->delete();
+        return response()->json(null, 204);
     }
+
+    /**
+     * List all soft deleted treatments.
+     */
+    public function indexSoftDelete()
+    {
+        $treatments = Treatment::onlyTrashed()->get();
+        return response()->json($treatments, 200);
+    }
+
+    /**
+     * Show a specific soft deleted treatment.
+     */
+    public function showSoftDelete($id)
+    {
+        $treatment = Treatment::onlyTrashed()->findOrFail($id);
+        return response()->json($treatment, 200);
+    }
+
+    /**
+     * Restore a soft deleted treatment.
+     */
+    public function restoreSoftDelete($id)
+    {
+        $treatment = Treatment::onlyTrashed()->findOrFail($id);
+        $treatment->restore();
+        return response()->json($treatment, 200);
+    }
+
+    public function userTreatments(Request $request)
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthenticated'
+            ], 401);
+        }
+
+        $patient = $user->patient;
+
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found for this user'
+            ], 404);
+        }
+
+        $patient->load('treatments');
+
+        return response()->json([
+            'treatments' => $patient->treatments
+        ], 200);
+    }
+
+    public function patientTreatments(Patient $patient)
+    {
+        $patient->load('treatments');
+
+        return response()->json($patient, 200);
+    }
+
+    public function patientTreatmentsSoftDelete(Patient $patient)
+    {
+        $treatments = $patient->treatments()
+            ->onlyTrashed()
+            ->get();
+
+        return response()->json([
+            'patient' => $patient,
+            'treatments' => $treatments
+        ], 200);
+    }
+
 }

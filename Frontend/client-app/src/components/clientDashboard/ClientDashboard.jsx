@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
     Calendar,
     Target,
@@ -9,7 +9,18 @@ import {
     CheckCircle2,
     Heart,
     ChevronRight,
+    Mail,
+    Phone,
+    MapPin,
+    User,
+    X,
 } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import {
+    getUserPatient,
+    getUserAppointments,
+    getUserTreatmentGoals,
+} from "@/services/userServices";
 
 function StatCard({ title, value, subtitle, icon: Icon, tone = "primary" }) {
     const variants = {
@@ -139,44 +150,205 @@ function RecommendationCard({ title, description, tone = "green" }) {
     );
 }
 
-export default function ClientDashboard({ patientName = "X" }) {
+export default function ClientDashboard() {
+    const { user, isAuthenticated } = useAuth();
+    const [loading, setLoading] = useState(true);
+    const [patientData, setPatientData] = useState(null);
+    const [appointments, setAppointments] = useState([]);
+    const [treatments, setTreatments] = useState([]);
+    const [selectedAppointment, setSelectedAppointment] = useState(null);
+    const dialogRef = useRef(null);
+
+    useEffect(() => {
+        if (isAuthenticated && user) {
+            loadPatientData();
+            console.log(treatments);
+        }
+    }, [isAuthenticated, user]);
+
+    const loadPatientData = async () => {
+        try {
+            setLoading(true);
+            const [patient, appointmentsData, goalsData] = await Promise.all([
+                getUserPatient(),
+                getUserAppointments(),
+                getUserTreatmentGoals(),
+            ]);
+
+            setPatientData(patient);
+            setAppointments(Array.isArray(appointmentsData) ? appointmentsData : []);
+            setTreatments(Array.isArray(goalsData) ? goalsData : []);
+        } catch (error) {
+            console.error("Error loading patient data:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Calculate statistics (memoized to only recalculate when data changes)
+    const stats = useMemo(() => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Find next appointment
+        const upcomingAppts = appointments
+            .filter(app => {
+                if (!app.appointment_date_time) return false;
+                const appDate = new Date(app.appointment_date_time);
+                return appDate >= today;
+            })
+            .sort((a, b) => new Date(a.appointment_date_time) - new Date(b.appointment_date_time));
+
+        const nextAppointment = upcomingAppts[0];
+
+        // Days until next appointment
+        let daysUntilNext = null;
+        if (nextAppointment) {
+            const nextDate = new Date(nextAppointment.appointment_date_time);
+            const diffTime = nextDate - today;
+            daysUntilNext = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+        // Completed appointments this year
+        const thisYear = new Date().getFullYear();
+        const completedThisYear = appointments.filter(app => {
+            if (!app.appointment_date_time) return false;
+            const appDate = new Date(app.appointment_date_time);
+            return appDate.getFullYear() === thisYear && app.status === 'Concluído';
+        }).length;
+
+        // Calculate overall progress from treatment goals (excluding cancelled)
+        const activeGoals = treatments.filter(g => g.status !== 'Cancelado');
+        const avgProgress = activeGoals.length > 0
+            ? Math.round(activeGoals.reduce((sum, goal) =>
+                sum + (goal.progress_percentage || 0), 0) / activeGoals.length)
+            : 0;
+
+        return {
+            daysUntilNext,
+            nextAppointment,
+            completedThisYear,
+            avgProgress,
+        };
+    }, [appointments, treatments]);
+    const patientName = user?.name || patientData?.user?.name || "Paciente";
+
+    // Get upcoming appointments
+    const upcomingAppointments = appointments
+        .filter(app => {
+            if (!app.appointment_date_time) return false;
+            const appDate = new Date(app.appointment_date_time);
+            return appDate >= new Date();
+        })
+        .sort((a, b) => new Date(a.appointment_date_time) - new Date(b.appointment_date_time))
+        .slice(0, 3);
+
+    const openAppointmentDetails = (appointment) => {
+        setSelectedAppointment(appointment);
+        dialogRef.current?.showModal();
+    };
+
+    const closeAppointmentDetails = () => {
+        dialogRef.current?.close();
+        setSelectedAppointment(null);
+    };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-[400px]">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+        );
+    }
+
     return (
         <div className="space-y-6 lg:space-y-8 pb-8 bg-background text-foreground">
             <section className="rounded-2xl border border-border bg-gradient-to-r from-background via-card to-background px-5 py-6 sm:px-8 sm:py-8 shadow-sm">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                    <div>
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2">
-                            Portal do Paciente
-                        </p>
-                        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground mb-2">
-                            Olá, {patientName}
-                        </h1>
-                        <p className="text-sm sm:text-[15px] text-muted-foreground max-w-xl leading-relaxed">
-                            Bem-vindo(a) ao seu espaço pessoal.
-                        </p>
-                    </div>
-
-                    <div className="w-full lg:w-auto">
-                        <div className="rounded-xl border border-border bg-card/90 px-4 py-3 shadow-xs flex items-center justify-between gap-3">
-                            <div className="flex items-center gap-3">
-                                <span className="inline-flex items-center justify-center rounded-lg bg-primary/10 text-primary p-2">
-                                    <Calendar className="w-4 h-4" />
-                                </span>
-                                <div className="space-y-0.5">
-                                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-[0.16em]">
-                                        Próxima consulta
-                                    </p>
-                                    <p className="text-sm font-semibold text-foreground">
-                                        20 Nov às 09:00
-                                    </p>
-                                </div>
+                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+                    <div className="flex-1">
+                        <div className="flex items-start gap-4 mb-5">
+                            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl font-semibold">
+                                {patientName.split(" ").map(s => s[0]).join("").slice(0, 2).toUpperCase()}
                             </div>
-                            <button className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline">
-                                Ver detalhes
-                                <ChevronRight className="w-3.5 h-3.5" />
-                            </button>
+                            <div>
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-1">
+                                    Portal do Paciente
+                                </p>
+                                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+                                    Olá, {patientName}
+                                </h1>
+                                <p className="text-sm text-muted-foreground mt-1">
+                                    Bem-vindo(a) ao seu espaço pessoal.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                            {user?.email && (
+                                <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                                    <Mail className="w-4 h-4 text-primary" />
+                                    <span>{user.email}</span>
+                                </div>
+                            )}
+                            {patientData?.phone_number && (
+                                <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                                    <Phone className="w-4 h-4 text-primary" />
+                                    <span>{patientData.phone_number}</span>
+                                </div>
+                            )}
+                            {patientData?.address && (
+                                <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                                    <MapPin className="w-4 h-4 text-primary" />
+                                    <span>{patientData.address}</span>
+                                </div>
+                            )}
+                            {patientData?.birth_date && (
+                                <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                                    <Calendar className="w-4 h-4 text-primary" />
+                                    <span>Nascimento: {new Date(patientData.birth_date).toLocaleDateString('pt-PT')}</span>
+                                </div>
+                            )}
+                            {patientData?.client_since && (
+                                <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                                    <User className="w-4 h-4 text-primary" />
+                                    <span>Cliente desde: {new Date(patientData.client_since).toLocaleDateString('pt-PT')}</span>
+                                </div>
+                            )}
                         </div>
                     </div>
+
+                    {stats.nextAppointment && (
+                        <div className="w-full lg:w-auto">
+                            <div className="rounded-xl border border-border bg-card/90 px-4 py-3 shadow-xs flex items-center justify-between gap-3">
+                                <div className="flex items-center gap-3">
+                                    <span className="inline-flex items-center justify-center rounded-lg bg-primary/10 text-primary p-2">
+                                        <Calendar className="w-4 h-4" />
+                                    </span>
+                                    <div className="space-y-0.5">
+                                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-[0.16em]">
+                                            Próxima consulta
+                                        </p>
+                                        <p className="text-sm font-semibold text-foreground">
+                                            {new Date(stats.nextAppointment.appointment_date_time).toLocaleDateString('pt-PT', {
+                                                day: 'numeric',
+                                                month: 'short'
+                                            })} às {new Date(stats.nextAppointment.appointment_date_time).toLocaleTimeString('pt-PT', {
+                                                hour: '2-digit',
+                                                minute: '2-digit'
+                                            })}
+                                        </p>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => openAppointmentDetails(stats.nextAppointment)}
+                                    className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
+                                >
+                                    Ver detalhes
+                                    <ChevronRight className="w-3.5 h-3.5" />
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </section>
 
@@ -195,57 +367,68 @@ export default function ClientDashboard({ patientName = "X" }) {
                         </button>
                     </div>
 
-                    <div className="space-y-3">
-                        <ConsultaCard
-                            data="20 Nov 2024"
-                            hora="09:00"
-                            tipo="Acupuntura"
-                            status="agendada"
-                            terapeuta="Mestre José Machado"
-                        />
-                        <ConsultaCard
-                            data="27 Nov 2024"
-                            hora="10:30"
-                            tipo="Massagem Tui Na"
-                            status="agendada"
-                            terapeuta="Mestre José Machado"
-                        />
-                        <ConsultaCard
-                            data="13 Nov 2024"
-                            hora="14:00"
-                            tipo="Fitoterapia"
-                            status="concluida"
-                            terapeuta="Mestre José Machado"
-                        />
-                    </div>
+                    {upcomingAppointments.length > 0 ? (
+                        <div className="space-y-3">
+                            {upcomingAppointments.map((appointment) => (
+                                <ConsultaCard
+                                    key={appointment.id}
+                                    data={new Date(appointment.appointment_date_time).toLocaleDateString('pt-PT', {
+                                        day: 'numeric',
+                                        month: 'short',
+                                        year: 'numeric'
+                                    })}
+                                    hora={new Date(appointment.appointment_date_time).toLocaleTimeString('pt-PT', {
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    })}
+                                    tipo={appointment.service_type || "Consulta"}
+                                    status={appointment.status?.toLowerCase() || "pendente"}
+                                    terapeuta={appointment.therapist_name || "Terapeuta"}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-8">
+                            <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                            <p className="text-muted-foreground">Nenhuma consulta agendada</p>
+                        </div>
+                    )}
                 </div>
 
                 <div className="grid grid-rows-4 gap-4">
                     <StatCard
                         title="Próxima Consulta"
-                        value="2 dias"
-                        subtitle="20 Nov às 09:00"
+                        value={stats.daysUntilNext !== null ? `${stats.daysUntilNext} ${stats.daysUntilNext === 1 ? 'dia' : 'dias'}` : "---"}
+                        subtitle={stats.nextAppointment
+                            ? new Date(stats.nextAppointment.appointment_date_time).toLocaleDateString('pt-PT', {
+                                day: 'numeric',
+                                month: 'short'
+                            }) + ' às ' + new Date(stats.nextAppointment.appointment_date_time).toLocaleTimeString('pt-PT', {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            })
+                            : "Sem consultas agendadas"}
                         icon={Calendar}
                         tone="primary"
                     />
                     <StatCard
                         title="Sessões Realizadas"
-                        value="24"
+                        value={stats.completedThisYear}
                         subtitle="Este ano"
                         icon={CheckCircle2}
                         tone="success"
                     />
                     <StatCard
                         title="Progresso Geral"
-                        value="78%"
+                        value={`${stats.avgProgress}%`}
                         subtitle="Objetivos atingidos"
                         icon={Target}
                         tone="info"
                     />
                     <StatCard
-                        title="Próximo Objetivo"
-                        value="85%"
-                        subtitle="Equilíbrio energético"
+                        title="Objetivos Ativos"
+                        value={treatments.filter(g => g.status === 'Em progresso').length}
+                        subtitle="Em acompanhamento"
                         icon={TrendingUp}
                         tone="accent"
                     />
@@ -261,28 +444,32 @@ export default function ClientDashboard({ patientName = "X" }) {
                         Meu Progresso
                     </h2>
 
-                    <div className="space-y-4">
-                        <ProgressBar
-                            titulo="Redução de Dores"
-                            progresso={85}
-                            meta="Objetivo: 90% até ao fim do mês."
-                        />
-                        <ProgressBar
-                            titulo="Qualidade do Sono"
-                            progresso={70}
-                            meta="Objetivo: 80% até ao fim do mês."
-                        />
-                        <ProgressBar
-                            titulo="Níveis de Energia"
-                            progresso={92}
-                            meta="Meta atingida."
-                        />
-                        <ProgressBar
-                            titulo="Controlo de Peso"
-                            progresso={65}
-                            meta="Objetivo: 75% até ao fim do mês."
-                        />
-                    </div>
+                    {treatments.filter(g => g.status !== 'Cancelado').length > 0 ? (
+                        <div className="space-y-4">
+                            {treatments
+                                .filter(g => g.status !== 'Cancelado')
+                                .sort((a, b) => (a.status === 'Em progresso' ? -1 : 1))
+                                .slice(0, 4)
+                                .map((goal) => (
+                                    <ProgressBar
+                                        key={goal.id}
+                                        titulo={goal.title || goal.description || `Objetivo ${goal.id}`}
+                                        progresso={goal.progress_percentage || 0}
+                                        meta={goal.target_date
+                                            ? `Objetivo: ${new Date(goal.target_date).toLocaleDateString('pt-PT', {
+                                                day: 'numeric',
+                                                month: 'long'
+                                            })}`
+                                            : goal.target_value || "Meta em progresso"}
+                                    />
+                                ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-8">
+                            <Target className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                            <p className="text-muted-foreground">Nenhum objetivo definido</p>
+                        </div>
+                    )}
                 </div>
 
                 <div className="rounded-2xl border border-border bg-card shadow-sm p-5 sm:p-6 space-y-5">
@@ -312,6 +499,104 @@ export default function ClientDashboard({ patientName = "X" }) {
                     </div>
                 </div>
             </section>
+
+            {/* Appointment Details Dialog */}
+            <dialog
+                ref={dialogRef}
+                onClose={closeAppointmentDetails}
+                onClick={(e) => e.target === dialogRef.current && closeAppointmentDetails()}
+                className="max-w-md w-[92vw] p-0 rounded-2xl border shadow-xl backdrop:bg-black/40"
+                style={{ margin: "auto" }}
+            >
+                {selectedAppointment && (
+                    <div className="p-6">
+                        <header className="flex items-center justify-between mb-6">
+                            <h2 className="text-xl font-semibold text-foreground">Detalhes da Consulta</h2>
+                            <button
+                                onClick={closeAppointmentDetails}
+                                className="p-1.5 rounded-lg hover:bg-gray-100 text-muted-foreground"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+                        </header>
+
+                        <div className="space-y-4">
+                            <div className="flex items-start gap-3">
+                                <Calendar className="w-5 h-5 text-primary mt-0.5" />
+                                <div>
+                                    <p className="text-sm text-muted-foreground">Data e Hora</p>
+                                    <p className="font-medium text-foreground">
+                                        {new Date(selectedAppointment.appointment_date_time).toLocaleDateString('pt-PT', {
+                                            weekday: 'long',
+                                            day: 'numeric',
+                                            month: 'long',
+                                            year: 'numeric'
+                                        })} às {new Date(selectedAppointment.appointment_date_time).toLocaleTimeString('pt-PT', {
+                                            hour: '2-digit',
+                                            minute: '2-digit'
+                                        })}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="flex items-start gap-3">
+                                <Heart className="w-5 h-5 text-primary mt-0.5" />
+                                <div>
+                                    <p className="text-sm text-muted-foreground">Tipo de Serviço</p>
+                                    <p className="font-medium text-foreground">
+                                        {selectedAppointment.service_type || "Consulta"}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="flex items-start gap-3">
+                                <User className="w-5 h-5 text-primary mt-0.5" />
+                                <div>
+                                    <p className="text-sm text-muted-foreground">Terapeuta</p>
+                                    <p className="font-medium text-foreground">
+                                        {selectedAppointment.therapist_name || "A confirmar"}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="flex items-start gap-3">
+                                <CheckCircle2 className="w-5 h-5 text-primary mt-0.5" />
+                                <div>
+                                    <p className="text-sm text-muted-foreground">Estado</p>
+                                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
+                                        selectedAppointment.status === 'Confirmado' ? 'bg-emerald-50 text-emerald-700' :
+                                        selectedAppointment.status === 'Pendente' ? 'bg-amber-50 text-amber-700' :
+                                        'bg-blue-50 text-blue-700'
+                                    }`}>
+                                        {selectedAppointment.status || "Pendente"}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {selectedAppointment.notes && (
+                                <div className="flex items-start gap-3">
+                                    <Clock className="w-5 h-5 text-primary mt-0.5" />
+                                    <div>
+                                        <p className="text-sm text-muted-foreground">Notas</p>
+                                        <p className="text-foreground text-sm">
+                                            {selectedAppointment.notes}
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="mt-6 pt-4 border-t">
+                            <button
+                                onClick={closeAppointmentDetails}
+                                className="w-full py-2.5 rounded-xl bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+                            >
+                                Fechar
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </dialog>
         </div>
     );
 }

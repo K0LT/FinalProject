@@ -13,6 +13,9 @@ class TreatmentPolicy
      */
     public function viewAny(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -21,7 +24,7 @@ class TreatmentPolicy
      */
     public function view(User $user, Treatment $treatment): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,6 +32,9 @@ class TreatmentPolicy
      */
     public function create(User $user): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -37,6 +43,9 @@ class TreatmentPolicy
      */
     public function update(User $user, Treatment $treatment): bool
     {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 
@@ -45,22 +54,9 @@ class TreatmentPolicy
      */
     public function delete(User $user, Treatment $treatment): bool
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Treatment $treatment): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Treatment $treatment): bool
-    {
+        if($user->role->name === "Admin"){
+            return true;
+        }
         return false;
     }
 }

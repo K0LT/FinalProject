@@ -2,15 +2,13 @@
 
 import Card from "@/components/ui/Card";
 import {useEffect, useState} from "react";
-import {getDiagnostics} from "@/services/diagnostics";
 import TreatmentsCard from "@/components/treatments/Treatments";
-import {getTreatments} from "@/services/treatments";
 import NewDiagnosticModal from "@/components/diagnoses/NewDiagnosticModal";
 import ButtonRow from "@/components/ui/ButtonRow";
 import DiagnosisCard from "@/components/diagnoses/DiagnosisCard";
 import {useParams} from "next/navigation";
 import NewTreatmentModal from "@/components/treatments/NewTreatmentModal";
-import {login} from "@/services/login"
+import {getUserDiagnostics, getUserPatient, getUserTreatments} from "@/services/userServices";
 
 export default function DiagnosesPage() {
     // These names are passed down to the buttons to swap the current card displays
@@ -20,36 +18,50 @@ export default function DiagnosesPage() {
     const [diagOpen, setDiagOpen] = useState(false);
     const [treatOpen, setTreatOpen] = useState(false);
 
-    // This is how we grab information from the dynamic URL functionality provided by next
+    // Get patient ID from URL params
     const params = useParams();
 
     const [diagnostics, setDiagnostics] = useState([]);
+    const [symptoms, setSymptoms] = useState([]);
     const [treatments, setTreatments] = useState([]);
 
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const ctrl = new AbortController();
-        (async () => {
+        const loadData = async () => {
             try {
-                const loginResult = await login({
-                    email: "admin@example.com",
-                    password: "atec123",
-                });
+                // Use patient ID from URL params, or fetch from API
+                let patientId = params?.id;
 
-                const diagData = await getDiagnostics(params?.id);
-                const treatData = await getTreatments(params?.id);
+                if (!patientId) {
+                    const patient = await getUserPatient();
+                    patientId = patient?.id;
+                }
 
-                setDiagnostics(Array.isArray(diagData) ? diagData : []);
+                if (!patientId) {
+                    setError(new Error('ID do paciente não encontrado'));
+                    setLoading(false);
+                    return;
+                }
+
+                const [diagData, treatData] = await Promise.all([
+                    getUserDiagnostics(),
+                    getUserTreatments()
+                ]);
+
+                setDiagnostics(diagData?.diagnostics ?? []);
+                setSymptoms(diagData?.symptoms ?? []);
                 setTreatments(Array.isArray(treatData) ? treatData : []);
             } catch (e) {
-                if (e.name !== "CanceledError") setError(e);
+                console.error('Error loading diagnoses/treatments:', e);
+                setError(e);
             } finally {
                 setLoading(false);
             }
-        })();
-        return () => ctrl.abort();
+        };
+
+        loadData();
     }, [params?.id]);
 
     function handleClick(key) {
@@ -89,13 +101,11 @@ export default function DiagnosesPage() {
                         {!loading && !error && diagnostics.length > 0 && (
                             <div>
                                 {diagnostics.map((d, idx) => {
-                                    const symptoms =
-                                        Array.isArray(d.symptoms) ? d.symptoms
-                                            : typeof d.symptoms === 'string'
-                                                ? d.symptoms.split(',').map(s => s.trim()).filter(Boolean)
-                                                : [];
+                                    const diagSymptoms = symptoms
+                                        .filter(s => s.diagnostic_id === d.id)
+                                        .map(s => s.name);
 
-                                    return <DiagnosisCard key={d.id ?? idx} {...d} symptoms={symptoms} />;
+                                    return <DiagnosisCard key={d.id ?? idx} {...d} symptoms={diagSymptoms} />;
                                 })}
                             </div>
                         )}
